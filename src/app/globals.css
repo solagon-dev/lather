@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+  --cream: #F7F3EE;
+  --linen: #EDE6DB;
+  --stone: #8C7B6B;
+  --mink: #6B5C4E;
+  --bark: #3D2E22;
+  --sage: #A3AC94;
+  --blush: #D4B8A8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--bark);
+  font-family: var(--font-body);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-grid, .values-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+  .service-row {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+}
+
+::selection {
+  background-color: var(--blush);
+  color: var(--bark);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}

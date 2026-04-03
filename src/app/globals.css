@@ -1,12 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+
 :root {
   --font-display: 'Cormorant Garamond', serif;
   --font-body: 'Jost', sans-serif;
+
+  /* Palette */
   --cream: #F7F3EE;
   --linen: #EDE6DB;
   --stone: #8C7B6B;
@@ -14,7 +20,17 @@
   --bark: #3D2E22;
   --sage: #A3AC94;
   --blush: #D4B8A8;
+  --gold: #C9A96E;
+  --charcoal: #1A1714;
+
+  /* Easing */
+  --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
 
 * {
   box-sizing: border-box;
@@ -32,29 +48,614 @@ body {
   font-family: var(--font-body);
   font-weight: 300;
   letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .about-grid, .values-grid {
-    grid-template-columns: 1fr !important;
-    gap: 3rem !important;
+/* ============================================================
+   ACCESSIBILITY & POLISH
+   ============================================================ */
+
+/* Focus-visible — refined ring for keyboard nav */
+*:focus-visible {
+  outline: 2px solid var(--blush);
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--blush);
+  outline-offset: 3px;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(212, 184, 168, 0.35);
+  color: var(--bark);
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  background: var(--bark);
+  color: var(--cream);
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 16px;
+}
+
+/* Smooth image loading */
+img {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+/* Smooth scrollbar for comparison tables */
+[style*="overflow"] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--blush) transparent;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+
+body.reveal-active .reveal-section {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 1200ms var(--ease-luxury),
+    transform 1200ms var(--ease-luxury);
+  will-change: opacity, transform;
+}
+
+body.reveal-active .reveal-section.reveal-fade {
+  transform: translateY(20px);
+}
+
+body.reveal-active .reveal-section.reveal-lift {
+  transform: translateY(40px);
+}
+
+body.reveal-active .reveal-section.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   STAGGER CHILDREN REVEAL
+   Adds cascading entrance animation to direct children of
+   any element with class "stagger-children"
+   ============================================================ */
+
+body.reveal-active .stagger-children > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 900ms var(--ease-luxury),
+    transform 900ms var(--ease-luxury);
+  will-change: opacity, transform;
+}
+
+body.reveal-active .stagger-children.is-visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 80ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 200ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 320ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 440ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 560ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 680ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 800ms; }
+body.reveal-active .stagger-children.is-visible > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 920ms; }
+
+/* ============================================================
+   HERO ENTRANCE ANIMATIONS
+   ============================================================ */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
   }
-  .service-row {
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.5; }
+  50% { transform: scaleY(0.4); opacity: 0.2; }
+}
+
+.hero-line {
+  animation: heroFadeIn 1.4s var(--ease-luxury) 0.2s both;
+}
+
+.hero-eyebrow {
+  animation: heroFadeUp 1s var(--ease-luxury) 0.4s both;
+}
+
+.hero-headline {
+  animation: heroFadeUp 1.1s var(--ease-luxury) 0.6s both;
+}
+
+.hero-sub {
+  animation: heroFadeUp 1s var(--ease-luxury) 0.85s both;
+}
+
+.hero-ctas {
+  animation: heroFadeUp 1s var(--ease-luxury) 1.05s both;
+}
+
+.hero-scroll {
+  animation: heroFadeIn 1.2s var(--ease-luxury) 1.4s both;
+}
+
+.scroll-line {
+  animation: scrollPulse 2.4s ease-in-out 2s infinite;
+}
+
+/* ============================================================
+   MARQUEE / SCROLLING STRIP
+   ============================================================ */
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 48s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   GRAIN TEXTURE OVERLAY (editorial premium feel)
+   ============================================================ */
+
+.grain-overlay {
+  position: relative;
+}
+
+.grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 10;
+  mix-blend-mode: overlay;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--blush);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   SELECTION
+   ============================================================ */
 
 ::selection {
   background-color: var(--blush);
   color: var(--bark);
 }
 
-.font-display {
-  font-family: var(--font-display);
+/* ============================================================
+   REUSABLE BUTTON HOVER UTILITIES
+   (used in server components where JS event handlers can't be passed)
+   ============================================================ */
+
+.btn-dark {
+  transition: background 0.3s ease, transform 0.35s var(--ease-luxury) !important;
+}
+.btn-dark:hover {
+  background: var(--mink) !important;
+  transform: translateY(-2px) !important;
 }
 
-.font-body {
+.btn-light {
+  transition: background 0.3s ease, transform 0.35s var(--ease-luxury) !important;
+}
+.btn-light:hover {
+  background: var(--cream) !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-outline-light:hover {
+  border-color: rgba(237,230,219,0.6) !important;
+  color: var(--linen) !important;
+}
+
+.link-underline:hover {
+  opacity: 0.5 !important;
+}
+
+.hover-fade {
+  transition: opacity 0.25s ease;
+}
+.hover-fade:hover {
+  opacity: 0.65 !important;
+}
+
+.location-card {
+  transition: background 0.3s ease !important;
+}
+.location-card:hover {
+  background: rgba(237,230,219,0.04) !important;
+}
+
+/* ============================================================
+   ARTICLE CONTENT RENDERING
+   ============================================================ */
+
+/* First paragraph — drop-cap feel with larger size */
+.article-content > p:first-child {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--bark);
+}
+
+.article-content > p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.12em;
+  margin-top: 0.08em;
+  color: var(--bark);
+  font-weight: 300;
+}
+
+.article-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 300;
+  color: var(--bark);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 4rem 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212,184,168,0.2);
+}
+
+.article-content h2:first-of-type {
+  border-top: none;
+  margin-top: 2.5rem;
+  padding-top: 0;
+}
+
+.article-content h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 400;
+  color: var(--bark);
+  line-height: 1.2;
+  margin: 2.5rem 0 1rem;
+}
+
+.article-content p {
   font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 2;
+  color: var(--mink);
+  font-weight: 300;
+  margin-bottom: 1.75rem;
+}
+
+.article-content ul,
+.article-content ol {
+  margin: 1.5rem 0 2rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.article-content li {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--mink);
+  font-weight: 300;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.article-content li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 6px;
+  height: 1px;
+  background: var(--blush);
+}
+
+.article-content blockquote {
+  border-left: none;
+  padding: 2.5rem clamp(2rem, 4vw, 3.5rem);
+  margin: 3.5rem -1rem;
+  position: relative;
+  background: var(--linen);
+}
+
+.article-content blockquote::before {
+  content: "\201C";
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: var(--blush);
+  opacity: 0.2;
+  position: absolute;
+  top: 0.3rem;
+  left: clamp(0.75rem, 2vw, 1.5rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.article-content blockquote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--bark);
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.article-content a {
+  color: var(--bark);
+  border-bottom: 1px solid rgba(61,46,34,0.3);
+  text-decoration: none;
+  transition: border-color 0.25s ease, color 0.25s ease;
+  padding-bottom: 1px;
+}
+
+.article-content a:hover {
+  border-bottom-color: var(--bark);
+  color: var(--bark);
+}
+
+.article-content strong {
+  font-weight: 500;
+  color: var(--bark);
+}
+
+.article-content em {
+  font-style: italic;
+}
+
+.article-content img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 2.5rem 0;
+}
+
+.article-content hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--blush), transparent);
+  margin: 3rem 0;
+  opacity: 0.4;
+}
+
+/* ============================================================
+   JOURNAL CARDS — hover state
+   ============================================================ */
+
+.journal-card:hover {
+  box-shadow: 0 8px 40px rgba(61,46,34,0.06);
+}
+
+/* ============================================================
+   JOURNAL GRID — first article spans 2 columns on desktop
+   ============================================================ */
+
+.journal-grid > *:first-child {
+  grid-column: span 2;
+}
+
+.journal-grid > *:first-child img {
+  aspect-ratio: 21 / 10;
+}
+
+@media (max-width: 768px) {
+  .journal-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .journal-grid > *:first-child {
+    grid-column: span 1;
+  }
+}
+
+/* ============================================================
+   STICKY SCROLL SECTIONS — desktop / mobile toggles
+   ============================================================ */
+
+.experience-mobile-panels { display: none; }
+
+@media (max-width: 768px) {
+  .experience-journey { display: none !important; }
+  .experience-nav { display: none !important; }
+  .experience-mobile-panels { display: block; }
+
+  .treatment-card-item { grid-template-columns: 1fr !important; }
+  .treatment-card-item img { height: 200px !important; }
+}
+
+/* ============================================================
+   RESPONSIVE OVERRIDES — FULL MOBILE SYSTEM
+   ============================================================ */
+
+/* SMALL LAPTOP (max-width: 1100px) */
+@media (max-width: 1100px) {
+  .lg\:two-col { grid-template-columns: 1fr !important; }
+}
+
+/* TABLET (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .footer-top-grid { grid-template-columns: 1.5fr 1fr 1fr !important; gap: 2.5rem !important; }
+  .about-grid { gap: 4rem !important; }
+  .values-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .treatment-cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .gallery-grid { grid-template-columns: 1fr 1fr !important; grid-template-rows: 300px 260px !important; }
+  .gallery-grid > * { grid-column: auto !important; grid-row: auto !important; }
+  .editor-main-grid { grid-template-columns: 1fr !important; }
+  .editor-sidebar-col { position: static !important; display: grid !important; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important; gap: 16px !important; }
+}
+
+/* PHONE (max-width: 768px) */
+@media (max-width: 768px) {
+  .treatment-cards-grid { grid-template-columns: 1fr !important; }
+
+  .about-grid,
+  .values-grid,
+  .valueprop-grid,
+  .benefits-header,
+  .footer-top-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+
+  .about-metrics { grid-template-columns: repeat(3, 1fr) !important; gap: 0 !important; max-width: 100% !important; }
+
+  .service-row { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .service-image-col { display: none !important; }
+
+  .benefits-grid { grid-template-columns: 1fr 1fr !important; gap: 1.25rem !important; }
+  .testimonials-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+  .book-info-grid { grid-template-columns: 1fr 1fr !important; gap: 1.5rem !important; }
+
+  .gallery-grid { grid-template-columns: 1fr 1fr !important; grid-template-rows: 200px 200px !important; }
+  .gallery-grid > * { grid-column: auto !important; grid-row: auto !important; }
+
+  .section-pad { padding-left: 20px !important; padding-right: 20px !important; }
+  section.section-pad { padding-top: clamp(56px, 8.5vw, 100px) !important; padding-bottom: clamp(56px, 8.5vw, 100px) !important; }
+
+  .hero-ctas { flex-direction: column !important; align-items: stretch !important; }
+  .hero-ctas > a,
+  .hero-ctas > button { display: block !important; width: 100% !important; text-align: center !important; box-sizing: border-box !important; padding: 18px 24px !important; }
+
+  .book-online-btn { display: block !important; width: 100% !important; text-align: center !important; box-sizing: border-box !important; }
+  .book-secondary-row { flex-direction: column !important; align-items: stretch !important; }
+  .book-secondary-row > a { display: block !important; text-align: center !important; width: 100% !important; box-sizing: border-box !important; }
+
+  .experience-panel { flex-direction: column !important; min-height: auto !important; }
+  .experience-panel-image { width: 100% !important; height: 260px !important; order: -1 !important; flex: none !important; }
+
+  .hero-content { padding: 0 20px 64px !important; max-width: 100% !important; }
+
+  .sticky-booking-bar { display: flex !important; }
+
+  .article-mid-cta { flex-direction: column !important; align-items: flex-start !important; gap: 1.5rem !important; }
+  .article-mid-cta-btn { width: 100% !important; text-align: center !important; display: block !important; box-sizing: border-box !important; }
+
+  .contact-info-sticky { position: static !important; }
+  .contact-alt-grid { grid-template-columns: 1fr !important; }
+
+  .admin-sidebar { display: none; }
+  .admin-main { margin-left: 0 !important; }
+  .admin-content { padding: 20px 16px !important; }
+  .admin-form-grid-2 { grid-template-columns: 1fr !important; }
+  .admin-topbar { padding: 0 16px !important; }
+  .editor-main-grid { grid-template-columns: 1fr !important; }
+  .editor-sidebar-col { position: static !important; }
+}
+
+/* SMALL PHONE (max-width: 480px) */
+@media (max-width: 480px) {
+  .benefits-grid { grid-template-columns: 1fr !important; }
+  .gallery-grid { grid-template-columns: 1fr !important; grid-template-rows: repeat(4, 220px) !important; }
+  section.section-pad { padding-top: 48px !important; padding-bottom: 48px !important; }
+  .about-metrics { grid-template-columns: 1fr !important; gap: 1px !important; }
+  .book-info-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+}
+
+/* TINY PHONE (max-width: 374px) */
+@media (max-width: 374px) {
+  .section-pad { padding-left: 16px !important; padding-right: 16px !important; }
+  section.section-pad { padding-top: 40px !important; padding-bottom: 40px !important; }
+  .sticky-booking-bar { flex-direction: column !important; gap: 0.75rem !important; padding: 16px !important; }
+  .sticky-booking-bar a { width: 100% !important; text-align: center !important; display: block !important; }
+}
+
+/* HIDE STICKY BOOKING BAR ON DESKTOP */
+@media (min-width: 769px) {
+  .sticky-booking-bar { display: none !important; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body.reveal-active .reveal-section,
+  body.reveal-active .reveal-section.reveal-fade,
+  body.reveal-active .reveal-section.reveal-lift {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  body.reveal-active .stagger-children > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .animate-marquee {
+    animation: none;
+  }
+
+  .video-zoom {
+    animation: none;
+  }
+
+  .hero-eyebrow,
+  .hero-headline,
+  .hero-sub,
+  .hero-ctas,
+  .hero-scroll,
+  .hero-line,
+  .scroll-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

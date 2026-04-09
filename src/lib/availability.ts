@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { getGoogleBusyTimes, type BusyBlock } from "@/lib/google-calendar";
 
 /**
  * Production availability engine for Lather Head Spa.
@@ -153,17 +154,42 @@ export async function getAvailableSlots(
     }
   }
 
-  // ── 8. Current time in business timezone ─────────────
+  // ── 8. Google Calendar busy times ─────────────────────
+  // Fetch freebusy data for all staff with calendar sync enabled.
+  // This runs in parallel for all staff to minimize latency.
+  const staffGoogleBusy = new Map<string, { start: number; end: number }[]>();
+
+  const busyPromises = Array.from(staffHoursMap.keys()).map(async (sid) => {
+    try {
+      const busyBlocks: BusyBlock[] = await getGoogleBusyTimes(sid, utcStart, utcEnd);
+      const localBlocks = busyBlocks
+        .map((b) => ({
+          start: utcToLocalMinutes(b.start, BIZ_TZ, date) ?? 0,
+          end: utcToLocalMinutes(b.end, BIZ_TZ, date) ?? 1440,
+        }))
+        .filter((b) => b.end > b.start); // Only blocks that fall on this day
+      if (localBlocks.length > 0) {
+        staffGoogleBusy.set(sid, localBlocks);
+      }
+    } catch {
+      // Graceful degradation — if freebusy fails, don't block any slots
+    }
+  });
+
+  await Promise.allSettled(busyPromises);
+
+  // ── 9. Current time in business timezone ─────────────
   const nowMinutes = getNowMinutesInTz(BIZ_TZ);
   const isToday = date === getTodayInTz(BIZ_TZ);
 
-  // ── 9. Generate slots ────────────────────────────────
+  // ── 10. Generate slots ───────────────────────────────
   const allSlots: TimeSlot[] = [];
 
   for (const [sid, hours] of staffHoursMap) {
     const staffMember = eligibleStaff.find((s) => s.id === sid)!;
     const blocked = staffBlocked.get(sid) || [];
     const blackedOut = staffBlackouts.get(sid) || [];
+    const googleBusy = staffGoogleBusy.get(sid) || [];
 
     for (
       let slotStart = hours.start;
@@ -189,6 +215,12 @@ export async function getAvailableSlots(
         (b) => slotStart < b.end && (slotStart + service.durationMinutes) > b.start,
       );
       if (hasBlackout) continue;
+
+      // Check Google Calendar busy conflicts
+      const hasGoogleConflict = googleBusy.some(
+        (b) => slotStart < b.end && (slotStart + service.durationMinutes) > b.start,
+      );
+      if (hasGoogleConflict) continue;
 
       allSlots.push({
         time: formatMinutes(slotStart),

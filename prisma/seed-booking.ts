@@ -86,13 +86,12 @@ async function main() {
   // ── STAFF ──────────────────────────────────────────────────
 
   const staff1 = await prisma.staff.upsert({
-    where: { email: "founder@latherheadspa.com" },
-    update: {},
+    where: { email: "madison@latherheadspa.com" },
+    update: { name: "Madison Hoffschneider", slug: "madison-hoffschneider" },
     create: {
-      name: "Founder & Lead Therapist",
-      slug: "founder",
-      email: "founder@latherheadspa.com",
-      bio: "With years of experience in scalp health and wellness, our founder built Lather to bring the Japanese head spa tradition to eastern North Carolina.",
+      name: "Madison Hoffschneider",
+      slug: "madison-hoffschneider",
+      email: "madison@latherheadspa.com",
       image: "/Photos/Finalized/2.10.26_LHS-17.jpg",
       isActive: true,
       timezone: "America/New_York",
@@ -100,22 +99,33 @@ async function main() {
   });
 
   const staff2 = await prisma.staff.upsert({
-    where: { email: "therapist@latherheadspa.com" },
-    update: {},
+    where: { email: "heidi@latherheadspa.com" },
+    update: { name: "Heidi Griggs", slug: "heidi-griggs" },
     create: {
-      name: "Scalp Therapist",
-      slug: "scalp-therapist",
-      email: "therapist@latherheadspa.com",
-      bio: "Trained in therapeutic scalp techniques and advanced treatment protocols. Blends technical expertise with a warm, attentive presence.",
+      name: "Heidi Griggs",
+      slug: "heidi-griggs",
+      email: "heidi@latherheadspa.com",
       image: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4247.jpg",
       isActive: true,
       timezone: "America/New_York",
     },
   });
 
-  console.log(`  ✓ Staff: ${staff1.name}, ${staff2.name}`);
+  const staff3 = await prisma.staff.upsert({
+    where: { email: "hannah@latherheadspa.com" },
+    update: { name: "Hannah Justice", slug: "hannah-justice" },
+    create: {
+      name: "Hannah Justice",
+      slug: "hannah-justice",
+      email: "hannah@latherheadspa.com",
+      isActive: true,
+      timezone: "America/New_York",
+    },
+  });
 
-  // ── STAFF-SERVICE RELATIONS (both can do all services) ─────
+  console.log(`  ✓ Staff: ${staff1.name}, ${staff2.name}, ${staff3.name}`);
+
+  // ── STAFF-SERVICE RELATIONS (all can do all services) ─────
 
   const allServices = [
     classicRitual,
@@ -123,7 +133,7 @@ async function main() {
     nourishFortify,
     gentlemansRecharge,
   ];
-  const allStaff = [staff1, staff2];
+  const allStaff = [staff1, staff2, staff3];
 
   for (const staff of allStaff) {
     for (const service of allServices) {

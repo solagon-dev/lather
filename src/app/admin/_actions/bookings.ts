@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { getAdminSession } from "@/lib/auth";
 import { checkSlotConflict } from "@/lib/availability";
 import { bizLocalToUtc } from "@/lib/timezone";
+import { deleteCalendarEvent, createCalendarEvent } from "@/lib/google-calendar";
 
 async function requireAdmin() {
   const session = await getAdminSession();
@@ -138,10 +139,36 @@ export async function updateBookingStatusAction(
   }
 
   try {
-    await prisma.appointment.update({
+    const appointment = await prisma.appointment.update({
       where: { id },
       data: { status },
+      include: {
+        staff: { select: { id: true, name: true, googleCalendarId: true, calendarSyncEnabled: true } },
+        service: { select: { name: true, durationMinutes: true } },
+        client: { select: { firstName: true, lastName: true, email: true, phone: true } },
+      },
     });
+
+    // Sync calendar based on status change
+    if (status === "cancelled" || status === "no_show") {
+      // Remove event from Google Calendar
+      if (appointment.calendarEventId && appointment.staff.calendarSyncEnabled) {
+        deleteCalendarEvent(
+          appointment.staffId,
+          appointment.calendarEventId,
+          appointment.staff.googleCalendarId,
+        ).catch((err) => console.error("[Calendar] Failed to delete event on cancel:", err));
+      }
+    } else if (status === "confirmed" && !appointment.calendarEventId) {
+      // Create event if confirming a pending appointment that didn't have one
+      if (appointment.staff.calendarSyncEnabled) {
+        createCalendarEvent({
+          ...appointment,
+          timezone: appointment.timezone,
+          staff: appointment.staff,
+        }).catch((err) => console.error("[Calendar] Failed to create event on confirm:", err));
+      }
+    }
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";
     return { error: `Failed to update status: ${message}` };

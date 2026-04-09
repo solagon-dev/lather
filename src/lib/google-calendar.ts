@@ -94,6 +94,57 @@ async function getCalendarClient(staffId: string) {
   return google.calendar({ version: "v3", auth: client });
 }
 
+// ── Freebusy Query ───────────────────────────────────────────
+
+export interface BusyBlock {
+  start: Date;
+  end: Date;
+}
+
+/**
+ * Query Google Calendar for busy times within a date range.
+ * Returns an array of busy blocks that should block availability.
+ * Gracefully returns empty array if calendar is not connected or query fails.
+ */
+export async function getGoogleBusyTimes(
+  staffId: string,
+  timeMin: Date,
+  timeMax: Date,
+): Promise<BusyBlock[]> {
+  const staff = await prisma.staff.findUnique({
+    where: { id: staffId },
+    select: { calendarSyncEnabled: true, googleCalendarId: true },
+  });
+
+  if (!staff?.calendarSyncEnabled) return [];
+
+  const calendar = await getCalendarClient(staffId);
+  if (!calendar) return [];
+
+  const calendarId = staff.googleCalendarId || "primary";
+
+  try {
+    const res = await calendar.freebusy.query({
+      requestBody: {
+        timeMin: timeMin.toISOString(),
+        timeMax: timeMax.toISOString(),
+        items: [{ id: calendarId }],
+      },
+    });
+
+    const busySlots = res.data.calendars?.[calendarId]?.busy || [];
+    return busySlots
+      .filter((b): b is { start: string; end: string } => !!b.start && !!b.end)
+      .map((b) => ({
+        start: new Date(b.start),
+        end: new Date(b.end),
+      }));
+  } catch (e) {
+    console.error("[Calendar] Freebusy query failed for staff", staffId, ":", e instanceof Error ? e.message : e);
+    return []; // Graceful degradation — don't block the booking form
+  }
+}
+
 // ── Event CRUD ───────────────────────────────────────────────
 
 interface AppointmentEvent {

@@ -5,83 +5,118 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("Seeding booking system data...");
 
-  // ── SERVICES (from existing site data) ─────────────────────
+  // ── SERVICES ────────────────────────────────────────────────
 
-  const classicRitual = await prisma.bookingService.upsert({
-    where: { slug: "classic-ritual" },
-    update: {},
+  const luxeRitual = await prisma.bookingService.upsert({
+    where: { slug: "luxe-ritual" },
+    update: {
+      name: "The Luxe Ritual",
+      description: "Our most indulgent experience — detoxifying scalp cleanse, exfoliation, extended massage, nourishing hair mask, steam infusion, rose petal jelly facial, and professional blowout.",
+      durationMinutes: 90,
+      price: 20000,
+      tier: "premium",
+      sortOrder: 1,
+      isActive: true,
+    },
     create: {
-      name: "The Classic Ritual",
-      slug: "classic-ritual",
-      description:
-        "A complete scalp reset — purifying cleanse, gentle exfoliation, tension-relieving massage, nourishing hair mask, and therapeutic steam infusion. Ideal for first-time guests or anyone seeking a full reset.",
-      durationMinutes: 75,
-      price: 12500, // $125.00 in cents
+      name: "The Luxe Ritual",
+      slug: "luxe-ritual",
+      description: "Our most indulgent experience — detoxifying scalp cleanse, exfoliation, extended massage, nourishing hair mask, steam infusion, rose petal jelly facial, and professional blowout.",
+      durationMinutes: 90,
+      price: 20000, // $200.00 in cents
       bufferBeforeMinutes: 0,
       bufferAfterMinutes: 15,
-      tier: "foundation",
+      tier: "premium",
       sortOrder: 1,
       isActive: true,
     },
   });
 
-  const revitalizeRestore = await prisma.bookingService.upsert({
-    where: { slug: "revitalize-restore" },
-    update: {},
-    create: {
-      name: "Revitalize & Restore",
-      slug: "revitalize-restore",
-      description:
-        "A rejuvenating scalp ritual with purifying cleanse, restorative massage, high-frequency combing, and anti-hair loss serum protocol. For thinning, postpartum shedding, or stress-related hair loss.",
-      durationMinutes: 90,
-      price: 16500, // $165.00
-      bufferBeforeMinutes: 0,
-      bufferAfterMinutes: 15,
-      tier: "specialized",
+  const classicRitual = await prisma.bookingService.upsert({
+    where: { slug: "classic-ritual" },
+    update: {
+      name: "The Classic Ritual",
+      description: "Detoxifying scalp cleanse, gentle exfoliation, tension-relieving massage, nourishing hair mask, steam infusion, and professional blowdry. Suitable for all hair types.",
+      durationMinutes: 75,
+      price: 12500,
+      tier: "foundation",
       sortOrder: 2,
       isActive: true,
     },
-  });
-
-  const nourishFortify = await prisma.bookingService.upsert({
-    where: { slug: "nourish-fortify" },
-    update: {},
     create: {
-      name: "Nourish & Fortify",
-      slug: "nourish-fortify",
-      description:
-        "A bond-rebuilding treatment combining scalp care with advanced hair restoration. Professional-grade bond treatment restores strength, softness, and shine. For dry, damaged, or chemically treated hair.",
-      durationMinutes: 90,
-      price: 17500, // $175.00
+      name: "The Classic Ritual",
+      slug: "classic-ritual",
+      description: "Detoxifying scalp cleanse, gentle exfoliation, tension-relieving massage, nourishing hair mask, steam infusion, and professional blowdry. Suitable for all hair types.",
+      durationMinutes: 75,
+      price: 12500, // $125.00 in cents
       bufferBeforeMinutes: 0,
       bufferAfterMinutes: 15,
-      tier: "premium",
-      sortOrder: 3,
+      tier: "foundation",
+      sortOrder: 2,
       isActive: true,
     },
   });
 
   const gentlemansRecharge = await prisma.bookingService.upsert({
     where: { slug: "gentlemans-recharge" },
-    update: {},
+    update: {
+      name: "Gentleman's Recharge",
+      description: "A restorative experience designed for men — deep cleanse, scalp massage, and revitalizing treatment. Focused, effective care in a quiet space.",
+      durationMinutes: 60,
+      price: 10000,
+      tier: "foundation",
+      sortOrder: 3,
+      isActive: true,
+    },
     create: {
       name: "Gentleman's Recharge",
       slug: "gentlemans-recharge",
-      description:
-        "A restorative 60-minute experience designed specifically for men. Deep cleanse, scalp massage, and revitalizing treatment. No fuss, no pretense — just focused, effective care.",
+      description: "A restorative experience designed for men — deep cleanse, scalp massage, and revitalizing treatment. Focused, effective care in a quiet space.",
       durationMinutes: 60,
-      price: 9500, // $95.00
+      price: 10000, // $100.00 in cents
       bufferBeforeMinutes: 0,
       bufferAfterMinutes: 15,
       tier: "foundation",
+      sortOrder: 3,
+      isActive: true,
+    },
+  });
+
+  const blowout = await prisma.bookingService.upsert({
+    where: { slug: "blowout" },
+    update: {
+      name: "Blowout",
+      description: "Professional wash and blowdry styled to your desired look. Perfect for any occasion.",
+      durationMinutes: 45,
+      price: 5000,
+      tier: "express",
+      sortOrder: 4,
+      isActive: true,
+    },
+    create: {
+      name: "Blowout",
+      slug: "blowout",
+      description: "Professional wash and blowdry styled to your desired look. Perfect for any occasion.",
+      durationMinutes: 45,
+      price: 5000, // $50.00 in cents (starting at)
+      bufferBeforeMinutes: 0,
+      bufferAfterMinutes: 10,
+      tier: "express",
       sortOrder: 4,
       isActive: true,
     },
   });
 
+  // Deactivate retired services
+  await prisma.bookingService.updateMany({
+    where: { slug: { in: ["revitalize-restore", "nourish-fortify"] } },
+    data: { isActive: false },
+  });
+
   console.log(
-    `  ✓ Services: ${classicRitual.name}, ${revitalizeRestore.name}, ${nourishFortify.name}, ${gentlemansRecharge.name}`
+    `  ✓ Services: ${luxeRitual.name}, ${classicRitual.name}, ${gentlemansRecharge.name}, ${blowout.name}`
   );
+  console.log("  ✓ Deactivated: Revitalize & Restore, Nourish & Fortify");
 
   // ── STAFF ──────────────────────────────────────────────────
 
@@ -128,10 +163,10 @@ async function main() {
   // ── STAFF-SERVICE RELATIONS (all can do all services) ─────
 
   const allServices = [
+    luxeRitual,
     classicRitual,
-    revitalizeRestore,
-    nourishFortify,
     gentlemansRecharge,
+    blowout,
   ];
   const allStaff = [staff1, staff2, staff3];
 

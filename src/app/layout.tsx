@@ -111,6 +111,17 @@ const localBusinessSchema = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
+          name: "The Luxe Ritual",
+          description: "A 90-minute premium scalp experience — our most comprehensive ritual with advanced treatments, extended massage, and full restoration.",
+          provider: { "@id": `${SITE_URL}/#business` },
+        },
+        price: "200",
+        priceCurrency: "USD",
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
           name: "The Classic Ritual",
           description: "A 75-minute complete scalp reset — purifying cleanse, exfoliation, massage, hair mask, and steam infusion.",
           provider: { "@id": `${SITE_URL}/#business` },
@@ -122,33 +133,22 @@ const localBusinessSchema = {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: "Revitalize & Restore",
-          description: "A 90-minute therapeutic ritual with high-frequency combing and anti-hair loss serum protocol.",
-          provider: { "@id": `${SITE_URL}/#business` },
-        },
-        price: "165",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Nourish & Fortify",
-          description: "A 90-minute bond-rebuilding treatment for dry, damaged, or chemically treated hair.",
-          provider: { "@id": `${SITE_URL}/#business` },
-        },
-        price: "175",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
           name: "Gentleman's Recharge",
           description: "A 60-minute restorative scalp experience designed specifically for men.",
           provider: { "@id": `${SITE_URL}/#business` },
         },
-        price: "95",
+        price: "100",
+        priceCurrency: "USD",
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Blowout",
+          description: "A 45-minute professional blowout for a polished, finished look.",
+          provider: { "@id": `${SITE_URL}/#business` },
+        },
+        price: "50",
         priceCurrency: "USD",
       },
     ],

@@ -214,12 +214,12 @@ export const seoServiceTypes: SeoServiceType[] = [
       {
         question: "How long does a head spa session last?",
         answer:
-          "Sessions at Lather range from 60 to 90 minutes depending on the ritual. The Classic Ritual is 75 minutes, the Revitalize & Restore and Nourish & Fortify are 90 minutes, and the Gentleman's Recharge is 60 minutes. Every session is reserved exclusively for you — there's no rushing.",
+          "Sessions at Lather range from 45 to 90 minutes depending on the ritual. The Blowout is 45 minutes, the Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a 90-minute experience. Every session is reserved exclusively for you — there's no rushing.",
       },
       {
         question: "Is a head spa good for hair growth?",
         answer:
-          "Yes. The scalp massage component of a head spa stimulates blood circulation to the follicles, which nourishes hair at the root and creates a healthier environment for growth. Our Revitalize & Restore treatment is specifically designed to address thinning and support follicle health using targeted anti-hair loss serums and high-frequency combing.",
+          "Yes. The scalp massage component of a head spa stimulates blood circulation to the follicles, which nourishes hair at the root and creates a healthier environment for growth. Our Luxe Ritual is specifically designed to address thinning and support follicle health using targeted anti-hair loss serums and advanced scalp treatments.",
       },
       {
         question: "How often should I get a head spa treatment?",
@@ -298,7 +298,7 @@ export const seoServiceTypes: SeoServiceType[] = [
       {
         question: "Is scalp treatment effective for hair loss or thinning?",
         answer:
-          "Yes — particularly when thinning is related to scalp congestion, poor circulation, or follicle stress. Our Revitalize & Restore treatment specifically targets hair thinning with high-frequency combing, anti-hair loss serum protocols, and restorative massage. Results vary depending on the underlying cause, but consistent treatment typically yields noticeable improvement within several sessions.",
+          "Yes — particularly when thinning is related to scalp congestion, poor circulation, or follicle stress. Our Luxe Ritual specifically targets hair thinning with advanced scalp treatments, targeted serum protocols, and restorative massage. Results vary depending on the underlying cause, but consistent treatment typically yields noticeable improvement within several sessions.",
       },
       {
         question: "How often should I get a scalp treatment?",
@@ -392,7 +392,7 @@ export const seoServiceTypes: SeoServiceType[] = [
       {
         question: "Is a Japanese head spa good for hair growth?",
         answer:
-          "Yes. The Japanese head spa's emphasis on scalp health directly supports hair growth. Therapeutic massage improves circulation to the follicles, targeted serums address specific concerns like thinning or dormant follicles, and the deep cleansing process removes buildup that can inhibit healthy growth. Our Revitalize & Restore treatment is specifically designed for guests experiencing thinning or density concerns.",
+          "Yes. The Japanese head spa's emphasis on scalp health directly supports hair growth. Therapeutic massage improves circulation to the follicles, targeted serums address specific concerns like thinning or dormant follicles, and the deep cleansing process removes buildup that can inhibit healthy growth. Our Luxe Ritual is specifically designed for guests experiencing thinning or density concerns.",
       },
     ],
     relatedBlogs: [
@@ -476,7 +476,7 @@ export const seoServiceTypes: SeoServiceType[] = [
       {
         question: "Can scalp massage help with hair thinning?",
         answer:
-          "Yes — scalp massage is one of the most evidence-supported natural interventions for hair thinning caused by poor circulation or follicle stress. Regular therapeutic massage increases blood flow to the follicles, improving nutrient delivery and stimulating dormant hair growth. For best results, we often recommend pairing scalp massage with our targeted serum treatments as part of the Revitalize & Restore ritual.",
+          "Yes — scalp massage is one of the most evidence-supported natural interventions for hair thinning caused by poor circulation or follicle stress. Regular therapeutic massage increases blood flow to the follicles, improving nutrient delivery and stimulating dormant hair growth. For best results, we often recommend pairing scalp massage with our targeted serum treatments as part of The Luxe Ritual.",
       },
     ],
     relatedBlogs: [

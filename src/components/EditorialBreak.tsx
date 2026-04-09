@@ -84,8 +84,8 @@ export default function EditorialBreak() {
       {/* Parallax background image */}
       <img
         ref={imgRef}
-        src="/media/editorial/ambiance-wide.jpg"
-        alt="Marble counter detail with ceramic bowl and greenery at Lather"
+        src="/media/editorial/editorial-break.jpg"
+        alt="Scalp treatment in progress — dramatic overhead view with black gloves"
         loading="lazy"
         style={{
           position: "absolute",

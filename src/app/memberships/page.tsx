@@ -22,12 +22,12 @@ const tiers = [
   },
   {
     name: "Elevated",
-    price: "$145",
+    price: "$175",
     period: "/mo",
-    savings: "Save $20–30 every month",
+    savings: "Save $25 every month",
     featured: true,
     perks: [
-      "1 Premium Ritual per month (Revitalize or Nourish)",
+      "1 Luxe Ritual per month",
       "Priority booking access",
       "10% off all add-on treatments",
       "Exclusive member-only promotions",
@@ -35,9 +35,9 @@ const tiers = [
   },
   {
     name: "Devoted",
-    price: "$235",
+    price: "$275",
     period: "/mo",
-    savings: "Save $55+ every month",
+    savings: "Save $50+ every month",
     featured: false,
     perks: [
       "2 treatments per month (any ritual)",

@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 };
 
 const giftOptions = [
+  { name: "The Luxe Ritual", price: "$200" },
   { name: "The Classic Ritual", price: "$125" },
-  { name: "Revitalize & Restore", price: "$165" },
-  { name: "Nourish & Fortify", price: "$175" },
-  { name: "Gentleman's Recharge", price: "$95" },
+  { name: "Gentleman's Recharge", price: "$100" },
+  { name: "Blowout", price: "from $50" },
   { name: "Custom Amount", price: "from $50" },
 ];
 

@@ -81,7 +81,7 @@ async function main() {
 
 <h2>Persistent Flaking and Dryness</h2>
 <p>Flaking is one of the most misunderstood scalp signals. Most people reach for a dandruff shampoo, which may address surface symptoms but rarely resolves the underlying cause. Chronic flaking often reflects a compromised scalp barrier — the thin lipid layer that retains moisture and protects against irritation has been weakened, whether by harsh products, environmental exposure, hard water, or simply neglect.</p>
-<p>Restoring the scalp barrier requires hydration delivered at the right depth, not just on the surface. The <a href="/treatments/nourish-fortify">Nourish &amp; Fortify</a> treatment uses botanical masks and steam infusion to deliver moisture below the outermost layer, where it can actually support repair. The results are not just cosmetic — clients describe the sensation as the scalp finally being able to hold onto moisture rather than losing it within hours of washing.</p>
+<p>Restoring the scalp barrier requires hydration delivered at the right depth, not just on the surface. The <a href="/treatments/luxe-ritual">Luxe Ritual</a> uses botanical masks and steam infusion to deliver moisture below the outermost layer, where it can actually support repair. The results are not just cosmetic — clients describe the sensation as the scalp finally being able to hold onto moisture rather than losing it within hours of washing.</p>
 
 <h2>Tightness, Tenderness, and Tension</h2>
 <p>If your scalp feels tight — as though it is pulling, or tender when you press on certain spots — you are experiencing the muscular consequence of chronic stress. The galea aponeurotica, the flat tendon that stretches across the top of the skull, is surrounded by muscles that contract involuntarily during prolonged tension. Over time, this tightness restricts blood flow to the follicles above and contributes to both discomfort and diminished hair quality.</p>
@@ -89,7 +89,7 @@ async function main() {
 
 <h2>Shedding That Feels Unusual</h2>
 <p>Some shedding is entirely normal — the average scalp loses 50 to 100 hairs daily as part of the natural growth cycle. But when the volume increases noticeably, or when it persists beyond a few weeks, the scalp is telling you that something has disrupted that cycle. Common triggers include hormonal shifts (postpartum, thyroid, menopause), acute or chronic stress, nutritional deficiencies, and scalp inflammation.</p>
-<p>The <a href="/treatments/revitalize-restore">Revitalize &amp; Restore</a> treatment was designed specifically for this situation. High-frequency combing stimulates follicle activity, targeted serums support the anagen (growth) phase, and therapeutic massage improves the circulation that nourishes each follicle. It is not a cure — no honest practitioner would claim that — but it creates materially better conditions for recovery, and clients who commit to a series of sessions routinely report measurable improvement.</p>
+<p>The <a href="/treatments/luxe-ritual">Luxe Ritual</a> was designed specifically for this situation. Advanced scalp treatments stimulate follicle activity, targeted serums support the anagen (growth) phase, and therapeutic massage improves the circulation that nourishes each follicle. It is not a cure — no honest practitioner would claim that — but it creates materially better conditions for recovery, and clients who commit to a series of sessions routinely report measurable improvement.</p>
 
 <h2>Reading the Full Picture</h2>
 <p>No single symptom tells the whole story. The most useful thing you can do is pay attention to patterns — where symptoms appear, how long they persist, and whether they correlate with changes in your routine, your stress levels, or the seasons. When you bring that awareness to a professional scalp consultation, the assessment becomes significantly more precise, and the treatment that follows becomes significantly more effective.</p>
@@ -137,7 +137,7 @@ async function main() {
 <h2>After the Treatment</h2>
 <p>Most guests leave their appointment feeling noticeably lighter—both in the physical sensation of their scalp and in their overall state of mind. Hair typically feels softer, cleaner, and more manageable than usual. In the days that follow, many clients notice improved scalp texture, reduced irritation, and a visible improvement in the quality of their hair.</p>
 <p>Your specialist will share any personalized recommendations for home care to extend and support the effects of the treatment between sessions. These suggestions are practical and concise—not an attempt to sell you a shelf full of products, but a few targeted choices that can make a genuine difference.</p>
-<p>To see what a session actually looks like, our <a href="/treatments/classic-ritual">Classic Ritual</a> is where most guests start. If you already know you want to address something specific — <a href="/treatments/revitalize-restore">thinning</a>, <a href="/treatments/nourish-fortify">damage repair</a>, or <a href="/treatments/gentlemans-recharge">a focused men's session</a> — we have protocols built for each. <a href="/book">Book your appointment online</a> or explore our <a href="/faq">frequently asked questions</a> if you want to learn more first.</p>`,
+<p>To see what a session actually looks like, our <a href="/treatments/classic-ritual">Classic Ritual</a> is where most guests start. If you already know you want to address something specific — <a href="/treatments/luxe-ritual">our premium Luxe Ritual</a>, or <a href="/treatments/gentlemans-recharge">a focused men's session</a> — we have protocols built for each. <a href="/book">Book your appointment online</a> or explore our <a href="/faq">frequently asked questions</a> if you want to learn more first.</p>`,
         featuredImage:
           'https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80',
         featuredImageAlt: 'Head spa specialist performing a scalp treatment',
@@ -332,11 +332,11 @@ async function main() {
 <p>If any of these signs resonate with your current experience, a professional scalp assessment is a natural next step. At Lather, every appointment begins with exactly that—a thorough look at your scalp's condition, a conversation about your concerns and history, and a treatment plan built around what your scalp actually needs.</p>
 
 <blockquote>
-  <p>"After months of stress-related thinning, I tried the Revitalize &amp; Restore. Three sessions in and I can see and feel the difference. The environment is stunning, and the results are real."</p>
+  <p>"After months of stress-related thinning, I tried The Luxe Ritual. Three sessions in and I can see and feel the difference. The environment is stunning, and the results are real."</p>
   <footer>— Jennifer K., Greenville, NC</footer>
 </blockquote>
 
-<p>You do not need to wait until a problem becomes severe. If any of the above sounds familiar, our <a href="/scalp-concerns">scalp concerns guide</a> can help you match symptoms to the right treatment. For thinning or shedding specifically, the <a href="/treatments/revitalize-restore">Revitalize &amp; Restore</a> protocol is where we recommend starting. <a href="/book">book online</a> or <a href="/contact">reach out</a> — every appointment begins with a thorough assessment.</p>`,
+<p>You do not need to wait until a problem becomes severe. If any of the above sounds familiar, our <a href="/scalp-concerns">scalp concerns guide</a> can help you match symptoms to the right treatment. For thinning or shedding specifically, the <a href="/treatments/luxe-ritual">Luxe Ritual</a> protocol is where we recommend starting. <a href="/book">book online</a> or <a href="/contact">reach out</a> — every appointment begins with a thorough assessment.</p>`,
         featuredImage:
           'https://images.pexels.com/photos/3738339/pexels-photo-3738339.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80',
         featuredImageAlt: 'Specialist examining scalp condition under warm lighting',
@@ -452,10 +452,10 @@ async function main() {
       {
         clientName: 'Jennifer K.',
         testimonialText:
-          'After months of stress-related thinning, I tried the Revitalize & Restore. Three sessions in and I can see and feel the difference. The environment is stunning, and the results are real.',
+          'After months of stress-related thinning, I tried The Luxe Ritual. Three sessions in and I can see and feel the difference. The environment is stunning, and the results are real.',
         rating: 5,
         location: 'Greenville, NC',
-        serviceUsed: 'Revitalize & Restore',
+        serviceUsed: 'The Luxe Ritual',
         isFeatured: false,
       },
       {
@@ -473,7 +473,7 @@ async function main() {
           "Lather is not just a spa treatment—it's a ritual. Everything from the products to the ambiance tells you that this is different. This is what luxury actually feels like.",
         rating: 5,
         location: 'Greenville, NC',
-        serviceUsed: 'Nourish & Fortify',
+        serviceUsed: 'The Luxe Ritual',
         isFeatured: true,
       },
     ],

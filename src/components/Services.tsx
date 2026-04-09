@@ -5,10 +5,10 @@ import { services } from "@/lib/data";
 import Link from "next/link";
 
 const serviceImages: Record<string, string> = {
+  "luxe-ritual": "/media/services/service-tools.jpg",
   "classic-ritual": "/media/services/classic-ritual.jpg",
-  "revitalize-restore": "/media/services/service-tools.jpg",
-  "nourish-fortify": "/media/services/service-treatment.jpg",
   "gentlemans-recharge": "/media/services/service-detail.jpg",
+  "blowout": "/media/services/service-treatment.jpg",
 };
 
 const fallbackImage = "/media/services/service-closeup.jpg";

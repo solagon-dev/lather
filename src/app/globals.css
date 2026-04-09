@@ -966,7 +966,6 @@ body.reveal-active .stagger-children.is-visible > *:nth-child(8) { opacity: 1; t
     box-sizing: border-box !important;
   }
 
-  .admin-sidebar { display: none; }
   .admin-main { margin-left: 0 !important; }
   .admin-content { padding: 20px 16px !important; }
   .admin-form-grid-2 { grid-template-columns: 1fr !important; }

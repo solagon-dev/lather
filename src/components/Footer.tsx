@@ -13,10 +13,10 @@ const navLinks = [
 ];
 
 const serviceLinks = [
+  { label: "The Luxe Ritual", href: "/treatments/luxe-ritual" },
   { label: "The Classic Ritual", href: "/treatments/classic-ritual" },
-  { label: "Revitalize & Restore", href: "/treatments/revitalize-restore" },
-  { label: "Nourish & Fortify", href: "/treatments/nourish-fortify" },
   { label: "Gentleman's Recharge", href: "/treatments/gentlemans-recharge" },
+  { label: "Blowout", href: "/treatments/blowout" },
   { label: "Memberships", href: "/memberships" },
   { label: "Spa Parties", href: "/spa-parties" },
   { label: "Gift Cards", href: "/gift-cards" },

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logoutAction } from "../_actions/auth";
@@ -40,6 +41,18 @@ const nav = [
 
 export default function Sidebar({ email }: { email: string }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  // Close sidebar on navigation
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll when open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
 
   function isActive(href: string, exact?: boolean) {
     if (exact) return pathname === href;
@@ -47,41 +60,85 @@ export default function Sidebar({ email }: { email: string }) {
   }
 
   return (
-    <aside className="admin-sidebar">
-      <div className="admin-sidebar-brand">
-        <Link href="/admin" className="admin-sidebar-brand-name">
-          Lather
-        </Link>
-        <span className="admin-sidebar-brand-sub">Admin Dashboard</span>
-      </div>
+    <>
+      {/* Mobile hamburger button — visible only on small screens */}
+      <button
+        className="admin-mobile-menu-btn"
+        onClick={() => setOpen(!open)}
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+      >
+        <div style={{ width: "20px", height: "14px", position: "relative" }}>
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              style={{
+                position: "absolute",
+                left: 0,
+                width: "100%",
+                height: "1.5px",
+                background: open ? "#F4F1EC" : "#3D2E22",
+                borderRadius: "1px",
+                top: i === 0 ? 0 : i === 1 ? "50%" : "100%",
+                transform: open
+                  ? i === 0 ? "translateY(7px) rotate(45deg)"
+                  : i === 2 ? "translateY(-7px) rotate(-45deg)"
+                  : "scaleX(0)"
+                : i === 1 ? "translateY(-50%)" : "none",
+                transition: "transform 0.3s ease, opacity 0.2s ease, background 0.2s ease",
+                opacity: open && i === 1 ? 0 : 1,
+                transformOrigin: "center",
+              }}
+            />
+          ))}
+        </div>
+      </button>
 
-      <nav className="admin-sidebar-nav">
-        {nav.map((group) => (
-          <div key={group.section} className="admin-sidebar-section">
-            <span className="admin-sidebar-section-label">{group.section}</span>
-            {group.items.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`admin-nav-link ${isActive(item.href, item.exact) ? "active" : ""}`}
-              >
-                <span className="admin-nav-icon">{item.icon}</span>
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        ))}
-      </nav>
+      {/* Backdrop overlay */}
+      {open && (
+        <div
+          className="admin-mobile-backdrop"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-      <div className="admin-sidebar-footer">
-        <p className="admin-sidebar-user">{email}</p>
-        <form action={logoutAction}>
-          <button type="submit" className="admin-nav-link" style={{ width: "100%", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
-            <span className="admin-nav-icon">⏻</span>
-            Sign Out
-          </button>
-        </form>
-      </div>
-    </aside>
+      {/* Sidebar — always rendered, slides in on mobile */}
+      <aside className={`admin-sidebar ${open ? "admin-sidebar-open" : ""}`}>
+        <div className="admin-sidebar-brand">
+          <Link href="/admin" className="admin-sidebar-brand-name">
+            Lather
+          </Link>
+          <span className="admin-sidebar-brand-sub">Admin Dashboard</span>
+        </div>
+
+        <nav className="admin-sidebar-nav">
+          {nav.map((group) => (
+            <div key={group.section} className="admin-sidebar-section">
+              <span className="admin-sidebar-section-label">{group.section}</span>
+              {group.items.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`admin-nav-link ${isActive(item.href, item.exact) ? "active" : ""}`}
+                >
+                  <span className="admin-nav-icon">{item.icon}</span>
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          ))}
+        </nav>
+
+        <div className="admin-sidebar-footer">
+          <p className="admin-sidebar-user">{email}</p>
+          <form action={logoutAction}>
+            <button type="submit" className="admin-nav-link" style={{ width: "100%", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
+              <span className="admin-nav-icon">⏻</span>
+              Sign Out
+            </button>
+          </form>
+        </div>
+      </aside>
+    </>
   );
 }

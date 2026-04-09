@@ -4,16 +4,17 @@ import Link from "next/link";
 import { services } from "@/lib/data";
 
 const treatmentImages: Record<string, string> = {
+  "luxe-ritual": "/media/treatments/nourish-fortify.jpg",
   "classic-ritual": "/media/treatments/classic-ritual.jpg",
-  "revitalize-restore": "/media/treatments/revitalize-restore.jpg",
-  "nourish-fortify": "/media/treatments/treatments-hero.jpg",
-  "gentlemans-recharge": "/media/treatments/treatment-fallback.jpg",
+  "gentlemans-recharge": "/media/treatments/gentlemans-card.jpg",
+  "blowout": "/media/treatments/revitalize-restore.jpg",
 };
 
 const tierLabels: Record<string, string> = {
   foundation: "Foundation",
   specialized: "Specialized",
   premium: "Premium",
+  express: "Express",
 };
 
 export default function TreatmentCards() {

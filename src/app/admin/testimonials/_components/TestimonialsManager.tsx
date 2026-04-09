@@ -20,10 +20,10 @@ interface Testimonial {
 }
 
 const SERVICES = [
+  "The Luxe Ritual",
   "The Classic Ritual",
-  "Revitalize & Restore",
-  "Nourish & Fortify",
   "Gentleman's Recharge",
+  "Blowout",
 ];
 
 function TestimonialForm({

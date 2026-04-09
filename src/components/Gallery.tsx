@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 
 const images = [
@@ -41,6 +41,12 @@ const images = [
     caption: "Crystal Detail",
   },
   {
+    src: "/media/gallery/treatment-waterfall.jpg",
+    alt: "Water cascading through gold arch onto hair with flower — luxury head spa treatment",
+    focal: "center 40%",
+    caption: "The Waterfall",
+  },
+  {
     src: "/media/gallery/interior-lamp-brass.jpg",
     alt: "Crystal and brass lamp base on marble — luxury interior detail",
     focal: "center center",
@@ -52,8 +58,6 @@ export default function Gallery() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragState = useRef({ startX: 0, scrollLeft: 0 });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 769);
@@ -62,24 +66,40 @@ export default function Gallery() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  /* ── Drag-to-scroll for desktop track ── */
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    const track = trackRef.current;
-    if (!track) return;
-    setIsDragging(true);
-    dragState.current = { startX: e.clientX, scrollLeft: track.scrollLeft };
-    track.setPointerCapture(e.pointerId);
-  }, []);
+  /* ── Scroll-linked horizontal translation (desktop) ── */
+  useEffect(() => {
+    if (isMobile) return;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
 
-  const onPointerMove = useCallback((e: React.PointerEvent) => {
-    if (!isDragging) return;
+    const section = sectionRef.current;
     const track = trackRef.current;
-    if (!track) return;
-    const dx = e.clientX - dragState.current.startX;
-    track.scrollLeft = dragState.current.scrollLeft - dx;
-  }, [isDragging]);
+    if (!section || !track) return;
 
-  const onPointerUp = useCallback(() => setIsDragging(false), []);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const rect = section.getBoundingClientRect();
+        const scrollable = section.offsetHeight - window.innerHeight;
+        if (scrollable <= 0) { ticking = false; return; }
+
+        const scrolled = Math.max(0, -rect.top);
+        const progress = Math.min(scrolled / scrollable, 1);
+
+        // Translate the track horizontally based on scroll progress
+        const trackWidth = track.scrollWidth - track.parentElement!.offsetWidth;
+        track.style.transform = `translateX(${-progress * trackWidth}px)`;
+
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // initial position
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isMobile]);
 
   /* ── Mobile: editorial swipe gallery ── */
   if (isMobile) {
@@ -92,7 +112,6 @@ export default function Gallery() {
           paddingBottom: "clamp(56px, 8.5vw, 100px)",
         }}
       >
-        {/* Header */}
         <div style={{ padding: "0 24px", marginBottom: "clamp(28px, 5vw, 40px)" }}>
           <p
             style={{
@@ -124,7 +143,6 @@ export default function Gallery() {
           </h2>
         </div>
 
-        {/* Horizontal swipe strip — full-bleed, snaps to each image */}
         <div
           style={{
             overflowX: "auto",
@@ -150,13 +168,7 @@ export default function Gallery() {
                 position: "relative",
               }}
             >
-              <div
-                style={{
-                  overflow: "hidden",
-                  aspectRatio: "3 / 4",
-                  background: "var(--linen)",
-                }}
-              >
+              <div style={{ overflow: "hidden", aspectRatio: "3 / 4", background: "var(--linen)" }}>
                 <img
                   src={image.src}
                   alt={image.alt}
@@ -170,7 +182,6 @@ export default function Gallery() {
                   }}
                 />
               </div>
-              {/* Caption */}
               <p
                 style={{
                   fontFamily: "var(--font-body)",
@@ -188,7 +199,6 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Footer link */}
         <div style={{ padding: "0 24px", marginTop: "clamp(28px, 5vw, 40px)" }}>
           <Link
             href="/contact"
@@ -210,134 +220,133 @@ export default function Gallery() {
           </Link>
         </div>
 
-        <style>{`
-          section ::-webkit-scrollbar { display: none; }
-        `}</style>
+        <style>{`section ::-webkit-scrollbar { display: none; }`}</style>
       </section>
     );
   }
 
-  /* ── Desktop: elegant horizontal film-strip gallery ── */
+  /* ── Desktop: scroll-linked horizontal gallery ── */
   return (
     <section
       ref={sectionRef}
-      className="reveal-section reveal-lift"
       style={{
-        background: "var(--cream)",
+        height: "200vh",
         position: "relative",
-        overflow: "hidden",
+        background: "var(--cream)",
       }}
     >
-      {/* Header */}
+      {/* Sticky viewport — pins while the page scrolls */}
       <div
         style={{
-          padding: "clamp(80px, 10vw, 140px) clamp(20px, 4vw, 48px) clamp(32px, 4vw, 56px)",
-          maxWidth: "1400px",
-          margin: "0 auto",
-        }}
-      >
-        <GalleryHeader />
-      </div>
-
-      {/* Horizontal scrolling track */}
-      <div
-        ref={trackRef}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
-        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflow: "hidden",
           display: "flex",
-          gap: "clamp(14px, 1.5vw, 24px)",
-          overflowX: "auto",
-          overflowY: "hidden",
-          paddingLeft: "clamp(20px, 4vw, 48px)",
-          paddingRight: "clamp(20px, 4vw, 48px)",
-          paddingBottom: "clamp(80px, 10vw, 140px)",
-          cursor: isDragging ? "grabbing" : "grab",
-          scrollbarWidth: "none",
-          WebkitOverflowScrolling: "touch",
-          userSelect: "none",
+          flexDirection: "column",
         }}
       >
-        {images.map((image, i) => {
-          const heights = ["72vh", "56vh", "68vh", "60vh", "72vh", "54vh", "64vh"];
-          const widths = ["28vw", "22vw", "26vw", "30vw", "24vw", "20vw", "26vw"];
+        {/* Header */}
+        <div
+          style={{
+            padding: "clamp(80px, 10vw, 120px) clamp(20px, 4vw, 48px) clamp(24px, 3vw, 40px)",
+            maxWidth: "1400px",
+            width: "100%",
+            margin: "0 auto",
+          }}
+        >
+          <GalleryHeader />
+        </div>
 
-          return (
-            <div
-              key={i}
-              style={{
-                flex: "0 0 auto",
-                width: `clamp(260px, ${widths[i]}, 440px)`,
-                height: `clamp(320px, ${heights[i]}, 620px)`,
-                overflow: "hidden",
-                position: "relative",
-                marginTop: i % 2 === 1 ? "clamp(40px, 5vw, 80px)" : "0",
-              }}
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                loading={i < 3 ? "eager" : "lazy"}
-                draggable={false}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: image.focal,
-                  display: "block",
-                  transition: "transform 1.2s var(--ease-luxury)",
-                  pointerEvents: "none",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-              />
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "linear-gradient(to top, rgba(61,46,34,0.15) 0%, transparent 40%)",
-                  pointerEvents: "none",
-                }}
-              />
-            </div>
-          );
-        })}
+        {/* Image track — translated by scroll */}
+        <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+          <div
+            ref={trackRef}
+            style={{
+              display: "flex",
+              gap: "clamp(14px, 1.5vw, 24px)",
+              alignItems: "stretch",
+              height: "100%",
+              paddingLeft: "clamp(20px, 4vw, 48px)",
+              paddingRight: "15vw",
+              willChange: "transform",
+            }}
+          >
+            {images.map((image, i) => {
+              const heights = ["100%", "75%", "92%", "80%", "100%", "70%", "88%"];
+
+              return (
+                <div
+                  key={i}
+                  style={{
+                    flex: "0 0 auto",
+                    width: "clamp(280px, 26vw, 420px)",
+                    height: heights[i],
+                    overflow: "hidden",
+                    position: "relative",
+                    alignSelf: i % 2 === 1 ? "flex-end" : "flex-start",
+                  }}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading={i < 3 ? "eager" : "lazy"}
+                    draggable={false}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: image.focal,
+                      display: "block",
+                      transition: "transform 1.2s var(--ease-luxury)",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  />
+                  {/* Subtle vignette */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(to top, rgba(61,46,34,0.15) 0%, transparent 40%)",
+                      pointerEvents: "none",
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Fade edges */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              right: 0,
+              width: "clamp(80px, 10vw, 160px)",
+              background: "linear-gradient(to left, var(--cream), transparent)",
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
+          />
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              width: "clamp(20px, 3vw, 48px)",
+              background: "linear-gradient(to right, var(--cream), transparent)",
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
+          />
+        </div>
       </div>
-
-      {/* Fade edges */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          right: 0,
-          width: "clamp(60px, 8vw, 140px)",
-          background: "linear-gradient(to left, var(--cream), transparent)",
-          pointerEvents: "none",
-          zIndex: 2,
-        }}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: "clamp(20px, 3vw, 48px)",
-          background: "linear-gradient(to right, var(--cream), transparent)",
-          pointerEvents: "none",
-          zIndex: 2,
-        }}
-      />
-
-      <style>{`
-        section ::-webkit-scrollbar { display: none; }
-      `}</style>
     </section>
   );
 }

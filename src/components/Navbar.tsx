@@ -61,7 +61,6 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
-  const isHome = pathname === "/";
   const darkHero = hasDarkHero(pathname);
 
   useEffect(() => {
@@ -84,7 +83,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { label: "About", href: isHome ? "#about" : "/about" },
+    { label: "About", href: "/about" },
     { label: "Journal", href: "/journal" },
     { label: "Contact", href: "/contact" },
   ];
@@ -151,25 +150,14 @@ export default function Navbar() {
             onMouseEnter={openDropdown}
             onMouseLeave={closeDropdown}
           >
-            {isHome ? (
-              <a
-                href="#services"
-                style={{ ...navLinkStyle, position: "relative", cursor: "pointer" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = textHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
-              >
-                Treatments
-              </a>
-            ) : (
-              <Link
-                href="/treatments"
-                style={navLinkStyle}
-                onMouseEnter={(e) => (e.currentTarget.style.color = textHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
-              >
-                Treatments
-              </Link>
-            )}
+            <Link
+              href="/treatments"
+              style={navLinkStyle}
+              onMouseEnter={(e) => (e.currentTarget.style.color = textHover)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
+            >
+              Treatments
+            </Link>
 
             <div
               style={{
@@ -229,29 +217,17 @@ export default function Navbar() {
             </div>
           </div>
 
-          {navLinks.map((link) =>
-            link.href.startsWith("#") ? (
-              <a
-                key={link.label}
-                href={link.href}
-                style={navLinkStyle}
-                onMouseEnter={(e) => (e.currentTarget.style.color = textHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
-              >
-                {link.label}
-              </a>
-            ) : (
-              <Link
-                key={link.label}
-                href={link.href}
-                style={navLinkStyle}
-                onMouseEnter={(e) => (e.currentTarget.style.color = textHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
-              >
-                {link.label}
-              </Link>
-            )
-          )}
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              style={navLinkStyle}
+              onMouseEnter={(e) => (e.currentTarget.style.color = textHover)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = textColor)}
+            >
+              {link.label}
+            </Link>
+          ))}
 
           <Link
             href="/book"

@@ -1354,7 +1354,7 @@ export default function SeoLandingPage({ serviceKey, citySlug }: SeoLandingPageP
               All Services
             </Link>
             <Link
-              href="/blog"
+              href="/journal"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.58rem",

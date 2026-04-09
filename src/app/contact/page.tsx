@@ -638,7 +638,7 @@ export default function ContactPage() {
             >
               Lather Head Spa is rooted in eastern North Carolina, serving
               Greenville and the surrounding communities of Winterville, Ayden,
-              Kinston, Washington, and beyond. We are easy to find and worth the
+              Grimesland, Washington, and beyond. We are easy to find and worth the
               drive.
             </p>
             <p

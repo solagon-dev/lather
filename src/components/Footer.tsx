@@ -27,7 +27,7 @@ const locationLinks = [
   { label: "Greenville, NC", href: "/locations/greenville-head-spa" },
   { label: "Winterville, NC", href: "/locations/winterville-head-spa" },
   { label: "Ayden, NC", href: "/locations/ayden-head-spa" },
-  { label: "Kinston, NC", href: "/locations/kinston-head-spa" },
+  { label: "Grimesland, NC", href: "/locations/grimesland-head-spa" },
   { label: "Washington, NC", href: "/locations/washington-nc-head-spa" },
   { label: "All Locations →", href: "/locations" },
 ];

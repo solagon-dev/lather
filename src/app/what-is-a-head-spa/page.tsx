@@ -310,16 +310,16 @@ export default function WhatIsAHeadSpaPage() {
         className="values-grid"
       >
         {[
-          { src: "/media/pages/faq-hero.jpg", alt: "Client relaxed and smiling after treatment" },
-          { src: "/media/pages/faq-detail-01.jpg", alt: "Scalp treatment tools on marble" },
-          { src: "/media/team/heidi-griggs.jpg", alt: "Therapist performing scalp treatment" },
+          { src: "/media/pages/faq-hero.jpg", alt: "Client relaxed and smiling after treatment", focal: "center 25%" },
+          { src: "/media/pages/faq-detail-01.jpg", alt: "Scalp treatment tools on marble", focal: "center center" },
+          { src: "/media/team/heidi-griggs.jpg", alt: "Therapist performing scalp treatment", focal: "center 22%" },
         ].map((img) => (
           <div key={img.src} style={{ overflow: "hidden", height: "clamp(200px, 25vw, 320px)" }}>
             <img
               src={img.src}
               alt={img.alt}
               loading="lazy"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: img.focal, display: "block" }}
             />
           </div>
         ))}

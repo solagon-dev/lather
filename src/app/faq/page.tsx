@@ -105,12 +105,12 @@ export default function FAQPage() {
       {/* ── EDITORIAL IMAGE BREAK ────────────────────────── */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", background: "rgba(140,123,107,0.06)" }} className="values-grid">
         {[
-          { src: "/media/pages/faq-hero.jpg", alt: "Client relaxed in the treatment chair" },
-          { src: "/media/pages/faq-detail-01.jpg", alt: "Treatment tools on marble dish" },
-          { src: "/media/pages/faq-detail-02.jpg", alt: "Natulique products arranged on marble" },
+          { src: "/media/pages/faq-hero.jpg", alt: "Client relaxed in the treatment chair", focal: "center 25%" },
+          { src: "/media/pages/faq-detail-01.jpg", alt: "Treatment tools on marble dish", focal: "center center" },
+          { src: "/media/pages/faq-detail-02.jpg", alt: "Natulique products arranged on marble", focal: "center center" },
         ].map((img) => (
           <div key={img.src} style={{ overflow: "hidden", height: "clamp(140px, 16vw, 220px)" }}>
-            <img src={img.src} alt={img.alt} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <img src={img.src} alt={img.alt} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: img.focal, display: "block" }} />
           </div>
         ))}
       </div>

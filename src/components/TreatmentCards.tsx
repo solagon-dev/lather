@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { services } from "@/lib/data";
 
-const treatmentImages: Record<string, string> = {
-  "luxe-ritual": "/media/treatments/nourish-fortify.jpg",
-  "classic-ritual": "/media/treatments/classic-ritual.jpg",
-  "gentlemans-recharge": "/media/treatments/gentlemans-card.jpg",
-  "blowout": "/media/treatments/revitalize-restore.jpg",
+const treatmentImages: Record<string, { src: string; focal: string }> = {
+  "luxe-ritual": { src: "/media/treatments/nourish-fortify.jpg", focal: "center 40%" },
+  "classic-ritual": { src: "/media/treatments/classic-ritual.jpg", focal: "center 60%" },
+  "gentlemans-recharge": { src: "/media/treatments/gentlemans-card.jpg", focal: "center 45%" },
+  "blowout": { src: "/media/treatments/blowout-card.jpg", focal: "center 30%" },
 };
 
 const tierLabels: Record<string, string> = {
@@ -120,13 +120,14 @@ export default function TreatmentCards() {
                 }}
               >
                 <img
-                  src={treatmentImages[service.id] || "/media/treatments/treatment-fallback.jpg"}
+                  src={treatmentImages[service.id]?.src || "/media/treatments/treatment-fallback.jpg"}
                   alt={`${service.name} at Lather Head Spa`}
                   loading="lazy"
                   style={{
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
+                    objectPosition: treatmentImages[service.id]?.focal || "center center",
                     display: "block",
                     transition: "transform 1.2s var(--ease-luxury)",
                   }}

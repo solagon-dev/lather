@@ -223,7 +223,7 @@ export default function About() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                objectPosition: "center 20%",
+                objectPosition: "center 35%",
                 display: "block",
               }}
             />
@@ -237,6 +237,7 @@ export default function About() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+                objectPosition: "center 30%",
                 display: "block",
               }}
             />

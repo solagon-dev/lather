@@ -73,6 +73,7 @@ export default function SecondaryConversions() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
+                    objectPosition: "center 35%",
                     display: "block",
                   }}
                 />

@@ -233,22 +233,22 @@ export const locations: LocationData[] = [
     testimonialIndex: 1,
   },
   {
-    slug: "kinston-head-spa",
-    city: "Kinston",
+    slug: "grimesland-head-spa",
+    city: "Grimesland",
     state: "NC",
-    metaTitle: "Head Spa Near Kinston NC | Lather Head Spa Greenville",
+    metaTitle: "Head Spa Near Grimesland NC | Lather Head Spa Greenville",
     metaDescription:
-      "Kinston NC residents are about 38 minutes from Lather Head Spa in Greenville — luxury Japanese-inspired scalp treatments for hair health and deep relaxation.",
-    driveTime: "about 38 minutes",
-    distanceMiles: 33,
-    heroHeadline: "Luxury Head Spa Near Kinston, NC",
+      "Grimesland NC residents are just 10 minutes from Lather Head Spa in Greenville — luxury Japanese-inspired scalp treatments for hair health and deep relaxation.",
+    driveTime: "about 10 minutes",
+    distanceMiles: 8,
+    heroHeadline: "Luxury Head Spa Near Grimesland, NC",
     heroSub:
-      "Kinston's culinary and creative renaissance has made it a destination in its own right — and its residents who drive to Lather Head Spa in Greenville are adding a new dimension of wellness to their lives.",
-    introTitle: "Kinston Residents Discover Greenville's Luxury Head Spa",
+      "Just minutes from Grimesland, Lather Head Spa in Greenville offers a Japanese-inspired sanctuary for scalp health and genuine relaxation. Your ritual is closer than you think.",
+    introTitle: "Grimesland's Nearest Luxury Head Spa",
     introBody: [
-      "Kinston has had an extraordinary decade — the culinary scene, the arts, the renewed sense of civic pride. The city's residents have developed a refined appetite for quality, and that appetite extends naturally to how they care for themselves. Lather Head Spa in Greenville, just thirty-three miles away, offers a level of personal care that fits right in with Kinston's elevated sensibility.",
+      "Living in Grimesland means you're closer to Lather Head Spa than almost anyone else in the region. Just eight miles down the road in Greenville, our studio offers a level of personal care that transforms how you think about scalp health and self-care.",
       "The head spa experience at Lather isn't a trend — it's a genuine wellness practice with decades of refinement behind it. Rooted in Japanese head spa traditions, our treatment protocol addresses the scalp as the living foundation of your hair. Buildup from styling products and hard water, reduced circulation from stress, and follicle congestion are all addressed through a carefully sequenced combination of professional cleansing, treatment, and extended massage.",
-      "Kinston guests who've made Lather part of their routine often describe it as one of the few experiences that feels entirely restorative — not just a nice treat, but something their scalp and their mind genuinely needed. At thirty-eight minutes from Kinston, the drive is short enough to be practical and just long enough to help you arrive in the right headspace.",
+      "Grimesland guests who've made Lather part of their routine describe it as one of the few experiences that feels entirely restorative — not just a nice treat, but something their scalp and their mind genuinely needed. At just ten minutes away, it's easy to make it part of your regular self-care.",
     ],
     whyVisit: [
       {
@@ -256,16 +256,16 @@ export const locations: LocationData[] = [
         body: "Lather's approach to scalp care is methodical and informed. We don't offer a single-size service — every treatment is tailored based on a professional scalp assessment conducted at the start of your visit. What you receive is care that's specific to your scalp, your hair, and your needs that day.",
       },
       {
-        title: "Built for People Who Value Quality",
-        body: "Kinston residents have shown they know the difference between something good and something exceptional. Lather is built for exactly that discernment. The environment, the techniques, the products, and the level of attention you receive are all chosen with the same intention: to deliver the finest head spa experience in eastern North Carolina.",
+        title: "Just Minutes Away",
+        body: "At only eight miles from Grimesland, Lather is practically in your neighborhood. No long highway drives, no complicated directions — just a quick trip to Greenville and you're in the chair. It's close enough to fit into a lunch break or an afternoon errand run.",
       },
       {
         title: "Recovery for Your Hair and Your Mind",
-        body: "The benefits of a head spa session are twofold. Your scalp emerges cleaner, better nourished, and in improved health. And your nervous system — eased by prolonged, skilled massage — emerges quieter. That combination is rare in any single treatment, and it's exactly what guests from Kinston come back for.",
+        body: "The benefits of a head spa session are twofold. Your scalp emerges cleaner, better nourished, and in improved health. And your nervous system — eased by prolonged, skilled massage — emerges quieter. That combination is rare in any single treatment, and it's exactly what guests from Grimesland come back for.",
       },
     ],
     directionsText:
-      "The drive from Kinston to Lather Head Spa in Greenville is approximately thirty-eight minutes, heading east on US-70 through familiar eastern Carolina terrain. It's an easy, comfortable drive — and one that more and more Kinston residents are building into their monthly calendars. The highway is direct, the route is simple, and the experience waiting at the other end makes the trip feel effortless.",
+      "The drive from Grimesland to Lather Head Spa in Greenville is approximately ten minutes, heading west on NC-33 into Greenville. It's one of the shortest drives to our studio from any surrounding community — easy, direct, and effortless.",
     testimonialIndex: 2,
   },
   {

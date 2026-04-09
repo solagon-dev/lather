@@ -74,25 +74,38 @@ a:focus-visible {
   color: var(--bark);
 }
 
-/* Skip to content link */
+/* Skip to content link — only visible on keyboard focus */
 .skip-to-content {
   position: absolute;
-  top: -100%;
-  left: 16px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
   z-index: 9999;
   background: var(--bark);
   color: var(--cream);
-  padding: 12px 24px;
   font-family: var(--font-body);
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: top 0.2s ease;
 }
 
 .skip-to-content:focus {
+  position: fixed;
   top: 16px;
+  left: 16px;
+  width: auto;
+  height: auto;
+  padding: 12px 24px;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
 }
 
 /* Smooth image loading */
@@ -945,6 +958,98 @@ body.reveal-active .stagger-children.is-visible > *:nth-child(8) { opacity: 1; t
   .contact-expect-step {
     padding: 1.25rem !important;
     background: var(--cream) !important;
+  }
+
+  /* ── Location Pages: mobile hero ── */
+  .loc-hero {
+    min-height: auto !important;
+    justify-content: flex-start !important;
+    padding-top: 110px !important;
+    padding-bottom: 40px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .loc-breadcrumb {
+    display: none !important;
+  }
+  .loc-hero-title {
+    font-size: clamp(2rem, 8vw, 2.6rem) !important;
+    max-width: 100% !important;
+  }
+  .loc-hero-sub {
+    display: none !important;
+  }
+  .loc-hero-ctas {
+    flex-direction: column !important;
+    margin-top: 1.75rem !important;
+    gap: 0.65rem !important;
+  }
+  .loc-cta-primary {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    padding: 16px 24px !important;
+    font-size: 0.58rem !important;
+  }
+  .loc-cta-secondary {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    padding: 14px 24px !important;
+    font-size: 0.56rem !important;
+    border-color: rgba(237,230,219,0.2) !important;
+    color: rgba(237,230,219,0.55) !important;
+  }
+  .loc-distance-bar {
+    padding: 16px 24px !important;
+  }
+  .loc-distance-items {
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+  .loc-intro-grid {
+    gap: 0 !important;
+  }
+  .loc-intro-copy {
+    padding-top: 0 !important;
+  }
+  .loc-intro-copy p {
+    font-size: 0.9rem !important;
+    line-height: 1.8 !important;
+  }
+  .loc-section-headline {
+    font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
+  }
+  .loc-services-grid {
+    grid-template-columns: 1fr !important;
+    background: transparent !important;
+    gap: 0 !important;
+  }
+  .loc-service-card {
+    padding: 1.25rem 0 !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(140,123,107,0.1) !important;
+  }
+  .loc-service-card:last-child {
+    border-bottom: none !important;
+  }
+  .loc-directions-grid {
+    gap: 0 !important;
+  }
+  .loc-directions-copy {
+    padding-top: 0 !important;
+  }
+  .loc-directions-copy p {
+    font-size: 0.9rem !important;
+  }
+  .loc-cta-headline {
+    font-size: clamp(2.2rem, 8vw, 3rem) !important;
+  }
+  .loc-final-ctas {
+    flex-direction: column !important;
+    align-items: stretch !important;
   }
 
   /* ── Booking Page: mobile refinement ── */

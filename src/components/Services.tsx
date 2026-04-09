@@ -4,11 +4,11 @@ import { useState } from "react";
 import { services } from "@/lib/data";
 import Link from "next/link";
 
-const serviceImages: Record<string, string> = {
-  "luxe-ritual": "/media/services/service-tools.jpg",
-  "classic-ritual": "/media/services/classic-ritual.jpg",
-  "gentlemans-recharge": "/media/services/service-detail.jpg",
-  "blowout": "/media/services/service-treatment.jpg",
+const serviceImages: Record<string, { src: string; focal: string }> = {
+  "luxe-ritual": { src: "/media/services/service-tools.jpg", focal: "center 35%" },
+  "classic-ritual": { src: "/media/services/classic-ritual.jpg", focal: "center 55%" },
+  "gentlemans-recharge": { src: "/media/services/service-detail.jpg", focal: "center 35%" },
+  "blowout": { src: "/media/services/service-treatment.jpg", focal: "center center" },
 };
 
 const fallbackImage = "/media/services/service-closeup.jpg";
@@ -132,7 +132,9 @@ function ServiceRow({
   index: number;
 }) {
   const [hovered, setHovered] = useState(false);
-  const imageSrc = serviceImages[service.id] ?? fallbackImage;
+  const imageData = serviceImages[service.id];
+  const imageSrc = imageData?.src ?? fallbackImage;
+  const imageFocal = imageData?.focal ?? "center center";
 
   return (
     <div
@@ -417,6 +419,7 @@ function ServiceRow({
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition: imageFocal,
             display: "block",
             transition: "transform 0.9s var(--ease-luxury), opacity 0.4s ease",
             opacity: hovered ? 1 : 0.82,

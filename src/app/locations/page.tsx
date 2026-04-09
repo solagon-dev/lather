@@ -15,7 +15,7 @@ const nearbyLocations = [
   { city: "Winterville", label: "Winterville, NC", slug: "winterville-head-spa", note: "~10 min · 5 miles" },
   { city: "Ayden", label: "Ayden, NC", slug: "ayden-head-spa", note: "~18 min · 13 miles" },
   { city: "Farmville", label: "Farmville, NC", slug: "farmville-head-spa", note: "~22 min · 18 miles" },
-  { city: "Kinston", label: "Kinston, NC", slug: "kinston-head-spa", note: "~38 min · 33 miles" },
+  { city: "Grimesland", label: "Grimesland, NC", slug: "grimesland-head-spa", note: "~10 min · 8 miles" },
   { city: "Washington", label: "Washington, NC", slug: "washington-nc-head-spa", note: "~40 min · 35 miles" },
   { city: "Wilson", label: "Wilson, NC", slug: "wilson-head-spa", note: "~55 min · 47 miles" },
   { city: "New Bern", label: "New Bern, NC", slug: "new-bern-head-spa", note: "~55 min · 47 miles" },

@@ -21,6 +21,7 @@ const concerns = [
     href: "/treatments/classic-ritual",
     addon: "Scalp Analysis (+$25)",
     image: "/media/scalp-concerns/buildup-oily.jpg",
+    focal: "center 35%",
   },
   {
     title: "Dry, Flaky, or Irritated Scalp",
@@ -32,6 +33,7 @@ const concerns = [
     href: "/treatments/luxe-ritual",
     addon: "Hot Towel Compression (+$15)",
     image: "/media/scalp-concerns/dryness-flaking.jpg",
+    focal: "center center",
   },
   {
     title: "Thinning or Hair Loss",
@@ -43,6 +45,7 @@ const concerns = [
     href: "/treatments/classic-ritual",
     addon: "LED Light Therapy (+$35)",
     image: "/media/scalp-concerns/damage-repair.jpg",
+    focal: "center 30%",
   },
   {
     title: "Product Buildup",
@@ -54,6 +57,7 @@ const concerns = [
     href: "/treatments/classic-ritual",
     addon: "Scalp Analysis (+$25)",
     image: "/media/scalp-concerns/thinning-loss.jpg",
+    focal: "center center",
   },
   {
     title: "Stress & Tension",
@@ -65,6 +69,7 @@ const concerns = [
     href: "/treatments/gentlemans-recharge",
     addon: "Extended Massage (+$30)",
     image: "/media/scalp-concerns/tension-stress.jpg",
+    focal: "center center",
   },
   {
     title: "Damaged or Color-Treated Hair",
@@ -76,6 +81,7 @@ const concerns = [
     href: "/treatments/luxe-ritual",
     addon: "Aromatherapy Enhancement (+$20)",
     image: "/media/scalp-concerns/sensitivity.jpg",
+    focal: "center 40%",
   },
 ];
 
@@ -153,7 +159,7 @@ export default function ScalpConcernsPage() {
               >
                 {/* Image */}
                 <div style={{ overflow: "hidden", height: "clamp(180px, 18vw, 240px)" }}>
-                  <img src={concern.image} alt={concern.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 35%", display: "block" }} />
+                  <img src={concern.image} alt={concern.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: concern.focal, display: "block" }} />
                 </div>
                 {/* Content */}
                 <div style={{ padding: "clamp(1.5rem, 2.5vw, 2rem)", flex: 1, display: "flex", flexDirection: "column" }}>
@@ -214,7 +220,7 @@ export default function ScalpConcernsPage() {
             >
               {/* Small image thumbnail */}
               <div style={{ width: "clamp(80px, 10vw, 120px)", height: "clamp(80px, 10vw, 120px)", overflow: "hidden", flexShrink: 0 }}>
-                <img src={concern.image} alt={concern.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 35%", display: "block" }} />
+                <img src={concern.image} alt={concern.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: concern.focal, display: "block" }} />
               </div>
 
               {/* Text */}

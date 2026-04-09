@@ -5,7 +5,7 @@ const BASE = "https://www.latherspas.com";
 
 const seoCities = [
   "greenville-nc", "winterville-nc", "ayden-nc", "farmville-nc",
-  "washington-nc", "new-bern-nc", "kinston-nc", "wilson-nc",
+  "washington-nc", "new-bern-nc", "grimesland-nc", "wilson-nc",
   "rocky-mount-nc", "tarboro-nc", "goldsboro-nc", "morehead-city-nc",
   "jacksonville-nc",
 ];
@@ -13,7 +13,7 @@ const seoCities = [
 const locationSlugs = [
   "greenville-head-spa", "winterville-head-spa", "ayden-head-spa",
   "farmville-head-spa", "washington-nc-head-spa", "new-bern-head-spa",
-  "kinston-head-spa", "wilson-head-spa", "rocky-mount-head-spa",
+  "grimesland-head-spa", "wilson-head-spa", "rocky-mount-head-spa",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -93,7 +93,7 @@ export default function EditorialBreak() {
           width: "100%",
           height: "120%",
           objectFit: "cover",
-          objectPosition: "center 40%",
+          objectPosition: "center 25%",
           display: "block",
           transformOrigin: "center center",
           transform: "scale(1.1)",

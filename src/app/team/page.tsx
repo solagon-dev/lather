@@ -14,11 +14,13 @@ export const metadata: Metadata = {
 const teamMembers = [
   {
     image: "/media/team/madison-hoffschneider.jpg",
+    focal: "center 18%",
     role: "Founder & Lead Therapist",
     bio: "With years of experience in scalp health and wellness, our founder built Lather to bring the Japanese head spa tradition to eastern North Carolina. Every protocol, product, and detail reflects a commitment to results-driven care in a genuinely calming environment.",
   },
   {
     image: "/media/team/heidi-griggs.jpg",
+    focal: "center 25%",
     role: "Scalp Therapist",
     bio: "Trained in therapeutic scalp techniques and advanced treatment protocols, our scalp therapist brings precision and intuition to every session. Her approach blends technical expertise with a warm, attentive presence — ensuring every guest feels both cared for and restored.",
   },
@@ -314,7 +316,7 @@ export default function TeamPage() {
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
-                      objectPosition: "center 20%",
+                      objectPosition: member.focal || "center 20%",
                       display: "block",
                     }}
                   />

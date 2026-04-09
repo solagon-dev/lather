@@ -109,7 +109,7 @@ export const services = [
     recommendedAddOns: [] as string[],
     suggestedUpgrade: "classic-ritual",
     suggestedUpgradeReason: "Want the full head spa experience? The Classic Ritual adds scalp treatment, massage, and steam infusion — plus a blowdry finish.",
-    image: "/media/treatments/revitalize-restore.jpg",
+    image: "/media/treatments/blowout-card.jpg",
     concerns: ["Styling", "Special occasion prep"],
   },
 ];

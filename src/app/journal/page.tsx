@@ -332,6 +332,7 @@ export default async function JournalPage({
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
+                      objectPosition: "center 35%",
                       display: "block",
                       transition: "transform 1.4s var(--ease-luxury)",
                     }}
@@ -561,6 +562,7 @@ export default async function JournalPage({
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
+                          objectPosition: "center 35%",
                           display: "block",
                           transition: "transform 1s var(--ease-luxury)",
                         }}

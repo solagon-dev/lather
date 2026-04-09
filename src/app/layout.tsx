@@ -88,7 +88,7 @@ const localBusinessSchema = {
     { "@type": "City", name: "Ayden" },
     { "@type": "City", name: "Washington" },
     { "@type": "City", name: "New Bern" },
-    { "@type": "City", name: "Kinston" },
+    { "@type": "City", name: "Grimesland" },
   ],
   openingHoursSpecification: [
     {

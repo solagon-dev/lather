@@ -198,7 +198,7 @@ export default function Book() {
             style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center", marginBottom: "5rem" }}
           >
             <a
-              href="tel:+12525584344"
+              href="tel:+12525310987"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -217,7 +217,7 @@ export default function Book() {
               Call to Book
             </a>
             <a
-              href="mailto:hello@latherspa.com"
+              href="mailto:hello@latherspas.com"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -254,7 +254,7 @@ export default function Book() {
           {[
             { label: "Location", value: "Greenville, NC" },
             { label: "Hours", value: "Tue – Sat\n10am – 7pm" },
-            { label: "Contact", value: "hello@latherspa.com" },
+            { label: "Contact", value: "hello@latherspas.com" },
           ].map((item) => (
             <div key={item.label}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.55rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(237,230,219,0.3)", marginBottom: "10px" }}>

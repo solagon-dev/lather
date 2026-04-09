@@ -50,7 +50,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
           <div>
             <div className="admin-card" style={{ marginBottom: "20px" }}>
               <div className="admin-card-header"><h3 className="admin-card-title">Client Info</h3></div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <DetailRow label="Name" value={`${client.firstName} ${client.lastName}`} />
                 <DetailRow label="Email" value={client.email} />
                 <DetailRow label="Phone" value={client.phone || "Not provided"} />
@@ -61,7 +61,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
 
             <div className="admin-card">
               <div className="admin-card-header"><h3 className="admin-card-title">Stats</h3></div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <DetailRow label="Total Visits" value={String(client.appointments.filter((a) => a.status === "completed").length)} />
                 <DetailRow label="Total Spent" value={totalSpent ? `$${(totalSpent / 100).toFixed(0)}` : "$0"} />
                 <DetailRow label="All Bookings" value={String(client.appointments.length)} />

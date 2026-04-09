@@ -9,7 +9,7 @@ const steps = [
     title: "Arrival & Consultation",
     body: "You're welcomed into a calm, private space. No busy waiting room — just you. We begin with a brief scalp consultation to understand your hair history, current concerns, and what your scalp needs most today.",
     pullQuote: "Every ritual begins with listening.",
-    image: "/Photos/Finalized/2.10.26_LHS-15.jpg",
+    image: "/media/experience/step-01-consultation.jpg",
     imageAlt: "Client and stylist during a relaxed consultation at Lather Head Spa",
     focal: "center 30%",
   },
@@ -19,9 +19,9 @@ const steps = [
     title: "The Cleanse",
     body: "A therapeutic double cleanse removes buildup, excess oil, and environmental stress from the scalp. The water is warm, the products are organic, and the pace is entirely unhurried.",
     pullQuote: "The foundation of every great treatment.",
-    image: "/Photos/Finalized/2.10.26_LHS-21.jpg",
+    image: "/media/experience/step-02-cleanse.jpg",
     imageAlt: "Hands-on scalp cleansing at the wash basin",
-    video: "/Videos/Finished%20Videos/Posted/Hair%20Washing.mp4",
+    video: "/media/video/experience-cleanse.mp4",
     focal: "center 40%",
   },
   {
@@ -30,7 +30,7 @@ const steps = [
     title: "Exfoliation & Massage",
     body: "Gentle exfoliation loosens congestion and stimulates circulation, followed by our signature scalp massage — slow, intentional pressure that dissolves tension and restores flow.",
     pullQuote: "Where tension dissolves and circulation returns.",
-    image: "/Photos/Finalized/2.10.26_LHS-19.jpg",
+    image: "/media/experience/step-03-massage.jpg",
     imageAlt: "Therapist performing scalp exfoliation with a specialized brush",
     focal: "center 25%",
   },
@@ -40,9 +40,9 @@ const steps = [
     title: "Targeted Treatment",
     body: "Based on your scalp type and chosen ritual, we apply a curated serum, mask, or bond-rebuilding protocol — sealed with steam or warmth for deep absorption.",
     pullQuote: "Precision care, tailored to your scalp.",
-    image: "/Photos/Finalized/2.10.26_LHS-13.jpg",
+    image: "/media/experience/step-04-treatment.jpg",
     imageAlt: "Therapist applying targeted treatment with professional equipment",
-    video: "/Videos/Finished%20Videos/Posted/The%20Tools.mp4",
+    video: "/media/video/experience-tools.mp4",
     focal: "center 30%",
   },
   {
@@ -51,7 +51,7 @@ const steps = [
     title: "The Renewal",
     body: "You leave with a scalp that breathes freely, hair that holds moisture, and a nervous system that finally had permission to rest. Results deepen with every visit.",
     pullQuote: "This is what renewal feels like.",
-    image: "/Photos/Finalized/2.10.26_LHS-5.jpg",
+    image: "/media/experience/step-05-renewal.jpg",
     imageAlt: "Client smiling peacefully under the gold treatment arch — renewed and restored",
     focal: "center 35%",
   },
@@ -208,7 +208,7 @@ export default function Experience() {
               alignSelf: "start",
             }}
           >
-            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
               {steps.map((step, i) => (
                 <div
                   key={step.number}
@@ -332,7 +332,7 @@ export default function Experience() {
                   top: 0,
                   left: 0,
                   width: "1px",
-                  height: `${((activeStep + 1) / steps.length) * 100}%`,
+                  height: `${(activeStep / (steps.length - 1)) * 100}%`,
                   background: "linear-gradient(to bottom, var(--blush), var(--gold))",
                   opacity: 0.4,
                   transition: "height 1.4s cubic-bezier(0.22, 1, 0.36, 1)",

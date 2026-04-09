@@ -4,10 +4,10 @@ import Link from "next/link";
 import { services } from "@/lib/data";
 
 const treatmentImages: Record<string, string> = {
-  "classic-ritual": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4083.jpg",
-  "revitalize-restore": "/Photos/Finalized/2.10.26_LHS-20.jpg",
-  "nourish-fortify": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4256.jpg",
-  "gentlemans-recharge": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4259.jpg",
+  "classic-ritual": "/media/treatments/classic-ritual.jpg",
+  "revitalize-restore": "/media/treatments/revitalize-restore.jpg",
+  "nourish-fortify": "/media/treatments/treatments-hero.jpg",
+  "gentlemans-recharge": "/media/treatments/treatment-fallback.jpg",
 };
 
 const tierLabels: Record<string, string> = {
@@ -29,16 +29,7 @@ export default function TreatmentCards() {
     >
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
         {/* Header */}
-        <div
-          style={{
-            marginBottom: "clamp(48px, 7vw, 80px)",
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "2rem",
-          }}
-        >
+        <div className="tc-header" style={{ marginBottom: "clamp(48px, 7vw, 80px)" }}>
           <div>
             <p
               style={{
@@ -71,6 +62,7 @@ export default function TreatmentCards() {
           </div>
           <Link
             href="/treatments"
+            className="tc-view-all"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -92,7 +84,7 @@ export default function TreatmentCards() {
           </Link>
         </div>
 
-        {/* Treatments — 2x2 editorial grid with images */}
+        {/* ── Desktop: 2×2 editorial grid ── */}
         <div
           className="treatment-cards-grid"
           style={{
@@ -108,7 +100,7 @@ export default function TreatmentCards() {
               style={{
                 textDecoration: "none",
                 display: "grid",
-                gridTemplateColumns: i % 2 === 0 ? "1fr 1fr" : "1fr 1fr",
+                gridTemplateColumns: "1fr 1fr",
                 background: "var(--linen)",
                 transition: "box-shadow 0.5s ease",
                 overflow: "hidden",
@@ -119,6 +111,7 @@ export default function TreatmentCards() {
             >
               {/* Image side */}
               <div
+                className="tc-card-image"
                 style={{
                   overflow: "hidden",
                   height: "clamp(220px, 22vw, 320px)",
@@ -126,7 +119,7 @@ export default function TreatmentCards() {
                 }}
               >
                 <img
-                  src={treatmentImages[service.id] || "/Photos/Finalized/2.10.26_LHS-5.jpg"}
+                  src={treatmentImages[service.id] || "/media/treatments/treatment-fallback.jpg"}
                   alt={`${service.name} at Lather Head Spa`}
                   loading="lazy"
                   style={{
@@ -143,6 +136,7 @@ export default function TreatmentCards() {
 
               {/* Text side */}
               <div
+                className="tc-card-text"
                 style={{
                   padding: "clamp(1.25rem, 2.5vw, 2rem)",
                   display: "flex",
@@ -204,6 +198,7 @@ export default function TreatmentCards() {
                 </p>
 
                 <p
+                  className="tc-card-tagline"
                   style={{
                     fontFamily: "var(--font-body)",
                     fontSize: "0.82rem",
@@ -218,6 +213,7 @@ export default function TreatmentCards() {
                 </p>
 
                 <p
+                  className="tc-card-cta"
                   style={{
                     fontFamily: "var(--font-body)",
                     fontSize: "0.58rem",

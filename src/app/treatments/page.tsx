@@ -52,7 +52,7 @@ export default function TreatmentsPage() {
         />
 
         <img
-          src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4064.jpg"
+          src="/media/treatments/treatments-hero.jpg"
           alt="Treatment brushes in wooden holder at Lather"
           loading="eager"
           aria-hidden="true"
@@ -529,7 +529,7 @@ export default function TreatmentsPage() {
         headline="Ready to"
         headlineItalic="begin?"
         description="Book your appointment online. Each session is private, unhurried, and reserved exclusively for you."
-        secondaryCTA={{ label: "Call to Book", href: "tel:+12525584344" }}
+        secondaryCTA={{ label: "Call to Book", href: "tel:+12525310987" }}
       />
 
       <Footer />

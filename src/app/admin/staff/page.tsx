@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useTransition, useCallback } from "react";
+import { useEffect, useState, useTransition, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   createStaffAction,
   updateStaffAction,
@@ -26,7 +27,10 @@ interface StaffRow {
   image: string | null;
   isActive: boolean;
   timezone: string;
+  calendarSyncEnabled: boolean;
+  googleCalendarId: string | null;
   staffServices: { service: ServiceRef }[];
+  googleCalendarToken: { id: string; expiresAt: string; updatedAt: string; googleEmail: string | null; lastSyncAt: string | null; lastSyncError: string | null } | null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -58,6 +62,14 @@ const EMPTY_FORM = {
 /* ------------------------------------------------------------------ */
 
 export default function StaffPage() {
+  return (
+    <Suspense>
+      <StaffPageInner />
+    </Suspense>
+  );
+}
+
+function StaffPageInner() {
   const [staffList, setStaffList] = useState<StaffRow[]>([]);
   const [allServices, setAllServices] = useState<ServiceRef[]>([]);
   const [loading, setLoading] = useState(true);
@@ -73,6 +85,7 @@ export default function StaffPage() {
   );
   const [formError, setFormError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const searchParams = useSearchParams();
 
   /* ---- fetch ---------------------------------------------------- */
   const fetchData = useCallback(async () => {
@@ -93,6 +106,21 @@ export default function StaffPage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // Handle OAuth callback messages
+  useEffect(() => {
+    const success = searchParams.get("success");
+    const error = searchParams.get("error");
+    if (success === "calendar_connected") {
+      setSuccessMsg("Google Calendar connected successfully.");
+      setTimeout(() => setSuccessMsg(""), 4000);
+      window.history.replaceState({}, "", "/admin/staff");
+    }
+    if (error === "calendar_failed") {
+      setFormError("Failed to connect Google Calendar. Please try again.");
+      window.history.replaceState({}, "", "/admin/staff");
+    }
+  }, [searchParams]);
 
   /* ---- form helpers --------------------------------------------- */
   function openCreate() {
@@ -184,6 +212,31 @@ export default function StaffPage() {
     });
   }
 
+  /* ---- calendar connect/disconnect -------------------------------- */
+  function handleConnectCalendar(staffId: string) {
+    window.location.href = `/api/admin/calendar/connect?staffId=${staffId}`;
+  }
+
+  function handleDisconnectCalendar(staffId: string) {
+    if (!confirm("Disconnect Google Calendar for this provider?")) return;
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/admin/calendar/disconnect", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ staffId }),
+        });
+        if (res.ok) {
+          setSuccessMsg("Google Calendar disconnected.");
+          await fetchData();
+          setTimeout(() => setSuccessMsg(""), 3000);
+        }
+      } catch {
+        setFormError("Failed to disconnect calendar.");
+      }
+    });
+  }
+
   /* ---- toggle active -------------------------------------------- */
   function handleToggleActive(s: StaffRow) {
     startTransition(async () => {
@@ -262,6 +315,7 @@ export default function StaffPage() {
               </button>
             </div>
 
+            <div className="admin-card-body">
             {formError && (
               <div
                 className="admin-alert admin-alert-error"
@@ -422,6 +476,7 @@ export default function StaffPage() {
                 Cancel
               </button>
             </div>
+            </div>
           </div>
         )}
 
@@ -450,9 +505,9 @@ export default function StaffPage() {
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Phone</th>
                     <th>Timezone</th>
                     <th>Services</th>
+                    <th>Google Calendar</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -465,55 +520,59 @@ export default function StaffPage() {
                     return (
                       <tr key={s.id}>
                         <td style={{ fontWeight: 400 }}>{s.name}</td>
-                        <td
-                          style={{ fontSize: "0.82rem", color: "#6B5C4E" }}
-                        >
-                          {s.email}
-                        </td>
-                        <td
-                          style={{ fontSize: "0.82rem", color: "#6B5C4E" }}
-                        >
-                          {s.phone ?? "\u2014"}
-                        </td>
-                        <td
-                          style={{ fontSize: "0.82rem", color: "#8C7B6B" }}
-                        >
-                          {s.timezone.replace(/_/g, " ")}
-                        </td>
-                        <td
-                          style={{
-                            fontSize: "0.82rem",
-                            color: "#6B5C4E",
-                            maxWidth: "280px",
-                          }}
-                        >
-                          {serviceNames || "\u2014"}
+                        <td style={{ fontSize: "0.82rem", color: "#6B5C4E" }}>{s.email}</td>
+                        <td style={{ fontSize: "0.82rem", color: "#8C7B6B" }}>{s.timezone.replace(/_/g, " ")}</td>
+                        <td style={{ fontSize: "0.82rem", color: "#6B5C4E", maxWidth: "240px" }}>{serviceNames || "\u2014"}</td>
+                        <td>
+                          {s.calendarSyncEnabled && s.googleCalendarToken ? (
+                            <div>
+                              <span className="admin-badge" style={{ background: s.googleCalendarToken.lastSyncError ? "#FEF9E7" : "#EDF5EC", color: s.googleCalendarToken.lastSyncError ? "#9A7D0A" : "#2D5A2A", marginBottom: "4px", display: "inline-block" }}>
+                                {s.googleCalendarToken.lastSyncError ? "Sync Issue" : "Connected"}
+                              </span>
+                              {s.googleCalendarToken.googleEmail && (
+                                <p style={{ fontSize: "0.75rem", color: "#3D2E22", margin: "4px 0 0" }}>
+                                  {s.googleCalendarToken.googleEmail}
+                                </p>
+                              )}
+                              {s.googleCalendarToken.lastSyncAt && (
+                                <p style={{ fontSize: "0.7rem", color: "#6B5C4E", margin: "2px 0 0" }}>
+                                  Last read: {new Date(s.googleCalendarToken.lastSyncAt).toLocaleString(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}
+                                </p>
+                              )}
+                              {s.googleCalendarToken.lastSyncError && (
+                                <p style={{ fontSize: "0.7rem", color: "#922B21", margin: "4px 0 0", maxWidth: "300px", wordBreak: "break-word" }}>
+                                  Error: {s.googleCalendarToken.lastSyncError}
+                                </p>
+                              )}
+                              <button
+                                className="admin-btn admin-btn-ghost admin-btn-sm"
+                                style={{ color: "#922B21", marginTop: "6px" }}
+                                onClick={() => handleDisconnectCalendar(s.id)}
+                                disabled={isPending}
+                              >
+                                Disconnect
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              className="admin-btn admin-btn-primary admin-btn-sm"
+                              onClick={() => handleConnectCalendar(s.id)}
+                            >
+                              Connect Calendar
+                            </button>
+                          )}
                         </td>
                         <td>
-                          <span
-                            className="admin-badge"
-                            style={
-                              s.isActive
-                                ? { background: "#EDF5EC", color: "#3A6B37" }
-                                : { background: "#F4F1EC", color: "#8C7B6B" }
-                            }
-                          >
+                          <span className="admin-badge" style={s.isActive ? { background: "#EDF5EC", color: "#3A6B37" } : { background: "#F4F1EC", color: "#8C7B6B" }}>
                             {s.isActive ? "Active" : "Inactive"}
                           </span>
                         </td>
                         <td>
                           <div style={{ display: "flex", gap: "6px" }}>
+                            <button className="admin-btn admin-btn-ghost admin-btn-sm" onClick={() => openEdit(s)}>Edit</button>
                             <button
                               className="admin-btn admin-btn-ghost admin-btn-sm"
-                              onClick={() => openEdit(s)}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="admin-btn admin-btn-ghost admin-btn-sm"
-                              style={{
-                                color: s.isActive ? "#c0392b" : "#3A6B37",
-                              }}
+                              style={{ color: s.isActive ? "#c0392b" : "#3A6B37" }}
                               onClick={() => handleToggleActive(s)}
                               disabled={isPending}
                             >

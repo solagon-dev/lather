@@ -37,6 +37,10 @@ export async function createServiceAction(formData: FormData): Promise<{ error: 
   }
 
   revalidatePath("/admin/services");
+  revalidatePath("/admin/staff");
+  revalidatePath("/admin/bookings");
+  revalidatePath("/book");
+  revalidatePath("/treatments");
   redirect("/admin/services");
 }
 
@@ -65,6 +69,10 @@ export async function updateServiceAction(id: string, formData: FormData): Promi
   }
 
   revalidatePath("/admin/services");
+  revalidatePath("/admin/staff");
+  revalidatePath("/admin/bookings");
+  revalidatePath("/book");
+  revalidatePath("/treatments");
   redirect("/admin/services");
 }
 
@@ -77,4 +85,8 @@ export async function deleteServiceAction(id: string): Promise<{ error: string }
     return { error: "Cannot delete service — it may have existing appointments." };
   }
   revalidatePath("/admin/services");
+  revalidatePath("/admin/staff");
+  revalidatePath("/admin/bookings");
+  revalidatePath("/book");
+  revalidatePath("/treatments");
 }

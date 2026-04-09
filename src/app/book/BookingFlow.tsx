@@ -71,6 +71,19 @@ function formatDateLong(dateStr: string) {
   }).format(d);
 }
 
+function formatDateTimeET(isoStr: string) {
+  const d = new Date(isoStr);
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "America/New_York",
+  }).format(d);
+}
+
 function getNextDays(count: number): string[] {
   const days: string[] = [];
   const now = new Date();
@@ -100,29 +113,30 @@ function getMonthName(dateStr: string) {
 
 const label: React.CSSProperties = {
   fontFamily: "var(--font-body)",
-  fontSize: "0.62rem",
-  letterSpacing: "0.3em",
+  fontSize: "0.72rem",
+  letterSpacing: "0.18em",
   textTransform: "uppercase",
-  color: "var(--stone)",
-  marginBottom: "1.2rem",
+  color: "#5C4E42",
+  marginBottom: "0.6rem",
   display: "flex",
   alignItems: "center",
-  gap: "12px",
+  gap: "10px",
+  fontWeight: 400,
 };
 
 const heading: React.CSSProperties = {
   fontFamily: "var(--font-display)",
-  fontSize: "clamp(2rem, 4vw, 3rem)",
-  fontWeight: 300,
+  fontSize: "clamp(1.6rem, 5vw, 2.6rem)",
+  fontWeight: 400,
   color: "var(--bark)",
-  lineHeight: 1.08,
-  marginBottom: "clamp(32px, 5vw, 48px)",
+  lineHeight: 1.12,
+  marginBottom: "clamp(20px, 3.5vw, 40px)",
 };
 
 const accent: React.CSSProperties = {
   display: "inline-block",
   width: "28px",
-  height: "1px",
+  height: "2px",
   background: "var(--blush)",
 };
 
@@ -136,6 +150,12 @@ export default function BookingFlow() {
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Calendar month navigation
+  const [calMonth, setCalMonth] = useState(() => {
+    const now = new Date();
+    return { year: now.getFullYear(), month: now.getMonth() };
+  });
 
   // Selections
   const [selectedService, setSelectedService] = useState<Service | null>(null);
@@ -241,14 +261,15 @@ export default function BookingFlow() {
     <div style={{ maxWidth: "720px", margin: "0 auto" }}>
       {/* Progress indicator */}
       {step !== "success" && (
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "clamp(32px, 5vw, 48px)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "clamp(28px, 4vw, 40px)" }}>
           {steps.map((s, i) => (
             <div
               key={s}
               style={{
                 flex: 1,
-                height: "2px",
-                background: i <= stepIndex ? "var(--bark)" : "rgba(140,123,107,0.15)",
+                height: "3px",
+                borderRadius: "2px",
+                background: i <= stepIndex ? "var(--bark)" : "rgba(140,123,107,0.12)",
                 transition: "background 0.6s ease",
               }}
             />
@@ -308,21 +329,21 @@ export default function BookingFlow() {
                 onMouseLeave={(e) => (e.currentTarget.style.background = "var(--cream)")}
               >
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "0.3rem" }}>
-                    <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.15rem, 1.8vw, 1.4rem)", fontWeight: 300, color: "var(--bark)" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "4px" }}>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.2rem, 2vw, 1.5rem)", fontWeight: 400, color: "var(--bark)" }}>
                       {service.name}
                     </span>
                     {service.tier && (
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "0.48rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--stone)", padding: "2px 7px", border: "1px solid rgba(140,123,107,0.15)" }}>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "0.6rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "#5C4E42", padding: "3px 8px", border: "1px solid rgba(140,123,107,0.2)" }}>
                         {service.tier}
                       </span>
                     )}
                   </div>
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "0.72rem", color: "var(--stone)" }}>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "#5C4E42", fontWeight: 400 }}>
                     {service.durationMinutes} min · {formatPrice(service.price)}
                   </span>
                 </div>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--blush)" }}>→</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--bark)" }}>→</span>
               </button>
             ))}
           </div>
@@ -363,14 +384,14 @@ export default function BookingFlow() {
               }}
             >
               <div>
-                <span style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 300, color: "var(--bark)", display: "block", marginBottom: "0.2rem" }}>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 400, color: "var(--bark)", display: "block", marginBottom: "4px" }}>
                   No preference
                 </span>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: "var(--stone)" }}>
-                  We will match you with the first available therapist
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "#5C4E42" }}>
+                  We will match you with the best available therapist
                 </span>
               </div>
-              <span style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--blush)" }}>→</span>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--bark)" }}>→</span>
             </button>
 
             {availableStaff.map((s) => (
@@ -379,7 +400,7 @@ export default function BookingFlow() {
                 onClick={() => { setSelectedStaff(s); setNoStaffPreference(false); setStep("date"); }}
                 style={{
                   background: "var(--cream)",
-                  border: "1px solid rgba(140,123,107,0.1)",
+                  border: "1px solid rgba(140,123,107,0.15)",
                   cursor: "pointer",
                   padding: "1.25rem 1.5rem",
                   textAlign: "left",
@@ -395,72 +416,170 @@ export default function BookingFlow() {
                   </div>
                 )}
                 <div style={{ flex: 1 }}>
-                  <span style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 300, color: "var(--bark)" }}>
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: "1.15rem", fontWeight: 400, color: "var(--bark)" }}>
                     {s.name}
                   </span>
                 </div>
-                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--blush)" }}>→</span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--bark)" }}>→</span>
               </button>
             ))}
           </div>}
         </div>
       )}
 
-      {/* ── STEP 3: DATE ──────────────────────────────── */}
-      {step === "date" && (
-        <div>
-          <p style={label}><span style={accent} /> Pick a Date</p>
-          <h2 style={heading}>When works <em style={{ fontStyle: "italic" }}>best?</em></h2>
+      {/* ── STEP 3: DATE — Calendar ────────────────────── */}
+      {step === "date" && (() => {
+        const today = new Date().toISOString().split("T")[0];
+        const nowMonth = new Date().getMonth();
+        const nowYear = new Date().getFullYear();
+        const maxMonth = nowMonth + 3; // Allow booking ~3 months ahead
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "8px" }}>
-            {getNextDays(21).map((dateStr) => {
-              const dayName = getDayName(dateStr);
-              const dayNum = getDayNum(dateStr);
-              const month = getMonthName(dateStr);
-              const isSunMon = [0, 1].includes(new Date(dateStr + "T12:00:00").getDay());
-              const isSelected = selectedDate === dateStr;
+        // Build calendar grid for the current calMonth
+        const firstDay = new Date(calMonth.year, calMonth.month, 1);
+        const startDow = firstDay.getDay(); // 0=Sun
+        const daysInMonth = new Date(calMonth.year, calMonth.month + 1, 0).getDate();
+        const monthLabel = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(firstDay);
 
-              return (
+        const canGoPrev = calMonth.year > nowYear || calMonth.month > nowMonth;
+        const canGoNext = (calMonth.year - nowYear) * 12 + calMonth.month - nowMonth < maxMonth;
+
+        // Build 6-week grid of day numbers (null = empty cell)
+        const cells: (number | null)[] = [];
+        for (let i = 0; i < startDow; i++) cells.push(null);
+        for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+        while (cells.length % 7 !== 0) cells.push(null);
+
+        return (
+          <div>
+            <p style={label}><span style={accent} /> Pick a Date</p>
+            <h2 style={heading}>When works <em style={{ fontStyle: "italic" }}>best?</em></h2>
+
+            {/* Calendar container with border */}
+            <div style={{ border: "1px solid rgba(140,123,107,0.15)", background: "#fff" }}>
+
+              {/* Month navigation header */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid rgba(140,123,107,0.1)" }}>
                 <button
-                  key={dateStr}
-                  disabled={isSunMon}
-                  onClick={() => { setSelectedDate(dateStr); setSelectedSlot(null); setStep("time"); }}
-                  style={{
-                    background: isSelected ? "var(--bark)" : isSunMon ? "rgba(140,123,107,0.04)" : "var(--cream)",
-                    border: isSelected ? "1px solid var(--bark)" : "1px solid rgba(140,123,107,0.1)",
-                    cursor: isSunMon ? "default" : "pointer",
-                    padding: "clamp(8px, 1.2vw, 12px) 4px",
-                    textAlign: "center",
-                    opacity: isSunMon ? 0.3 : 1,
-                    transition: "all 0.2s ease",
-                  }}
+                  onClick={() => setCalMonth((p) => {
+                    const m = p.month - 1;
+                    return m < 0 ? { year: p.year - 1, month: 11 } : { year: p.year, month: m };
+                  })}
+                  disabled={!canGoPrev}
+                  style={{ background: "none", border: "none", cursor: canGoPrev ? "pointer" : "default", fontSize: "1.1rem", color: canGoPrev ? "var(--bark)" : "rgba(140,123,107,0.2)", padding: "4px 8px" }}
                 >
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "0.5rem", letterSpacing: "0.1em", textTransform: "uppercase", color: isSelected ? "rgba(237,230,219,0.6)" : "var(--stone)", display: "block" }}>
-                    {dayName}
-                  </span>
-                  <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1rem, 1.5vw, 1.25rem)", fontWeight: 300, color: isSelected ? "var(--linen)" : "var(--bark)", display: "block", margin: "2px 0" }}>
-                    {dayNum}
-                  </span>
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "0.45rem", letterSpacing: "0.08em", textTransform: "uppercase", color: isSelected ? "rgba(237,230,219,0.5)" : "var(--stone)", display: "block" }}>
-                    {month}
-                  </span>
+                  ←
                 </button>
-              );
-            })}
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", fontWeight: 500, color: "var(--bark)" }}>
+                  {monthLabel}
+                </span>
+                <button
+                  onClick={() => setCalMonth((p) => {
+                    const m = p.month + 1;
+                    return m > 11 ? { year: p.year + 1, month: 0 } : { year: p.year, month: m };
+                  })}
+                  disabled={!canGoNext}
+                  style={{ background: "none", border: "none", cursor: canGoNext ? "pointer" : "default", fontSize: "1.1rem", color: canGoNext ? "var(--bark)" : "rgba(140,123,107,0.2)", padding: "4px 8px" }}
+                >
+                  →
+                </button>
+              </div>
+
+              {/* Day-of-week headers */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", borderBottom: "1px solid rgba(140,123,107,0.08)" }}>
+                {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
+                  <div key={d} style={{ textAlign: "center", fontFamily: "var(--font-body)", fontSize: "0.72rem", fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: "#8C7B6B", padding: "12px 0" }}>
+                    {d}
+                  </div>
+                ))}
+              </div>
+
+              {/* Calendar grid */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", padding: "8px" }}>
+                {cells.map((day, i) => {
+                  if (day === null) return <div key={`empty-${i}`} style={{ padding: "12px" }} />;
+
+                  const dateStr = `${calMonth.year}-${String(calMonth.month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+                  const dow = new Date(dateStr + "T12:00:00").getDay();
+                  const isClosed = dow === 0 || dow === 1;
+                  const isPast = dateStr < today;
+                  const isDisabled = isClosed || isPast;
+                  const isSelected = selectedDate === dateStr;
+                  const isCurrentDay = dateStr === today;
+
+                  return (
+                    <button
+                      key={dateStr}
+                      disabled={isDisabled}
+                      onClick={() => { setSelectedDate(dateStr); setSelectedSlot(null); setStep("time"); }}
+                      style={{
+                        padding: "12px 4px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: isSelected ? "var(--bark)" : isCurrentDay ? "var(--linen)" : "transparent",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: isDisabled ? "default" : "pointer",
+                        opacity: isDisabled ? 0.25 : 1,
+                        transition: "background 0.15s ease",
+                      }}
+                    >
+                      <span style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: "0.95rem",
+                        fontWeight: isCurrentDay || isSelected ? 600 : 400,
+                        color: isSelected ? "#fff" : isCurrentDay ? "var(--bark)" : "var(--bark)",
+                      }}>
+                        {day}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Footer legend */}
+              <div style={{ display: "flex", gap: "20px", padding: "12px 20px", borderTop: "1px solid rgba(140,123,107,0.08)", justifyContent: "center" }}>
+                <span style={{ display: "flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-body)", fontSize: "0.72rem", color: "#5C4E42" }}>
+                  <span style={{ width: "16px", height: "16px", borderRadius: "3px", background: "var(--linen)", display: "inline-block", border: "1px solid rgba(140,123,107,0.1)" }} /> Today
+                </span>
+                <span style={{ display: "flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-body)", fontSize: "0.72rem", color: "#5C4E42" }}>
+                  <span style={{ width: "16px", height: "16px", borderRadius: "3px", background: "var(--bark)", display: "inline-block" }} /> Selected
+                </span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.72rem", color: "#8C7B6B" }}>
+                  Sun & Mon — Closed
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ── STEP 4: TIME ──────────────────────────────── */}
-      {step === "time" && (
+      {step === "time" && (() => {
+        const deduped = Array.from(new Map(slots.map((s) => [s.time, s])).values());
+        const morning = deduped.filter((s) => { const h = parseInt(s.time.split(":")[0]); return h < 12; });
+        const afternoon = deduped.filter((s) => { const h = parseInt(s.time.split(":")[0]); return h >= 12; });
+
+        return (
         <div>
           <p style={label}><span style={accent} /> Select a Time</p>
           <h2 style={heading}>
             {selectedDate && formatDateLong(selectedDate)}
           </h2>
 
+          {/* Selected service reminder */}
+          {selectedService && (
+            <div style={{ display: "flex", gap: "16px", marginBottom: "28px", padding: "16px 20px", background: "var(--linen)", alignItems: "center" }}>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", fontWeight: 500, color: "var(--bark)" }}>{selectedService.name}</span>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "#5C4E42" }}>{selectedService.durationMinutes} min</span>
+              <button onClick={() => setStep("date")} style={{ marginLeft: "auto", background: "none", border: "none", cursor: "pointer", fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "#5C4E42", textDecoration: "underline" }}>
+                Change date
+              </button>
+            </div>
+          )}
+
           {loadingSlots && (
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.88rem", color: "var(--stone)", textAlign: "center", padding: "3rem 0" }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", color: "var(--stone)", textAlign: "center", padding: "3rem 0" }}>
               Finding available times...
             </p>
           )}
@@ -472,7 +591,7 @@ export default function BookingFlow() {
               </p>
               <button
                 onClick={() => setStep("date")}
-                style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "var(--font-body)", fontSize: "0.62rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--bark)", borderBottom: "1px solid rgba(61,46,34,0.3)", paddingBottom: "3px" }}
+                style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "var(--font-body)", fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--bark)", borderBottom: "1px solid rgba(61,46,34,0.3)", paddingBottom: "3px" }}
               >
                 Choose another date
               </button>
@@ -480,33 +599,55 @@ export default function BookingFlow() {
           )}
 
           {!loadingSlots && slots.length > 0 && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))", gap: "8px" }}>
-              {/* Deduplicate by time (show first available staff per time) */}
-              {Array.from(new Map(slots.map((s) => [s.time, s])).values()).map((slot) => {
-                const isSelected = selectedSlot?.time === slot.time;
-                return (
-                  <button
-                    key={slot.time}
-                    onClick={() => { setSelectedSlot(slot); setStep("details"); }}
-                    style={{
-                      background: isSelected ? "var(--bark)" : "var(--cream)",
-                      border: "1px solid " + (isSelected ? "var(--bark)" : "rgba(140,123,107,0.12)"),
-                      cursor: "pointer",
-                      padding: "14px 8px",
-                      textAlign: "center",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <span style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontWeight: 300, color: isSelected ? "var(--linen)" : "var(--bark)" }}>
-                      {formatTime12(slot.time)}
-                    </span>
-                  </button>
-                );
-              })}
+            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+              {/* Morning */}
+              {morning.length > 0 && (
+                <div>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5C4E42", marginBottom: "14px" }}>
+                    Morning
+                  </p>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "10px" }}>
+                    {morning.map((slot) => {
+                      const isSelected = selectedSlot?.time === slot.time;
+                      return (
+                        <button key={slot.time} onClick={() => { setSelectedSlot(slot); setStep("details"); }}
+                          style={{ background: isSelected ? "var(--bark)" : "transparent", border: "1px solid " + (isSelected ? "var(--bark)" : "rgba(140,123,107,0.15)"), cursor: "pointer", padding: "16px 12px", textAlign: "center", transition: "all 0.15s ease", borderRadius: "0" }}>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", fontWeight: isSelected ? 500 : 400, color: isSelected ? "var(--linen)" : "var(--bark)" }}>
+                            {formatTime12(slot.time)}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Afternoon */}
+              {afternoon.length > 0 && (
+                <div>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5C4E42", marginBottom: "14px" }}>
+                    Afternoon
+                  </p>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "10px" }}>
+                    {afternoon.map((slot) => {
+                      const isSelected = selectedSlot?.time === slot.time;
+                      return (
+                        <button key={slot.time} onClick={() => { setSelectedSlot(slot); setStep("details"); }}
+                          style={{ background: isSelected ? "var(--bark)" : "transparent", border: "1px solid " + (isSelected ? "var(--bark)" : "rgba(140,123,107,0.15)"), cursor: "pointer", padding: "16px 12px", textAlign: "center", transition: "all 0.15s ease", borderRadius: "0" }}>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", fontWeight: isSelected ? 500 : 400, color: isSelected ? "var(--linen)" : "var(--bark)" }}>
+                            {formatTime12(slot.time)}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* ── STEP 5: DETAILS ───────────────────────────── */}
       {step === "details" && (
@@ -515,15 +656,15 @@ export default function BookingFlow() {
           <h2 style={heading}>Almost <em style={{ fontStyle: "italic" }}>there.</em></h2>
 
           <div style={{ display: "grid", gap: "1.5rem" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div className="booking-name-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
               <InputField label="First Name" value={firstName} onChange={setFirstName} required />
               <InputField label="Last Name" value={lastName} onChange={setLastName} required />
             </div>
             <InputField label="Email" value={email} onChange={setEmail} type="email" required />
             <InputField label="Phone" value={phone} onChange={setPhone} type="tel" />
             <div>
-              <label style={{ fontFamily: "var(--font-body)", fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--stone)", display: "block", marginBottom: "0.5rem" }}>
-                Notes <span style={{ textTransform: "none", letterSpacing: 0, opacity: 0.5 }}>(optional)</span>
+              <label style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#3D2E22", display: "block", marginBottom: "8px", fontWeight: 500 }}>
+                Notes <span style={{ textTransform: "none", letterSpacing: 0, fontWeight: 300, color: "#8C7B6B", fontSize: "0.82rem" }}>(optional)</span>
               </label>
               <textarea
                 value={notes}
@@ -533,7 +674,7 @@ export default function BookingFlow() {
                 style={{
                   width: "100%",
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.92rem",
+                  fontSize: "1rem",
                   color: "var(--bark)",
                   background: "transparent",
                   border: "1px solid rgba(140,123,107,0.2)",
@@ -541,6 +682,7 @@ export default function BookingFlow() {
                   resize: "vertical",
                   outline: "none",
                   fontWeight: 300,
+                  lineHeight: 1.6,
                 }}
               />
             </div>
@@ -558,6 +700,7 @@ export default function BookingFlow() {
                 setError(null);
                 setStep("confirm");
               }}
+              className="booking-review-btn"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -570,6 +713,7 @@ export default function BookingFlow() {
                 cursor: "pointer",
                 transition: "background 0.3s ease",
                 alignSelf: "flex-start",
+                width: "100%",
               }}
             >
               Review Booking
@@ -613,10 +757,11 @@ export default function BookingFlow() {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="booking-confirm-actions" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
             <button
               onClick={handleSubmit}
               disabled={submitting}
+              className="booking-confirm-primary"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -635,6 +780,7 @@ export default function BookingFlow() {
             <button
               onClick={goBack}
               disabled={submitting}
+              className="booking-confirm-secondary"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -687,7 +833,7 @@ export default function BookingFlow() {
 
             <div style={{ display: "grid", gap: "0.75rem", borderTop: "1px solid rgba(140,123,107,0.1)", paddingTop: "1.25rem" }}>
               <SummaryRow label="Treatment" value={booking.serviceName} />
-              <SummaryRow label="Date & Time" value={`${formatDateLong(booking.startAt.split("T")[0])} at ${formatTime12(booking.startAt.split("T")[1].substring(0, 5))}`} />
+              <SummaryRow label="Date & Time" value={formatDateTimeET(booking.startAt)} />
               <SummaryRow label="Duration" value={`${booking.durationMinutes} minutes`} />
               <SummaryRow label="Therapist" value={booking.staffName} />
             </div>
@@ -763,7 +909,7 @@ function InputField({
 }) {
   return (
     <div>
-      <label style={{ fontFamily: "var(--font-body)", fontSize: "0.55rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--stone)", display: "block", marginBottom: "0.5rem" }}>
+      <label style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#3D2E22", display: "block", marginBottom: "8px", fontWeight: 500 }}>
         {fieldLabel} {required && <span style={{ color: "var(--blush)" }}>*</span>}
       </label>
       <input
@@ -774,15 +920,17 @@ function InputField({
         style={{
           width: "100%",
           fontFamily: "var(--font-body)",
-          fontSize: "0.92rem",
+          fontSize: "1rem",
           color: "var(--bark)",
           background: "transparent",
-          border: "none",
-          borderBottom: "1px solid rgba(140,123,107,0.25)",
-          padding: "12px 0",
+          border: "1px solid rgba(140,123,107,0.2)",
+          padding: "14px 16px",
           outline: "none",
           fontWeight: 300,
+          transition: "border-color 0.2s ease",
         }}
+        onFocus={(e) => (e.currentTarget.style.borderColor = "var(--bark)")}
+        onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(140,123,107,0.2)")}
       />
     </div>
   );
@@ -790,11 +938,11 @@ function InputField({
 
 function SummaryRow({ label: rowLabel, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", alignItems: "baseline" }}>
-      <span style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--stone)", flexShrink: 0 }}>
+    <div style={{ display: "flex", justifyContent: "space-between", gap: "1.5rem", alignItems: "baseline", padding: "8px 0" }}>
+      <span style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: "#5C4E42", flexShrink: 0 }}>
         {rowLabel}
       </span>
-      <span style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", color: "var(--bark)", fontWeight: 300, textAlign: "right" }}>
+      <span style={{ fontFamily: "var(--font-body)", fontSize: "1rem", color: "var(--bark)", fontWeight: 400, textAlign: "right" }}>
         {value}
       </span>
     </div>

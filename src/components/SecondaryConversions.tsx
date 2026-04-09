@@ -8,21 +8,21 @@ const items = [
     headline: "Invest in consistency.",
     body: "Monthly scalp rituals starting at $110/month. Priority booking, savings on every visit, and results that compound over time.",
     cta: { label: "View Memberships", href: "/memberships" },
-    image: "/Photos/Finalized/2.10.26_LHS-3.jpg",
+    image: "/media/pages/memberships-hero.jpg",
   },
   {
     eyebrow: "Spa Parties",
     headline: "Gather. Restore.",
     body: "Private group experiences for bridal parties, birthdays, corporate wellness, and more. We'll curate every detail.",
     cta: { label: "Plan Your Event", href: "/spa-parties" },
-    image: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4176.jpg",
+    image: "/media/editorial/gift-card-detail.jpg",
   },
   {
     eyebrow: "Gift Cards",
     headline: "Give renewal.",
     body: "The gift of calm, starting at $50. Available for any treatment or custom amount — delivered digitally or in person.",
     cta: { label: "Send a Gift", href: "/gift-cards" },
-    image: "/Photos/Finalized/2.10.26_LHS-2.jpg",
+    image: "/media/editorial/secondary-treatment.jpg",
   },
 ];
 

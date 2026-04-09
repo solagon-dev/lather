@@ -86,7 +86,7 @@ export default function AvailabilityPage() {
         {showForm && (
           <div className="admin-card" style={{ marginBottom: "24px" }}>
             <div className="admin-card-header"><h3 className="admin-card-title">New Blackout / Time Off</h3></div>
-            <div style={{ padding: "20px 24px" }}>
+            <div className="admin-card-body">
               <div className="admin-form-grid-2">
                 <div className="admin-form-group"><label className="admin-label">Title</label><input className="admin-input" value={bTitle} onChange={(e) => setBTitle(e.target.value)} placeholder="Holiday Closure" /></div>
                 <div className="admin-form-group"><label className="admin-label">Staff</label>

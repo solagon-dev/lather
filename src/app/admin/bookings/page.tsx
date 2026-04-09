@@ -125,7 +125,7 @@ export default async function BookingsPage({
 
         {/* Filters */}
         <div className="admin-card" style={{ marginBottom: "20px" }}>
-          <form method="GET" style={{ display: "flex", gap: "12px", padding: "16px 20px", flexWrap: "wrap", alignItems: "flex-end" }}>
+          <form method="GET" className="admin-card-body" style={{ display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "flex-end" }}>
             <div style={{ flex: "1 1 200px" }}>
               <label style={{ fontSize: "0.68rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", color: "#999", display: "block", marginBottom: "6px" }}>Search</label>
               <input name="q" defaultValue={search || ""} placeholder="Client name, email, or phone..." className="admin-input" style={{ width: "100%", padding: "8px 12px", fontSize: "0.85rem" }} />

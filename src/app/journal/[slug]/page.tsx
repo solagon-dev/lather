@@ -150,11 +150,11 @@ export default async function ArticlePage({ params }: Props) {
     publisher: {
       "@type": "Organization",
       name: "Lather Head Spa",
-      url: "https://www.latherheadspa.com",
+      url: "https://www.latherspas.com",
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://www.latherheadspa.com/journal/${slug}`,
+      "@id": `https://www.latherspas.com/journal/${slug}`,
     },
   };
 

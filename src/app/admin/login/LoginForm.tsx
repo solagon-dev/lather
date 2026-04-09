@@ -36,7 +36,7 @@ export default function LoginForm() {
           type="email"
           autoComplete="email"
           required
-          placeholder="admin@latherheadspa.com"
+          placeholder="admin@latherspas.com"
           className="admin-input"
         />
       </div>

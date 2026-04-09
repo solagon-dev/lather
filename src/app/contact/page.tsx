@@ -12,7 +12,7 @@ const bookingFaqs = [
   {
     question: "How do I book an appointment?",
     answer:
-      "The easiest way is through our online booking page — just click the Book Now button on our site. Select your preferred ritual, choose a date and time that works for you, and confirm instantly. You can also call us at (252) 558-4344 or email hello@latherspa.com to book by phone or message.",
+      "The easiest way is through our online booking page — just click the Book Now button on our site. Select your preferred ritual, choose a date and time that works for you, and confirm instantly. You can also call us at (252) 531-0987 or email hello@latherspas.com to book by phone or message.",
   },
   {
     question: "How should I prepare for my appointment?",
@@ -37,7 +37,7 @@ const bookingFaqs = [
   {
     question: "Do you accept walk-ins?",
     answer:
-      "We operate by appointment only to ensure every guest receives our full, undivided attention. Same-day availability does open up from time to time, so feel free to call us at (252) 558-4344 if you'd like to check.",
+      "We operate by appointment only to ensure every guest receives our full, undivided attention. Same-day availability does open up from time to time, so feel free to call us at (252) 531-0987 if you'd like to check.",
   },
 ];
 
@@ -51,20 +51,20 @@ export default function ContactPage() {
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section
+        className="grain-overlay section-pad contact-page-hero"
         style={{
           minHeight: "52vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          padding: "0 clamp(20px, 4vw, 48px) 80px",
+          padding: "0 clamp(20px, 4vw, 48px) clamp(48px, 8vw, 80px)",
           background: "var(--charcoal)",
           position: "relative",
           overflow: "hidden",
         }}
-        className="grain-overlay section-pad"
       >
         <img
-          src="/Photos/Finalized/2.10.26_LHS-14.jpg"
+          src="/media/pages/contact-hero.jpg"
           alt="Inside Lather Head Spa — warm, inviting treatment space in Greenville, NC"
           loading="eager"
           style={{
@@ -121,6 +121,7 @@ export default function ContactPage() {
             Greenville, NC
           </p>
           <h1
+            className="contact-page-hero-title"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 7vw, 6rem)",
@@ -136,6 +137,7 @@ export default function ContactPage() {
             <em style={{ fontStyle: "italic" }}>ritual.</em>
           </h1>
           <p
+            className="contact-page-hero-sub"
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "0.95rem",
@@ -169,11 +171,11 @@ export default function ContactPage() {
             gap: "6rem",
             alignItems: "start",
           }}
-          className="about-grid"
+          className="about-grid contact-booking-grid"
         >
           {/* Left column — sticky on desktop */}
           <div
-            className="contact-info-sticky"
+            className="contact-info-sticky contact-booking-info"
             style={{ position: "sticky", top: "120px" }}
           >
             <p
@@ -230,6 +232,7 @@ export default function ContactPage() {
               distractions.
             </p>
             <p
+              className="contact-booking-info-desc"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.92rem",
@@ -246,6 +249,7 @@ export default function ContactPage() {
 
             {/* After You Book info box */}
             <div
+              className="contact-after-book"
               style={{
                 padding: "1.5rem",
                 border: "1px solid rgba(140,123,107,0.15)",
@@ -283,6 +287,7 @@ export default function ContactPage() {
 
             {/* Contact Details */}
             <div
+              className="contact-details-list"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -290,7 +295,7 @@ export default function ContactPage() {
               }}
             >
               {[
-                { label: "Location", value: "Greenville, NC", href: null },
+                { label: "Location", value: "620 Lynndale Court\nGreenville, NC 27858", href: null },
                 {
                   label: "Hours",
                   value: "Tue\u2013Sat \u00b7 10am\u20137pm",
@@ -298,13 +303,13 @@ export default function ContactPage() {
                 },
                 {
                   label: "Phone",
-                  value: "(252) 558-4344",
-                  href: "tel:+12525584344",
+                  value: "(252) 531-0987",
+                  href: "tel:+12525310987",
                 },
                 {
                   label: "Email",
-                  value: "hello@latherspa.com",
-                  href: "mailto:hello@latherspa.com",
+                  value: "hello@latherspas.com",
+                  href: "mailto:hello@latherspas.com",
                 },
               ].map((item) => (
                 <div
@@ -366,7 +371,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right column — booking card + alternatives */}
-          <div>
+          <div className="contact-booking-card">
             {/* Dark booking card */}
             <div
               style={{
@@ -473,7 +478,7 @@ export default function ContactPage() {
               }}
             >
               <a
-                href="tel:+12525584344"
+                href="tel:+12525310987"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -510,12 +515,12 @@ export default function ContactPage() {
                     fontWeight: 300,
                   }}
                 >
-                  (252) 558-4344
+                  (252) 531-0987
                 </p>
               </a>
 
               <a
-                href="mailto:hello@latherspa.com"
+                href="mailto:hello@latherspas.com"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -552,7 +557,7 @@ export default function ContactPage() {
                     fontWeight: 300,
                   }}
                 >
-                  hello@latherspa.com
+                  hello@latherspas.com
                 </p>
               </a>
             </div>
@@ -578,10 +583,10 @@ export default function ContactPage() {
             gap: "6rem",
             alignItems: "start",
           }}
-          className="about-grid"
+          className="about-grid contact-location-grid"
         >
           {/* Left — directions info */}
-          <div>
+          <div className="contact-location-copy">
             <p
               style={{
                 fontFamily: "var(--font-body)",
@@ -710,6 +715,7 @@ export default function ContactPage() {
 
           {/* Right — Google Map */}
           <div
+            className="contact-map-container"
             style={{
               overflow: "hidden",
               minHeight: "420px",
@@ -717,7 +723,7 @@ export default function ContactPage() {
             }}
           >
             <iframe
-              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA_KPI4Fnhx51xw-ZnCQQmS7aVKHVIyyk4&q=Lather+Head+Spa,Greenville,NC&zoom=14&maptype=roadmap"
+              src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAX0ejy_st1v_b74pD_JonXQph-bGGP04A&q=Lather+Head+Spa,Greenville,NC&zoom=14&maptype=roadmap"
               width="100%"
               height="100%"
               style={{
@@ -752,7 +758,7 @@ export default function ContactPage() {
               gap: "6rem",
               alignItems: "start",
             }}
-            className="about-grid"
+            className="about-grid contact-expect-grid"
           >
             <div>
               <p
@@ -799,7 +805,7 @@ export default function ContactPage() {
                 gridTemplateColumns: "1fr 1fr",
                 gap: "2rem",
               }}
-              className="benefits-grid"
+              className="benefits-grid contact-expect-steps"
             >
               {[
                 {
@@ -825,6 +831,7 @@ export default function ContactPage() {
               ].map((item) => (
                 <div
                   key={item.step}
+                  className="contact-expect-step"
                   style={{
                     padding: "2rem",
                     background: "rgba(237,230,219,0.5)",
@@ -1039,8 +1046,8 @@ export default function ContactPage() {
         headlineItalic="questions?"
         description="Whether you are unsure which ritual is right for you, have a concern about your scalp, or just want to know more before booking — reach out. We would love to hear from you."
         primaryCTA={{
-          label: "Call (252) 558-4344",
-          href: "tel:+12525584344",
+          label: "Call (252) 531-0987",
+          href: "tel:+12525310987",
         }}
         secondaryCTA={{
           label: "View FAQ",

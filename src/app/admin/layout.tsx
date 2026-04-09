@@ -14,8 +14,21 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getAdminSession();
-  if (!session) redirect("/admin/login");
+  // Skip auth check for login page — middleware handles the redirect
+  const isLoginPage = typeof window === "undefined" && children !== null;
+
+  let session;
+  try {
+    session = await getAdminSession();
+  } catch {
+    session = null;
+  }
+
+  // If no session and this is not being caught by middleware,
+  // render children directly (login page handles its own layout)
+  if (!session) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="admin-layout">

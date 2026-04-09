@@ -20,7 +20,7 @@ const aboutHeadSpaFAQs = [
 ];
 
 const bookingFAQs = [
-  { question: "How do I book an appointment?", answer: "You can book online anytime through our website — just click the Book Now button on any page. Select your preferred ritual, choose a date and time, and confirm instantly. If you prefer, you can also call or text us at (252) 558-4344. We recommend booking in advance as appointments fill up quickly, especially on weekends." },
+  { question: "How do I book an appointment?", answer: "You can book online anytime through our website — just click the Book Now button on any page. Select your preferred ritual, choose a date and time, and confirm instantly. If you prefer, you can also call or text us at (252) 531-0987. We recommend booking in advance as appointments fill up quickly, especially on weekends." },
   { question: "How should I prepare for my appointment?", answer: "Come as you are. There is no need to wash your hair beforehand — in fact, we prefer to start with your scalp in its natural state so we can assess it accurately. Avoid heavy oils or styling products on the scalp the day before. Wear something comfortable and plan to relax. We handle everything else." },
   { question: "Can I book for a group?", answer: "Yes! We offer spa party packages for groups of 3 or more. Whether it is a bridal party, birthday celebration, or a simple afternoon with friends, we can create a customized group experience. Visit our Spa Parties page or reach out to us directly to coordinate." },
   { question: "What if I'm running late?", answer: "We understand that things come up. If you are running late, please call or text us as soon as possible. We will do our best to accommodate you, but your session may be shortened to avoid impacting the next guest. The full service price will still apply." },
@@ -75,7 +75,7 @@ export default function FAQPage() {
           overflow: "hidden",
         }}
       >
-        <img src="/Photos/Finalized/2.10.26_LHS-1.jpg" alt="Lather Head Spa detail" loading="eager" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", opacity: 0.12 }} />
+        <img src="/media/editorial/ambiance-wide.jpg" alt="Lather Head Spa detail" loading="eager" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%", opacity: 0.12 }} />
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(15,10,6,0.7) 0%, transparent 60%)", pointerEvents: "none" }} />
         <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--blush)", marginBottom: "1.2rem", display: "flex", alignItems: "center", gap: "12px", opacity: 0.85 }}>
@@ -105,9 +105,9 @@ export default function FAQPage() {
       {/* ── EDITORIAL IMAGE BREAK ────────────────────────── */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "2px", background: "rgba(140,123,107,0.06)" }} className="values-grid">
         {[
-          { src: "/Photos/Finalized/2.10.26_LHS-16.jpg", alt: "Client relaxed in the treatment chair" },
-          { src: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4074.jpg", alt: "Treatment tools on marble dish" },
-          { src: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4096.jpg", alt: "Natulique products arranged on marble" },
+          { src: "/media/pages/faq-hero.jpg", alt: "Client relaxed in the treatment chair" },
+          { src: "/media/pages/faq-detail-01.jpg", alt: "Treatment tools on marble dish" },
+          { src: "/media/pages/faq-detail-02.jpg", alt: "Natulique products arranged on marble" },
         ].map((img) => (
           <div key={img.src} style={{ overflow: "hidden", height: "clamp(140px, 16vw, 220px)" }}>
             <img src={img.src} alt={img.alt} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
@@ -198,8 +198,8 @@ export default function FAQPage() {
             <Link href="/contact" style={{ display: "inline-block", fontFamily: "var(--font-body)", fontSize: "0.62rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--bark)", background: "var(--linen)", padding: "16px 40px", textDecoration: "none" }}>
               Contact Us
             </Link>
-            <a href="tel:+12525584344" style={{ display: "inline-block", fontFamily: "var(--font-body)", fontSize: "0.62rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(237,230,219,0.62)", border: "1px solid rgba(237,230,219,0.18)", padding: "14px 32px", textDecoration: "none" }}>
-              (252) 558-4344
+            <a href="tel:+12525310987" style={{ display: "inline-block", fontFamily: "var(--font-body)", fontSize: "0.62rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(237,230,219,0.62)", border: "1px solid rgba(237,230,219,0.18)", padding: "14px 32px", textDecoration: "none" }}>
+              (252) 531-0987
             </a>
           </div>
         </div>

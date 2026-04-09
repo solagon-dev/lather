@@ -5,13 +5,13 @@ import { services } from "@/lib/data";
 import Link from "next/link";
 
 const serviceImages: Record<string, string> = {
-  "classic-ritual": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4083.jpg",
-  "revitalize-restore": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4104.jpg",
-  "nourish-fortify": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4098.jpg",
-  "gentlemans-recharge": "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4135.jpg",
+  "classic-ritual": "/media/services/classic-ritual.jpg",
+  "revitalize-restore": "/media/services/service-tools.jpg",
+  "nourish-fortify": "/media/services/service-treatment.jpg",
+  "gentlemans-recharge": "/media/services/service-detail.jpg",
 };
 
-const fallbackImage = "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4119.jpg";
+const fallbackImage = "/media/services/service-closeup.jpg";
 
 export default function Services() {
   return (

@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
         `Confirmation: ${appointment.confirmationCode}`,
         "",
         "Please arrive 5 minutes early.",
-        "Lather Head Spa · Greenville, NC · (252) 558-4344",
+        "Lather Head Spa · Greenville, NC · (252) 531-0987",
       ].join("\n"),
       startAt: appointment.startAt,
       endAt: appointment.endAt,

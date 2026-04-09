@@ -13,7 +13,6 @@ const treatmentSubLinks = [
   { label: "Gift Cards", href: "/gift-cards" },
 ];
 
-// Pages with dark hero sections where white nav text works
 const darkHeroRoutes = [
   "/",
   "/about",
@@ -31,7 +30,6 @@ const darkHeroRoutes = [
 
 function hasDarkHero(pathname: string): boolean {
   if (darkHeroRoutes.includes(pathname)) return true;
-  // Dynamic dark-hero routes
   if (pathname.startsWith("/treatments/") && pathname.split("/").length > 2) return true;
   if (pathname.startsWith("/locations/")) return true;
   if (pathname.startsWith("/head-spa-near/")) return true;
@@ -41,6 +39,21 @@ function hasDarkHero(pathname: string): boolean {
   if (pathname.startsWith("/journal/") && pathname.split("/").length > 2) return true;
   return false;
 }
+
+const mobileNavLinks = [
+  { label: "Treatments", href: "/treatments" },
+  { label: "About", href: "/about" },
+  { label: "Journal", href: "/journal" },
+  { label: "Contact", href: "/contact" },
+  { label: "Team", href: "/team" },
+];
+
+const mobileSecondaryLinks = [
+  { label: "Memberships", href: "/memberships" },
+  { label: "Gift Cards", href: "/gift-cards" },
+  { label: "Spa Parties", href: "/spa-parties" },
+  { label: "FAQ + Policies", href: "/faq" },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -76,22 +89,11 @@ export default function Navbar() {
     { label: "Contact", href: "/contact" },
   ];
 
-  const mobileLinks = [
-    { label: "Home", href: "/" },
-    { label: "Treatments", href: "/treatments" },
-    { label: "About", href: isHome ? "#about" : "/about" },
-    { label: "Journal", href: "/journal" },
-    { label: "Contact", href: "/contact" },
-  ];
-
-  // When not scrolled: use light text on dark heroes, dark text on light heroes
-  // When scrolled: always dark text on cream background
   const useLightText = !scrolled && darkHero;
-
   const textColor = useLightText ? "rgba(255,255,255,0.82)" : "var(--mink)";
   const textHover = useLightText ? "#FFFFFF" : "var(--bark)";
   const logoColor = useLightText ? "rgba(255,255,255,0.96)" : "var(--bark)";
-  const hamburgerColor = menuOpen ? "var(--bark)" : (useLightText ? "#FFFFFF" : "var(--bark)");
+  const hamburgerColor = menuOpen ? "var(--linen)" : (useLightText ? "#FFFFFF" : "var(--bark)");
 
   const navLinkStyle: React.CSSProperties = {
     fontFamily: "var(--font-body)",
@@ -116,22 +118,22 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: scrolled ? "rgba(247,243,238,0.95)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(140,123,107,0.1)" : "none",
+          background: scrolled && !menuOpen ? "rgba(247,243,238,0.95)" : "transparent",
+          backdropFilter: scrolled && !menuOpen ? "blur(20px)" : "none",
+          WebkitBackdropFilter: scrolled && !menuOpen ? "blur(20px)" : "none",
+          borderBottom: scrolled && !menuOpen ? "1px solid rgba(140,123,107,0.1)" : "none",
           transition: "padding 0.5s var(--ease-luxury), background 0.5s var(--ease-luxury), border-color 0.5s ease",
         }}
       >
-        {/* Logo — refined letterform */}
-        <Link href="/" style={{ textDecoration: "none" }}>
+        {/* Logo */}
+        <Link href="/" style={{ textDecoration: "none", zIndex: 60, position: "relative" }} onClick={() => menuOpen && setMenuOpen(false)}>
           <span
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "1.5rem",
               fontWeight: 300,
               letterSpacing: "0.18em",
-              color: scrolled ? "var(--bark)" : logoColor,
+              color: menuOpen ? "var(--linen)" : (scrolled ? "var(--bark)" : logoColor),
               textTransform: "uppercase",
               display: "block",
               transition: "color 0.4s var(--ease-luxury)",
@@ -144,7 +146,6 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex" style={{ alignItems: "center", gap: "2.5rem" }}>
-          {/* Treatments with dropdown */}
           <div
             style={{ position: "relative" }}
             onMouseEnter={openDropdown}
@@ -170,7 +171,6 @@ export default function Navbar() {
               </Link>
             )}
 
-            {/* Dropdown panel */}
             <div
               style={{
                 position: "absolute",
@@ -229,7 +229,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Other nav links */}
           {navLinks.map((link) =>
             link.href.startsWith("#") ? (
               <a
@@ -254,7 +253,6 @@ export default function Navbar() {
             )
           )}
 
-          {/* Book CTA */}
           <Link
             href="/book"
             style={{
@@ -291,7 +289,7 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Hamburger Button */}
+        {/* Hamburger */}
         <button
           className="md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -333,138 +331,157 @@ export default function Navbar() {
         </button>
       </header>
 
-      {/* Mobile Full-Screen Overlay Menu */}
+      {/* ── Mobile Full-Screen Menu ── */}
       <div
         aria-hidden={!menuOpen}
         style={{
           position: "fixed",
           inset: 0,
-          background: "var(--cream)",
+          background: "var(--charcoal)",
           zIndex: 49,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0",
+          justifyContent: "space-between",
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? "auto" : "none",
           transition: "opacity 0.45s var(--ease-luxury)",
+          overflow: "hidden",
         }}
       >
+        {/* Ambient glow */}
         <div
           aria-hidden
           style={{
             position: "absolute",
             inset: 0,
-            background: "radial-gradient(ellipse at 30% 50%, rgba(212,184,168,0.25), transparent 65%)",
+            background: "radial-gradient(ellipse at 20% 40%, rgba(212,184,168,0.1), transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(163,172,148,0.06), transparent 50%)",
             pointerEvents: "none",
           }}
         />
 
-        <nav style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.8rem", position: "relative", zIndex: 1 }}>
-          {mobileLinks.map((link) => (
-            <div key={link.label} style={{ textAlign: "center" }}>
-              {link.href.startsWith("#") ? (
-                <a
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
-                    fontWeight: 300,
-                    color: "var(--bark)",
-                    textDecoration: "none",
-                    letterSpacing: "0.06em",
-                    transition: "opacity 0.2s",
-                    lineHeight: 1.15,
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.4")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                >
-                  {link.label}
-                </a>
-              ) : (
-                <Link
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
-                    fontWeight: 300,
-                    color: "var(--bark)",
-                    textDecoration: "none",
-                    letterSpacing: "0.06em",
-                    transition: "opacity 0.2s",
-                    lineHeight: 1.15,
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.4")}
-                  onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-                >
-                  {link.label}
-                </Link>
-              )}
+        {/* Main content */}
+        <nav
+          style={{
+            position: "relative",
+            zIndex: 1,
+            paddingTop: "clamp(100px, 16vh, 140px)",
+            paddingLeft: "clamp(28px, 6vw, 48px)",
+            paddingRight: "clamp(28px, 6vw, 48px)",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* Primary links — large editorial type, left-aligned */}
+          <div style={{ marginBottom: "2.5rem" }}>
+            {mobileNavLinks.map((link, i) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: "block",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 8vw, 2.8rem)",
+                  fontWeight: 300,
+                  color: "var(--linen)",
+                  textDecoration: "none",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1.15,
+                  padding: "0.55rem 0",
+                  opacity: menuOpen ? 1 : 0,
+                  transform: menuOpen ? "translateY(0)" : "translateY(12px)",
+                  transitionDelay: menuOpen ? `${0.1 + i * 0.05}s` : "0s",
+                  transitionProperty: "opacity, transform",
+                  transitionDuration: "0.5s",
+                  transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
 
-              {link.label === "Treatments" && (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem", marginTop: "0.6rem" }}>
-                  {treatmentSubLinks.slice(1).map((sub) => (
-                    <Link
-                      key={sub.href}
-                      href={sub.href}
-                      onClick={() => setMenuOpen(false)}
-                      style={{
-                        fontFamily: "var(--font-body)",
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.15em",
-                        textTransform: "uppercase",
-                        color: "var(--stone)",
-                        textDecoration: "none",
-                        transition: "color 0.2s",
-                        lineHeight: 1.4,
-                      }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bark)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--stone)")}
-                    >
-                      {sub.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+          {/* Divider */}
+          <div style={{ width: "32px", height: "1px", background: "var(--blush)", opacity: 0.3, marginBottom: "1.5rem" }} />
 
+          {/* Secondary links — compact 2-column grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem 2rem", marginBottom: "2.5rem" }}>
+            {mobileSecondaryLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.08em",
+                  color: "rgba(237,230,219,0.45)",
+                  textDecoration: "none",
+                  lineHeight: 1.5,
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Book CTA */}
           <Link
             href="/book"
             onClick={() => setMenuOpen(false)}
             style={{
-              marginTop: "1.2rem",
+              display: "block",
               fontFamily: "var(--font-body)",
-              fontSize: "0.65rem",
+              fontSize: "0.58rem",
               letterSpacing: "0.24em",
               textTransform: "uppercase",
-              color: "var(--cream)",
-              background: "var(--bark)",
-              padding: "16px 48px",
+              textAlign: "center",
+              color: "var(--bark)",
+              background: "var(--linen)",
+              padding: "16px 32px",
               textDecoration: "none",
-              display: "inline-block",
+              alignSelf: "stretch",
             }}
           >
-            Book Now
+            Reserve Your Ritual
           </Link>
         </nav>
 
-        <p
+        {/* Footer bar */}
+        <div
           style={{
-            position: "absolute",
-            bottom: "32px",
-            fontFamily: "var(--font-body)",
-            fontSize: "0.6rem",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "var(--stone)",
+            position: "relative",
+            zIndex: 1,
+            padding: "0 clamp(28px, 6vw, 48px) clamp(28px, 4vh, 40px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          Greenville, NC &nbsp;·&nbsp; Tue–Sat 10am–7pm
-        </p>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.54rem",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "rgba(237,230,219,0.22)",
+            }}
+          >
+            Greenville, NC
+          </p>
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "0.54rem",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "rgba(237,230,219,0.22)",
+            }}
+          >
+            Tue – Sat &nbsp;·&nbsp; 10am – 7pm
+          </p>
+        </div>
       </div>
     </>
   );

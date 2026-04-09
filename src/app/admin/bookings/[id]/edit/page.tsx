@@ -117,8 +117,8 @@ export default function EditAppointmentPage() {
           <div className="admin-card-header">
             <h3 className="admin-card-title">Edit Appointment</h3>
           </div>
-          <div style={{ padding: "24px" }}>
-            <p style={{ fontSize: "0.82rem", color: "#888", marginBottom: "20px" }}>
+          <div className="admin-card-body">
+            <p style={{ fontSize: "0.88rem", color: "#5C4E42", marginBottom: "20px" }}>
               Client: <strong style={{ color: "#333" }}>{appt.client.firstName} {appt.client.lastName}</strong> ({appt.client.email})
             </p>
 

@@ -96,7 +96,7 @@ export default function SpaPartiesPage() {
         className="grain-overlay section-pad"
       >
         <img
-          src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4174.jpg"
+          src="/media/pages/spa-parties-hero.jpg"
           alt="The Lather team in the studio with warm lighting and gold accents"
           loading="eager"
           style={{
@@ -632,7 +632,7 @@ export default function SpaPartiesPage() {
                 Email Us
               </p>
               <a
-                href="mailto:hello@latherspa.com"
+                href="mailto:hello@latherspas.com"
                 className="hover-fade"
                 style={{
                   fontFamily: "var(--font-display)",
@@ -643,7 +643,7 @@ export default function SpaPartiesPage() {
                   transition: "opacity 0.2s",
                 }}
               >
-                hello@latherspa.com
+                hello@latherspas.com
               </a>
             </div>
             <div style={{ flex: 1, minWidth: "200px" }}>
@@ -660,7 +660,7 @@ export default function SpaPartiesPage() {
                 Call Us
               </p>
               <a
-                href="tel:+12525584344"
+                href="tel:+12525310987"
                 className="hover-fade"
                 style={{
                   fontFamily: "var(--font-display)",
@@ -671,7 +671,7 @@ export default function SpaPartiesPage() {
                   transition: "opacity 0.2s",
                 }}
               >
-                (252) 558-4344
+                (252) 531-0987
               </a>
             </div>
             <div style={{ flex: 1, minWidth: "200px" }}>
@@ -763,7 +763,7 @@ export default function SpaPartiesPage() {
           </p>
 
           <form
-            action="mailto:hello@latherspa.com"
+            action="mailto:hello@latherspas.com"
             method="POST"
             encType="text/plain"
             style={{
@@ -1041,7 +1041,7 @@ export default function SpaPartiesPage() {
         }}
         secondaryCTA={{
           label: "Call to Inquire",
-          href: "tel:+12525584344",
+          href: "tel:+12525310987",
         }}
       />
 

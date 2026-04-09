@@ -150,7 +150,7 @@ export async function sendBookingConfirmationEmail(appt: AppointmentData): Promi
     <!-- Footer -->
     <div style="text-align:center;margin-top:32px;padding-top:24px;">
       <p style="font-size:13px;color:#6B5C4E;line-height:1.8;margin:0 0 16px;">
-        Questions? Reply to this email or call us at <a href="tel:+12525584344" style="color:#3D2E22;">(252) 558-4344</a>
+        Questions? Reply to this email or call us at <a href="tel:+12525310987" style="color:#3D2E22;">(252) 531-0987</a>
       </p>
       <p style="font-size:11px;color:#8C7B6B;margin:0;">
         Lather Head Spa · Greenville, NC · Tue–Sat 10am–7pm
@@ -165,7 +165,7 @@ export async function sendBookingConfirmationEmail(appt: AppointmentData): Promi
 
   try {
     const result = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Lather Head Spa <hello@latherheadspa.com>",
+      from: process.env.RESEND_FROM_EMAIL || "Lather Head Spa <hello@latherspas.com>",
       to: appt.client.email,
       subject,
       html,
@@ -252,7 +252,7 @@ export async function sendReminderEmail(appt: AppointmentData, hoursAhead: 24 | 
     </div>
     <div style="text-align:center;margin-top:32px;">
       <p style="font-size:13px;color:#6B5C4E;margin:0;">
-        <a href="tel:+12525584344" style="color:#3D2E22;">(252) 558-4344</a> · hello@latherheadspa.com
+        <a href="tel:+12525310987" style="color:#3D2E22;">(252) 531-0987</a> · hello@latherspas.com
       </p>
     </div>
   </div>
@@ -261,7 +261,7 @@ export async function sendReminderEmail(appt: AppointmentData, hoursAhead: 24 | 
 
   try {
     const result = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Lather Head Spa <hello@latherheadspa.com>",
+      from: process.env.RESEND_FROM_EMAIL || "Lather Head Spa <hello@latherspas.com>",
       to: appt.client.email,
       subject,
       html,
@@ -328,13 +328,13 @@ export async function sendAdminNewBookingNotice(appt: AppointmentData): Promise<
     ${appt.notes ? `<tr><td style="padding:6px 0;color:#888;font-size:13px;">Notes</td><td style="padding:6px 0;font-size:14px;">${appt.notes}</td></tr>` : ""}
   </table>
   <p style="margin:24px 0 0;font-size:13px;color:#888;">
-    <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.latherheadspa.com"}/admin/bookings/${appt.id}" style="color:#3D2E22;">View in Dashboard →</a>
+    <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://www.latherspas.com"}/admin/bookings/${appt.id}" style="color:#3D2E22;">View in Dashboard →</a>
   </p>
 </div>`;
 
   try {
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Lather Head Spa <hello@latherheadspa.com>",
+      from: process.env.RESEND_FROM_EMAIL || "Lather Head Spa <hello@latherspas.com>",
       to: adminEmail,
       subject,
       html,

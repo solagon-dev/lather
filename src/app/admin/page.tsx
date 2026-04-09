@@ -17,10 +17,10 @@ function formatPrice(cents: number | null) {
 
 const statusColors: Record<string, { bg: string; text: string }> = {
   pending: { bg: "#FEF9E7", text: "#9A7D0A" },
-  confirmed: { bg: "#EDF5EC", text: "#3A6B37" },
-  completed: { bg: "#EBF5FB", text: "#2471A3" },
-  no_show: { bg: "#FDEDEC", text: "#C0392B" },
-  cancelled: { bg: "#F4F1EC", text: "#8C7B6B" },
+  confirmed: { bg: "#EDF5EC", text: "#2D5A2A" },
+  completed: { bg: "#EBF5FB", text: "#1A5276" },
+  no_show: { bg: "#FDEDEC", text: "#922B21" },
+  cancelled: { bg: "#F4F1EC", text: "#6B5C4E" },
 };
 
 export default async function AdminDashboard() {
@@ -28,9 +28,16 @@ export default async function AdminDashboard() {
   const firstName = session?.name?.split(" ")[0] || "there";
 
   let dbError = false;
-  type ApptRow = { id: string; startAt: Date; status: string; client: { firstName: string; lastName: string }; service: { name: string; durationMinutes: number; price: number | null }; staff: { name: string } };
+  type ApptRow = {
+    id: string;
+    startAt: Date;
+    status: string;
+    client: { firstName: string; lastName: string };
+    service: { name: string; durationMinutes: number; price: number | null };
+    staff: { name: string };
+  };
   let todayAppointments: ApptRow[] = [];
-  let stats = { today: 0, upcoming: 0, pending: 0, completed: 0, noShows: 0, totalClients: 0, articles: 0 };
+  let stats = { today: 0, upcoming: 0, pending: 0, completed: 0, totalClients: 0, articles: 0 };
 
   try {
     const now = new Date();
@@ -48,17 +55,16 @@ export default async function AdminDashboard() {
       orderBy: { startAt: "asc" },
     });
 
-    const [todayCount, upcomingCount, pendingCount, completedCount, noShowCount, clientCount, articleCount] = await Promise.all([
+    const [todayCount, upcomingCount, pendingCount, completedCount, clientCount, articleCount] = await Promise.all([
       prisma.appointment.count({ where: { startAt: { gte: dayStart, lte: dayEnd }, status: { in: ["pending", "confirmed"] } } }),
       prisma.appointment.count({ where: { startAt: { gt: now }, status: { in: ["pending", "confirmed"] } } }),
       prisma.appointment.count({ where: { status: "pending" } }),
       prisma.appointment.count({ where: { status: "completed" } }),
-      prisma.appointment.count({ where: { status: "no_show" } }),
       prisma.client.count(),
       prisma.article.count({ where: { status: "published" } }),
     ]);
 
-    stats = { today: todayCount, upcoming: upcomingCount, pending: pendingCount, completed: completedCount, noShows: noShowCount, totalClients: clientCount, articles: articleCount };
+    stats = { today: todayCount, upcoming: upcomingCount, pending: pendingCount, completed: completedCount, totalClients: clientCount, articles: articleCount };
   } catch {
     dbError = true;
   }
@@ -76,14 +82,16 @@ export default async function AdminDashboard() {
         {dbError && <div className="admin-alert admin-alert-error">Database connection failed. Check your DATABASE_URL.</div>}
 
         <div className="admin-page-header">
-          <h2 className="admin-page-title">Welcome back, {firstName}.</h2>
-          <p className="admin-page-sub">
-            {new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "America/New_York" }).format(new Date())}
-          </p>
+          <div>
+            <h2 className="admin-page-title">Welcome back, {firstName}.</h2>
+            <p className="admin-page-sub">
+              {new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: "America/New_York" }).format(new Date())}
+            </p>
+          </div>
         </div>
 
         {/* Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "12px", marginBottom: "28px" }}>
+        <div className="admin-stats-grid">
           {[
             { label: "Today", value: stats.today, href: "/admin/bookings", accent: true },
             { label: "Upcoming", value: stats.upcoming, href: "/admin/bookings" },
@@ -92,13 +100,19 @@ export default async function AdminDashboard() {
             { label: "Clients", value: stats.totalClients },
             { label: "Articles", value: stats.articles, href: "/admin/articles" },
           ].map((s) => {
-            const inner = (
-              <div className="admin-stat-card" key={s.label} style={s.accent ? { background: "#3D2E22", borderColor: "#3D2E22" } : undefined}>
+            const card = (
+              <div
+                className="admin-stat-card"
+                key={s.label}
+                style={s.accent ? { background: "#3D2E22", borderColor: "#3D2E22" } : undefined}
+              >
                 <p className="admin-stat-value" style={s.accent ? { color: "#EDE6DB" } : undefined}>{s.value}</p>
                 <p className="admin-stat-label" style={s.accent ? { color: "rgba(237,230,219,0.6)" } : undefined}>{s.label}</p>
               </div>
             );
-            return s.href ? <Link key={s.label} href={s.href} style={{ textDecoration: "none" }}>{inner}</Link> : <div key={s.label}>{inner}</div>;
+            return s.href
+              ? <Link key={s.label} href={s.href} style={{ textDecoration: "none" }}>{card}</Link>
+              : <div key={s.label}>{card}</div>;
           })}
         </div>
 
@@ -110,30 +124,31 @@ export default async function AdminDashboard() {
           </div>
 
           {todayAppointments.length === 0 ? (
-            <div style={{ padding: "40px 24px", textAlign: "center" }}>
-              <p style={{ fontSize: "0.92rem", color: "#999", marginBottom: "16px" }}>No appointments scheduled for today.</p>
+            <div className="admin-empty" style={{ padding: "48px 24px" }}>
+              <p className="admin-empty-sub" style={{ marginBottom: "16px" }}>No appointments scheduled for today.</p>
               <Link href="/admin/bookings/new" className="admin-btn admin-btn-primary admin-btn-sm">+ New Booking</Link>
             </div>
           ) : (
             <div>
-              {todayAppointments.map((appt) => {
+              {todayAppointments.map((appt, i) => {
                 const colors = statusColors[appt.status] || statusColors.pending;
                 return (
                   <Link
                     key={appt.id}
                     href={`/admin/bookings/${appt.id}`}
-                    style={{ display: "grid", gridTemplateColumns: "80px 1fr auto", gap: "16px", padding: "14px 24px", borderBottom: "1px solid #f0f0f0", textDecoration: "none", color: "inherit", alignItems: "center" }}
+                    className="admin-schedule-row"
+                    style={{ borderBottom: i < todayAppointments.length - 1 ? "1px solid #F0ECE6" : "none" }}
                   >
-                    <span style={{ fontSize: "0.95rem", fontWeight: 500, color: "#1a1a1a" }}>{formatTime(appt.startAt)}</span>
-                    <div>
-                      <p style={{ fontSize: "0.88rem", fontWeight: 500, color: "#1a1a1a", marginBottom: "2px" }}>
+                    <span className="admin-schedule-time">{formatTime(appt.startAt)}</span>
+                    <div className="admin-schedule-info">
+                      <p className="admin-schedule-name">
                         {appt.client.firstName} {appt.client.lastName}
                       </p>
-                      <p style={{ fontSize: "0.76rem", color: "#888" }}>
+                      <p className="admin-schedule-meta">
                         {appt.service.name} · {appt.staff.name}{appt.service.price ? ` · ${formatPrice(appt.service.price)}` : ""}
                       </p>
                     </div>
-                    <span style={{ display: "inline-block", padding: "3px 10px", borderRadius: "9999px", fontSize: "0.68rem", fontWeight: 500, background: colors.bg, color: colors.text, textTransform: "capitalize" }}>
+                    <span className="admin-badge" style={{ background: colors.bg, color: colors.text }}>
                       {appt.status.replace("_", " ")}
                     </span>
                   </Link>
@@ -144,25 +159,30 @@ export default async function AdminDashboard() {
         </div>
 
         {/* Quick actions */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-          <div className="admin-card" style={{ padding: "20px 24px" }}>
-            <h3 style={{ fontSize: "0.88rem", fontWeight: 600, marginBottom: "12px", color: "#1a1a1a" }}>Bookings</h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-              <Link href="/admin/bookings/new" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>+ New Booking</Link>
-              <Link href="/admin/bookings" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>All Appointments</Link>
-              <Link href="/admin/availability" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Availability</Link>
-              <Link href="/admin/services" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Services</Link>
-              <Link href="/admin/staff" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Staff</Link>
+        <div className="admin-quick-grid">
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3 className="admin-card-title">Bookings</h3>
+            </div>
+            <div className="admin-quick-links">
+              <Link href="/admin/bookings/new" className="admin-quick-link">+ New Booking</Link>
+              <Link href="/admin/bookings" className="admin-quick-link">All Appointments</Link>
+              <Link href="/admin/availability" className="admin-quick-link">Availability</Link>
+              <Link href="/admin/services" className="admin-quick-link">Services</Link>
+              <Link href="/admin/staff" className="admin-quick-link">Staff</Link>
+              <Link href="/admin/clients" className="admin-quick-link">Clients</Link>
             </div>
           </div>
-          <div className="admin-card" style={{ padding: "20px 24px" }}>
-            <h3 style={{ fontSize: "0.88rem", fontWeight: 600, marginBottom: "12px", color: "#1a1a1a" }}>Content</h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-              <Link href="/admin/articles/new" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Write Article</Link>
-              <Link href="/admin/articles" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Manage Articles</Link>
-              <Link href="/admin/testimonials" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Testimonials</Link>
-              <Link href="/admin/gallery" style={{ fontSize: "0.82rem", color: "#3D2E22", textDecoration: "none", padding: "6px 0" }}>Gallery</Link>
-              <Link href="/" style={{ fontSize: "0.82rem", color: "#8C7B6B", textDecoration: "none", padding: "6px 0" }}>View Website ↗</Link>
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3 className="admin-card-title">Content</h3>
+            </div>
+            <div className="admin-quick-links">
+              <Link href="/admin/articles/new" className="admin-quick-link">Write Article</Link>
+              <Link href="/admin/articles" className="admin-quick-link">Manage Articles</Link>
+              <Link href="/admin/testimonials" className="admin-quick-link">Testimonials</Link>
+              <Link href="/admin/gallery" className="admin-quick-link">Gallery</Link>
+              <Link href="/" className="admin-quick-link" style={{ color: "#8C7B6B" }}>View Website ↗</Link>
             </div>
           </div>
         </div>

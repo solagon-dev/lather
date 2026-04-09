@@ -95,7 +95,7 @@ export default function MembershipsPage() {
         className="grain-overlay section-pad"
       >
         <img
-          src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4090.jpg"
+          src="/media/pages/memberships-hero.jpg"
           alt="Natulique products and treatment tools at Lather"
           loading="eager"
           style={{

@@ -417,7 +417,7 @@ export default function ArticleEditor({ article, action, submitLabel = "Save" }:
                   name="canonicalUrl"
                   className="admin-input"
                   defaultValue={article?.canonicalUrl ?? ""}
-                  placeholder="https://latherheadspa.com/articles/..."
+                  placeholder="https://www.latherspas.com/articles/..."
                   type="url"
                   style={{ fontSize: "0.75rem" }}
                 />

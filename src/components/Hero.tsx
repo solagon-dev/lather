@@ -11,8 +11,6 @@ export default function Hero() {
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const watermarkRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -25,8 +23,6 @@ export default function Hero() {
     const sub = subRef.current;
     const cta = ctaRef.current;
     const scroll = scrollRef.current;
-    const watermark = watermarkRef.current;
-    const line = lineRef.current;
     if (!section || !video || !overlay) return;
 
     let ticking = false;
@@ -41,14 +37,9 @@ export default function Hero() {
           const scrolled = Math.max(0, -rect.top);
           const p = Math.min(scrolled / sectionH, 1);
 
-          // Video: very slow zoom (barely perceptible)
           video.style.transform = `scale(${1 + p * 0.06})`;
-
-          // Overlay: gentle darken
           overlay.style.background = `rgba(20, 14, 9, ${0.55 + p * 0.2})`;
 
-          // Parallax depth — gentle, unhurried rates
-          // Everything fades together but moves at different speeds
           const fade = Math.max(0, 1 - p * 1.2);
           if (headline) {
             headline.style.transform = `translateY(${p * -18}px)`;
@@ -64,13 +55,6 @@ export default function Hero() {
           }
           if (scroll) {
             scroll.style.opacity = `${Math.max(0, 1 - p * 3)}`;
-          }
-          if (watermark) {
-            watermark.style.transform = `translate(-50%, calc(-50% + ${p * -20}px))`;
-            watermark.style.opacity = `${0.045 * (1 - p)}`;
-          }
-          if (line) {
-            line.style.opacity = `${Math.max(0, 1 - p * 2)}`;
           }
         }
         ticking = false;
@@ -96,7 +80,7 @@ export default function Hero() {
         background: "var(--charcoal)",
       }}
     >
-      {/* ── BACKGROUND VIDEO — fixed behind all content ───── */}
+      {/* ── BACKGROUND VIDEO ───────────────────────────────── */}
       <div
         style={{
           position: "fixed",
@@ -113,7 +97,7 @@ export default function Hero() {
           muted
           playsInline
           aria-hidden="true"
-          poster="/Photos/Finalized/2.10.26_LHS-5.jpg"
+          poster="/media/hero/hero-poster.jpg"
           style={{
             width: "100%",
             height: "100%",
@@ -124,14 +108,11 @@ export default function Hero() {
             willChange: "transform",
           }}
         >
-          <source
-            src="/Videos/Finished%20Videos/Posted/Welcome%20to%20Lather.mp4"
-            type="video/mp4"
-          />
+          <source src="/media/video/hero-welcome.mp4" type="video/mp4" />
         </video>
       </div>
 
-      {/* ── OVERLAY LAYERS ───────────────────────────────────── */}
+      {/* ── OVERLAY LAYERS ─────────────────────────────────── */}
       <div
         ref={overlayRef}
         aria-hidden="true"
@@ -174,9 +155,9 @@ export default function Hero() {
         }}
       />
 
-      {/* ── LOCATION TAG ─────────────────────────────────────── */}
+      {/* ── LOCATION TAG ───────────────────────────────────── */}
       <div
-        className="hero-eyebrow"
+        className="hero-location-tag"
         style={{
           position: "absolute",
           top: "clamp(90px, 12vw, 120px)",
@@ -201,52 +182,10 @@ export default function Hero() {
         </span>
       </div>
 
-      {/* ── CENTER HORIZONTAL LINE ───────────────────────────── */}
-      <div
-        ref={lineRef}
-        className="hero-line"
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "clamp(20px, 4vw, 48px)",
-          right: "clamp(20px, 4vw, 48px)",
-          height: "1px",
-          background: "linear-gradient(to right, transparent, rgba(255,255,255,0.18) 25%, rgba(255,255,255,0.18) 75%, transparent)",
-          zIndex: 2,
-          willChange: "opacity",
-        }}
-      />
-
-      {/* ── DECORATIVE LARGE WATERMARK ───────────────────────── */}
-      <div
-        ref={watermarkRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(140px, 22vw, 340px)",
-          fontWeight: 300,
-          color: "rgba(255,255,255,0.045)",
-          lineHeight: 1,
-          userSelect: "none",
-          whiteSpace: "nowrap",
-          letterSpacing: "-0.03em",
-          pointerEvents: "none",
-          zIndex: 2,
-          willChange: "transform, opacity",
-        }}
-      >
-        Lather
-      </div>
-
-      {/* ── MAIN CONTENT ─────────────────────────────────────── */}
+      {/* ── MAIN CONTENT ───────────────────────────────────── */}
       <div
         ref={contentRef}
-        className="hero-content section-pad"
+        className="hero-content"
         style={{
           position: "relative",
           zIndex: 2,
@@ -317,6 +256,7 @@ export default function Hero() {
         >
           <a
             href="/book"
+            className="hero-cta-primary"
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "0.62rem",
@@ -337,6 +277,7 @@ export default function Hero() {
           </a>
           <a
             href="#services"
+            className="hero-cta-secondary"
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "0.62rem",
@@ -359,7 +300,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ── SCROLL INDICATOR ─────────────────────────────────── */}
+      {/* ── SCROLL INDICATOR ───────────────────────────────── */}
       <div
         ref={scrollRef}
         className="hero-scroll"

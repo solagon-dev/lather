@@ -28,6 +28,7 @@ export async function updateAvailabilityRuleAction(
     return { error: "Failed to update rule." };
   }
   revalidatePath("/admin/availability");
+  revalidatePath("/book");
 }
 
 export async function createAvailabilityRuleAction(
@@ -50,12 +51,14 @@ export async function createAvailabilityRuleAction(
     return { error: "Failed to create rule." };
   }
   revalidatePath("/admin/availability");
+  revalidatePath("/book");
 }
 
 export async function deleteAvailabilityRuleAction(id: string): Promise<void> {
   await requireAdmin();
   await prisma.availabilityRule.delete({ where: { id } }).catch(() => {});
   revalidatePath("/admin/availability");
+  revalidatePath("/book");
 }
 
 export async function createBlackoutAction(
@@ -87,10 +90,12 @@ export async function createBlackoutAction(
     return { error: "Failed to create blackout." };
   }
   revalidatePath("/admin/availability");
+  revalidatePath("/book");
 }
 
 export async function deleteBlackoutAction(id: string): Promise<void> {
   await requireAdmin();
   await prisma.blackout.delete({ where: { id } }).catch(() => {});
   revalidatePath("/admin/availability");
+  revalidatePath("/book");
 }

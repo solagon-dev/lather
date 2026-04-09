@@ -66,14 +66,15 @@ export default function SeoLandingPage({ serviceKey, citySlug }: SeoLandingPageP
     "@type": ["LocalBusiness", "BeautySalon", "DaySpa"],
     name: "Lather Head Spa",
     description: service.metaDesc(city.name, city.state, city.driveTime),
-    url: `https://www.latherheadspa.com/${service.urlPrefix}/${city.slug}`,
-    telephone: "(252) 558-4344",
+    url: `https://www.latherspas.com/${service.urlPrefix}/${city.slug}`,
+    telephone: "(252) 531-0987",
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "",
+      streetAddress: "620 Lynndale Court",
       addressLocality: "Greenville",
       addressRegion: "NC",
+      postalCode: "27858",
       addressCountry: "US",
     },
     geo: {

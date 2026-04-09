@@ -52,11 +52,13 @@ export default async function LocationPage({ params }: Props) {
     description: loc.metaDescription,
     address: {
       "@type": "PostalAddress",
+      streetAddress: "620 Lynndale Court",
       addressLocality: "Greenville",
       addressRegion: "NC",
+      postalCode: "27858",
       addressCountry: "US",
     },
-    url: `https://www.latherheadspa.com/locations/${loc.slug}`,
+    url: `https://www.latherspas.com/locations/${loc.slug}`,
     areaServed: {
       "@type": "City",
       name: loc.city,
@@ -91,7 +93,7 @@ export default async function LocationPage({ params }: Props) {
         className="grain-overlay section-pad"
       >
         <img
-          src="/Photos/Finalized/2.10.26_LHS-6.jpg"
+          src="/media/pages/locations-hero.jpg"
           alt="Lather Head Spa interior — luxury waiting area in Greenville, NC"
           loading="eager"
           aria-hidden="true"

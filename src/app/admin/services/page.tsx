@@ -252,6 +252,7 @@ export default function ServicesPage() {
               </button>
             </div>
 
+            <div className="admin-card-body">
             {formError && (
               <div
                 className="admin-alert admin-alert-error"
@@ -395,6 +396,7 @@ export default function ServicesPage() {
               >
                 Cancel
               </button>
+            </div>
             </div>
           </div>
         )}

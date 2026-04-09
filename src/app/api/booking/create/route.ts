@@ -140,17 +140,28 @@ export async function POST(request: NextRequest) {
       console.error("[Notifications] Background send error:", err)
     );
 
-    // Sync to Google Calendar if staff has it enabled
+    // Sync to Google Calendar if staff has it enabled (awaited so errors are recorded)
     const staffForCal = await prisma.staff.findUnique({
       where: { id: staffId },
       select: { id: true, name: true, googleCalendarId: true, calendarSyncEnabled: true },
     });
     if (staffForCal?.calendarSyncEnabled) {
-      createCalendarEvent({
-        ...appointment,
-        timezone: "America/New_York",
-        staff: staffForCal,
-      }).catch((err) => console.error("[Calendar] Background sync error:", err));
+      try {
+        await createCalendarEvent({
+          id: appointment.id,
+          startAt: appointment.startAt,
+          endAt: appointment.endAt,
+          timezone: "America/New_York",
+          notes: appointment.notes,
+          confirmationCode: appointment.confirmationCode,
+          client: appointment.client,
+          service: appointment.service,
+          staff: staffForCal,
+          calendarEventId: appointment.calendarEventId,
+        });
+      } catch (err) {
+        console.error("[Calendar] Sync error:", err);
+      }
     }
 
     // Build calendar links for the response

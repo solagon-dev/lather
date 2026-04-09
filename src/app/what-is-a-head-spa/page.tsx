@@ -108,7 +108,7 @@ export default function WhatIsAHeadSpaPage() {
         className="grain-overlay section-pad"
       >
         <img
-          src="/Photos/Finalized/2.10.26_LHS-20.jpg"
+          src="/media/pages/head-spa-guide-hero.jpg"
           alt="Head spa treatment in progress at Lather Head Spa"
           loading="eager"
           style={{
@@ -310,9 +310,9 @@ export default function WhatIsAHeadSpaPage() {
         className="values-grid"
       >
         {[
-          { src: "/Photos/Finalized/2.10.26_LHS-16.jpg", alt: "Client relaxed and smiling after treatment" },
-          { src: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4074.jpg", alt: "Scalp treatment tools on marble" },
-          { src: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4247.jpg", alt: "Therapist performing scalp treatment" },
+          { src: "/media/pages/faq-hero.jpg", alt: "Client relaxed and smiling after treatment" },
+          { src: "/media/pages/faq-detail-01.jpg", alt: "Scalp treatment tools on marble" },
+          { src: "/media/team/heidi-griggs.jpg", alt: "Therapist performing scalp treatment" },
         ].map((img) => (
           <div key={img.src} style={{ overflow: "hidden", height: "clamp(200px, 25vw, 320px)" }}>
             <img

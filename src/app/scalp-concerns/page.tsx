@@ -20,7 +20,7 @@ const concerns = [
     treatmentDetail: "75 min · $125",
     href: "/treatments/classic-ritual",
     addon: "Scalp Analysis (+$25)",
-    image: "/Photos/Finalized/2.10.26_LHS-8.jpg",
+    image: "/media/scalp-concerns/buildup-oily.jpg",
   },
   {
     title: "Dry, Flaky, or Irritated Scalp",
@@ -31,7 +31,7 @@ const concerns = [
     treatmentDetail: "90 min · $175",
     href: "/treatments/nourish-fortify",
     addon: "Hot Towel Compression (+$15)",
-    image: "/Photos/Finalized/2.10.26_LHS-11.jpg",
+    image: "/media/scalp-concerns/dryness-flaking.jpg",
   },
   {
     title: "Thinning or Hair Loss",
@@ -42,7 +42,7 @@ const concerns = [
     treatmentDetail: "90 min · $165",
     href: "/treatments/revitalize-restore",
     addon: "LED Light Therapy (+$35)",
-    image: "/Photos/Finalized/2.10.26_LHS-13.jpg",
+    image: "/media/scalp-concerns/damage-repair.jpg",
   },
   {
     title: "Product Buildup",
@@ -53,7 +53,7 @@ const concerns = [
     treatmentDetail: "75 min · $125",
     href: "/treatments/classic-ritual",
     addon: "Scalp Analysis (+$25)",
-    image: "/Photos/Finalized/2.10.26_LHS-10.jpg",
+    image: "/media/scalp-concerns/thinning-loss.jpg",
   },
   {
     title: "Stress & Tension",
@@ -64,7 +64,7 @@ const concerns = [
     treatmentDetail: "60 min · $95",
     href: "/treatments/gentlemans-recharge",
     addon: "Extended Massage (+$30)",
-    image: "/Photos/Finalized/2.10.26_LHS-21.jpg",
+    image: "/media/scalp-concerns/tension-stress.jpg",
   },
   {
     title: "Damaged or Color-Treated Hair",
@@ -75,7 +75,7 @@ const concerns = [
     treatmentDetail: "90 min · $175",
     href: "/treatments/nourish-fortify",
     addon: "Aromatherapy Enhancement (+$20)",
-    image: "/Photos/Finalized/2.10.26_LHS-9.jpg",
+    image: "/media/scalp-concerns/sensitivity.jpg",
   },
 ];
 
@@ -100,7 +100,7 @@ export default function ScalpConcernsPage() {
         }}
       >
         <img
-          src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4256.jpg"
+          src="/media/scalp-concerns/concerns-hero.jpg"
           alt="Therapist performing scalp treatment at the wash basin"
           loading="eager"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", opacity: 0.2 }}

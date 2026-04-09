@@ -16,7 +16,10 @@ export function getAuthUrl(staffId: string): string {
   return client.generateAuthUrl({
     access_type: "offline",
     prompt: "consent",
-    scope: ["https://www.googleapis.com/auth/calendar.events"],
+    scope: [
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ],
     state: staffId,
   });
 }
@@ -29,6 +32,17 @@ export async function handleOAuthCallback(code: string, staffId: string): Promis
     throw new Error("No refresh token received. Try disconnecting and reconnecting.");
   }
 
+  // Get the connected Google account email
+  let googleEmail: string | null = null;
+  try {
+    client.setCredentials(tokens);
+    const oauth2 = google.oauth2({ version: "v2", auth: client });
+    const userInfo = await oauth2.userinfo.get();
+    googleEmail = userInfo.data.email || null;
+  } catch {
+    // Non-fatal — email is nice-to-have for admin display
+  }
+
   await prisma.googleCalendarToken.upsert({
     where: { staffId },
     update: {
@@ -36,6 +50,8 @@ export async function handleOAuthCallback(code: string, staffId: string): Promis
       refreshToken: tokens.refresh_token,
       expiresAt: new Date(tokens.expiry_date || Date.now() + 3600000),
       scope: tokens.scope || null,
+      googleEmail,
+      lastSyncError: null,
     },
     create: {
       staffId,
@@ -43,6 +59,7 @@ export async function handleOAuthCallback(code: string, staffId: string): Promis
       refreshToken: tokens.refresh_token,
       expiresAt: new Date(tokens.expiry_date || Date.now() + 3600000),
       scope: tokens.scope || null,
+      googleEmail,
     },
   });
 
@@ -133,14 +150,30 @@ export async function getGoogleBusyTimes(
     });
 
     const busySlots = res.data.calendars?.[calendarId]?.busy || [];
-    return busySlots
+    const result = busySlots
       .filter((b): b is { start: string; end: string } => !!b.start && !!b.end)
       .map((b) => ({
         start: new Date(b.start),
         end: new Date(b.end),
       }));
+
+    // Record successful sync
+    await prisma.googleCalendarToken.update({
+      where: { staffId },
+      data: { lastSyncAt: new Date(), lastSyncError: null },
+    }).catch(() => {}); // Non-critical
+
+    return result;
   } catch (e) {
-    console.error("[Calendar] Freebusy query failed for staff", staffId, ":", e instanceof Error ? e.message : e);
+    const errMsg = e instanceof Error ? e.message : "Unknown error";
+    console.error("[Calendar] Freebusy query failed for staff", staffId, ":", errMsg);
+
+    // Record sync error for admin visibility
+    await prisma.googleCalendarToken.update({
+      where: { staffId },
+      data: { lastSyncError: errMsg },
+    }).catch(() => {});
+
     return []; // Graceful degradation — don't block the booking form
   }
 }
@@ -217,9 +250,23 @@ export async function createCalendarEvent(appt: AppointmentEvent): Promise<strin
       });
     }
 
+    // Record successful sync
+    await prisma.googleCalendarToken.update({
+      where: { staffId: appt.staff.id },
+      data: { lastSyncAt: new Date(), lastSyncError: null },
+    }).catch(() => {});
+
     return eventId;
   } catch (e) {
-    console.error("[Calendar] Failed to create event:", e instanceof Error ? e.message : e);
+    const errMsg = e instanceof Error ? e.message : "Unknown error";
+    console.error("[Calendar] Failed to create event:", errMsg);
+
+    // Record sync error for admin visibility
+    await prisma.googleCalendarToken.update({
+      where: { staffId: appt.staff.id },
+      data: { lastSyncError: `Event create: ${errMsg}` },
+    }).catch(() => {});
+
     return null;
   }
 }
@@ -238,9 +285,22 @@ export async function updateCalendarEvent(appt: AppointmentEvent): Promise<boole
       eventId: appt.calendarEventId,
       requestBody: buildEventBody(appt),
     });
+
+    await prisma.googleCalendarToken.update({
+      where: { staffId: appt.staff.id },
+      data: { lastSyncAt: new Date(), lastSyncError: null },
+    }).catch(() => {});
+
     return true;
   } catch (e) {
-    console.error("[Calendar] Failed to update event:", e instanceof Error ? e.message : e);
+    const errMsg = e instanceof Error ? e.message : "Unknown error";
+    console.error("[Calendar] Failed to update event:", errMsg);
+
+    await prisma.googleCalendarToken.update({
+      where: { staffId: appt.staff.id },
+      data: { lastSyncError: `Event update: ${errMsg}` },
+    }).catch(() => {});
+
     return false;
   }
 }
@@ -259,9 +319,22 @@ export async function deleteCalendarEvent(staffId: string, calendarEventId: stri
       calendarId,
       eventId: calendarEventId,
     });
+
+    await prisma.googleCalendarToken.update({
+      where: { staffId },
+      data: { lastSyncAt: new Date(), lastSyncError: null },
+    }).catch(() => {});
+
     return true;
   } catch (e) {
-    console.error("[Calendar] Failed to delete event:", e instanceof Error ? e.message : e);
+    const errMsg = e instanceof Error ? e.message : "Unknown error";
+    console.error("[Calendar] Failed to delete event:", errMsg);
+
+    await prisma.googleCalendarToken.update({
+      where: { staffId },
+      data: { lastSyncError: `Event delete: ${errMsg}` },
+    }).catch(() => {});
+
     return false;
   }
 }

@@ -14,6 +14,9 @@ export async function GET() {
         staffServices: {
           include: { service: { select: { id: true, name: true } } },
         },
+        googleCalendarToken: {
+          select: { id: true, expiresAt: true, updatedAt: true, googleEmail: true, lastSyncAt: true, lastSyncError: true },
+        },
       },
     }),
     prisma.bookingService.findMany({

@@ -20,20 +20,20 @@ export default function AboutPage() {
 
       {/* ── PAGE HERO ──────────────────────────────────────── */}
       <section
+        className="grain-overlay section-pad about-page-hero"
         style={{
           minHeight: "60vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          padding: "0 48px 80px",
+          padding: "0 clamp(20px, 4vw, 48px) clamp(56px, 8vw, 80px)",
           background: "var(--bark)",
           position: "relative",
           overflow: "hidden",
         }}
-        className="grain-overlay section-pad"
       >
         <img
-          src="/Photos/Finalized/2.10.26_LHS-4.jpg"
+          src="/media/about/about-hero.jpg"
           alt="Elegant gold mirror reflecting the Lather Head Spa interior"
           loading="eager"
           style={{
@@ -46,7 +46,6 @@ export default function AboutPage() {
             opacity: 0.22,
           }}
         />
-
         <div
           aria-hidden="true"
           style={{
@@ -56,7 +55,6 @@ export default function AboutPage() {
               "radial-gradient(circle at 8% 35%, rgba(212,184,168,0.15), transparent 50%), radial-gradient(circle at 90% 80%, rgba(163,172,148,0.1), transparent 50%)",
           }}
         />
-
         <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
           <p
             style={{
@@ -76,6 +74,7 @@ export default function AboutPage() {
             About Lather
           </p>
           <h1
+            className="about-page-hero-title"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 7vw, 6rem)",
@@ -97,11 +96,12 @@ export default function AboutPage() {
         className="reveal-section reveal-lift section-pad"
         style={{
           background: "var(--cream)",
-          padding: "120px 48px",
+          padding: "clamp(64px, 10vw, 120px) clamp(20px, 4vw, 48px)",
           position: "relative",
         }}
       >
         <div
+          className="about-grid about-story-grid"
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
@@ -110,7 +110,6 @@ export default function AboutPage() {
             gap: "7rem",
             alignItems: "start",
           }}
-          className="about-grid"
         >
           <div>
             <p
@@ -130,6 +129,7 @@ export default function AboutPage() {
               Our Story
             </p>
             <h2
+              className="about-story-headline"
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
@@ -144,7 +144,7 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div>
+          <div className="about-story-copy">
             <p
               style={{
                 fontFamily: "var(--font-body)",
@@ -185,9 +185,8 @@ export default function AboutPage() {
       </section>
 
       {/* ── PHILOSOPHY IMAGE BREAK ─────────────────────────── */}
-      {/* TEMP MEDIA: Replace with editorial Lather studio / product photography */}
       <section
-        className="reveal-section reveal-fade"
+        className="reveal-section reveal-fade about-image-break"
         style={{
           height: "clamp(320px, 50vw, 580px)",
           position: "relative",
@@ -196,7 +195,7 @@ export default function AboutPage() {
         }}
       >
         <img
-          src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4137.jpg"
+          src="/media/about/spa-detail.jpg"
           alt="Lather stylist holding a treatment brush — warm studio lighting"
           loading="lazy"
           style={{
@@ -209,6 +208,7 @@ export default function AboutPage() {
         />
         <div
           aria-hidden="true"
+          className="about-image-break-gradient"
           style={{
             position: "absolute",
             inset: 0,
@@ -217,6 +217,7 @@ export default function AboutPage() {
           }}
         />
         <div
+          className="about-image-break-quote"
           style={{
             position: "absolute",
             bottom: "clamp(32px, 5vw, 60px)",
@@ -234,7 +235,7 @@ export default function AboutPage() {
               lineHeight: 1.25,
             }}
           >
-            "The scalp is the foundation of everything. We start there."
+            &ldquo;The scalp is the foundation of everything. We start there.&rdquo;
           </p>
         </div>
       </section>
@@ -244,7 +245,7 @@ export default function AboutPage() {
         className="reveal-section reveal-lift grain-overlay section-pad"
         style={{
           background: "var(--bark)",
-          padding: "120px 48px",
+          padding: "clamp(64px, 10vw, 120px) clamp(20px, 4vw, 48px)",
           position: "relative",
           overflow: "hidden",
         }}
@@ -260,15 +261,8 @@ export default function AboutPage() {
           }}
         />
 
-        <div
-          style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
-          <div style={{ marginBottom: "72px" }}>
+        <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div style={{ marginBottom: "clamp(40px, 6vw, 72px)" }}>
             <p
               style={{
                 fontFamily: "var(--font-body)",
@@ -301,17 +295,17 @@ export default function AboutPage() {
           </div>
 
           <div
-            className="values-grid"
+            className="values-grid about-page-values"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
               gap: "3.5rem",
               borderTop: "1px solid rgba(237,230,219,0.1)",
-              paddingTop: "60px",
+              paddingTop: "clamp(32px, 5vw, 60px)",
             }}
           >
             {brandValues.map((v, i) => (
-              <div key={i}>
+              <div key={i} className="about-value-card">
                 <div
                   style={{
                     width: "32px",
@@ -360,7 +354,7 @@ export default function AboutPage() {
         }}
       >
         <div
-          className="about-grid"
+          className="about-grid about-team-grid"
           style={{
             maxWidth: "1400px",
             margin: "0 auto",
@@ -370,15 +364,15 @@ export default function AboutPage() {
             alignItems: "center",
           }}
         >
-          <div style={{ overflow: "hidden", height: "340px" }}>
+          <div className="about-team-image" style={{ overflow: "hidden", height: "340px" }}>
             <img
-              src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4116.jpg"
+              src="/media/about/values-detail.jpg"
               alt="The Lather team in the treatment space"
               loading="lazy"
               style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
             />
           </div>
-          <div>
+          <div className="about-team-copy">
             <p
               style={{
                 fontFamily: "var(--font-body)",
@@ -417,7 +411,7 @@ export default function AboutPage() {
                 marginBottom: "2rem",
               }}
             >
-              Every therapist at Lather is trained in Japanese head spa technique, advanced scalp assessment, and organic product protocols. We're a small team by design — because great care requires focus.
+              Every therapist at Lather is trained in Japanese head spa technique, advanced scalp assessment, and organic product protocols. We&apos;re a small team by design — because great care requires focus.
             </p>
             <Link
               href="/team"

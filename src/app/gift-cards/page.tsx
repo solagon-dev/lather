@@ -281,7 +281,7 @@ export default function GiftCardsPage() {
               >
                 or call{" "}
                 <a
-                  href="tel:+12525584344"
+                  href="tel:+12525310987"
                   style={{
                     color: "var(--bark)",
                     textDecoration: "none",
@@ -291,7 +291,7 @@ export default function GiftCardsPage() {
                   }}
                   className="hover-fade"
                 >
-                  (252) 558-4344
+                  (252) 531-0987
                 </a>
               </p>
             </div>
@@ -622,7 +622,7 @@ export default function GiftCardsPage() {
         }}
         secondaryCTA={{
           label: "Call to Purchase",
-          href: "tel:+12525584344",
+          href: "tel:+12525310987",
         }}
       />
 

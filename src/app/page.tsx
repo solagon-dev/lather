@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: "Luxury Head Spa in Greenville, NC",
   description:
     "Lather is a luxury head spa in Greenville, NC. Japanese-inspired scalp rituals, therapeutic massage, and hair restoration treatments. Book your ritual today.",
-  alternates: { canonical: "https://www.latherheadspa.com" },
+  alternates: { canonical: "https://www.latherspas.com" },
 };
 
 export default function Home() {

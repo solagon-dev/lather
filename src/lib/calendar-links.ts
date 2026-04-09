@@ -34,7 +34,7 @@ function escapeICS(str: string): string {
  * Generate ICS file content (works with Apple Calendar, Outlook, etc.)
  */
 export function generateICS(event: CalendarEvent): string {
-  const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@latherheadspa.com`;
+  const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@latherspas.com`;
 
   return [
     "BEGIN:VCALENDAR",
@@ -117,7 +117,7 @@ export function buildCalendarLinks(appt: {
       "",
       "Please arrive 5 minutes early.",
       "Lather Head Spa · Greenville, NC",
-      "(252) 558-4344",
+      "(252) 531-0987",
     ].join("\n"),
     startAt: startDate,
     endAt: endDate,

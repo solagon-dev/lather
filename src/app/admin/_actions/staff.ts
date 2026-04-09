@@ -41,6 +41,9 @@ export async function createStaffAction(formData: FormData): Promise<{ error: st
   }
 
   revalidatePath("/admin/staff");
+  revalidatePath("/admin/services");
+  revalidatePath("/admin/bookings");
+  revalidatePath("/book");
   redirect("/admin/staff");
 }
 
@@ -75,6 +78,9 @@ export async function updateStaffAction(id: string, formData: FormData): Promise
   }
 
   revalidatePath("/admin/staff");
+  revalidatePath("/admin/services");
+  revalidatePath("/admin/bookings");
+  revalidatePath("/book");
   redirect("/admin/staff");
 }
 
@@ -82,4 +88,7 @@ export async function toggleStaffActiveAction(id: string, isActive: boolean): Pr
   await requireAdmin();
   await prisma.staff.update({ where: { id }, data: { isActive } });
   revalidatePath("/admin/staff");
+  revalidatePath("/admin/services");
+  revalidatePath("/admin/bookings");
+  revalidatePath("/book");
 }

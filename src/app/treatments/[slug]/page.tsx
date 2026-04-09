@@ -1437,7 +1437,7 @@ export default async function TreatmentPage({
         headline="Ready to"
         headlineItalic="begin?"
         description="Book your appointment online. Each session is by appointment only — your time slot is reserved exclusively for you."
-        secondaryCTA={{ label: "Call to Book", href: "tel:+12525584344" }}
+        secondaryCTA={{ label: "Call to Book", href: "tel:+12525310987" }}
       />
 
       <Footer />

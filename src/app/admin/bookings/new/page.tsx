@@ -61,7 +61,7 @@ export default function NewBookingPage() {
           </div>
         )}
 
-        <div className="admin-card" style={{ padding: "32px" }}>
+        <div className="admin-card"><div className="admin-card-body">
           <form onSubmit={handleSubmit}>
             {/* Client info */}
             <div style={{ marginBottom: "24px" }}>
@@ -249,7 +249,7 @@ export default function NewBookingPage() {
               </button>
             </div>
           </form>
-        </div>
+        </div></div>
       </div>
     </>
   );

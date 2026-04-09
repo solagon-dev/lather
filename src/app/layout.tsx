@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-const SITE_URL = "https://www.latherheadspa.com";
+const SITE_URL = "https://www.latherspas.com";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -65,12 +65,13 @@ const localBusinessSchema = {
   description:
     "Luxury head spa in Greenville, NC offering Japanese-inspired scalp rituals, hair restoration treatments, and therapeutic massage.",
   url: SITE_URL,
-  telephone: "(252) 558-4344",
-  email: "hello@latherspa.com",
+  telephone: "(252) 531-0987",
+  email: "hello@latherspas.com",
   priceRange: "$$",
-  image: `${SITE_URL}/Photos/Finalized/2.10.26_LHS-5.jpg`,
+  image: `${SITE_URL}/media/hero/hero-poster.jpg`,
   address: {
     "@type": "PostalAddress",
+    streetAddress: "620 Lynndale Court",
     addressLocality: "Greenville",
     addressRegion: "NC",
     postalCode: "27858",

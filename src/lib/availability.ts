@@ -35,7 +35,7 @@ export type ConflictCheck = BookingConflict | BookingClear;
 
 // ── Constants ────────────────────────────────────────────────
 
-const SLOT_INCREMENT = 15; // minutes
+const SLOT_INCREMENT = 30; // minutes — clean spacing for 60-90min spa services
 const BIZ_TZ = "America/New_York";
 
 // ── Slot generation ──────────────────────────────────────────
@@ -156,18 +156,29 @@ export async function getAvailableSlots(
 
   // ── 8. Google Calendar busy times ─────────────────────
   // Fetch freebusy data for all staff with calendar sync enabled.
-  // This runs in parallel for all staff to minimize latency.
+  // Runs in parallel. De-duplicates against local appointments to avoid
+  // double-counting website bookings that were mirrored to Google Calendar.
   const staffGoogleBusy = new Map<string, { start: number; end: number }[]>();
 
   const busyPromises = Array.from(staffHoursMap.keys()).map(async (sid) => {
     try {
       const busyBlocks: BusyBlock[] = await getGoogleBusyTimes(sid, utcStart, utcEnd);
+      const localBlocksForStaff = staffBlocked.get(sid) || [];
+
       const localBlocks = busyBlocks
         .map((b) => ({
           start: utcToLocalMinutes(b.start, BIZ_TZ, date) ?? 0,
           end: utcToLocalMinutes(b.end, BIZ_TZ, date) ?? 1440,
         }))
-        .filter((b) => b.end > b.start); // Only blocks that fall on this day
+        .filter((b) => b.end > b.start)
+        // De-duplicate: remove Google busy blocks that exactly overlap a local appointment.
+        // This prevents double-counting when website bookings are mirrored to Google Calendar.
+        .filter((gBlock) => {
+          return !localBlocksForStaff.some((local) =>
+            Math.abs(local.start - gBlock.start) < 5 && Math.abs(local.end - gBlock.end) < 5
+          );
+        });
+
       if (localBlocks.length > 0) {
         staffGoogleBusy.set(sid, localBlocks);
       }

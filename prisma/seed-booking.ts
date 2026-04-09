@@ -86,38 +86,38 @@ async function main() {
   // ── STAFF ──────────────────────────────────────────────────
 
   const staff1 = await prisma.staff.upsert({
-    where: { email: "madison@latherheadspa.com" },
+    where: { email: "madison@latherspas.com" },
     update: { name: "Madison Hoffschneider", slug: "madison-hoffschneider" },
     create: {
       name: "Madison Hoffschneider",
       slug: "madison-hoffschneider",
-      email: "madison@latherheadspa.com",
-      image: "/Photos/Finalized/2.10.26_LHS-17.jpg",
+      email: "madison@latherspas.com",
+      image: "/media/team/madison-hoffschneider.jpg",
       isActive: true,
       timezone: "America/New_York",
     },
   });
 
   const staff2 = await prisma.staff.upsert({
-    where: { email: "heidi@latherheadspa.com" },
+    where: { email: "heidi@latherspas.com" },
     update: { name: "Heidi Griggs", slug: "heidi-griggs" },
     create: {
       name: "Heidi Griggs",
       slug: "heidi-griggs",
-      email: "heidi@latherheadspa.com",
-      image: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4247.jpg",
+      email: "heidi@latherspas.com",
+      image: "/media/team/heidi-griggs.jpg",
       isActive: true,
       timezone: "America/New_York",
     },
   });
 
   const staff3 = await prisma.staff.upsert({
-    where: { email: "hannah@latherheadspa.com" },
+    where: { email: "hannah@latherspas.com" },
     update: { name: "Hannah Justice", slug: "hannah-justice" },
     create: {
       name: "Hannah Justice",
       slug: "hannah-justice",
-      email: "hannah@latherheadspa.com",
+      email: "hannah@latherspas.com",
       isActive: true,
       timezone: "America/New_York",
     },

@@ -14,7 +14,7 @@ async function main() {
   const passwordHash = await bcrypt.hash('Lather2024!', 12);
   await prisma.adminUser.create({
     data: {
-      email: 'admin@latherheadspa.com',
+      email: 'admin@latherspas.com',
       passwordHash,
       name: 'Lather Admin',
     },

@@ -1,52 +1,71 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { testimonials } from "@/lib/data";
 
-export default function Testimonials() {
-  const [featured, ...rest] = testimonials;
-  const sectionRef = useRef<HTMLElement>(null);
-  const quoteRef = useRef<HTMLDivElement>(null);
-  const quotMarkRef = useRef<HTMLParagraphElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+const CYCLE_DURATION = 7000; // ms per testimonial
 
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 769);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+export default function Testimonials() {
+  const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const startTimeRef = useRef(Date.now());
+  const rafRef = useRef<number>(0);
+
+  const count = testimonials.length;
+
+  const goTo = useCallback((i: number) => {
+    setActive(i);
+    setProgress(0);
+    startTimeRef.current = Date.now();
   }, []);
 
+  const next = useCallback(() => {
+    goTo((active + 1) % count);
+  }, [active, count, goTo]);
+
+  const prev = useCallback(() => {
+    goTo((active - 1 + count) % count);
+  }, [active, count, goTo]);
+
+  // Intersection observer — only animate when in view
   useEffect(() => {
-    if (isMobile) return;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
-
     const section = sectionRef.current;
-    const mark = quotMarkRef.current;
-    if (!section || !mark) return;
+    if (!section) return;
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const rect = section.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const p = 1 - rect.bottom / (vh + rect.height);
-        const progress = Math.max(0, Math.min(p, 1));
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.15 },
+    );
+    obs.observe(section);
+    return () => obs.disconnect();
+  }, []);
 
-        // Quotation mark drifts slowly upward and fades
-        mark.style.transform = `translateY(${progress * -60}px)`;
-        mark.style.opacity = `${0.08 + progress * 0.04}`;
+  // Auto-cycle with progress animation
+  useEffect(() => {
+    if (paused || !isVisible) return;
 
-        ticking = false;
-      });
+    startTimeRef.current = Date.now() - progress * CYCLE_DURATION;
+
+    const tick = () => {
+      const elapsed = Date.now() - startTimeRef.current;
+      const p = Math.min(elapsed / CYCLE_DURATION, 1);
+      setProgress(p);
+
+      if (p >= 1) {
+        setActive((prev) => (prev + 1) % count);
+        setProgress(0);
+        startTimeRef.current = Date.now();
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isMobile]);
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [paused, isVisible, count, progress]);
 
   return (
     <section
@@ -55,7 +74,10 @@ export default function Testimonials() {
       style={{
         background: "var(--bark)",
         position: "relative",
+        overflow: "hidden",
       }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
       {/* Ambient glow */}
       <div
@@ -68,189 +90,220 @@ export default function Testimonials() {
         }}
       />
 
-      {/* ── FEATURED QUOTE — pinned on desktop ─────────────── */}
       <div
         style={{
-          height: isMobile ? "auto" : "140vh",
-          position: "relative",
-        }}
-      >
-        <div
-          ref={quoteRef}
-          style={{
-            position: isMobile ? "relative" : "sticky",
-            top: 0,
-            height: isMobile ? "auto" : "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "clamp(80px, 10vw, 140px) clamp(20px, 4vw, 48px)",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: "960px",
-              position: "relative",
-              zIndex: 1,
-              textAlign: "center",
-            }}
-          >
-            {/* Large quotation mark — animated */}
-            <p
-              ref={quotMarkRef}
-              aria-hidden="true"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(10rem, 24vw, 20rem)",
-                color: "var(--blush)",
-                opacity: 0.08,
-                lineHeight: 0.6,
-                position: "absolute",
-                top: "-0.3em",
-                left: "50%",
-                transform: "translateX(-50%)",
-                pointerEvents: "none",
-                userSelect: "none",
-                willChange: "transform, opacity",
-              }}
-            >
-              &ldquo;
-            </p>
-
-            {/* Eyebrow */}
-            <p
-              className="reveal-section reveal-fade"
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "var(--blush)",
-                marginBottom: "clamp(2rem, 4vw, 3.5rem)",
-                opacity: 0.7,
-              }}
-            >
-              Guest Experiences
-            </p>
-
-            {/* Quote text */}
-            <p
-              className="reveal-section reveal-fade"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.5rem, 3.5vw, 2.8rem)",
-                fontWeight: 300,
-                fontStyle: "italic",
-                color: "var(--linen)",
-                lineHeight: 1.5,
-                marginBottom: "clamp(2rem, 4vw, 3.5rem)",
-                letterSpacing: "-0.005em",
-                maxWidth: "820px",
-                margin: "0 auto clamp(2rem, 4vw, 3.5rem)",
-              }}
-            >
-              &ldquo;{featured.quote}&rdquo;
-            </p>
-
-            {/* Attribution */}
-            <div
-              className="reveal-section reveal-fade"
-              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem" }}
-            >
-              <div style={{ width: "32px", height: "1px", background: "var(--blush)", opacity: 0.5 }} />
-              <div>
-                <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--linen)", letterSpacing: "0.08em", fontWeight: 400 }}>
-                  {featured.name}
-                </p>
-                <p style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", color: "rgba(237,230,219,0.42)", letterSpacing: "0.1em", marginTop: "4px" }}>
-                  {featured.service} · {featured.location}
-                </p>
-              </div>
-              <div style={{ width: "32px", height: "1px", background: "var(--blush)", opacity: 0.5 }} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── SUPPORTING TESTIMONIALS ────────────────────────── */}
-      <div
-        style={{
-          maxWidth: "1400px",
+          maxWidth: "960px",
           margin: "0 auto",
-          padding: "0 clamp(20px, 4vw, 48px) clamp(80px, 10vw, 120px)",
+          padding: "clamp(100px, 12vw, 180px) clamp(20px, 4vw, 48px)",
           position: "relative",
           zIndex: 1,
         }}
       >
-        <div
-          className="testimonials-grid stagger-children"
+        {/* Eyebrow */}
+        <p
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.5rem",
-            borderTop: "1px solid rgba(237,230,219,0.07)",
-            paddingTop: "48px",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.62rem",
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+            color: "var(--blush)",
+            marginBottom: "clamp(3rem, 5vw, 5rem)",
+            textAlign: "center",
+            opacity: 0.7,
           }}
         >
-          {rest.map((t, i) => (
+          Guest Experiences
+        </p>
+
+        {/* Quote — crossfade container */}
+        <div
+          style={{
+            position: "relative",
+            minHeight: "clamp(200px, 30vw, 320px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {testimonials.map((item, i) => (
             <div
               key={i}
+              aria-hidden={i !== active}
               style={{
-                padding: "clamp(1.5rem, 3vw, 2.5rem)",
-                border: "1px solid rgba(237,230,219,0.09)",
-                background: "rgba(237,230,219,0.025)",
-                position: "relative",
-                transition: "background 0.4s ease, border-color 0.4s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(237,230,219,0.05)";
-                e.currentTarget.style.borderColor = "rgba(237,230,219,0.16)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(237,230,219,0.025)";
-                e.currentTarget.style.borderColor = "rgba(237,230,219,0.09)";
+                position: i === active ? "relative" : "absolute",
+                inset: 0,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: i === active ? 1 : 0,
+                transform: i === active ? "translateY(0)" : "translateY(12px)",
+                transition: "opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
+                pointerEvents: i === active ? "auto" : "none",
               }}
             >
+              {/* Large decorative open-quote */}
               <p
+                aria-hidden="true"
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "2.5rem",
+                  fontSize: "clamp(4rem, 8vw, 7rem)",
                   color: "var(--blush)",
-                  opacity: 0.28,
+                  opacity: 0.15,
                   lineHeight: 1,
-                  marginBottom: "1rem",
-                  fontStyle: "italic",
+                  marginBottom: "-0.5em",
+                  userSelect: "none",
                 }}
               >
                 &ldquo;
               </p>
+
               <p
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(0.95rem, 1.6vw, 1.1rem)",
+                  fontSize: "clamp(1.3rem, 3vw, 2.4rem)",
                   fontWeight: 300,
-                  color: "rgba(237,230,219,0.82)",
-                  lineHeight: 1.72,
                   fontStyle: "italic",
-                  marginBottom: "2rem",
+                  color: "var(--linen)",
+                  lineHeight: 1.55,
+                  textAlign: "center",
+                  letterSpacing: "-0.005em",
+                  maxWidth: "820px",
+                  marginBottom: "clamp(2rem, 3.5vw, 3rem)",
                 }}
               >
-                {t.quote}
+                &ldquo;{item.quote}&rdquo;
               </p>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
-                <div style={{ width: "20px", height: "1px", background: "var(--blush)", opacity: 0.5, flexShrink: 0 }} />
-                <div>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.72rem", color: "var(--linen)", letterSpacing: "0.08em", fontWeight: 400 }}>
-                    {t.name}
+
+              {/* Attribution */}
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <div style={{ width: "32px", height: "1px", background: "var(--blush)", opacity: 0.4 }} />
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "var(--linen)", letterSpacing: "0.08em", fontWeight: 400 }}>
+                    {item.name}
                   </p>
-                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.58rem", color: "rgba(237,230,219,0.38)", letterSpacing: "0.1em", marginTop: "3px" }}>
-                    {t.service}
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", color: "rgba(237,230,219,0.4)", letterSpacing: "0.1em", marginTop: "4px" }}>
+                    {item.service}
                   </p>
                 </div>
+                <div style={{ width: "32px", height: "1px", background: "var(--blush)", opacity: 0.4 }} />
               </div>
             </div>
           ))}
         </div>
+
+        {/* ── Controls: arrows + progress indicators ── */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "clamp(20px, 3vw, 36px)",
+            marginTop: "clamp(3rem, 5vw, 5rem)",
+          }}
+        >
+          {/* Prev arrow */}
+          <button
+            onClick={prev}
+            aria-label="Previous testimonial"
+            style={{
+              background: "none",
+              border: "1px solid rgba(237,230,219,0.15)",
+              color: "rgba(237,230,219,0.5)",
+              width: "44px",
+              height: "44px",
+              borderRadius: "50%",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.1rem",
+              transition: "border-color 0.3s, color 0.3s",
+              flexShrink: 0,
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(237,230,219,0.4)"; e.currentTarget.style.color = "var(--linen)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(237,230,219,0.15)"; e.currentTarget.style.color = "rgba(237,230,219,0.5)"; }}
+          >
+            ←
+          </button>
+
+          {/* Progress bars */}
+          <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Go to testimonial ${i + 1}`}
+                style={{
+                  width: i === active ? "48px" : "24px",
+                  height: "2px",
+                  border: "none",
+                  borderRadius: "1px",
+                  cursor: "pointer",
+                  padding: 0,
+                  position: "relative",
+                  background: "rgba(237,230,219,0.12)",
+                  transition: "width 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+                  overflow: "hidden",
+                }}
+              >
+                {/* Fill — animated on active, full on past, empty on future */}
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    height: "100%",
+                    borderRadius: "1px",
+                    background: "var(--blush)",
+                    width: i === active ? `${progress * 100}%` : i < active ? "100%" : "0%",
+                    transition: i === active ? "none" : "width 0.4s ease",
+                  }}
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* Next arrow */}
+          <button
+            onClick={next}
+            aria-label="Next testimonial"
+            style={{
+              background: "none",
+              border: "1px solid rgba(237,230,219,0.15)",
+              color: "rgba(237,230,219,0.5)",
+              width: "44px",
+              height: "44px",
+              borderRadius: "50%",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.1rem",
+              transition: "border-color 0.3s, color 0.3s",
+              flexShrink: 0,
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(237,230,219,0.4)"; e.currentTarget.style.color = "var(--linen)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(237,230,219,0.15)"; e.currentTarget.style.color = "rgba(237,230,219,0.5)"; }}
+          >
+            →
+          </button>
+        </div>
+
+        {/* Counter */}
+        <p
+          style={{
+            textAlign: "center",
+            fontFamily: "var(--font-display)",
+            fontSize: "0.82rem",
+            color: "rgba(237,230,219,0.25)",
+            marginTop: "1.5rem",
+            fontStyle: "italic",
+            letterSpacing: "0.05em",
+          }}
+        >
+          {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+        </p>
       </div>
     </section>
   );

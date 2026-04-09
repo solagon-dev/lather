@@ -89,7 +89,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
               <div className="admin-card-header">
                 <h3 className="admin-card-title">Appointment</h3>
               </div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <DetailRow label="Service" value={appointment.service.name} />
                 <DetailRow label="Duration" value={`${appointment.service.durationMinutes} min`} />
                 <DetailRow label="Price" value={formatPrice(appointment.service.price)} />
@@ -105,7 +105,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
               <div className="admin-card-header">
                 <h3 className="admin-card-title">Notes</h3>
               </div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <div style={{ marginBottom: "16px" }}>
                   <p style={{ fontSize: "0.7rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", color: "#999", marginBottom: "6px" }}>Client Notes</p>
                   <p style={{ fontSize: "0.88rem", color: appointment.notes ? "#333" : "#ccc", lineHeight: 1.6 }}>
@@ -128,7 +128,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
               <div className="admin-card-header">
                 <h3 className="admin-card-title">Client</h3>
               </div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <DetailRow label="Name" value={`${appointment.client.firstName} ${appointment.client.lastName}`} />
                 <DetailRow label="Email" value={appointment.client.email} />
                 <DetailRow label="Phone" value={appointment.client.phone || "Not provided"} />
@@ -143,7 +143,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
               <div className="admin-card-header">
                 <h3 className="admin-card-title">Notifications</h3>
               </div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <DetailRow label="Email Confirmation" value={appointment.emailConfirmationSent ? "Sent ✓" : "Not sent"} />
                 <DetailRow label="SMS Confirmation" value={appointment.smsConfirmationSent ? "Sent ✓" : "Not sent"} />
                 <DetailRow label="24h Reminder" value={appointment.reminder24hSent ? "Sent ✓" : "Not sent"} />
@@ -174,7 +174,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
               <div className="admin-card-header">
                 <h3 className="admin-card-title">Metadata</h3>
               </div>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <DetailRow label="Confirmation Code" value={appointment.confirmationCode} />
                 <DetailRow label="Source" value={appointment.source} />
                 <DetailRow label="Created" value={new Date(appointment.createdAt).toLocaleString()} />
@@ -187,7 +187,7 @@ export default async function AppointmentDetailPage({ params }: { params: Promis
 
             {/* Danger zone */}
             <div className="admin-card" style={{ borderColor: "#FDEDEC" }}>
-              <div style={{ padding: "20px 24px" }}>
+              <div className="admin-card-body">
                 <p style={{ fontSize: "0.78rem", fontWeight: 600, color: "#C0392B", marginBottom: "12px" }}>Danger Zone</p>
                 <DeleteButton appointmentId={appointment.id} />
               </div>

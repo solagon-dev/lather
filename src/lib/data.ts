@@ -26,7 +26,7 @@ export const services = [
     recommendedAddOns: ["aromatherapy", "hot-towel"],
     suggestedUpgrade: "nourish-fortify",
     suggestedUpgradeReason: "Want deeper repair? Nourish & Fortify adds professional bond rebuilding for lasting strength.",
-    image: "/Photos/Finalized/2.10.26_LHS-5.jpg",
+    image: "/media/treatments/classic-ritual.jpg",
     concerns: ["Product buildup", "General maintenance", "Oily scalp", "Stress"],
   },
   {
@@ -54,7 +54,7 @@ export const services = [
     recommendedAddOns: ["led-therapy", "extended-massage"],
     suggestedUpgrade: null,
     suggestedUpgradeReason: null,
-    image: "/Photos/Finalized/2.10.26_LHS-20.jpg",
+    image: "/media/treatments/revitalize-restore.jpg",
     concerns: ["Thinning hair", "Hair loss", "Postpartum shedding", "Stress"],
   },
   {
@@ -81,7 +81,7 @@ export const services = [
     recommendedAddOns: ["aromatherapy", "hot-towel", "extended-massage"],
     suggestedUpgrade: null,
     suggestedUpgradeReason: null,
-    image: "/Photos/Finalized/2.10.26_LHS-19.jpg",
+    image: "/media/treatments/nourish-fortify.jpg",
     concerns: ["Dry scalp", "Damaged hair", "Chemical damage", "Brittle strands"],
   },
   {
@@ -108,7 +108,7 @@ export const services = [
     recommendedAddOns: ["scalp-analysis", "extended-massage"],
     suggestedUpgrade: "revitalize-restore",
     suggestedUpgradeReason: "Noticing thinning? Revitalize & Restore adds high-frequency combing and growth serum protocols.",
-    image: "/Photos/Finalized/2.10.26_LHS-21.jpg",
+    image: "/media/treatments/gentlemans-recharge.jpg",
     concerns: ["Stress", "General maintenance", "Tension"],
   },
 ];

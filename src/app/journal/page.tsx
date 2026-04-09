@@ -105,7 +105,7 @@ export default async function JournalPage({
         }}
       >
         <img
-          src="/Photos/Finalized/2.10.26_LHS-10.jpg"
+          src="/media/pages/journal-hero.jpg"
           alt="Natulique products and wooden tools"
           loading="eager"
           style={{
@@ -162,6 +162,7 @@ export default async function JournalPage({
             The Journal
           </p>
           <h1
+            className="journal-hero-title"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 7vw, 6rem)",
@@ -176,6 +177,7 @@ export default async function JournalPage({
             <em style={{ fontStyle: "italic" }}>Hair wellness.</em>
           </h1>
           <p
+            className="journal-hero-sub"
             style={{
               fontFamily: "var(--font-body)",
               fontSize: "clamp(0.88rem, 1.4vw, 1rem)",
@@ -312,7 +314,7 @@ export default async function JournalPage({
             }}
           >
             <div
-              className="about-grid"
+              className="about-grid journal-featured-grid"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1.3fr 1fr",
@@ -320,7 +322,7 @@ export default async function JournalPage({
               }}
             >
               {/* Full-height image */}
-              <div style={{ overflow: "hidden", position: "relative" }}>
+              <div className="journal-featured-image" style={{ overflow: "hidden", position: "relative" }}>
                 {featured.featuredImage ? (
                   <img
                     src={featured.featuredImage}
@@ -341,8 +343,9 @@ export default async function JournalPage({
                 )}
               </div>
 
-              {/* Content side — generous padding */}
+              {/* Content side */}
               <div
+                className="journal-featured-text"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -362,6 +365,7 @@ export default async function JournalPage({
                 </div>
 
                 <h2
+                  className="journal-featured-title"
                   style={{
                     fontFamily: "var(--font-display)",
                     fontSize: "clamp(2.2rem, 4vw, 3.4rem)",
@@ -695,12 +699,12 @@ export default async function JournalPage({
           gap: "2px",
           background: "rgba(140,123,107,0.06)",
         }}
-        className="values-grid"
+        className="journal-image-strip"
       >
         {[
-          { src: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4064.jpg", alt: "Brushes in wooden holder" },
-          { src: "/Photos/Finalized/2.10.26_LHS-7.jpg", alt: "Ribbed wood credenza detail" },
-          { src: "/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4093.jpg", alt: "Treatment product in wooden bowl" },
+          { src: "/media/treatments/treatments-hero.jpg", alt: "Brushes in wooden holder" },
+          { src: "/media/pages/journal-detail-01.jpg", alt: "Ribbed wood credenza detail" },
+          { src: "/media/pages/journal-detail-02.jpg", alt: "Treatment product in wooden bowl" },
         ].map((img) => (
           <div key={img.src} style={{ overflow: "hidden", height: "clamp(160px, 18vw, 260px)" }}>
             <img src={img.src} alt={img.alt} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />

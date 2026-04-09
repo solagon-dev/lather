@@ -38,7 +38,7 @@ export default function About() {
       >
         {/* Main grid: Philosophy + copy */}
         <div
-          className="about-grid"
+          className="about-grid about-main"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -50,6 +50,7 @@ export default function About() {
           {/* Left: Heading */}
           <div>
             <p
+              className="about-eyebrow"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -74,6 +75,7 @@ export default function About() {
               Our Philosophy
             </p>
             <h2
+              className="about-headline"
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(2.6rem, 5.5vw, 4.8rem)",
@@ -108,12 +110,14 @@ export default function About() {
               ].map((metric) => (
                 <div
                   key={metric.label}
+                  className="about-metric-item"
                   style={{
                     background: "rgba(237,230,219,0.04)",
                     padding: "18px 16px",
                   }}
                 >
                   <p
+                    className="about-metric-label"
                     style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "0.5rem",
@@ -126,6 +130,7 @@ export default function About() {
                     {metric.label}
                   </p>
                   <p
+                    className="about-metric-value"
                     style={{
                       fontFamily: "var(--font-display)",
                       fontSize: "1.05rem",
@@ -142,7 +147,7 @@ export default function About() {
           </div>
 
           {/* Right: Copy */}
-          <div style={{ paddingTop: "0.5rem" }}>
+          <div className="about-copy" style={{ paddingTop: "0.5rem" }}>
             <p
               style={{
                 fontFamily: "var(--font-body)",
@@ -201,17 +206,17 @@ export default function About() {
 
         {/* Team portrait */}
         <div
+          className="about-portraits"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: "8px",
             marginBottom: "64px",
           }}
-          className="about-grid"
         >
-          <div style={{ overflow: "hidden", height: "420px" }}>
+          <div className="about-portrait-item" style={{ overflow: "hidden", height: "420px" }}>
             <img
-              src="/Photos/Finalized/2.10.26_LHS-18.jpg"
+              src="/media/team/team-atmosphere.jpg"
               alt="The Lather team — founders together at the spa"
               loading="lazy"
               style={{
@@ -223,9 +228,9 @@ export default function About() {
               }}
             />
           </div>
-          <div style={{ overflow: "hidden", height: "420px" }}>
+          <div className="about-portrait-item" style={{ overflow: "hidden", height: "420px" }}>
             <img
-              src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4086.jpg"
+              src="/media/about/values-detail.jpg"
               alt="Lather Head Spa interior — waiting area with vintage rug and warm lighting"
               loading="lazy"
               style={{
@@ -240,6 +245,7 @@ export default function About() {
 
         {/* Brand values */}
         <div
+          className="about-values-section"
           style={{
             borderTop: "1px solid rgba(237,230,219,0.1)",
             paddingTop: "64px",
@@ -254,7 +260,7 @@ export default function About() {
             }}
           >
             {brandValues.map((v, i) => (
-              <div key={i}>
+              <div key={i} className="about-value-card">
                 <div
                   style={{
                     width: "32px",

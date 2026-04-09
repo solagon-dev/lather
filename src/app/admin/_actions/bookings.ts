@@ -183,6 +183,25 @@ export async function deleteBookingAction(
   await requireAdmin();
 
   try {
+    // Fetch appointment so we can remove the Google Calendar event
+    const appointment = await prisma.appointment.findUnique({
+      where: { id },
+      select: {
+        calendarEventId: true,
+        staffId: true,
+        staff: { select: { calendarSyncEnabled: true, googleCalendarId: true } },
+      },
+    });
+
+    // Delete the Google Calendar event if one exists
+    if (appointment?.calendarEventId && appointment.staff.calendarSyncEnabled) {
+      await deleteCalendarEvent(
+        appointment.staffId,
+        appointment.calendarEventId,
+        appointment.staff.googleCalendarId,
+      ).catch((err) => console.error("[Calendar] Failed to delete event on booking delete:", err));
+    }
+
     await prisma.notificationLog.deleteMany({
       where: { appointmentId: id },
     });

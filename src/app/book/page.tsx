@@ -31,7 +31,7 @@ export default function BookPage() {
         }}
       >
         <img
-          src="/Photos/Finalized/2.10.26_LHS-5.jpg"
+          src="/media/pages/book-hero.jpg"
           alt="Client relaxing during head spa treatment"
           loading="eager"
           style={{
@@ -72,6 +72,7 @@ export default function BookPage() {
             Reserve Your Ritual
           </p>
           <h1
+            className="book-hero-title"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 7vw, 5.5rem)",
@@ -126,12 +127,12 @@ export default function BookPage() {
             gap: "2rem",
             textAlign: "center",
           }}
-          className="values-grid"
+          className="book-info-bar"
         >
           {[
             { label: "Location", value: "Greenville, NC" },
             { label: "Hours", value: "Tue – Sat\n10am – 7pm" },
-            { label: "Contact", value: "(252) 558-4344" },
+            { label: "Contact", value: "(252) 531-0987" },
           ].map((item) => (
             <div key={item.label}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.55rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(237,230,219,0.3)", marginBottom: "10px" }}>

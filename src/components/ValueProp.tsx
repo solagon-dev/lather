@@ -35,18 +35,19 @@ export default function ValueProp() {
           overflow: "hidden",
         }}
       >
+        {/* Desktop: side-by-side grid | Mobile: stacked with image as subtle BG */}
         <div
-          className="about-grid"
+          className="valueprop-editorial"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             minHeight: "clamp(420px, 52vw, 640px)",
           }}
         >
-          {/* Left: image */}
-          <div style={{ overflow: "hidden", position: "relative" }}>
+          {/* Left: image (hidden on mobile, replaced by bg approach) */}
+          <div className="valueprop-editorial-image" style={{ overflow: "hidden", position: "relative" }}>
             <img
-              src="/Photos/RAW/02.10.2026_LHS_RAWS/IMG_4080.jpg"
+              src="/media/editorial/value-prop.jpg"
               alt="Gold-framed mirror and warm interior at Lather Head Spa"
               loading="lazy"
               style={{
@@ -60,7 +61,7 @@ export default function ValueProp() {
 
           {/* Right: editorial statement */}
           <div
-            className="grain-overlay"
+            className="grain-overlay valueprop-editorial-text"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -98,6 +99,7 @@ export default function ValueProp() {
               </p>
 
               <h2
+                className="valueprop-headline"
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)",
@@ -130,7 +132,7 @@ export default function ValueProp() {
         </div>
       </section>
 
-      {/* ── FOUR PILLARS — horizontal strip ────────────────── */}
+      {/* ── FOUR PILLARS ──────────────────────────────────── */}
       <section
         className="reveal-section reveal-lift section-pad"
         style={{
@@ -139,8 +141,9 @@ export default function ValueProp() {
         }}
       >
         <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+          {/* Desktop: 4-column grid | Mobile: handled via CSS */}
           <div
-            className="valueprop-grid stagger-children"
+            className="valueprop-pillars stagger-children"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(4, 1fr)",
@@ -151,6 +154,7 @@ export default function ValueProp() {
             {pillars.map((pillar) => (
               <div
                 key={pillar.number}
+                className="valueprop-pillar"
                 style={{
                   background: "var(--cream)",
                   padding: "clamp(1.5rem, 2.5vw, 2.5rem)",
@@ -165,6 +169,7 @@ export default function ValueProp() {
                   }}
                 >
                   <span
+                    className="valueprop-pillar-number"
                     style={{
                       fontFamily: "var(--font-display)",
                       fontSize: "2.4rem",
@@ -180,6 +185,7 @@ export default function ValueProp() {
                 </div>
 
                 <div
+                  className="valueprop-pillar-line"
                   style={{
                     width: "24px",
                     height: "1px",

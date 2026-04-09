@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/lib/data";
 
-const BASE = "https://www.latherheadspa.com";
+const BASE = "https://www.latherspas.com";
 
 const seoCities = [
   "greenville-nc", "winterville-nc", "ayden-nc", "farmville-nc",

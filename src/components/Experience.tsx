@@ -483,7 +483,7 @@ export default function Experience() {
           >
             <div style={{ width: "100%", height: "56vw", maxHeight: "340px", overflow: "hidden", position: "relative" }}>
               {step.video ? (
-                <video autoPlay loop muted playsInline poster={step.image} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}>
+                <video autoPlay loop muted playsInline preload="none" poster={step.image} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}>
                   <source src={step.video} type="video/mp4" />
                 </video>
               ) : (

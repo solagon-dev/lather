@@ -1,206 +1,88 @@
 import type { Metadata, Viewport } from "next";
+import { Figtree, Fraunces } from "next/font/google";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import StickyBook from "@/components/StickyBook";
+import { business } from "@/lib/business";
+import { jsonLd, localBusinessSchema } from "@/lib/seo";
 import "./globals.css";
 
-const SITE_URL = "https://www.latherspas.com";
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz", "SOFT", "WONK"],
+});
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#3D2E22",
-};
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(business.siteUrl),
   title: {
-    default: "Lather | Luxury Head Spa — Greenville, NC",
+    default: "Lather Head Spa | Luxury Head Spa in Greenville, NC",
     template: "%s | Lather Head Spa",
   },
   description:
-    "Lather is a luxury head spa in Greenville, NC offering Japanese-inspired scalp rituals, hair restoration treatments, and therapeutic massage. Book your ritual today.",
+    "Lather Head Spa is Greenville, NC's premier luxury head spa — Japanese-inspired scalp rituals, therapeutic massage, and hair wellness. A facial for your scalp. Book on Vagaro.",
   keywords: [
     "head spa Greenville NC",
-    "scalp treatment Greenville",
     "Japanese head spa North Carolina",
-    "luxury spa Greenville NC",
-    "scalp massage near me",
-    "hair restoration Greenville",
-    "scalp ritual",
-    "hair wellness",
+    "scalp treatment Greenville",
+    "scalp massage Greenville NC",
+    "luxury spa Greenville",
+    "hair wellness Greenville",
+    "blowout Greenville NC",
     "head spa near me",
-    "best head spa eastern NC",
   ],
-  authors: [{ name: "Lather Head Spa" }],
-  creator: "Lather Head Spa",
-  publisher: "Lather Head Spa",
-  formatDetection: { telephone: true, email: true, address: true },
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Lather | Luxury Head Spa — Greenville, NC",
-    description:
-      "Where the scalp breathes again. Japanese-inspired scalp rituals and hair restoration in Greenville, NC.",
-    url: SITE_URL,
-    siteName: "Lather Head Spa",
-    locale: "en_US",
     type: "website",
+    locale: "en_US",
+    url: business.siteUrl,
+    siteName: business.name,
+    title: "Lather Head Spa | Luxury Head Spa in Greenville, NC",
+    description:
+      "A facial for your scalp. Japanese-inspired scalp rituals, therapeutic massage, and hair wellness in Greenville, North Carolina.",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Lather Head Spa — Greenville, NC" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lather | Luxury Head Spa — Greenville, NC",
+    title: "Lather Head Spa | Luxury Head Spa in Greenville, NC",
     description:
-      "Japanese-inspired scalp rituals and hair restoration in Greenville, NC. Book your ritual today.",
+      "A facial for your scalp. Japanese-inspired scalp rituals in Greenville, NC.",
+    images: ["/og.jpg"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
-  },
-  alternates: { canonical: SITE_URL },
-  category: "beauty",
-};
-
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "DaySpa",
-  "@id": `${SITE_URL}/#business`,
-  name: "Lather Head Spa",
-  description:
-    "Luxury head spa in Greenville, NC offering Japanese-inspired scalp rituals, hair restoration treatments, and therapeutic massage.",
-  url: SITE_URL,
-  telephone: "(252) 531-0987",
-  email: "hello@latherspas.com",
-  priceRange: "$$",
-  image: `${SITE_URL}/media/hero/hero-poster.jpg`,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "620 Lynndale Court",
-    addressLocality: "Greenville",
-    addressRegion: "NC",
-    postalCode: "27858",
-    addressCountry: "US",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "35.6127",
-    longitude: "-77.3664",
-  },
-  areaServed: [
-    { "@type": "City", name: "Greenville", containedInPlace: { "@type": "State", name: "North Carolina" } },
-    { "@type": "City", name: "Winterville" },
-    { "@type": "City", name: "Ayden" },
-    { "@type": "City", name: "Washington" },
-    { "@type": "City", name: "New Bern" },
-    { "@type": "City", name: "Grimesland" },
-  ],
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "10:00",
-      closes: "19:00",
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
-  ],
-  hasMap: "https://www.google.com/maps/search/Lather+Head+Spa+Greenville+NC",
-  sameAs: [
-    "https://www.instagram.com/latherheadspa",
-    "https://www.facebook.com/latherheadspa",
-  ],
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Scalp Rituals",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "The Luxe Ritual",
-          description: "A 90-minute premium scalp experience — our most comprehensive ritual with advanced treatments, extended massage, and full restoration.",
-          provider: { "@id": `${SITE_URL}/#business` },
-        },
-        price: "200",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "The Classic Ritual",
-          description: "A 75-minute complete scalp reset — purifying cleanse, exfoliation, massage, hair mask, and steam infusion.",
-          provider: { "@id": `${SITE_URL}/#business` },
-        },
-        price: "125",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Gentleman's Recharge",
-          description: "A 60-minute restorative scalp experience designed specifically for men.",
-          provider: { "@id": `${SITE_URL}/#business` },
-        },
-        price: "100",
-        priceCurrency: "USD",
-      },
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Blowout",
-          description: "A 45-minute professional blowout for a polished, finished look.",
-          provider: { "@id": `${SITE_URL}/#business` },
-        },
-        price: "50",
-        priceCurrency: "USD",
-      },
-    ],
   },
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // Dynamic import to avoid circular dependency issues
-  const { getCompanySettings } = await import("@/lib/settings");
-  const { SettingsProvider } = await import("@/components/SettingsProvider");
-  const settings = await getCompanySettings();
+export const viewport: Viewport = {
+  themeColor: "#181310",
+  width: "device-width",
+  initialScale: 1,
+};
 
-  // Build dynamic schema from settings
-  const dynamicSchema = {
-    ...localBusinessSchema,
-    name: settings.businessName,
-    telephone: settings.phone,
-    email: settings.email,
-    address: {
-      "@type": "PostalAddress" as const,
-      streetAddress: settings.addressLine1,
-      addressLocality: settings.city,
-      addressRegion: settings.state,
-      postalCode: settings.zip,
-      addressCountry: settings.country,
-    },
-    sameAs: [settings.instagramUrl, settings.facebookUrl, settings.tiktokUrl].filter(Boolean),
-  };
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(dynamicSchema),
-          }}
-        />
-      </head>
+    <html lang="en" className={`${fraunces.variable} ${figtree.variable}`}>
       <body>
-        <a href="#main-content" className="skip-to-content">
-          Skip to content
-        </a>
-        <SettingsProvider settings={settings}>
-          <div id="main-content">{children}</div>
-        </SettingsProvider>
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(localBusinessSchema())} />
+        <Navbar />
+        <main id="main">{children}</main>
+        <Footer />
+        <StickyBook />
       </body>
     </html>
   );

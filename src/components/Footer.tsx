@@ -1,411 +1,97 @@
-"use client";
-
 import Link from "next/link";
-import { useSettings } from "@/components/SettingsProvider";
-import { formatHoursShort, phoneTel } from "@/lib/settings";
+import { BOOK_URL, GIFT_CARD_URL, business, hours } from "@/lib/business";
 
-const navLinks = [
-  { label: "Treatments", href: "/treatments" },
-  { label: "What Is a Head Spa", href: "/what-is-a-head-spa" },
-  { label: "Scalp Concerns", href: "/scalp-concerns" },
-  { label: "About", href: "/about" },
-  { label: "Team", href: "/team" },
-  { label: "Journal", href: "/journal" },
-  { label: "Contact", href: "/contact" },
+const explore = [
+  { href: "/services", label: "Services & Pricing" },
+  { href: "/experience", label: "The Experience" },
+  { href: "/what-is-a-head-spa", label: "What Is a Head Spa?" },
+  { href: "/scalp-concerns", label: "Scalp Concerns" },
+  { href: "/about", label: "About Lather" },
+  { href: "/journal", label: "Journal" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/locations", label: "Areas We Serve" },
 ];
-
-const serviceLinks = [
-  { label: "The Luxe Ritual", href: "/treatments/luxe-ritual" },
-  { label: "The Classic Ritual", href: "/treatments/classic-ritual" },
-  { label: "Gentleman's Recharge", href: "/treatments/gentlemans-recharge" },
-  { label: "Blowout", href: "/treatments/blowout" },
-  { label: "Memberships", href: "/memberships" },
-  { label: "Spa Parties", href: "/spa-parties" },
-  { label: "Gift Cards", href: "/gift-cards" },
-  { label: "FAQ + Policies", href: "/faq" },
-];
-
-const locationLinks = [
-  { label: "Greenville, NC", href: "/locations/greenville-head-spa" },
-  { label: "Winterville, NC", href: "/locations/winterville-head-spa" },
-  { label: "Ayden, NC", href: "/locations/ayden-head-spa" },
-  { label: "Grimesland, NC", href: "/locations/grimesland-head-spa" },
-  { label: "Washington, NC", href: "/locations/washington-nc-head-spa" },
-  { label: "All Locations →", href: "/locations" },
-];
-
-const footerLinkStyle: React.CSSProperties = {
-  display: "block",
-  fontFamily: "var(--font-body)",
-  fontSize: "0.82rem",
-  color: "rgba(237,230,219,0.48)",
-  textDecoration: "none",
-  marginBottom: "0.9rem",
-  letterSpacing: "0.02em",
-  transition: "color 0.2s ease",
-};
-
-const footerHeadStyle: React.CSSProperties = {
-  fontFamily: "var(--font-body)",
-  fontSize: "0.55rem",
-  letterSpacing: "0.28em",
-  textTransform: "uppercase",
-  color: "rgba(237,230,219,0.26)",
-  marginBottom: "1.5rem",
-};
-
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      style={footerLinkStyle}
-      onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(237,230,219,0.88)")}
-      onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(237,230,219,0.48)")}
-    >
-      {children}
-    </Link>
-  );
-}
 
 export default function Footer() {
-  const s = useSettings();
-  const hoursDisplay = formatHoursShort(s.businessHours);
-  const telHref = phoneTel(s.phone);
   return (
-    <footer
-      className="section-pad"
-      style={{
-        background: "var(--charcoal)",
-        padding: "80px 48px 40px",
-        position: "relative",
-        borderTop: "1px solid rgba(237,230,219,0.06)",
-      }}
-    >
-      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        {/* ── Desktop: full 5-column grid ── */}
-        <div
-          className="footer-top-grid footer-desktop"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr",
-            gap: "3rem",
-            paddingBottom: "56px",
-            borderBottom: "1px solid rgba(237,230,219,0.07)",
-            marginBottom: "36px",
-          }}
-        >
-          {/* Brand column */}
-          <div>
-            <Link href="/" style={{ textDecoration: "none", display: "inline-block", marginBottom: "1.5rem" }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.8rem",
-                  fontWeight: 300,
-                  letterSpacing: "0.18em",
-                  color: "var(--linen)",
-                  textTransform: "uppercase",
-                  display: "block",
-                }}
-              >
-                Lather
-              </span>
-            </Link>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.82rem",
-                lineHeight: 1.85,
-                color: "rgba(237,230,219,0.4)",
-                fontWeight: 300,
-                maxWidth: "240px",
-                marginBottom: "2.25rem",
-              }}
-            >
-              A luxury head spa in Greenville, NC. Where the scalp breathes again.
-            </p>
-            <Link
-              href="/book"
-              style={{
-                display: "inline-block",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                color: "var(--bark)",
-                background: "var(--linen)",
-                padding: "12px 22px",
-                textDecoration: "none",
-                transition: "background 0.25s ease",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "var(--cream)")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "var(--linen)")}
-            >
-              Book Now
-            </Link>
-          </div>
-
-          {/* Navigate */}
-          <div>
-            <p style={footerHeadStyle}>Navigate</p>
-            {navLinks.map((link) => <FooterLink key={link.label} href={link.href}>{link.label}</FooterLink>)}
-          </div>
-
-          {/* Services */}
-          <div>
-            <p style={footerHeadStyle}>Services</p>
-            {serviceLinks.map((link) => <FooterLink key={link.label} href={link.href}>{link.label}</FooterLink>)}
-          </div>
-
-          {/* Locations */}
-          <div>
-            <p style={footerHeadStyle}>Locations</p>
-            {locationLinks.map((link) => <FooterLink key={link.label} href={link.href}>{link.label}</FooterLink>)}
-          </div>
-
-          {/* Contact info */}
-          <div>
-            <p style={footerHeadStyle}>Find Us</p>
-            {[
-              { label: s.addressLine1, href: null },
-              { label: `${s.city}, ${s.state} ${s.zip}`, href: null },
-              { label: hoursDisplay, href: null },
-              { label: s.email, href: `mailto:${s.email}` },
-              { label: s.phone, href: telHref },
-            ].map((item) =>
-              item.href ? (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  style={footerLinkStyle}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(237,230,219,0.88)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(237,230,219,0.48)")}
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <p
-                  key={item.label}
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.82rem",
-                    color: "rgba(237,230,219,0.36)",
-                    marginBottom: "0.9rem",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {item.label}
-                </p>
-              )
-            )}
-          </div>
-        </div>
-
-        {/* ── Mobile: compact editorial footer ── */}
-        <div className="footer-mobile" style={{ display: "none" }}>
-          {/* Brand + CTA */}
-          <div style={{ marginBottom: "2.5rem" }}>
-            <Link href="/" style={{ textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.5rem",
-                  fontWeight: 300,
-                  letterSpacing: "0.18em",
-                  color: "var(--linen)",
-                  textTransform: "uppercase",
-                }}
-              >
-                Lather
-              </span>
-            </Link>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.82rem",
-                lineHeight: 1.75,
-                color: "rgba(237,230,219,0.38)",
-                fontWeight: 300,
-                marginBottom: "1.5rem",
-              }}
-            >
-              A luxury head spa in Greenville, NC.
-              <br />
-              Where the scalp breathes again.
-            </p>
-            <Link
-              href="/book"
-              style={{
-                display: "block",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.58rem",
-                letterSpacing: "0.22em",
-                textTransform: "uppercase",
-                textAlign: "center",
-                color: "var(--bark)",
-                background: "var(--linen)",
-                padding: "15px 24px",
-                textDecoration: "none",
-              }}
-            >
-              Book Your Ritual
-            </Link>
-          </div>
-
-          {/* Contact info — clean horizontal block */}
-          <div
-            style={{
-              borderTop: "1px solid rgba(237,230,219,0.07)",
-              borderBottom: "1px solid rgba(237,230,219,0.07)",
-              padding: "1.5rem 0",
-              marginBottom: "2rem",
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1.25rem 2rem",
-            }}
-          >
-            <div>
-              <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Location</p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", lineHeight: 1.6, fontWeight: 300 }}>
-                {s.addressLine1}
-                <br />
-                {s.city}, {s.state} {s.zip}
-              </p>
-            </div>
-            <div>
-              <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Hours</p>
-              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", lineHeight: 1.6, fontWeight: 300 }}>
-                {hoursDisplay.split(" · ")[0] || "Tue – Sat"}
-                <br />
-                {hoursDisplay.split(" · ")[1] || "10am – 7pm"}
-              </p>
-            </div>
-            <div>
-              <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Email</p>
-              <a href={`mailto:${s.email}`} style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", textDecoration: "none" }}>
-                {s.email}
-              </a>
-            </div>
-            <div>
-              <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Phone</p>
-              <a href={telHref} style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", textDecoration: "none" }}>
-                {s.phone}
-              </a>
-            </div>
-          </div>
-
-          {/* Navigation — two compact columns */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "0 2rem",
-              marginBottom: "2rem",
-            }}
-          >
-            <div>
-              <p style={{ ...footerHeadStyle, marginBottom: "1rem", fontSize: "0.48rem" }}>Navigate</p>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  style={{ ...footerLinkStyle, fontSize: "0.78rem", marginBottom: "0.75rem" }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            <div>
-              <p style={{ ...footerHeadStyle, marginBottom: "1rem", fontSize: "0.48rem" }}>Services</p>
-              {serviceLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  style={{ ...footerLinkStyle, fontSize: "0.78rem", marginBottom: "0.75rem" }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ── Bottom bar (shared) ── */}
-        <div
-          className="footer-bottom"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: "1rem",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.58rem",
-              letterSpacing: "0.1em",
-              color: "rgba(237,230,219,0.2)",
-            }}
-          >
-            {s.copyrightText || `© ${new Date().getFullYear()} ${s.businessName} · ${s.city}, ${s.state}`}
+    <footer className="relative bg-noir text-ivory/80">
+      <div className="wrap grid gap-14 px-6 py-20 sm:px-10 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] lg:px-16">
+        <div>
+          <p className="font-display text-2xl font-light tracking-[0.32em] text-ivory">LATHER</p>
+          <p className="mt-1 text-[0.55rem] font-medium uppercase tracking-[0.5em] text-ivory/50">Head Spa</p>
+          <p className="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-ivory/60">
+            A facial for your scalp. Japanese-inspired scalp rituals, therapeutic massage, and hair
+            wellness in a space built for stillness — Greenville, North Carolina.
           </p>
-
-          <div className="footer-socials" style={{ display: "flex", gap: "2rem" }}>
-            {([
-              s.instagramUrl ? { label: "Instagram", href: s.instagramUrl } : null,
-              s.facebookUrl ? { label: "Facebook", href: s.facebookUrl } : null,
-              s.tiktokUrl ? { label: "TikTok", href: s.tiktokUrl } : null,
-            ].filter(Boolean) as { label: string; href: string }[]).map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.58rem",
-                  letterSpacing: "0.2em",
-                  textTransform: "uppercase",
-                  color: "rgba(237,230,219,0.28)",
-                  textDecoration: "none",
-                  transition: "color 0.2s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(237,230,219,0.62)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(237,230,219,0.28)")}
-              >
-                {social.label}
-              </a>
-            ))}
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
+              Book Now
+            </a>
+            <a href={GIFT_CARD_URL} target="_blank" rel="noopener" className="btn-outline-light">
+              Gift Cards
+            </a>
           </div>
         </div>
 
-        {/* Site credit */}
-        <div
-          style={{
-            marginTop: "clamp(24px, 3vw, 36px)",
-            paddingTop: "clamp(20px, 2.5vw, 28px)",
-            borderTop: "1px solid rgba(237,230,219,0.04)",
-            textAlign: "center",
-          }}
-        >
+        <nav aria-label="Footer">
+          <p className="kicker text-brass-light">Explore</p>
+          <ul className="mt-6 grid gap-3 text-[0.95rem]">
+            {explore.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="link-ul text-ivory/70 hover:text-ivory">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <p className="kicker text-brass-light">Visit</p>
+          <address className="mt-6 not-italic leading-relaxed text-ivory/70">
+            <a href={business.mapsUrl} target="_blank" rel="noopener" className="link-ul hover:text-ivory">
+              620 Lynndale Court, Unit B<br />
+              Greenville, NC 27858
+            </a>
+            <br />
+            <a href={business.phoneHref} className="link-ul mt-3 inline-block hover:text-ivory">
+              {business.phone}
+            </a>
+            <br />
+            <a href={`mailto:${business.email}`} className="link-ul inline-block hover:text-ivory">
+              {business.email}
+            </a>
+          </address>
+          <ul className="mt-6 space-y-1 text-[0.85rem] text-ivory/55">
+            {hours.map((h) => (
+              <li key={h.day} className="flex justify-between gap-6 border-b border-ivory/10 pb-1">
+                <span>{h.day}</span>
+                <span>{h.open ? `${h.open} – ${h.close}` : "Closed"}</span>
+              </li>
+            ))}
+          </ul>
           <a
-            href="https://solagon.com"
+            href={business.instagram}
             target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.5rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "rgba(237,230,219,0.18)",
-              textDecoration: "none",
-              transition: "color 0.3s ease",
-            }}
+            rel="noopener"
+            className="link-ul mt-6 inline-block text-[0.85rem] uppercase tracking-wideish text-brass-light"
           >
-            Designed by Solagon
+            Instagram {business.instagramHandle}
           </a>
+        </div>
+      </div>
+
+      <div className="border-t border-ivory/10">
+        <div className="wrap flex flex-col items-center justify-between gap-3 px-6 py-6 text-[0.75rem] text-ivory/40 sm:flex-row sm:px-10 lg:px-16">
+          <p>
+            © {new Date().getFullYear()} {business.name}. All rights reserved.
+          </p>
+          <p>
+            By appointment only · {business.parking} ·{" "}
+            <Link href="/contact" className="link-ul hover:text-ivory/70">
+              Directions
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

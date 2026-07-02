@@ -4,3 +4,9 @@ node_modules/
 .env.local
 .env.production
 .vercel
+
+# Raw source media (kept locally, never deployed)
+public/Photos/
+public/Videos/
+.DS_Store
+tsconfig.tsbuildinfo

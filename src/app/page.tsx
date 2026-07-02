@@ -1,55 +1,314 @@
-import type { Metadata } from "next";
-import ScrollReveal from "@/components/ScrollReveal";
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import CinematicMarquee from "@/components/CinematicMarquee";
-import ValueProp from "@/components/ValueProp";
-import TreatmentCards from "@/components/TreatmentCards";
-import EditorialBreak from "@/components/EditorialBreak";
-import Experience from "@/components/Experience";
-import ConcernPaths from "@/components/ConcernPaths";
-import Gallery from "@/components/Gallery";
-import Testimonials from "@/components/Testimonials";
-import SecondaryConversions from "@/components/SecondaryConversions";
-import About from "@/components/About";
-import FAQ from "@/components/FAQ";
-import Book from "@/components/Book";
-import Footer from "@/components/Footer";
-import StickyBooking from "@/components/StickyBooking";
+import Image from "next/image";
+import Link from "next/link";
+import BookCTA from "@/components/BookCTA";
+import FaqAccordion from "@/components/FaqAccordion";
+import Marquee from "@/components/Marquee";
+import Reveal from "@/components/Reveal";
+import ServiceCard from "@/components/ServiceCard";
+import { BOOK_URL, business, hours } from "@/lib/business";
+import { faqs, services, testimonials } from "@/lib/data";
+import { experienceSteps } from "@/lib/experience";
 
-export const metadata: Metadata = {
-  title: "Luxury Head Spa in Greenville, NC",
-  description:
-    "Lather is a luxury head spa in Greenville, NC. Japanese-inspired scalp rituals, therapeutic massage, and hair restoration treatments. Book your ritual today.",
-  alternates: { canonical: "https://www.latherspas.com" },
-};
+const galleryStrip = [
+  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the Lather treatment room" },
+  { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather waiting lounge" },
+  { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp detail inside Lather Head Spa" },
+  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Head Spa" },
+];
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main>
-      <ScrollReveal />
-      <Navbar />
+    <>
+      {/* ── HERO ─────────────────────────────────────────────── */}
+      <section className="grain relative flex min-h-[100svh] items-end overflow-hidden bg-noir text-ivory">
+        <video
+          className="kenburns absolute inset-0 h-full w-full object-cover opacity-60"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/media/hero/hero-poster.webp"
+          aria-hidden
+        >
+          <source src="/media/video/hero-welcome.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/30 to-noir/40" />
 
-      {/* 1. Cinematic hero — immediate desire + booking CTA */}
-      <Hero />
+        <div className="wrap relative px-6 pb-24 pt-44 sm:px-10 lg:px-16">
+          <Reveal>
+            <p className="kicker-line text-brass-light">Greenville, North Carolina</p>
+            <h1 className="h-display mt-8 max-w-4xl text-balance text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+              A facial <span className="italic text-brass-light">for your scalp.</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-lg text-ivory/75">
+              Japanese-inspired scalp rituals, therapeutic massage, and hair wellness — in a
+              sanctuary built for stillness. Eastern North Carolina&rsquo;s dedicated head spa.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
+                Book Your Ritual
+              </a>
+              <Link href="/services" className="btn-outline-light">
+                Explore Services
+              </Link>
+            </div>
+          </Reveal>
+        </div>
 
-      {/* Content wrapper — solid background covers the fixed hero video */}
-      <div style={{ position: "relative", zIndex: 1, background: "var(--cream)" }}>
-        <CinematicMarquee />
-        <ValueProp />
-        <TreatmentCards />
-        <EditorialBreak />
-        <Experience />
-        <ConcernPaths />
-        <Gallery />
-        <Testimonials />
-        <SecondaryConversions />
-        <About />
-        <FAQ />
-        <Book />
-        <Footer />
-      </div>
-      <StickyBooking />
-    </main>
+        <div className="absolute bottom-8 right-8 hidden items-center gap-3 text-[0.65rem] uppercase tracking-kicker text-ivory/50 md:flex">
+          <span>Scroll</span>
+          <span className="block h-10 w-px animate-pulse bg-ivory/40" />
+        </div>
+      </section>
+
+      <Marquee />
+
+      {/* ── PHILOSOPHY ───────────────────────────────────────── */}
+      <section className="section-pad bg-porcelain">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <Reveal className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div className="arch relative aspect-[3/4]">
+              <Image
+                src="/media/gallery/treatment-waterfall.webp"
+                alt="Warm water poured over the scalp during a Lather head spa ritual"
+                fill
+                sizes="(min-width: 1024px) 45vw, 90vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-4 hidden bg-noir px-6 py-5 text-ivory sm:block md:-right-10">
+              <p className="font-display text-3xl text-brass-light">5.0</p>
+              <p className="mt-1 text-[0.6rem] uppercase tracking-kicker text-ivory/60">Guest Rating</p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <p className="kicker-line">The Lather Philosophy</p>
+            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
+              Where the scalp <span className="italic">breathes</span> again
+            </h2>
+            <p className="mt-8 max-w-xl text-umber">
+              Lather is a premier beauty-wellness establishment in Greenville, North Carolina —
+              built on a simple belief: the scalp deserves the same professional care as the skin
+              on your face. We combine ultimate relaxation with results-oriented scalp and hair
+              treatments, rooted in Japanese head spa tradition.
+            </p>
+            <p className="mt-5 max-w-xl text-umber">
+              No noise, no rush, no busy salon floor. Step into our tranquil oasis, recline beneath
+              the arch of warm water, and let skilled hands take it from there.
+            </p>
+            <dl className="mt-10 grid grid-cols-3 gap-6 border-t hairline pt-8">
+              <div>
+                <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Appointments</dt>
+                <dd className="mt-2 font-display text-lg">Private, one-on-one</dd>
+              </div>
+              <div>
+                <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Tradition</dt>
+                <dd className="mt-2 font-display text-lg">Japanese-inspired</dd>
+              </div>
+              <div>
+                <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Rituals from</dt>
+                <dd className="mt-2 font-display text-lg">45–90 minutes</dd>
+              </div>
+            </dl>
+            <Link href="/about" className="link-ul mt-10 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker">
+              Our Story →
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── SERVICES ─────────────────────────────────────────── */}
+      <section className="section-pad border-t hairline bg-ivory">
+        <div className="wrap">
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="kicker-line">The Menu</p>
+              <h2 className="h-display mt-6 text-4xl sm:text-5xl">Choose your ritual</h2>
+            </div>
+            <Link href="/services" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">
+              Full Menu & Add-Ons →
+            </Link>
+          </Reveal>
+          <div className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((s, i) => (
+              <ServiceCard key={s.id} service={s} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── EXPERIENCE ───────────────────────────────────────── */}
+      <section className="grain relative section-pad bg-noir text-ivory">
+        <div className="wrap relative">
+          <Reveal className="max-w-2xl">
+            <p className="kicker-line text-brass-light">What to Expect</p>
+            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
+              One unhurried hour, <span className="italic text-brass-light">five movements</span>
+            </h2>
+          </Reveal>
+          <ol className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 sm:grid-cols-2 lg:grid-cols-5">
+            {experienceSteps.map((step, i) => (
+              <Reveal key={step.number} as="li" delay={i * 80}>
+                <p className="font-display text-3xl font-light text-brass-light/70">{step.number}</p>
+                <h3 className="mt-4 font-display text-2xl">{step.title}</h3>
+                <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{step.body}</p>
+              </Reveal>
+            ))}
+          </ol>
+          <Reveal className="mt-14">
+            <Link href="/experience" className="btn-outline-light">
+              The Full Experience
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── EDITORIAL BREAK ──────────────────────────────────── */}
+      <section className="relative h-[52vh] min-h-[380px] overflow-hidden">
+        <Image
+          src="/media/editorial/editorial-break.webp"
+          alt="Quiet ambiance inside Lather Head Spa"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 flex items-center justify-center bg-noir/35 px-6">
+          <Reveal>
+            <p className="h-display max-w-3xl text-center text-3xl italic text-ivory sm:text-4xl md:text-5xl">
+              &ldquo;Sorry, I have plans&rdquo; — the plans:
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ─────────────────────────────────────── */}
+      <section className="section-pad bg-bone">
+        <div className="wrap">
+          <Reveal className="text-center">
+            <p className="kicker">Guest Notes</p>
+            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+              Five stars, <span className="italic">every one</span>
+            </h2>
+          </Reveal>
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {testimonials.map((t, i) => (
+              <Reveal key={t.name} delay={i * 100} className="flex flex-col border hairline bg-ivory p-8">
+                <p className="text-brass" aria-label="5 out of 5 stars">★★★★★</p>
+                <blockquote className="mt-5 flex-1 font-display text-xl font-light leading-relaxed">
+                  &ldquo;{t.quote}&rdquo;
+                </blockquote>
+                <footer className="mt-6 border-t hairline pt-4 text-[0.75rem] uppercase tracking-wideish text-taupe">
+                  <span className="font-semibold text-ink">{t.name}</span> · {t.service}
+                  <br />
+                  <span className="text-[0.65rem]">{t.location}</span>
+                </footer>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SPACE / GALLERY STRIP ────────────────────────────── */}
+      <section className="section-pad border-t hairline bg-porcelain">
+        <div className="wrap">
+          <Reveal className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="kicker-line">The Space</p>
+              <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+                Designed for <span className="italic">stillness</span>
+              </h2>
+            </div>
+            <Link href="/about" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">
+              Step Inside →
+            </Link>
+          </Reveal>
+          <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {galleryStrip.map((g, i) => (
+              <Reveal key={g.src} delay={i * 80} className={i % 2 === 1 ? "md:mt-10" : ""}>
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <Image
+                    src={g.src}
+                    alt={g.alt}
+                    fill
+                    sizes="(min-width: 768px) 25vw, 50vw"
+                    className="object-cover transition-transform duration-[1.2s] ease-luxe hover:scale-105"
+                  />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ TEASER ───────────────────────────────────────── */}
+      <section className="section-pad border-t hairline bg-ivory">
+        <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
+          <Reveal>
+            <p className="kicker-line">Good to Know</p>
+            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+              First time at a <span className="italic">head spa?</span>
+            </h2>
+            <p className="mt-6 max-w-md text-umber">
+              Most of our guests are first-timers. Here&rsquo;s what people ask before they book —
+              and everything else lives on the FAQ page.
+            </p>
+            <Link href="/faq" className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker">
+              All Questions →
+            </Link>
+          </Reveal>
+          <Reveal delay={120}>
+            <FaqAccordion faqs={faqs.slice(0, 4)} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── VISIT ────────────────────────────────────────────── */}
+      <section className="section-pad border-t hairline bg-porcelain">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-2">
+          <Reveal>
+            <p className="kicker-line">Visit Us</p>
+            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+              In the heart of <span className="italic">Greenville</span>
+            </h2>
+            <address className="mt-8 not-italic text-umber">
+              <a href={business.mapsUrl} target="_blank" rel="noopener" className="link-ul font-display text-2xl text-ink">
+                620 Lynndale Court, Unit B
+              </a>
+              <br />
+              Greenville, NC 27858
+              <br />
+              <a href={business.phoneHref} className="link-ul mt-4 inline-block">
+                {business.phone}
+              </a>
+            </address>
+            <p className="mt-4 text-[0.85rem] text-taupe">{business.parking} · By appointment only</p>
+            <div className="mt-8 max-w-sm">
+              <ul className="space-y-1 text-[0.9rem] text-umber">
+                {hours.map((h) => (
+                  <li key={h.day} className="flex justify-between border-b hairline pb-1">
+                    <span>{h.day}</span>
+                    <span>{h.open ? `${h.open} – ${h.close}` : "Closed"}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+          <Reveal delay={120} className="relative">
+            <div className="arch relative aspect-[3/4] max-h-[560px] w-full">
+              <Image
+                src="/media/about/about-hero.webp"
+                alt="The entrance of Lather Head Spa in Greenville, NC"
+                fill
+                sizes="(min-width: 1024px) 45vw, 90vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <BookCTA />
+    </>
   );
 }

@@ -1,30 +1,32 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SeoLandingPage from "@/components/SeoLandingPage";
-import { seoCities, getSeoService } from "@/lib/seo-pages";
+import { getSeoCity, getSeoService, seoCities } from "@/lib/seo-pages";
 
-type Props = { params: Promise<{ city: string }> };
+const service = getSeoService("scalp-massage")!;
 
-const SERVICE_KEY = "scalp-massage";
+interface Params {
+  city: string;
+}
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return seoCities.map((c) => ({ city: c.slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { city: citySlug } = await params;
-  const city = seoCities.find((c) => c.slug === citySlug);
-  const service = getSeoService(SERVICE_KEY);
-  if (!city || !service) return {};
+export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
+  const { city } = await params;
+  const seoCity = getSeoCity(city);
+  if (!seoCity) return {};
   return {
-    title: service.metaTitle(city.name, city.state),
-    description: service.metaDesc(city.name, city.state, city.driveTime),
+    title: { absolute: service.metaTitle(seoCity.name, seoCity.state) },
+    description: service.metaDesc(seoCity.name, seoCity.state, seoCity.driveTime),
+    alternates: { canonical: `/${service.urlPrefix}/${seoCity.slug}` },
   };
 }
 
-export default async function ScalpMassageCityPage({ params }: Props) {
-  const { city: citySlug } = await params;
-  const city = seoCities.find((c) => c.slug === citySlug);
-  if (!city) notFound();
-  return <SeoLandingPage serviceKey={SERVICE_KEY} citySlug={citySlug} />;
+export default async function ScalpMassageCityPage({ params }: { params: Promise<Params> }) {
+  const { city } = await params;
+  const seoCity = getSeoCity(city);
+  if (!seoCity) notFound();
+  return <SeoLandingPage city={seoCity} service={service} />;
 }

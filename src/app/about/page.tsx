@@ -1,450 +1,179 @@
 import type { Metadata } from "next";
-import ScrollReveal from "@/components/ScrollReveal";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import CTABanner from "@/components/CTABanner";
+import Image from "next/image";
+import BookCTA from "@/components/BookCTA";
+import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
+import { BOOK_URL, business } from "@/lib/business";
 import { brandValues } from "@/lib/data";
-import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About — Our Story & The Space",
   description:
-    "Learn about Lather's philosophy, our Japanese head spa roots, and why we believe slow care delivers the deepest results.",
+    "The story behind Lather Head Spa in Greenville, NC — bringing the Japanese head spa tradition to Eastern North Carolina in a sanctuary built for stillness. Meet the team and step inside.",
+  alternates: { canonical: "/about" },
 };
+
+const team = [
+  {
+    image: "/media/team/madison-hoffschneider.webp",
+    role: "Founder & Lead Therapist",
+    bio: "With years of experience in scalp health and wellness, our founder built Lather to bring the Japanese head spa tradition to eastern North Carolina. Every protocol, product, and detail reflects a commitment to results-driven care in a genuinely calming environment.",
+  },
+  {
+    image: "/media/team/heidi-griggs.webp",
+    role: "Scalp Therapist",
+    bio: "Trained in therapeutic scalp techniques and advanced treatment protocols, our scalp therapist brings precision and intuition to every session. Her approach blends technical expertise with a warm, attentive presence — ensuring every guest feels both cared for and restored.",
+  },
+];
+
+const gallery = [
+  { src: "/media/gallery/interior-waiting-room.webp", alt: "The quiet waiting lounge at Lather Head Spa" },
+  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the Lather treatment room" },
+  { src: "/media/gallery/treatment-waterfall.webp", alt: "Warm water poured over the scalp at the treatment basin" },
+  { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp glowing softly inside Lather Head Spa" },
+  { src: "/media/gallery/interior-diffuser.webp", alt: "Aromatherapy diffuser detail in the treatment space" },
+  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Head Spa in Greenville, NC" },
+];
 
 export default function AboutPage() {
   return (
-    <main>
-      <ScrollReveal />
-      <Navbar />
+    <>
+      <PageHero
+        kicker="Our Story"
+        title={
+          <>
+            Built for <span className="italic">stillness</span>
+          </>
+        }
+        sub="A facial for your scalp — and a quiet answer to the question of where Eastern North Carolina goes to truly slow down."
+        image="/media/about/about-hero.webp"
+        imageAlt="The entrance of Lather Head Spa in Greenville, NC"
+      />
 
-      {/* ── PAGE HERO ──────────────────────────────────────── */}
-      <section
-        className="grain-overlay section-pad about-page-hero"
-        style={{
-          minHeight: "60vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          padding: "0 clamp(20px, 4vw, 48px) clamp(56px, 8vw, 80px)",
-          background: "var(--bark)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <img
-          src="/media/about/about-hero.jpg"
-          alt="Elegant gold mirror reflecting the Lather Head Spa interior"
-          loading="eager"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 40%",
-            opacity: 0.22,
-          }}
-        />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(circle at 8% 35%, rgba(212,184,168,0.15), transparent 50%), radial-gradient(circle at 90% 80%, rgba(163,172,148,0.1), transparent 50%)",
-          }}
-        />
-        <div style={{ position: "relative", zIndex: 1, maxWidth: "1400px", margin: "0 auto", width: "100%" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.62rem",
-              letterSpacing: "0.3em",
-              textTransform: "uppercase",
-              color: "var(--blush)",
-              marginBottom: "1.2rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              opacity: 0.85,
-            }}
-          >
-            <span style={{ display: "inline-block", width: "28px", height: "1px", background: "var(--blush)" }} />
-            About Lather
-          </p>
-          <h1
-            className="about-page-hero-title"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(3rem, 7vw, 6rem)",
-              fontWeight: 300,
-              color: "var(--linen)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.015em",
-            }}
-          >
-            Slow care.
-            <br />
-            <em style={{ fontStyle: "italic" }}>Deep results.</em>
-          </h1>
-        </div>
-      </section>
-
-      {/* ── BRAND STORY ────────────────────────────────────── */}
-      <section
-        className="reveal-section reveal-lift section-pad"
-        style={{
-          background: "var(--cream)",
-          padding: "clamp(64px, 10vw, 120px) clamp(20px, 4vw, 48px)",
-          position: "relative",
-        }}
-      >
-        <div
-          className="about-grid about-story-grid"
-          style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "7rem",
-            alignItems: "start",
-          }}
-        >
-          <div>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "var(--stone)",
-                marginBottom: "1.2rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <span style={{ display: "inline-block", width: "28px", height: "1px", background: "var(--blush)" }} />
-              Our Story
-            </p>
-            <h2
-              className="about-story-headline"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
-                fontWeight: 300,
-                color: "var(--bark)",
-                lineHeight: 1.08,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Born from a belief in{" "}
-              <em style={{ fontStyle: "italic" }}>unhurried beauty.</em>
+      {/* ── STORY / PHILOSOPHY ───────────────────────────────── */}
+      <section className="section-pad bg-porcelain">
+        <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
+          <Reveal className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div className="arch relative aspect-[3/4]">
+              <Image
+                src="/media/about/spa-detail.webp"
+                alt="Quiet interior details inside Lather Head Spa"
+                fill
+                sizes="(min-width: 1024px) 45vw, 90vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <p className="kicker-line">The Lather Philosophy</p>
+            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
+              A tradition, <span className="italic">transplanted</span>
             </h2>
-          </div>
-
-          <div className="about-story-copy">
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "1rem",
-                lineHeight: 1.92,
-                color: "var(--mink)",
-                fontWeight: 300,
-                marginBottom: "1.75rem",
-              }}
-            >
-              At Lather, we believe that the most transformative beauty experiences are also the most unhurried ones. Rooted in the Japanese head spa tradition and elevated with modern therapeutic technique, each ritual is a deliberate sequence of touch, warmth, and intention.
+            <p className="mt-8 max-w-xl text-umber">{business.description}</p>
+            <p className="mt-5 max-w-xl text-umber">
+              Lather began with a simple observation: the Japanese head spa tradition — careful,
+              methodical, deeply restorative — had reached the coasts and the big cities, but not
+              here. Eastern North Carolina had salons, and it had spas, but nowhere devoted entirely
+              to the scalp. So we built one, in Greenville, from the ground up.
             </p>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "1rem",
-                lineHeight: 1.92,
-                color: "var(--mink)",
-                fontWeight: 300,
-                marginBottom: "1.75rem",
-              }}
-            >
-              We are located in Greenville, NC—serving guests who understand that caring for the scalp is an act of self-preservation, not indulgence.
+            <p className="mt-5 max-w-xl text-umber">
+              Everything about the space was chosen for stillness — the light, the temperature, the
+              absence of a busy salon floor. Appointments are private and one-on-one. You recline
+              beneath the arch of warm water, and for an hour or so, nothing is asked of you at all.
             </p>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "1rem",
-                lineHeight: 1.92,
-                color: "var(--mink)",
-                fontWeight: 300,
-              }}
-            >
-              Every product we choose, every technique we practice, every detail of the environment is calibrated to support one thing: your complete restoration.
-            </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── PHILOSOPHY IMAGE BREAK ─────────────────────────── */}
-      <section
-        className="reveal-section reveal-fade about-image-break"
-        style={{
-          height: "clamp(320px, 50vw, 580px)",
-          position: "relative",
-          overflow: "hidden",
-          background: "var(--linen)",
-        }}
-      >
-        <img
-          src="/media/about/spa-detail.jpg"
-          alt="Lather stylist holding a treatment brush — warm studio lighting"
-          loading="lazy"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "60% center",
-            display: "block",
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="about-image-break-gradient"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to right, rgba(61,46,34,0.5) 0%, rgba(61,46,34,0.1) 50%, transparent 100%)",
-          }}
-        />
-        <div
-          className="about-image-break-quote"
-          style={{
-            position: "absolute",
-            bottom: "clamp(32px, 5vw, 60px)",
-            left: "clamp(20px, 4vw, 60px)",
-            maxWidth: "480px",
-          }}
-        >
-          <p
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.4rem, 3.5vw, 2.5rem)",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: "var(--linen)",
-              lineHeight: 1.25,
-            }}
-          >
-            &ldquo;The scalp is the foundation of everything. We start there.&rdquo;
-          </p>
-        </div>
-      </section>
-
-      {/* ── VALUES ─────────────────────────────────────────── */}
-      <section
-        className="reveal-section reveal-lift grain-overlay section-pad"
-        style={{
-          background: "var(--bark)",
-          padding: "clamp(64px, 10vw, 120px) clamp(20px, 4vw, 48px)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(circle at 10% 50%, rgba(212,184,168,0.12), transparent 50%), radial-gradient(circle at 90% 20%, rgba(163,172,148,0.1), transparent 50%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        <div style={{ maxWidth: "1400px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-          <div style={{ marginBottom: "clamp(40px, 6vw, 72px)" }}>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "var(--blush)",
-                marginBottom: "1.2rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                opacity: 0.85,
-              }}
-            >
-              <span style={{ display: "inline-block", width: "28px", height: "1px", background: "var(--blush)" }} />
-              What We Believe
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
-                fontWeight: 300,
-                color: "var(--linen)",
-                lineHeight: 1.08,
-                letterSpacing: "-0.01em",
-              }}
-            >
-              Our <em style={{ fontStyle: "italic" }}>values.</em>
+      {/* ── VALUES ───────────────────────────────────────────── */}
+      <section className="grain relative section-pad bg-noir text-ivory">
+        <div className="wrap relative">
+          <Reveal className="max-w-2xl">
+            <p className="kicker-line text-brass-light">What Guides Us</p>
+            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
+              Three things we <span className="italic text-brass-light">believe</span>
             </h2>
-          </div>
-
-          <div
-            className="values-grid about-page-values"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "3.5rem",
-              borderTop: "1px solid rgba(237,230,219,0.1)",
-              paddingTop: "clamp(32px, 5vw, 60px)",
-            }}
-          >
+          </Reveal>
+          <div className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
             {brandValues.map((v, i) => (
-              <div key={i} className="about-value-card">
-                <div
-                  style={{
-                    width: "32px",
-                    height: "1px",
-                    background: "var(--blush)",
-                    marginBottom: "1.75rem",
-                    opacity: 0.7,
-                  }}
-                />
-                <h3
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "1.5rem",
-                    fontWeight: 300,
-                    color: "var(--linen)",
-                    marginBottom: "1rem",
-                    fontStyle: "italic",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {v.title}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.9rem",
-                    lineHeight: 1.85,
-                    color: "rgba(237,230,219,0.62)",
-                    fontWeight: 300,
-                  }}
-                >
-                  {v.body}
+              <Reveal key={v.title} delay={i * 80}>
+                <p className="font-display text-3xl font-light text-brass-light/70">
+                  {String(i + 1).padStart(2, "0")}
                 </p>
-              </div>
+                <h3 className="mt-4 font-display text-2xl">{v.title}</h3>
+                <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{v.body}</p>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── MEET THE TEAM ─────────────────────────────────── */}
-      <section
-        className="reveal-section reveal-lift section-pad"
-        style={{
-          background: "var(--cream)",
-          padding: "clamp(56px, 8.5vw, 80px) clamp(20px, 4vw, 48px)",
-        }}
-      >
-        <div
-          className="about-grid about-team-grid"
-          style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "4rem",
-            alignItems: "center",
-          }}
-        >
-          <div className="about-team-image" style={{ overflow: "hidden", height: "340px" }}>
-            <img
-              src="/media/about/values-detail.jpg"
-              alt="The Lather team in the treatment space"
-              loading="lazy"
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
-            />
-          </div>
-          <div className="about-team-copy">
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "var(--stone)",
-                marginBottom: "1.2rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <span style={{ display: "inline-block", width: "28px", height: "1px", background: "var(--blush)" }} />
-              The People
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(2rem, 4vw, 3rem)",
-                fontWeight: 300,
-                color: "var(--bark)",
-                lineHeight: 1.08,
-                marginBottom: "1.5rem",
-              }}
-            >
-              Small team. <em style={{ fontStyle: "italic" }}>Deep expertise.</em>
+      {/* ── THE TEAM ─────────────────────────────────────────── */}
+      <section className="section-pad bg-bone">
+        <div className="wrap">
+          <Reveal className="max-w-2xl">
+            <p className="kicker-line">The Team</p>
+            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+              Skilled hands, <span className="italic">quiet presence</span>
             </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.95rem",
-                lineHeight: 1.88,
-                color: "var(--mink)",
-                fontWeight: 300,
-                marginBottom: "2rem",
-              }}
-            >
-              Every therapist at Lather is trained in Japanese head spa technique, advanced scalp assessment, and organic product protocols. We&apos;re a small team by design — because great care requires focus.
+          </Reveal>
+          <div className="mt-14 grid gap-12 md:grid-cols-2">
+            {team.map((member, i) => (
+              <Reveal key={member.role} delay={i * 100}>
+                <div className="arch relative aspect-[3/4] max-w-md">
+                  <Image
+                    src={member.image}
+                    alt={`${member.role} at Lather Head Spa`}
+                    fill
+                    sizes="(min-width: 768px) 45vw, 90vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+                <p className="mt-6 text-[0.7rem] uppercase tracking-kicker text-taupe">{member.role}</p>
+                <p className="mt-3 max-w-md text-umber">{member.bio}</p>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="mt-14 border-t hairline pt-8">
+            <p className="max-w-xl text-umber">
+              Have a preference? You&rsquo;re welcome to request your therapist when you{" "}
+              <a href={BOOK_URL} target="_blank" rel="noopener" className="link-ul">
+                book on Vagaro
+              </a>
+              .
             </p>
-            <Link
-              href="/team"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.2em",
-                textTransform: "uppercase",
-                color: "var(--bark)",
-                textDecoration: "none",
-                borderBottom: "1px solid rgba(61,46,34,0.35)",
-                paddingBottom: "3px",
-              }}
-            >
-              Meet the team <span style={{ fontSize: "0.85rem" }}>→</span>
-            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── THE SPACE ────────────────────────────────────────── */}
+      <section className="section-pad border-t hairline bg-porcelain">
+        <div className="wrap">
+          <Reveal className="max-w-2xl">
+            <p className="kicker-line">The Space</p>
+            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+              Step <span className="italic">inside</span>
+            </h2>
+          </Reveal>
+          <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
+            {gallery.map((g, i) => (
+              <Reveal key={g.src} delay={i * 80} className={i % 2 === 1 ? "md:mt-10" : ""}>
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <Image
+                    src={g.src}
+                    alt={g.alt}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 50vw"
+                    className="object-cover transition-transform duration-[1.2s] ease-luxe hover:scale-105"
+                  />
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────── */}
-      <CTABanner
-        eyebrow="Begin Your Ritual"
-        headline="Experience the"
-        headlineItalic="difference."
-        description="Every appointment is an act of self-care. Book yours today and let us show you what intentional rest feels like."
-        secondaryCTA={{ label: "View Treatments", href: "/treatments" }}
-      />
-
-      <Footer />
-    </main>
+      <BookCTA title="Come see it for yourself." />
+    </>
   );
 }

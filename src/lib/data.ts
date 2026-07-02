@@ -26,7 +26,7 @@ export const services = [
     recommendedAddOns: ["aromatherapy", "extended-massage"],
     suggestedUpgrade: null,
     suggestedUpgradeReason: null,
-    image: "/media/treatments/nourish-fortify.jpg",
+    image: "/media/treatments/nourish-fortify.webp",
     concerns: ["Dry scalp", "Stress", "Dull skin", "Special occasion prep"],
   },
   {
@@ -55,7 +55,7 @@ export const services = [
     recommendedAddOns: ["aromatherapy", "extended-massage"],
     suggestedUpgrade: "luxe-ritual",
     suggestedUpgradeReason: "Want the full experience? The Luxe Ritual adds an extended massage, rose petal facial, and professional blowout.",
-    image: "/media/treatments/classic-ritual.jpg",
+    image: "/media/treatments/classic-ritual.webp",
     concerns: ["Product buildup", "General maintenance", "Oily scalp", "Stress"],
   },
   {
@@ -82,7 +82,7 @@ export const services = [
     recommendedAddOns: ["scalp-analysis", "extended-massage"],
     suggestedUpgrade: "classic-ritual",
     suggestedUpgradeReason: "Want more? The Classic Ritual extends the massage and adds a nourishing hair mask with steam infusion.",
-    image: "/media/treatments/gentlemans-recharge.jpg",
+    image: "/media/treatments/gentlemans-recharge.webp",
     concerns: ["Stress", "General maintenance", "Tension"],
   },
   {
@@ -109,7 +109,7 @@ export const services = [
     recommendedAddOns: [] as string[],
     suggestedUpgrade: "classic-ritual",
     suggestedUpgradeReason: "Want the full head spa experience? The Classic Ritual adds scalp treatment, massage, and steam infusion — plus a blowdry finish.",
-    image: "/media/treatments/blowout-card.jpg",
+    image: "/media/treatments/blowout-card.webp",
     concerns: ["Styling", "Special occasion prep"],
   },
 ];
@@ -332,34 +332,28 @@ export const treatmentDetails: Record<string, {
 };
 
 // ── TESTIMONIALS ─────────────────────────────────────────────
+// Real 5-star guest reviews from Lather's Vagaro profile.
 export const testimonials = [
   {
     quote:
-      "I've been to many spas across the country, but Lather is in a category of its own. The Classic Ritual was deeply relaxing and my scalp hasn't felt this healthy in years. I walked out genuinely renewed.",
-    name: "Sarah M.",
-    location: "Greenville, NC",
-    service: "The Classic Ritual",
+      "I was completely delighted. My first time experience exceeded my expectations. I wouldn't change a thing.",
+    name: "Carolyn J.",
+    location: "Verified Vagaro review",
+    service: "First visit",
   },
   {
     quote:
-      "The Luxe Ritual was an absolute dream. The facial combined with the scalp treatment made it feel like two services in one. I left glowing — inside and out.",
-    name: "Jennifer K.",
-    location: "Greenville, NC",
-    service: "The Luxe Ritual",
+      "Hannah did an amazing job with my blowout and style! It was so relaxing and my hair looked SO good — will definitely be back for more!",
+    name: "Reagan L.",
+    location: "Verified Vagaro review",
+    service: "Blowout",
   },
   {
     quote:
-      "The Gentleman's Recharge was exactly what I needed — quiet, focused, completely professional. My scalp feels incredible and I slept better that night than I had in months.",
-    name: "Marcus T.",
-    location: "Greenville, NC",
-    service: "Gentleman's Recharge",
-  },
-  {
-    quote:
-      "Lather is not just a spa treatment — it's a ritual. Everything from the products to the ambiance tells you that this is different. This is what luxury actually feels like.",
-    name: "Amara J.",
-    location: "Greenville, NC",
-    service: "The Classic Ritual",
+      "For a girl who loves having her hair played with and having it styled, this was the perfect afternoon. From beginning to end the entire experience was completely relaxing — I can't wait to book again!",
+    name: "Courtney B.",
+    location: "Verified Vagaro review",
+    service: "Head Spa Ritual",
   },
 ];
 

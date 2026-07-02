@@ -1,78 +1,69 @@
 # Lather — Head Spa Website
 
-A luxury head spa website for **Lather**, located in Greenville, NC. Built with Next.js 14, TypeScript, and Tailwind CSS.
+Marketing website for **Lather Head Spa**, Greenville, NC — rebuilt in 2026 as a fully static
+Next.js site. All booking and gift-certificate purchases run through Lather's Vagaro profile;
+the site has no database, no server runtime, and no cron jobs.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router, all static/server components)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS + CSS custom properties
-- **Fonts**: Cormorant Garamond (display) + Jost (body) via Google Fonts
+- **Styling**: Tailwind CSS (design tokens in `tailwind.config.ts` + `src/app/globals.css`)
+- **Fonts**: Fraunces (display) + Figtree (body), self-hosted via `next/font`
+- **Media**: compressed WebP (q70, ≤2160px) + short MP4 loops in `public/media/`
+- **Booking**: Vagaro deep links (`src/lib/business.ts` → `BOOK_URL`, `GIFT_CARD_URL`)
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
-npm run dev
+npm run dev     # http://localhost:3000
+npm run build   # production build (fully prerendered)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Project Structure
+## Where things live
 
 ```
 src/
-├── app/
-│   ├── layout.tsx        # Root layout with metadata
-│   ├── page.tsx          # Main page
-│   └── globals.css       # Global styles & CSS variables
-├── components/
-│   ├── Navbar.tsx        # Fixed navigation with scroll effect + mobile menu
-│   ├── Hero.tsx          # Full-height hero section
-│   ├── Services.tsx      # Services listing (row-based layout)
-│   ├── About.tsx         # Philosophy & brand values (dark section)
-│   ├── Book.tsx          # Booking CTA + contact info
-│   └── Footer.tsx        # Footer
+├── app/                  # Routes (all server components)
+│   ├── page.tsx          # Home
+│   ├── services/         # Menu + 4 ritual detail pages
+│   ├── experience/       # What to expect
+│   ├── about/            # Story, values, team, space
+│   ├── what-is-a-head-spa/, scalp-concerns/, faq/, journal/
+│   ├── gift-cards/, book/, contact/
+│   ├── locations/        # 13 city pages
+│   ├── head-spa-near/, scalp-treatment/,
+│   │   japanese-head-spa/, scalp-massage/   # 52 SEO landing pages (4 × 13 cities)
+│   ├── sitemap.ts, robots.ts, icon.svg
+│   └── layout.tsx        # Fonts, global metadata, LocalBusiness JSON-LD
+├── components/           # Navbar, Footer, Reveal, BookCTA, PageHero, …
 └── lib/
-    └── data.ts           # Services & brand values data
+    ├── business.ts       # ★ Single source of truth: NAP, hours, Vagaro URLs, geo
+    ├── data.ts           # Services, add-ons, FAQs, real Vagaro reviews
+    ├── blog.ts           # 10 journal articles (static content)
+    ├── locations.ts      # City-page content
+    ├── seo-pages.ts      # SEO landing-page templates
+    └── seo.ts            # JSON-LD schema builders
 ```
 
-## Design System
+## Updating business info
 
-| Token | Value | Usage |
-|---|---|---|
-| `--cream` | `#F7F3EE` | Main background |
-| `--linen` | `#EDE6DB` | Hero & booking backgrounds |
-| `--stone` | `#8C7B6B` | Muted labels & secondary text |
-| `--mink` | `#6B5C4E` | Body text |
-| `--bark` | `#3D2E22` | Headings, dark sections, CTA buttons |
-| `--sage` | `#A3AC94` | Service taglines |
-| `--blush` | `#D4B8A8` | Accent highlights, dividers |
+Hours, phone, address, and booking links live **only** in `src/lib/business.ts`.
+Service names/prices live in `src/lib/data.ts`. Change them there and every page,
+footer, and JSON-LD schema updates together.
 
-## Services
+## Media
 
-| Service | Price | Duration |
-|---|---|---|
-| The Classic Ritual | $125 | 75 min |
-| Revitalize & Restore | Inquire | 90 min |
-| Nourish & Fortify | Inquire | 90 min |
-| Gentleman's Recharge | Inquire | 60 min |
+`public/media/` holds web-ready WebP/MP4 assets. `public/Photos/` and `public/Videos/`
+are raw source material — gitignored and never deployed. To add a new web image:
 
-## Customization
+```bash
+cwebp -q 70 -m 6 -resize 0 2160 source.jpg -o public/media/<dir>/<name>.webp
+```
 
-- **Services & pricing**: Edit `src/lib/data.ts`
-- **Contact details**: Update phone/email in `src/components/Book.tsx`
-- **Hours**: Update in `src/components/Book.tsx`
-- **Colors**: Modify CSS variables in `src/app/globals.css`
+## History
 
-## Next Steps
-
-- [ ] Add a booking integration (Vagaro, Mindbody, Square Appointments, or Acuity)
-- [ ] Add real photography to Hero and About sections
-- [ ] Set up a contact/inquiry form (Formspree, Resend, etc.)
-- [ ] Configure a custom domain
-- [ ] Add Google Analytics
-- [ ] Update placeholder phone number and email
+The pre-2026 site (custom Prisma/Postgres booking system, admin panel, Google Calendar
+sync) is preserved in git history — see the `Checkpoint: WIP admin settings system`
+commit and earlier on the `redesign` branch.

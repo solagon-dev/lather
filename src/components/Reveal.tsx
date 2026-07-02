@@ -15,6 +15,10 @@ export default function Reveal({ children, className = "", delay = 0, as = "div"
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      el.classList.add("is-visible");
+      return;
+    }
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {

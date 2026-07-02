@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import BookCTA from "@/components/BookCTA";
+import LazyVideo from "@/components/LazyVideo";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { treatmentDetails } from "@/lib/data";
@@ -108,17 +109,12 @@ export default function ExperiencePage() {
           </Reveal>
           <Reveal delay={120}>
             <div className="relative aspect-[4/5] overflow-hidden">
-              <video
+              <LazyVideo
                 className="absolute inset-0 h-full w-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
+                src="/media/video/experience-cleanse.mp4"
                 poster="/media/experience/step-02-cleanse.webp"
-                aria-label="Warm water cleanse during a Lather head spa session"
-              >
-                <source src="/media/video/experience-cleanse.mp4" type="video/mp4" />
-              </video>
+                ariaLabel="Warm water cleanse during a Lather head spa session"
+              />
             </div>
           </Reveal>
         </div>

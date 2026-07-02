@@ -78,6 +78,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${figtree.variable}`}>
       <body>
+        {/* Without JS the scroll reveals would never fire — show everything. */}
+        <noscript>
+          <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(localBusinessSchema())} />
         <Navbar />
         <main id="main">{children}</main>

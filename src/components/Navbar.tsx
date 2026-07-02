@@ -95,7 +95,7 @@ export default function Navbar() {
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
-          className={`relative z-[60] flex h-10 w-10 flex-col items-center justify-center gap-[7px] lg:hidden ${open ? "text-ivory" : ""}`}
+          className={`relative z-[60] flex h-11 w-11 flex-col items-center justify-center gap-[7px] lg:hidden ${open ? "text-ivory" : ""}`}
         >
           <span
             className={`block h-px w-7 bg-current transition-transform duration-300 ${open ? "translate-y-[4px] rotate-45" : ""}`}

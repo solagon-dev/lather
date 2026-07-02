@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
 import FaqAccordion from "@/components/FaqAccordion";
+import HeroMedia from "@/components/HeroMedia";
 import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import ServiceCard from "@/components/ServiceCard";
@@ -21,17 +22,7 @@ export default function HomePage() {
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="grain relative flex min-h-[100svh] items-end overflow-hidden bg-noir text-ivory">
-        <video
-          className="kenburns absolute inset-0 h-full w-full object-cover opacity-60"
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/media/hero/hero-poster.webp"
-          aria-hidden
-        >
-          <source src="/media/video/hero-welcome.mp4" type="video/mp4" />
-        </video>
+        <HeroMedia />
         <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/30 to-noir/40" />
 
         <div className="wrap relative px-6 pb-24 pt-44 sm:px-10 lg:px-16">
@@ -76,7 +67,7 @@ export default function HomePage() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-4 hidden bg-noir px-6 py-5 text-ivory sm:block md:-right-10">
+            <div className="absolute -bottom-5 right-2 bg-noir px-5 py-4 text-ivory sm:-bottom-6 sm:-right-4 sm:px-6 sm:py-5 md:-right-10">
               <p className="font-display text-3xl text-brass-light">5.0</p>
               <p className="mt-1 text-[0.6rem] uppercase tracking-kicker text-ivory/60">Guest Rating</p>
             </div>
@@ -97,7 +88,7 @@ export default function HomePage() {
               No noise, no rush, no busy salon floor. Step into our tranquil oasis, recline beneath
               the arch of warm water, and let skilled hands take it from there.
             </p>
-            <dl className="mt-10 grid grid-cols-3 gap-6 border-t hairline pt-8">
+            <dl className="mt-10 grid grid-cols-1 gap-5 border-t hairline pt-8 sm:grid-cols-3 sm:gap-6">
               <div>
                 <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Appointments</dt>
                 <dd className="mt-2 font-display text-lg">Private, one-on-one</dd>

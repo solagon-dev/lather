@@ -81,8 +81,9 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Bottom bar — extra padding below lg clears the sticky booking bar */}
       <div className="border-t border-ivory/10">
-        <div className="wrap flex flex-col items-center justify-between gap-3 px-6 py-6 text-[0.75rem] text-ivory/40 sm:flex-row sm:px-10 lg:px-16">
+        <div className="wrap flex flex-col items-center justify-between gap-3 px-6 pb-24 pt-6 text-[0.75rem] text-ivory/40 sm:flex-row sm:px-10 lg:px-16 lg:pb-6">
           <p>
             © {new Date().getFullYear()} {business.name}. All rights reserved.
           </p>

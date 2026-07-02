@@ -2,7 +2,6 @@ import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
 interface PageHeroProps {
-  kicker: string;
   title: React.ReactNode;
   sub?: string;
   image?: string;
@@ -14,13 +13,12 @@ interface PageHeroProps {
  * layout on desktop and stacks an arch image below the text on mobile;
  * without, a centered porcelain masthead.
  */
-export default function PageHero({ kicker, title, sub, image, imageAlt = "" }: PageHeroProps) {
+export default function PageHero({ title, sub, image, imageAlt = "" }: PageHeroProps) {
   if (!image) {
     return (
       <section className="border-b hairline bg-porcelain px-5 pb-14 pt-32 text-center sm:px-10 md:pb-24 md:pt-48">
         <Reveal className="wrap">
-          <p className="kicker">{kicker}</p>
-          <h1 className="h-display mx-auto mt-6 max-w-4xl text-balance text-4xl sm:text-5xl md:text-6xl">
+          <h1 className="h-display mx-auto max-w-4xl text-balance text-4xl sm:text-5xl md:text-6xl">
             {title}
           </h1>
           {sub && <p className="mx-auto mt-6 max-w-2xl text-umber">{sub}</p>}
@@ -33,8 +31,7 @@ export default function PageHero({ kicker, title, sub, image, imageAlt = "" }: P
     <section className="border-b hairline bg-porcelain px-5 pt-28 sm:px-10 md:pt-40 lg:px-16">
       <div className="wrap grid gap-10 pb-12 md:grid-cols-[1.2fr_1fr] md:items-end md:gap-10 md:pb-0">
         <Reveal className="pb-0 md:pb-24">
-          <p className="kicker-line">{kicker}</p>
-          <h1 className="h-display mt-6 max-w-2xl text-balance text-4xl sm:text-5xl md:text-6xl">{title}</h1>
+          <h1 className="h-display max-w-2xl text-balance text-4xl sm:text-5xl md:text-6xl">{title}</h1>
           {sub && <p className="mt-6 max-w-xl text-umber">{sub}</p>}
         </Reveal>
 

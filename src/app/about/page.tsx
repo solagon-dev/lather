@@ -39,7 +39,6 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        kicker="Our Story"
         title={
           <>
             Built for <span className="italic">stillness</span>
@@ -65,9 +64,8 @@ export default function AboutPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <p className="kicker-line">The Lather Philosophy</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              A tradition, <span className="italic">transplanted</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              A tradition, transplanted
             </h2>
             <p className="mt-8 max-w-xl text-umber">{business.description}</p>
             <p className="mt-5 max-w-xl text-umber">
@@ -89,9 +87,8 @@ export default function AboutPage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">What Guides Us</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Three things we <span className="italic text-brass-light">believe</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Three things we believe
             </h2>
           </Reveal>
           <div className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
@@ -112,9 +109,8 @@ export default function AboutPage() {
       <section className="section-pad bg-bone">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line">The Team</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Skilled hands, <span className="italic">quiet presence</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Skilled hands, quiet presence
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-12 md:grid-cols-2">
@@ -150,9 +146,8 @@ export default function AboutPage() {
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line">The Space</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Step <span className="italic">inside</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Step inside
             </h2>
           </Reveal>
           <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">

@@ -38,7 +38,6 @@ export default function ExperiencePage() {
   return (
     <>
       <PageHero
-        kicker="The Experience"
         title={
           <>
             One unhurried hour, <span className="italic">five movements</span>
@@ -77,7 +76,7 @@ export default function ExperiencePage() {
               <Reveal className={imageFirst ? "" : "lg:order-1"}>
                 <p className="font-display text-5xl font-light text-brass/60">{step.number}</p>
                 <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-                  <span className="italic">{step.title}</span>
+                  {step.title}
                 </h2>
                 <p className="mt-8 max-w-xl text-umber">{step.body}</p>
               </Reveal>
@@ -90,9 +89,8 @@ export default function ExperiencePage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
-            <p className="kicker-line text-brass-light">The Environment</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              The space <span className="italic text-brass-light">between</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              The space between
             </h2>
             <p className="mt-8 max-w-xl text-ivory/70">
               The movements matter — but so does everything around them. Lather is a quiet,
@@ -124,9 +122,8 @@ export default function ExperiencePage() {
       <section className="section-pad border-t hairline bg-bone">
         <div className="wrap">
           <Reveal>
-            <p className="kicker-line">Good to Know</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Before you <span className="italic">arrive</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Before you arrive
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden border hairline bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">

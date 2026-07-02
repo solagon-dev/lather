@@ -105,11 +105,10 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
       <section className="section-pad bg-ivory">
         <div className="wrap grid gap-14 lg:grid-cols-2">
           <Reveal>
-            <p className="kicker-line">Included in Your Session</p>
+            <h3 className="font-display text-2xl">Included in your session</h3>
             <ul className="mt-8 space-y-4">
               {service.highlights.map((h) => (
-                <li key={h} className="flex items-start gap-4 border-b hairline pb-4">
-                  <span aria-hidden className="mt-1 text-xs text-brass">◆</span>
+                <li key={h} className="border-b hairline pb-4">
                   <span className="font-display text-xl">{h}</span>
                 </li>
               ))}
@@ -117,7 +116,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           </Reveal>
           {details && (
             <Reveal delay={120}>
-              <p className="kicker-line">Who It&rsquo;s For</p>
+              <h3 className="font-display text-2xl">Who it&rsquo;s for</h3>
               <p className="mt-8 font-display text-2xl font-light leading-relaxed">{details.whoItsFor}</p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {service.bestForTags.map((t) => (
@@ -136,8 +135,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
         <section className="grain relative section-pad bg-noir text-ivory">
           <div className="wrap relative">
             <Reveal>
-              <p className="kicker-line text-brass-light">The Session</p>
-              <h2 className="h-display mt-6 text-4xl sm:text-5xl">
+              <h2 className="h-display text-4xl sm:text-5xl">
                 What to <span className="italic text-brass-light">expect</span>
               </h2>
             </Reveal>
@@ -153,7 +151,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
             </ol>
             <div className="mt-16 grid gap-10 border-t border-ivory/10 pt-10 md:grid-cols-2">
               <Reveal>
-                <h3 className="kicker text-brass-light">Before Your Visit</h3>
+                <h3 className="font-display text-2xl text-brass-light">Before your visit</h3>
                 <ul className="mt-5 space-y-3 text-[0.95rem] text-ivory/70">
                   {details.beforeVisit.map((b) => (
                     <li key={b} className="flex gap-3">
@@ -163,7 +161,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
                 </ul>
               </Reveal>
               <Reveal delay={100}>
-                <h3 className="kicker text-brass-light">Aftercare</h3>
+                <h3 className="font-display text-2xl text-brass-light">Aftercare</h3>
                 <ul className="mt-5 space-y-3 text-[0.95rem] text-ivory/70">
                   {details.afterCare.map((a) => (
                     <li key={a} className="flex gap-3">
@@ -183,7 +181,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           <div className="wrap grid gap-14 lg:grid-cols-[1.2fr_1fr]">
             {recommended.length > 0 && (
               <Reveal>
-                <p className="kicker-line">Recommended Enhancements</p>
+                <h3 className="font-display text-2xl">Recommended enhancements</h3>
                 <div className="mt-8 grid gap-px overflow-hidden border hairline bg-ink/10 sm:grid-cols-2">
                   {recommended.map((a) => (
                     <div key={a.id} className="bg-ivory p-7">
@@ -200,8 +198,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
             {upgrade && (
               <Reveal delay={120} className="flex flex-col justify-between bg-noir p-10 text-ivory">
                 <div>
-                  <p className="kicker text-brass-light">Or Go Further</p>
-                  <h3 className="h-display mt-5 text-3xl">{upgrade.name}</h3>
+                  <h3 className="h-display text-3xl">{upgrade.name}</h3>
                   <p className="mt-4 text-[0.95rem] text-ivory/70">{service.suggestedUpgradeReason}</p>
                 </div>
                 <Link
@@ -221,9 +218,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
         <section className="section-pad border-t hairline bg-ivory">
           <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.5fr]">
             <Reveal>
-              <p className="kicker-line">Questions</p>
-              <h2 className="h-display mt-6 text-4xl">
-                About this <span className="italic">ritual</span>
+              <h2 className="h-display text-4xl">
+                About this ritual
               </h2>
             </Reveal>
             <Reveal delay={120}>

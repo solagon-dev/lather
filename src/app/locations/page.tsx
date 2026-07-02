@@ -18,7 +18,6 @@ export default function LocationsPage() {
   return (
     <>
       <PageHero
-        kicker="Areas We Serve"
         title={
           <>
             One spa, all of <span className="italic">Eastern North Carolina</span>
@@ -33,8 +32,7 @@ export default function LocationsPage() {
       <section className="section-pad bg-porcelain">
         <div className="wrap">
           <Reveal className="max-w-prose2">
-            <p className="kicker-line">Where to Find Us</p>
-            <p className="mt-8 font-display text-2xl font-light leading-relaxed sm:text-3xl">
+            <p className="font-display text-2xl font-light leading-relaxed sm:text-3xl">
               There is exactly one Lather — at {business.address.full} — and guests make the drive
               from all over Eastern North Carolina to be here.
             </p>
@@ -51,9 +49,8 @@ export default function LocationsPage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap">
           <Reveal>
-            <p className="kicker-line">By City</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Find your <span className="italic">drive</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Find your drive
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-px overflow-hidden border hairline bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
@@ -86,9 +83,8 @@ export default function LocationsPage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">Looking for Something Specific?</p>
-            <h2 className="h-display mt-6 text-balance text-3xl sm:text-4xl">
-              Four ways to search, <span className="italic text-brass-light">one address</span>
+            <h2 className="h-display text-balance text-3xl sm:text-4xl">
+              Four ways to search, one address
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-px border border-ivory/10 bg-ivory/10 sm:grid-cols-2 lg:grid-cols-4">

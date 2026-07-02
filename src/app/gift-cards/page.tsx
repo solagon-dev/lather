@@ -66,7 +66,6 @@ export default function GiftCardsPage() {
         )}
       />
       <PageHero
-        kicker="Give the Ritual"
         title={
           <>
             The <span className="italic">&ldquo;sorry, I have plans&rdquo;</span> gift
@@ -81,9 +80,8 @@ export default function GiftCardsPage() {
       <section className="section-pad bg-porcelain">
         <div className="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
           <Reveal>
-            <p className="kicker-line">How It Works</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Stillness, <span className="italic">gift-wrapped</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Stillness, gift-wrapped
             </h2>
             <p className="mt-8 max-w-xl text-umber">
               Lather gift certificates are digital, purchased securely through Vagaro — our
@@ -118,9 +116,8 @@ export default function GiftCardsPage() {
       <section className="grain relative section-pad border-t hairline bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">If You Need a Number</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Amounts that map to a <span className="italic text-brass-light">ritual</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Amounts that map to a ritual
             </h2>
             <p className="mt-6 text-ivory/70">
               Any amount works — but if you want the gift to cover a full session, these are the

@@ -58,7 +58,6 @@ export default function BookPage() {
         )}
       />
       <PageHero
-        kicker="Book Your Ritual"
         title={
           <>
             Your hour of <span className="italic">stillness</span> starts here
@@ -73,9 +72,8 @@ export default function BookPage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">How It Works</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Three steps to <span className="italic text-brass-light">quiet</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Three steps to quiet
             </h2>
           </Reveal>
           <ol className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
@@ -99,9 +97,8 @@ export default function BookPage() {
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line">The Menu, At a Glance</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Four rituals, <span className="italic">one price list</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Four rituals, one price list
             </h2>
           </Reveal>
           <div className="mt-14 border-t hairline">

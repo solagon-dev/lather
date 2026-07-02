@@ -166,9 +166,9 @@ export const seoServiceTypes: SeoServiceType[] = [
     introP1: (city) =>
       `Guests from ${city} and across Eastern North Carolina have been discovering what the head spa experience actually delivers — and why it's so unlike anything a conventional salon offers. A head spa is a complete, protocol-driven scalp and hair wellness ritual rooted in Japanese beauty tradition. It combines professional cleansing, exfoliation, targeted scalp treatments, and extended therapeutic massage into a single, seamless experience.`,
     introP2:
-      "At Lather Head Spa in Greenville, every session begins with a scalp analysis. We assess hydration, buildup, and follicle health before personalizing your treatment. The result isn't just a cleaner scalp — it's a measurably healthier one. Guests consistently describe leaving with hair that feels lighter, softer, and more alive, and a clarity of mind that's harder to explain but impossible to miss.",
+      "At Lather Head Spa in Greenville, every session begins with a scalp analysis. We assess hydration, buildup, and follicle health before personalizing your treatment, so the work goes deeper than a good cleanse. Guests consistently describe leaving with hair that feels lighter, softer, and more alive, and a clarity of mind that's harder to explain but impossible to miss.",
     introP3: (city) =>
-      `For ${city} residents, making the drive to Greenville for a head spa treatment has become a regular ritual rather than a rare occasion. The experience is that good, and the results compound over time. Whether you're coming in for the first time out of curiosity or returning for your monthly ritual, Lather is ready for you.`,
+      `For ${city} residents, making the drive to Greenville for a head spa treatment has become a regular ritual rather than a rare occasion. The experience is that good, and the results compound over time. First visit out of curiosity or your standing monthly appointment — Lather is ready for you.`,
     benefits: [
       {
         title: "Deep Scalp Detox",
@@ -282,7 +282,7 @@ export const seoServiceTypes: SeoServiceType[] = [
       },
       {
         title: "Formulated for Real Concerns",
-        body: "Whether you're dealing with postpartum shedding, stress-related thinning, chronic dryness, or simply a scalp that's never felt quite right — we have a protocol designed specifically for your concern.",
+        body: "Postpartum shedding, stress-related thinning, chronic dryness, or a scalp that has simply never felt quite right — we have a protocol designed specifically for your concern.",
       },
       {
         title: "Long-Term Partnership",

@@ -22,8 +22,7 @@ export default function BookCTA({
       />
       <div className="wrap relative section-pad text-center">
         <Reveal>
-          <p className="kicker text-brass-light">Reserve Your Ritual</p>
-          <h2 className="h-display mx-auto mt-6 max-w-3xl text-balance text-4xl sm:text-5xl md:text-6xl">
+          <h2 className="h-display mx-auto max-w-3xl text-balance text-4xl sm:text-5xl md:text-6xl">
             {title}
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-ivory/70">{body}</p>
@@ -35,7 +34,7 @@ export default function BookCTA({
               Call {business.phone}
             </a>
           </div>
-          <p className="mt-8 text-[0.8rem] uppercase tracking-kicker text-ivory/40">{hoursShort}</p>
+          <p className="mt-8 text-[0.85rem] text-ivory/45">{hoursShort} · By appointment only</p>
         </Reveal>
       </div>
     </section>

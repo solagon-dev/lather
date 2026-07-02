@@ -63,7 +63,6 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       />
 
       <PageHero
-        kicker={`Serving ${location.city}, ${location.state}`}
         title={accentedTitle(location.heroHeadline, location.city)}
         sub={location.heroSub}
       />
@@ -72,8 +71,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="section-pad bg-porcelain">
         <div className="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
           <Reveal>
-            <p className="kicker-line">The Experience</p>
-            <h2 className="h-display mt-6 text-balance text-3xl sm:text-4xl">{location.introTitle}</h2>
+            <h2 className="h-display text-balance text-3xl sm:text-4xl">{location.introTitle}</h2>
             {location.introBody.map((p) => (
               <p key={p.slice(0, 40)} className="mt-6 max-w-xl leading-relaxed text-umber">
                 {p}
@@ -98,9 +96,8 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap">
           <Reveal>
-            <p className="kicker-line">Why Guests Make the Trip</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Worth every <span className="italic">mile</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Worth every mile
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-8 md:grid-cols-3">
@@ -120,10 +117,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="section-pad bg-bone">
         <div className="wrap">
           <Reveal className="mx-auto max-w-3xl text-center">
-            <p className="text-brass" aria-label="5 out of 5 stars">
-              ★★★★★
-            </p>
-            <blockquote className="h-display mt-8 text-balance text-2xl italic leading-relaxed sm:text-3xl">
+            <blockquote className="h-display text-balance text-2xl italic leading-relaxed sm:text-3xl">
               &ldquo;{testimonial.quote}&rdquo;
             </blockquote>
             <footer className="mt-8 text-[0.75rem] uppercase tracking-kicker text-taupe">
@@ -139,9 +133,8 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <p className="kicker-line text-brass-light">Getting Here</p>
-            <h2 className="h-display mt-6 text-balance text-3xl sm:text-4xl">
-              The drive from <span className="italic text-brass-light">{location.city}</span>
+            <h2 className="h-display text-balance text-3xl sm:text-4xl">
+              The drive from <span className="text-brass-light">{location.city}</span>
             </h2>
           </Reveal>
           <Reveal delay={120}>
@@ -160,9 +153,8 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="section-pad bg-porcelain">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.5fr]">
           <Reveal>
-            <p className="kicker-line">The Menu</p>
-            <h2 className="h-display mt-6 text-balance text-3xl sm:text-4xl">
-              Rituals worth the <span className="italic">drive</span>
+            <h2 className="h-display text-balance text-3xl sm:text-4xl">
+              Rituals worth the drive
             </h2>
             <Link href="/services" className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker">
               Full Menu & Add-Ons →
@@ -192,9 +184,8 @@ export default async function LocationPage({ params }: { params: Promise<Params>
         <div className="wrap">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="kicker-line">Nearby</p>
-              <h2 className="h-display mt-6 text-3xl sm:text-4xl">
-                We also serve <span className="italic">your neighbors</span>
+              <h2 className="h-display text-3xl sm:text-4xl">
+                We also serve your neighbors
               </h2>
             </div>
             <Link href="/locations" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">

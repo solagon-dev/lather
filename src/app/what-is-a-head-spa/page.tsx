@@ -58,7 +58,6 @@ export default function WhatIsAHeadSpaPage() {
       />
 
       <PageHero
-        kicker="The Guide"
         title={
           <>
             What is a <span className="italic">head spa?</span>
@@ -73,9 +72,8 @@ export default function WhatIsAHeadSpaPage() {
       <section className="section-pad bg-porcelain">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <p className="kicker-line">Origins</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Born in <span className="italic">Japan</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Born in Japan
             </h2>
           </Reveal>
           <Reveal delay={120} className="space-y-5">
@@ -111,9 +109,8 @@ export default function WhatIsAHeadSpaPage() {
             ))}
           </Reveal>
           <Reveal delay={120} className="lg:order-2 lg:text-right">
-            <p className="kicker-line lg:justify-end">The Difference</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              More than a <span className="italic">wash</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              More than a wash
             </h2>
           </Reveal>
         </div>
@@ -122,7 +119,7 @@ export default function WhatIsAHeadSpaPage() {
         <div className="wrap mt-16">
           <div className="grid gap-px overflow-hidden border hairline bg-ink/10 md:grid-cols-2">
             <Reveal className="bg-porcelain p-10">
-              <p className="kicker-line">{comparison.salon.title}</p>
+              <h3 className="font-display text-2xl">{comparison.salon.title}</h3>
               <ul className="mt-8 space-y-4">
                 {comparison.salon.points.map((point) => (
                   <li key={point} className="flex gap-3 border-b hairline pb-4 text-umber">
@@ -132,11 +129,11 @@ export default function WhatIsAHeadSpaPage() {
               </ul>
             </Reveal>
             <Reveal delay={120} className="grain relative bg-noir p-10 text-ivory">
-              <p className="kicker-line text-brass-light">{comparison.headSpa.title}</p>
+              <h3 className="font-display text-2xl text-brass-light">{comparison.headSpa.title}</h3>
               <ul className="mt-8 space-y-4">
                 {comparison.headSpa.points.map((point) => (
                   <li key={point} className="flex gap-3 border-b border-ivory/10 pb-4 text-ivory/75">
-                    <span aria-hidden className="text-brass-light">◆</span> {point}
+                    <span aria-hidden className="text-brass-light">—</span> {point}
                   </li>
                 ))}
               </ul>
@@ -149,9 +146,8 @@ export default function WhatIsAHeadSpaPage() {
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <p className="kicker-line">The Moment</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Why it&rsquo;s <span className="italic">everywhere</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Why it&rsquo;s everywhere
             </h2>
           </Reveal>
           <Reveal delay={120} className="space-y-5">
@@ -168,9 +164,8 @@ export default function WhatIsAHeadSpaPage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">Inside a Session</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              The five <span className="italic text-brass-light">movements</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              The five movements
             </h2>
           </Reveal>
           <ol className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 sm:grid-cols-2 lg:grid-cols-5">
@@ -194,9 +189,8 @@ export default function WhatIsAHeadSpaPage() {
       <section className="section-pad bg-bone">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <p className="kicker-line">In Short</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Intentional <span className="italic">care</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Intentional care
             </h2>
           </Reveal>
           <Reveal delay={120}>
@@ -223,9 +217,8 @@ export default function WhatIsAHeadSpaPage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.5fr]">
           <Reveal>
-            <p className="kicker-line">Questions</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Before your <span className="italic">first visit</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Before your first visit
             </h2>
           </Reveal>
           <Reveal delay={120}>

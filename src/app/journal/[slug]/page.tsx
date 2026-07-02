@@ -116,8 +116,7 @@ export default async function JournalArticlePage({ params }: { params: Promise<P
         <div className="wrap">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="kicker-line">Continue Reading</p>
-              <h2 className="h-display mt-6 text-3xl sm:text-4xl">
+              <h2 className="h-display text-3xl sm:text-4xl">
                 More from the <span className="italic">Journal</span>
               </h2>
             </div>
@@ -129,12 +128,11 @@ export default async function JournalArticlePage({ params }: { params: Promise<P
             {continueReading.map((a, i) => (
               <Reveal key={a.slug} delay={i * 100}>
                 <Link href={`/journal/${a.slug}`} className="group flex h-full flex-col border hairline bg-ivory p-8">
-                  <p className="kicker-line">{a.category}</p>
-                  <h3 className="h-display mt-5 flex-1 text-balance text-2xl transition-colors group-hover:text-brass-dark sm:text-3xl">
+                  <h3 className="h-display flex-1 text-balance text-2xl transition-colors group-hover:text-brass-dark sm:text-3xl">
                     {a.title}
                   </h3>
                   <p className="mt-6 border-t hairline pt-4 text-[0.7rem] uppercase tracking-kicker text-taupe">
-                    {a.readTime} · {formatDate(a.publishDate)}
+                    {a.category} · {a.readTime} · {formatDate(a.publishDate)}
                   </p>
                 </Link>
               </Reveal>

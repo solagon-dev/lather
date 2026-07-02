@@ -29,7 +29,6 @@ export default function FaqPage() {
         )}
       />
       <PageHero
-        kicker="Questions & Answers"
         title={
           <>
             Everything you&rsquo;re <span className="italic">wondering</span>
@@ -44,9 +43,8 @@ export default function FaqPage() {
       <section className="section-pad bg-porcelain">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.6fr]">
           <Reveal>
-            <p className="kicker-line">The Essentials</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Before you <span className="italic">book</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Before you book
             </h2>
             <p className="mt-6 max-w-md text-umber">
               The questions we hear most — from what a head spa actually is to how often you should
@@ -81,9 +79,8 @@ export default function FaqPage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line">About the Rituals</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Ritual by <span className="italic">ritual</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Ritual by ritual
             </h2>
             <p className="mt-6 text-umber">
               Each treatment has its own rhythm — and its own questions. Answers below, grouped by
@@ -95,7 +92,7 @@ export default function FaqPage() {
               .filter((s) => treatmentFAQs[s.id]?.length)
               .map((s, i) => (
                 <Reveal key={s.id} delay={i * 80}>
-                  <p className="kicker-line">{s.name}</p>
+                  <h3 className="font-display text-2xl">{s.name}</h3>
                   <div className="mt-6">
                     <FaqAccordion faqs={treatmentFAQs[s.id]} />
                   </div>
@@ -109,9 +106,8 @@ export default function FaqPage() {
       <section className="section-pad border-t hairline bg-bone">
         <div className="wrap text-center">
           <Reveal>
-            <p className="kicker">Still Curious?</p>
-            <h2 className="h-display mx-auto mt-6 max-w-2xl text-balance text-4xl sm:text-5xl">
-              Ask us <span className="italic">anything</span>
+            <h2 className="h-display mx-auto max-w-2xl text-balance text-4xl sm:text-5xl">
+              Ask us anything
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-umber">
               If your question isn&rsquo;t answered here, call us during business hours or send a

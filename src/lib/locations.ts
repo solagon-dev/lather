@@ -31,7 +31,7 @@ export const locations: LocationData[] = [
     introTitle: "A Luxury Head Spa Experience in the Heart of Greenville",
     introBody: [
       "Lather Head Spa is Greenville's first dedicated luxury head spa, bringing a curated Japanese-inspired approach to scalp and hair wellness to the heart of eastern North Carolina. Whether you've been curious about the head spa experience or you're ready to make it a regular ritual, our doors are open — right here in your city.",
-      "Our treatment protocol is designed around one simple belief: your scalp deserves the same thoughtful attention as the rest of your wellness routine. We combine professional-grade scalp analysis, deep cleansing techniques, targeted treatments, and prolonged massage into a seamless experience that leaves you genuinely restored — not just relaxed.",
+      "Our treatment protocol is designed around one simple belief: your scalp deserves the same thoughtful attention as the rest of your wellness routine. We combine professional-grade scalp analysis, deep cleansing techniques, targeted treatments, and prolonged massage into a single unbroken hour that leaves you genuinely restored.",
       "Greenville is a city that moves fast. Between ECU's energy, the medical corridor, and the bustle of everyday life, moments of true stillness are rare. Lather was built for exactly that — a space where you can set everything down and let skilled hands take care of you for a while.",
     ],
     whyVisit: [
@@ -41,7 +41,7 @@ export const locations: LocationData[] = [
       },
       {
         title: "Scalp Science, Not Surface Care",
-        body: "Every service begins with a scalp consultation. We assess buildup, hydration levels, and follicle health before tailoring your treatment. The result isn't just a cleaner scalp — it's a healthier foundation for better hair over time.",
+        body: "Every service begins with a scalp consultation. We assess buildup, hydration levels, and follicle health before tailoring your treatment, building a healthier foundation for better hair over time.",
       },
       {
         title: "A Ritual Worth Repeating",
@@ -49,7 +49,7 @@ export const locations: LocationData[] = [
       },
     ],
     directionsText:
-      "Lather Head Spa is located in Greenville, NC, accessible from all parts of the city. Whether you're coming from the university side of town, the medical district, or one of Greenville's surrounding neighborhoods, we're a short drive from wherever you are. No tolls, no highway confusion — just a clean, easy trip to a genuinely restorative experience.",
+      "Lather Head Spa is located in Greenville, NC, accessible from all parts of the city. From the university side of town, the medical district, or any of Greenville's surrounding neighborhoods, we're a short drive away. No tolls, no highway confusion — just a clean, easy trip to a genuinely restorative experience.",
     testimonialIndex: 0,
   },
   {

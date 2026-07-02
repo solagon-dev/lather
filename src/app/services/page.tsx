@@ -28,7 +28,6 @@ export default function ServicesPage() {
         )}
       />
       <PageHero
-        kicker="Services & Pricing"
         title={
           <>
             The service <span className="italic">menu</span>
@@ -51,9 +50,8 @@ export default function ServicesPage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line">Enhancements</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Make it <span className="italic">yours</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Make it yours
             </h2>
             <p className="mt-6 text-umber">
               Add any enhancement to your ritual when you book, or simply ask when you arrive.

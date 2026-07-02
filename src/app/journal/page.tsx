@@ -34,7 +34,6 @@ export default function JournalPage() {
   return (
     <>
       <PageHero
-        kicker="The Journal"
         title={
           <>
             Notes on the art of <span className="italic">scalp care</span>
@@ -63,13 +62,12 @@ export default function JournalPage() {
                 />
               </div>
               <div>
-                <p className="kicker-line">{feature.category}</p>
-                <h2 className="h-display mt-6 text-balance text-3xl sm:text-4xl md:text-5xl transition-colors group-hover:text-brass-dark">
+                <h2 className="h-display text-balance text-3xl sm:text-4xl md:text-5xl transition-colors group-hover:text-brass-dark">
                   {feature.title}
                 </h2>
                 <p className="mt-6 max-w-xl text-umber">{excerpt(feature.intro)}</p>
                 <p className="mt-8 text-[0.7rem] uppercase tracking-kicker text-taupe">
-                  {feature.readTime} · {formatDate(feature.publishDate)}
+                  {feature.category} · {feature.readTime} · {formatDate(feature.publishDate)}
                 </p>
                 <span className="link-ul mt-6 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker text-ink">
                   Read the Essay →
@@ -84,22 +82,20 @@ export default function JournalPage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap">
           <Reveal>
-            <p className="kicker-line">The Archive</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Every <span className="italic">essay</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Every essay
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((a, i) => (
               <Reveal key={a.slug} delay={i * 80}>
                 <Link href={`/journal/${a.slug}`} className="group flex h-full flex-col">
-                  <p className="kicker-line">{a.category}</p>
-                  <h3 className="h-display mt-5 text-balance text-2xl transition-colors group-hover:text-brass-dark sm:text-3xl">
+                  <h3 className="h-display text-balance text-2xl transition-colors group-hover:text-brass-dark sm:text-3xl">
                     {a.title}
                   </h3>
                   <p className="mt-4 flex-1 text-[0.95rem] text-umber">{excerpt(a.intro)}</p>
                   <p className="mt-6 border-t hairline pt-4 text-[0.7rem] uppercase tracking-kicker text-taupe">
-                    {a.readTime} · {formatDate(a.publishDate)}
+                    {a.category} · {a.readTime} · {formatDate(a.publishDate)}
                   </p>
                 </Link>
               </Reveal>

@@ -27,13 +27,12 @@ export default function HomePage() {
 
         <div className="wrap relative px-6 pb-24 pt-44 sm:px-10 lg:px-16">
           <Reveal>
-            <p className="kicker-line text-brass-light">Greenville, North Carolina</p>
-            <h1 className="h-display mt-8 max-w-4xl text-balance text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+            <h1 className="h-display max-w-4xl text-balance text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
               A facial <span className="italic text-brass-light">for your scalp.</span>
             </h1>
             <p className="mt-8 max-w-xl text-lg text-ivory/75">
-              Japanese-inspired scalp rituals, therapeutic massage, and hair wellness — in a
-              sanctuary built for stillness. Eastern North Carolina&rsquo;s dedicated head spa.
+              Japanese-inspired scalp rituals, therapeutic massage, and hair wellness in a
+              sanctuary built for stillness. Greenville, North Carolina.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
@@ -74,9 +73,8 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={120}>
-            <p className="kicker-line">The Lather Philosophy</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Where the scalp <span className="italic">breathes</span> again
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Where the scalp breathes again
             </h2>
             <p className="mt-8 max-w-xl text-umber">
               Lather is a premier beauty-wellness establishment in Greenville, North Carolina —
@@ -113,10 +111,7 @@ export default function HomePage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="kicker-line">The Menu</p>
-              <h2 className="h-display mt-6 text-4xl sm:text-5xl">Choose your ritual</h2>
-            </div>
+            <h2 className="h-display text-4xl sm:text-5xl">Choose your ritual</h2>
             <Link href="/services" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">
               Full Menu & Add-Ons →
             </Link>
@@ -133,9 +128,8 @@ export default function HomePage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">What to Expect</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              One unhurried hour, <span className="italic text-brass-light">five movements</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              One unhurried hour, five movements
             </h2>
           </Reveal>
           <ol className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 sm:grid-cols-2 lg:grid-cols-5">
@@ -177,16 +171,12 @@ export default function HomePage() {
       <section className="section-pad bg-bone">
         <div className="wrap">
           <Reveal className="text-center">
-            <p className="kicker">Guest Notes</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Five stars, <span className="italic">every one</span>
-            </h2>
+            <h2 className="h-display text-4xl sm:text-5xl">Five stars, every one</h2>
           </Reveal>
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {testimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 100} className="flex flex-col border hairline bg-ivory p-8">
-                <p className="text-brass" aria-label="5 out of 5 stars">★★★★★</p>
-                <blockquote className="mt-5 flex-1 font-display text-xl font-light leading-relaxed">
+                <blockquote className="flex-1 font-display text-xl font-light leading-relaxed">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
                 <footer className="mt-6 border-t hairline pt-4 text-[0.75rem] uppercase tracking-wideish text-taupe">
@@ -204,12 +194,7 @@ export default function HomePage() {
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap">
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="kicker-line">The Space</p>
-              <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-                Designed for <span className="italic">stillness</span>
-              </h2>
-            </div>
+            <h2 className="h-display text-4xl sm:text-5xl">Designed for stillness</h2>
             <Link href="/about" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">
               Step Inside →
             </Link>
@@ -236,10 +221,7 @@ export default function HomePage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <p className="kicker-line">Good to Know</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              First time at a <span className="italic">head spa?</span>
-            </h2>
+            <h2 className="h-display text-4xl sm:text-5xl">First time at a head spa?</h2>
             <p className="mt-6 max-w-md text-umber">
               Most of our guests are first-timers. Here&rsquo;s what people ask before they book —
               and everything else lives on the FAQ page.
@@ -258,10 +240,7 @@ export default function HomePage() {
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap grid items-center gap-14 lg:grid-cols-2">
           <Reveal>
-            <p className="kicker-line">Visit Us</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              In the heart of <span className="italic">Greenville</span>
-            </h2>
+            <h2 className="h-display text-4xl sm:text-5xl">In the heart of Greenville</h2>
             <address className="mt-8 not-italic text-umber">
               <a href={business.mapsUrl} target="_blank" rel="noopener" className="link-ul font-display text-2xl text-ink">
                 620 Lynndale Court, Unit B

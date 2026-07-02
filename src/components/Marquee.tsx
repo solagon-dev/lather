@@ -11,7 +11,7 @@ export default function Marquee({ dark = false }: { dark?: boolean }) {
       {phrases.map((p) => (
         <span key={p} className="flex items-center">
           <span className="px-8 font-display text-lg font-light italic tracking-wide sm:text-xl">{p}</span>
-          <span className={`text-xs ${dark ? "text-brass-light" : "text-brass"}`}>◆</span>
+          <span className={`text-base ${dark ? "text-brass-light" : "text-brass"}`}>·</span>
         </span>
       ))}
     </div>

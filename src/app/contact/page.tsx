@@ -47,7 +47,6 @@ export default function ContactPage() {
         )}
       />
       <PageHero
-        kicker="Visit Us"
         title={
           <>
             Come find your <span className="italic">quiet</span>
@@ -62,9 +61,8 @@ export default function ContactPage() {
       <section className="section-pad bg-porcelain">
         <div className="wrap grid gap-14 lg:grid-cols-2">
           <Reveal>
-            <p className="kicker-line">Where to Find Us</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              In the heart of <span className="italic">Greenville</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              In the heart of Greenville
             </h2>
             <address className="mt-8 not-italic text-umber">
               <a
@@ -135,9 +133,8 @@ export default function ContactPage() {
       <section className="grain relative section-pad border-t hairline bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line text-brass-light">Getting Here</p>
-            <h2 className="h-display mt-6 text-balance text-4xl sm:text-5xl">
-              Closer than a <span className="italic text-brass-light">day off</span>
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">
+              Closer than a day off
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
@@ -155,9 +152,8 @@ export default function ContactPage() {
       <section className="section-pad border-t hairline bg-ivory">
         <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.4fr]">
           <Reveal>
-            <p className="kicker-line">Before You Arrive</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Good to <span className="italic">know</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Good to know
             </h2>
             <p className="mt-6 max-w-md text-umber">
               A few things guests ask before their first visit — the full list lives on our FAQ

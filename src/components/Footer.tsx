@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
 
         <nav aria-label="Footer">
-          <p className="kicker text-brass-light">Explore</p>
+          <p className="font-display text-xl italic text-brass-light">Explore</p>
           <ul className="mt-6 grid gap-3 text-[0.95rem]">
             {explore.map((l) => (
               <li key={l.href}>
@@ -47,7 +47,7 @@ export default function Footer() {
         </nav>
 
         <div>
-          <p className="kicker text-brass-light">Visit</p>
+          <p className="font-display text-xl italic text-brass-light">Visit</p>
           <address className="mt-6 not-italic leading-relaxed text-ivory/70">
             <a href={business.mapsUrl} target="_blank" rel="noopener" className="link-ul hover:text-ivory">
               620 Lynndale Court, Unit B<br />

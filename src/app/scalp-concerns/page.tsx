@@ -126,7 +126,6 @@ export default function ScalpConcernsPage() {
       />
 
       <PageHero
-        kicker="Start With Your Concern"
         title={
           <>
             What is your scalp <span className="italic">telling you?</span>
@@ -141,9 +140,8 @@ export default function ScalpConcernsPage() {
       <section className="section-pad bg-porcelain">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <p className="kicker-line">Common Concerns</p>
-            <h2 className="h-display mt-6 text-4xl sm:text-5xl">
-              Six pathways <span className="italic">in</span>
+            <h2 className="h-display text-4xl sm:text-5xl">
+              Six pathways in
             </h2>
           </Reveal>
           <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -158,10 +156,8 @@ export default function ScalpConcernsPage() {
       <section className="grain relative bg-noir py-20 text-ivory sm:py-28">
         <div className="wrap relative px-6 text-center">
           <Reveal>
-            <p className="kicker text-brass-light">Not Sure?</p>
-            <h2 className="h-display mx-auto mt-6 max-w-3xl text-balance text-3xl sm:text-4xl md:text-5xl">
-              Start with a consultation — every ritual{" "}
-              <span className="italic text-brass-light">begins with one.</span>
+            <h2 className="h-display mx-auto max-w-3xl text-balance text-3xl sm:text-4xl md:text-5xl">
+              Start with a consultation — every ritual begins with one.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-ivory/70">
               You don&rsquo;t need to diagnose yourself. Every session opens with a scalp

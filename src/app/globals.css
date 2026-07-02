@@ -34,19 +34,6 @@
 }
 
 @layer components {
-  /* Small uppercase label above headings */
-  .kicker {
-    @apply font-body text-[0.7rem] font-medium uppercase tracking-kicker text-brass;
-  }
-
-  .kicker-line {
-    @apply kicker inline-flex items-center gap-4;
-  }
-  .kicker-line::before {
-    content: "";
-    @apply block h-px w-10 bg-brass/60;
-  }
-
   .h-display {
     @apply font-display font-light leading-[1.08] tracking-[-0.01em];
   }

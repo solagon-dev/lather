@@ -155,11 +155,33 @@ const localBusinessSchema = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Dynamic import to avoid circular dependency issues
+  const { getCompanySettings } = await import("@/lib/settings");
+  const { SettingsProvider } = await import("@/components/SettingsProvider");
+  const settings = await getCompanySettings();
+
+  // Build dynamic schema from settings
+  const dynamicSchema = {
+    ...localBusinessSchema,
+    name: settings.businessName,
+    telephone: settings.phone,
+    email: settings.email,
+    address: {
+      "@type": "PostalAddress" as const,
+      streetAddress: settings.addressLine1,
+      addressLocality: settings.city,
+      addressRegion: settings.state,
+      postalCode: settings.zip,
+      addressCountry: settings.country,
+    },
+    sameAs: [settings.instagramUrl, settings.facebookUrl, settings.tiktokUrl].filter(Boolean),
+  };
+
   return (
     <html lang="en">
       <head>
@@ -168,7 +190,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(localBusinessSchema),
+            __html: JSON.stringify(dynamicSchema),
           }}
         />
       </head>
@@ -176,7 +198,9 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
-        <div id="main-content">{children}</div>
+        <SettingsProvider settings={settings}>
+          <div id="main-content">{children}</div>
+        </SettingsProvider>
       </body>
     </html>
   );

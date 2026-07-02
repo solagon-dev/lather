@@ -220,3 +220,50 @@ model NotificationLog {
 
   @@index([appointmentId])
 }
+
+// ── COMPANY SETTINGS (singleton) ────────────────────────────
+
+model CompanySettings {
+  id        String   @id @default("default")
+  updatedAt DateTime @updatedAt
+
+  // General
+  businessName      String  @default("Lather Head Spa")
+  tagline           String  @default("Where the scalp breathes again.")
+  businessDescription String? @db.Text
+
+  // Contact
+  phone             String  @default("(252) 531-0987")
+  phoneSecondary    String?
+  email             String  @default("hello@latherspas.com")
+  emailSupport      String?
+  contactFormEmail  String?
+
+  // Address
+  addressLine1      String  @default("620 Lynndale Court")
+  addressLine2      String?
+  city              String  @default("Greenville")
+  state             String  @default("NC")
+  zip               String  @default("27858")
+  country           String  @default("US")
+  googleMapsUrl     String?
+
+  // Hours (JSON: array of { day, open, close, closed })
+  businessHours     String  @default("[{\"day\":\"Monday\",\"closed\":true},{\"day\":\"Tuesday\",\"open\":\"10:00\",\"close\":\"19:00\"},{\"day\":\"Wednesday\",\"open\":\"10:00\",\"close\":\"19:00\"},{\"day\":\"Thursday\",\"open\":\"10:00\",\"close\":\"19:00\"},{\"day\":\"Friday\",\"open\":\"10:00\",\"close\":\"19:00\"},{\"day\":\"Saturday\",\"open\":\"10:00\",\"close\":\"19:00\"},{\"day\":\"Sunday\",\"closed\":true}]") @db.Text
+  hoursNote         String?
+
+  // Social
+  instagramUrl      String? @default("https://www.instagram.com/latherheadspa")
+  facebookUrl       String? @default("https://www.facebook.com/latherheadspa")
+  tiktokUrl         String?
+
+  // Booking / CTAs
+  bookingUrl        String  @default("/book")
+  bookingCtaLabel   String  @default("Book Your Ritual")
+  giftCardUrl       String  @default("/gift-cards")
+
+  // Sitewide
+  announcementText  String?
+  announcementActive Boolean @default(false)
+  copyrightText     String?
+}

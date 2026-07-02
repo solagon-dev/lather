@@ -3,6 +3,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingFlow from "./BookingFlow";
+import { getCompanySettings, formatHoursShort } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Book Your Ritual",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
     "Book a luxury head spa appointment at Lather in Greenville, NC. Choose your treatment, select a time, and reserve your private session.",
 };
 
-export default function BookPage() {
+export default async function BookPage() {
+  const settings = await getCompanySettings();
+  const hoursDisplay = formatHoursShort(settings.businessHours);
   return (
     <main>
       <ScrollReveal />
@@ -130,9 +133,9 @@ export default function BookPage() {
           className="book-info-bar"
         >
           {[
-            { label: "Location", value: "Greenville, NC" },
-            { label: "Hours", value: "Tue – Sat\n10am – 7pm" },
-            { label: "Contact", value: "(252) 531-0987" },
+            { label: "Location", value: `${settings.city}, ${settings.state}` },
+            { label: "Hours", value: hoursDisplay.replace(" · ", "\n") },
+            { label: "Contact", value: settings.phone },
           ].map((item) => (
             <div key={item.label}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.55rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(237,230,219,0.3)", marginBottom: "10px" }}>

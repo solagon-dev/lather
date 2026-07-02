@@ -85,6 +85,7 @@ function StaffPageInner() {
   );
   const [formError, setFormError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [uploading, setUploading] = useState(false);
   const searchParams = useSearchParams();
 
   /* ---- fetch ---------------------------------------------------- */
@@ -378,14 +379,55 @@ function StaffPageInner() {
                 </select>
               </div>
               <div className="admin-form-group">
-                <label className="admin-label">Image URL</label>
+                <label className="admin-label">Photo</label>
+                {form.image && (
+                  <div style={{ marginBottom: "10px", display: "flex", alignItems: "center", gap: "12px" }}>
+                    <img
+                      src={form.image}
+                      alt="Staff preview"
+                      style={{ width: "56px", height: "56px", borderRadius: "50%", objectFit: "cover", objectPosition: "center 20%", border: "1px solid rgba(140,123,107,0.15)" }}
+                    />
+                    <span style={{ fontSize: "0.78rem", color: "#6B5C4E", wordBreak: "break-all" }}>{form.image.split("/").pop()}</span>
+                  </div>
+                )}
                 <input
-                  className="admin-input"
-                  name="image"
-                  value={form.image}
-                  onChange={handleChange}
-                  placeholder="/images/staff/name.jpg"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  disabled={uploading}
+                  style={{
+                    width: "100%",
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.85rem",
+                    color: "#3D2E22",
+                    padding: "10px 0",
+                  }}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    setUploading(true);
+                    setFormError("");
+                    try {
+                      const uploadData = new FormData();
+                      uploadData.set("file", file);
+                      uploadData.set("folder", "team");
+                      const res = await fetch("/api/admin/upload", {
+                        method: "POST",
+                        body: uploadData,
+                      });
+                      const json = await res.json();
+                      if (!res.ok) {
+                        setFormError(json.error || "Upload failed");
+                      } else {
+                        setForm((prev) => ({ ...prev, image: json.url }));
+                      }
+                    } catch {
+                      setFormError("Failed to upload image.");
+                    } finally {
+                      setUploading(false);
+                    }
+                  }}
                 />
+                {uploading && <p style={{ fontSize: "0.78rem", color: "#8C7B6B", marginTop: "4px" }}>Uploading...</p>}
               </div>
               {editingId && (
                 <div className="admin-form-group">

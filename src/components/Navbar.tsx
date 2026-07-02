@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSettings } from "@/components/SettingsProvider";
+import { formatHoursShort } from "@/lib/settings";
 
 const treatmentSubLinks = [
   { label: "All Treatments", href: "/treatments" },
@@ -62,6 +64,7 @@ export default function Navbar() {
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
   const darkHero = hasDarkHero(pathname);
+  const settings = useSettings();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -444,7 +447,7 @@ export default function Navbar() {
               color: "rgba(237,230,219,0.22)",
             }}
           >
-            Greenville, NC
+            {settings.city}, {settings.state}
           </p>
           <p
             style={{
@@ -455,7 +458,7 @@ export default function Navbar() {
               color: "rgba(237,230,219,0.22)",
             }}
           >
-            Tue – Sat &nbsp;·&nbsp; 10am – 7pm
+            {formatHoursShort(settings.businessHours)}
           </p>
         </div>
       </div>

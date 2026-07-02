@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useSettings } from "@/components/SettingsProvider";
+import { formatHoursShort, phoneTel } from "@/lib/settings";
 
 const navLinks = [
   { label: "Treatments", href: "/treatments" },
@@ -66,6 +68,9 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 export default function Footer() {
+  const s = useSettings();
+  const hoursDisplay = formatHoursShort(s.businessHours);
+  const telHref = phoneTel(s.phone);
   return (
     <footer
       className="section-pad"
@@ -162,11 +167,11 @@ export default function Footer() {
           <div>
             <p style={footerHeadStyle}>Find Us</p>
             {[
-              { label: "620 Lynndale Court", href: null },
-              { label: "Greenville, NC 27858", href: null },
-              { label: "Tue–Sat, 10am–7pm", href: null },
-              { label: "hello@latherspas.com", href: "mailto:hello@latherspas.com" },
-              { label: "(252) 531-0987", href: "tel:+12525310987" },
+              { label: s.addressLine1, href: null },
+              { label: `${s.city}, ${s.state} ${s.zip}`, href: null },
+              { label: hoursDisplay, href: null },
+              { label: s.email, href: `mailto:${s.email}` },
+              { label: s.phone, href: telHref },
             ].map((item) =>
               item.href ? (
                 <a
@@ -262,29 +267,29 @@ export default function Footer() {
             <div>
               <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Location</p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", lineHeight: 1.6, fontWeight: 300 }}>
-                620 Lynndale Court
+                {s.addressLine1}
                 <br />
-                Greenville, NC 27858
+                {s.city}, {s.state} {s.zip}
               </p>
             </div>
             <div>
               <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Hours</p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", lineHeight: 1.6, fontWeight: 300 }}>
-                Tue – Sat
+                {hoursDisplay.split(" · ")[0] || "Tue – Sat"}
                 <br />
-                10am – 7pm
+                {hoursDisplay.split(" · ")[1] || "10am – 7pm"}
               </p>
             </div>
             <div>
               <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Email</p>
-              <a href="mailto:hello@latherspas.com" style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", textDecoration: "none" }}>
-                hello@latherspas.com
+              <a href={`mailto:${s.email}`} style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", textDecoration: "none" }}>
+                {s.email}
               </a>
             </div>
             <div>
               <p style={{ ...footerHeadStyle, marginBottom: "0.6rem", fontSize: "0.48rem" }}>Phone</p>
-              <a href="tel:+12525310987" style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", textDecoration: "none" }}>
-                (252) 531-0987
+              <a href={telHref} style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "rgba(237,230,219,0.55)", textDecoration: "none" }}>
+                {s.phone}
               </a>
             </div>
           </div>
@@ -344,14 +349,15 @@ export default function Footer() {
               color: "rgba(237,230,219,0.2)",
             }}
           >
-            © {new Date().getFullYear()} Lather Head Spa · Greenville, NC
+            {s.copyrightText || `© ${new Date().getFullYear()} ${s.businessName} · ${s.city}, ${s.state}`}
           </p>
 
           <div className="footer-socials" style={{ display: "flex", gap: "2rem" }}>
-            {[
-              { label: "Instagram", href: "https://www.instagram.com/latherheadspa" },
-              { label: "Facebook", href: "https://www.facebook.com/latherheadspa" },
-            ].map((social) => (
+            {([
+              s.instagramUrl ? { label: "Instagram", href: s.instagramUrl } : null,
+              s.facebookUrl ? { label: "Facebook", href: s.facebookUrl } : null,
+              s.tiktokUrl ? { label: "TikTok", href: s.tiktokUrl } : null,
+            ].filter(Boolean) as { label: string; href: string }[]).map((social) => (
               <a
                 key={social.label}
                 href={social.href}

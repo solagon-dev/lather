@@ -3,6 +3,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { services } from "@/lib/data";
+import { getCompanySettings } from "@/lib/settings";
 import {
   seoCities,
   getSeoCity,
@@ -32,9 +33,10 @@ const bodyStyle: React.CSSProperties = {
   fontWeight: 300,
 };
 
-export default function SeoLandingPage({ serviceKey, citySlug }: SeoLandingPageProps) {
+export default async function SeoLandingPage({ serviceKey, citySlug }: SeoLandingPageProps) {
   const city = getSeoCity(citySlug);
   const service = getSeoService(serviceKey);
+  const companySettings = await getCompanySettings();
 
   if (!city || !service) return null;
 
@@ -64,18 +66,18 @@ export default function SeoLandingPage({ serviceKey, citySlug }: SeoLandingPageP
   const schema = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "BeautySalon", "DaySpa"],
-    name: "Lather Head Spa",
+    name: companySettings.businessName,
     description: service.metaDesc(city.name, city.state, city.driveTime),
     url: `https://www.latherspas.com/${service.urlPrefix}/${city.slug}`,
-    telephone: "(252) 531-0987",
+    telephone: companySettings.phone,
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "620 Lynndale Court",
-      addressLocality: "Greenville",
-      addressRegion: "NC",
-      postalCode: "27858",
-      addressCountry: "US",
+      streetAddress: companySettings.addressLine1,
+      addressLocality: companySettings.city,
+      addressRegion: companySettings.state,
+      postalCode: companySettings.zip,
+      addressCountry: companySettings.country,
     },
     geo: {
       "@type": "GeoCoordinates",
@@ -99,10 +101,7 @@ export default function SeoLandingPage({ serviceKey, citySlug }: SeoLandingPageP
       },
     ],
     hasMap: "https://www.google.com/maps/search/Lather+Head+Spa+Greenville+NC",
-    sameAs: [
-      "https://www.instagram.com/latherheadspa",
-      "https://www.facebook.com/latherheadspa",
-    ],
+    sameAs: [companySettings.instagramUrl, companySettings.facebookUrl, companySettings.tiktokUrl].filter(Boolean),
   };
 
   return (

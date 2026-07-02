@@ -1,8 +1,11 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { useSettings } from "@/components/SettingsProvider";
+import { formatHoursShort, phoneTel } from "@/lib/settings";
 
 export default function Book() {
+  const s = useSettings();
   const sectionRef = useRef<HTMLElement>(null);
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -198,7 +201,7 @@ export default function Book() {
             style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center", marginBottom: "5rem" }}
           >
             <a
-              href="tel:+12525310987"
+              href={phoneTel(s.phone)}
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -217,7 +220,7 @@ export default function Book() {
               Call to Book
             </a>
             <a
-              href="mailto:hello@latherspas.com"
+              href={`mailto:${s.email}`}
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.62rem",
@@ -253,8 +256,8 @@ export default function Book() {
         >
           {[
             { label: "Location", value: "Greenville, NC" },
-            { label: "Hours", value: "Tue – Sat\n10am – 7pm" },
-            { label: "Contact", value: "hello@latherspas.com" },
+            { label: "Hours", value: formatHoursShort(s.businessHours).replace(" · ", "\n") },
+            { label: "Contact", value: s.email },
           ].map((item) => (
             <div key={item.label}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.55rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(237,230,219,0.3)", marginBottom: "10px" }}>

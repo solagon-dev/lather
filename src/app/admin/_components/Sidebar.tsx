@@ -31,6 +31,12 @@ const nav = [
     ],
   },
   {
+    section: "Settings",
+    items: [
+      { label: "Company Info", href: "/admin/settings", icon: "⚙", exact: false },
+    ],
+  },
+  {
     section: "Site",
     items: [
       { label: "View Website", href: "/", icon: "↗", exact: true },

@@ -21,20 +21,19 @@ export default function HomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="grain relative flex min-h-[100svh] items-end overflow-hidden bg-noir text-ivory">
+      <section className="grain relative flex min-h-[100svh] flex-col justify-center gap-7 overflow-hidden bg-noir pt-20 text-ivory md:justify-end md:gap-0 md:pt-0">
         <HeroMedia />
-        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/30 to-noir/40" />
 
-        <div className="wrap relative px-6 pb-24 pt-44 sm:px-10 lg:px-16">
+        <div className="wrap relative z-10 px-6 pb-6 sm:px-10 md:pb-24 md:pt-44 lg:px-16">
           <Reveal>
-            <h1 className="h-display max-w-4xl text-balance text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+            <h1 className="h-display max-w-4xl text-balance text-5xl leading-[1.03] sm:text-6xl md:text-7xl lg:text-8xl">
               A facial <span className="italic text-brass-light">for your scalp.</span>
             </h1>
-            <p className="mt-8 max-w-xl text-lg text-ivory/75">
+            <p className="mt-6 max-w-xl text-base text-ivory/75 sm:mt-8 sm:text-lg">
               Japanese-inspired scalp rituals, therapeutic massage, and hair wellness in a
               sanctuary built for stillness. Greenville, North Carolina.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
                 Book Your Ritual
               </a>

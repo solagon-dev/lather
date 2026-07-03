@@ -6,6 +6,7 @@ import HeroMedia from "@/components/HeroMedia";
 import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import ServiceCard from "@/components/ServiceCard";
+import SocialSection from "@/components/SocialSection";
 import { BOOK_URL, business, hours } from "@/lib/business";
 import { faqs, services, testimonials } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
@@ -234,6 +235,9 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ── SOCIAL / INSTAGRAM ───────────────────────────────── */}
+      <SocialSection />
 
       {/* ── VISIT ────────────────────────────────────────────── */}
       <section className="section-pad border-t hairline bg-porcelain">

@@ -106,10 +106,14 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile overlay menu */}
+      {/* Mobile menu — slides in from the right. Animated with transform, not
+          opacity: an opacity transition on this overlay gets stuck at 0 in
+          Chrome when it composites over the autoplaying hero video, leaving the
+          menu invisible. translate-x is compositor-safe and avoids that. */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col bg-noir px-8 pb-10 pt-32 transition-opacity duration-500 ease-luxe lg:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
+        aria-hidden={!open}
+        className={`fixed inset-0 z-40 flex transform-gpu flex-col bg-noir px-8 pb-10 pt-32 transition-transform duration-500 ease-luxe lg:hidden ${
+          open ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
       >
         <ul className="flex flex-col gap-1">

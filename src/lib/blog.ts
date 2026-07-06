@@ -19,7 +19,7 @@ export interface BlogArticle {
 export const blogArticles: BlogArticle[] = [
   {
     slug: "what-is-a-head-spa",
-    metaTitle: "What Is a Head Spa and Why Is It So Popular? | Lather Head Spa",
+    metaTitle: "What Is a Head Spa and Why Is It So Popular? | Lather Spa & Wellness",
     metaDescription:
       "Discover the origins of the head spa, what makes it different from a standard salon treatment, and why it has become one of the most sought-after wellness experiences.",
     category: "Education",
@@ -55,11 +55,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "The head spa experience is, at its core, a return to intentional care — for your scalp, your hair, and your nervous system. It\'s the kind of treatment that people who\'ve experienced it describe as something they wish they\'d found sooner. At Lather Head Spa in Greenville, NC, we\'ve built our practice around delivering exactly that: a session that is thorough, restorative, and genuinely worth your time. If you\'ve been curious, we\'d love to show you what it\'s all about.",
+      "The head spa experience is, at its core, a return to intentional care — for your scalp, your hair, and your nervous system. It\'s the kind of treatment that people who\'ve experienced it describe as something they wish they\'d found sooner. At Lather Spa & Wellness in Greenville, NC, we\'ve built our practice around delivering exactly that: a session that is thorough, restorative, and genuinely worth your time. If you\'ve been curious, we\'d love to show you what it\'s all about.",
   },
   {
     slug: "benefits-of-scalp-treatments",
-    metaTitle: "Benefits of Scalp Treatments for Hair Health | Lather Head Spa",
+    metaTitle: "Benefits of Scalp Treatments for Hair Health | Lather Spa & Wellness",
     metaDescription:
       "Learn how regular professional scalp treatments improve hair health from the root up — addressing buildup, circulation, follicle function, and long-term growth.",
     category: "Hair Wellness",
@@ -101,11 +101,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "Scalp health is hair health — it\'s that direct, and that simple. At Lather Head Spa in Greenville, NC, every treatment we offer is built around this premise. Whether you\'re addressing a specific concern or simply want to give your scalp the professional care it deserves, we\'re here to deliver results that you can see and feel. Your hair will thank you in ways that might surprise you.",
+      "Scalp health is hair health — it\'s that direct, and that simple. At Lather Spa & Wellness in Greenville, NC, every treatment we offer is built around this premise. Whether you\'re addressing a specific concern or simply want to give your scalp the professional care it deserves, we\'re here to deliver results that you can see and feel. Your hair will thank you in ways that might surprise you.",
   },
   {
     slug: "japanese-head-spa-vs-traditional",
-    metaTitle: "Japanese Head Spa vs. Traditional Hair Treatments | Lather Head Spa",
+    metaTitle: "Japanese Head Spa vs. Traditional Hair Treatments | Lather Spa & Wellness",
     metaDescription:
       "Understand the key differences between a Japanese head spa and traditional salon hair treatments — in philosophy, technique, and the results you can expect.",
     category: "Education",
@@ -141,13 +141,13 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "Traditional hair treatments and Japanese head spa sessions are not competing services — they serve different purposes and produce different outcomes. But for anyone who has wondered why their hair seems to plateau despite consistent at-home care and regular salon visits, the missing piece is often the scalp. At Lather Head Spa in Greenville, NC, we offer the Japanese head spa experience in its fullest form — and we\'d love to show you what it can do for your hair.",
+      "Traditional hair treatments and Japanese head spa sessions are not competing services — they serve different purposes and produce different outcomes. But for anyone who has wondered why their hair seems to plateau despite consistent at-home care and regular salon visits, the missing piece is often the scalp. At Lather Spa & Wellness in Greenville, NC, we offer the Japanese head spa experience in its fullest form — and we\'d love to show you what it can do for your hair.",
   },
   {
     slug: "how-often-scalp-treatment",
-    metaTitle: "How Often Should You Get a Scalp Treatment? | Lather Head Spa",
+    metaTitle: "How Often Should You Get a Scalp Treatment? | Lather Spa & Wellness",
     metaDescription:
-      "Find out how frequently you should get professional scalp treatments based on your scalp type, hair concerns, and wellness goals — expert guidance from Lather Head Spa.",
+      "Find out how frequently you should get professional scalp treatments based on your scalp type, hair concerns, and wellness goals — expert guidance from Lather Spa & Wellness.",
     category: "Hair Wellness",
     readTime: "4 min read",
     publishDate: "2025-02-12",
@@ -180,11 +180,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "The right treatment frequency is ultimately the one you can maintain with consistency. A monthly appointment that you reliably keep will do more for your scalp and hair than a quarterly session you only occasionally manage. At Lather Head Spa in Greenville, NC, we\'re happy to help you find the cadence that fits both your scalp\'s needs and your lifestyle. The commitment to regular care is one of the most worthwhile ones you can make for your hair.",
+      "The right treatment frequency is ultimately the one you can maintain with consistency. A monthly appointment that you reliably keep will do more for your scalp and hair than a quarterly session you only occasionally manage. At Lather Spa & Wellness in Greenville, NC, we\'re happy to help you find the cadence that fits both your scalp\'s needs and your lifestyle. The commitment to regular care is one of the most worthwhile ones you can make for your hair.",
   },
   {
     slug: "scalp-health-hair-growth",
-    metaTitle: "Why Scalp Health Matters for Hair Growth | Lather Head Spa",
+    metaTitle: "Why Scalp Health Matters for Hair Growth | Lather Spa & Wellness",
     metaDescription:
       "Explore the science behind how scalp health directly influences hair growth — from follicle function and blood flow to DHT buildup and how professional treatments help.",
     category: "Hair Wellness",
@@ -227,11 +227,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "The scalp is not background infrastructure. It\'s the most important part of your hair care story, and treating it as such — with regular professional attention — is one of the most meaningful things you can do for your hair\'s long-term health. At Lather Head Spa in Greenville, NC, scalp health is our entire focus. We\'d welcome the chance to discuss your hair\'s specific needs and show you what consistent, expert scalp care can do.",
+      "The scalp is not background infrastructure. It\'s the most important part of your hair care story, and treating it as such — with regular professional attention — is one of the most meaningful things you can do for your hair\'s long-term health. At Lather Spa & Wellness in Greenville, NC, scalp health is the whole focus of our signature head spa. We\'d welcome the chance to discuss your hair\'s specific needs and show you what consistent, expert scalp care can do.",
   },
   {
     slug: "what-happens-head-spa-treatment",
-    metaTitle: "What Happens During a Head Spa Treatment? | Lather Head Spa",
+    metaTitle: "What Happens During a Head Spa Treatment? | Lather Spa & Wellness",
     metaDescription:
       "A step-by-step look at what to expect during a head spa treatment at Lather — from scalp consultation to massage. Perfect for first-timers curious about the experience.",
     category: "Experience",
@@ -274,11 +274,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "From first consultation to final rinse, a head spa session at Lather is designed to be everything a first-timer hopes it will be and more. The entire experience runs about sixty to ninety minutes, moves at an unhurried pace, and leaves you in a state that is difficult to fully describe until you\'ve felt it. If you\'re curious, the best thing to do is simply book an appointment at Lather Head Spa in Greenville, NC. We\'ll take care of everything from there.",
+      "From first consultation to final rinse, a head spa session at Lather is designed to be everything a first-timer hopes it will be and more. The entire experience runs about sixty to ninety minutes, moves at an unhurried pace, and leaves you in a state that is difficult to fully describe until you\'ve felt it. If you\'re curious, the best thing to do is simply book an appointment at Lather Spa & Wellness in Greenville, NC. We\'ll take care of everything from there.",
   },
   {
     slug: "head-spa-stress-relief",
-    metaTitle: "Is a Head Spa Good for Stress Relief? | Lather Head Spa",
+    metaTitle: "Is a Head Spa Good for Stress Relief? | Lather Spa & Wellness",
     metaDescription:
       "Explore the science behind head spa stress relief — how scalp massage affects cortisol, the parasympathetic nervous system, and your overall sense of wellbeing.",
     category: "Wellness",
@@ -313,11 +313,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "A head spa session is stress relief in a form that actually works — not through distraction or surface-level pampering, but through direct intervention in the physical systems that carry and express stress. At Lather Head Spa in Greenville, NC, the wellness dimension of every session is as important to us as the scalp health benefits. If stress has been showing up in your body — in your scalp, your hair, your neck, your sleep — we\'d love to offer you an hour of genuine relief.",
+      "A head spa session is stress relief in a form that actually works — not through distraction or surface-level treatment, but through direct intervention in the physical systems that carry and express stress. At Lather Spa & Wellness in Greenville, NC, the wellness dimension of every session is as important to us as the scalp health benefits. If stress has been showing up in your body — in your scalp, your hair, your neck, your sleep — we\'d love to offer you an hour of genuine relief.",
   },
   {
     slug: "luxury-self-care-head-spa-trending",
-    metaTitle: "Why Head Spa Treatments Are Trending | Lather Head Spa",
+    metaTitle: "Why Head Spa Treatments Are Trending | Lather Spa & Wellness",
     metaDescription:
       "Head spas are one of the fastest-growing luxury wellness trends. Explore why this treatment resonates so deeply with modern self-care culture and what makes it worth the investment.",
     category: "Lifestyle",
@@ -344,18 +344,18 @@ export const blogArticles: BlogArticle[] = [
       {
         heading: "Investment in Self as a Mindset",
         paragraphs: [
-          "One of the more meaningful cultural shifts underlying the head spa trend is a changing attitude toward spending on self. A generation ago, spending significant money on personal wellness services beyond basic grooming was often seen as indulgent — something reserved for the very wealthy or a special occasion. That view has shifted considerably, particularly among people in their thirties and forties who have decided, often through experience, that the cost of chronic stress and deferred self-care is ultimately higher than the cost of prevention.",
-          "A head spa appointment is an investment in the same category as a good mattress, a personal trainer, or regular therapy: something that produces compounding returns in quality of life that justify the upfront cost. Regular guests at Lather describe their appointments not as indulgences but as anchors — fixed points of restoration in weeks that might otherwise have no genuine rest built into them.",
+          "One of the more meaningful cultural shifts underlying the head spa trend is a changing attitude toward spending on self. A generation ago, spending significant money on personal wellness services beyond basic grooming was often seen as an extravagance — something reserved for the very wealthy or a special occasion. That view has shifted considerably, particularly among people in their thirties and forties who have decided, often through experience, that the cost of chronic stress and deferred self-care is ultimately higher than the cost of prevention.",
+          "A head spa appointment is an investment in the same category as a good mattress, a personal trainer, or regular therapy: something that produces compounding returns in quality of life that justify the upfront cost. Regular guests at Lather describe their appointments not as splurges but as anchors — fixed points of restoration in weeks that might otherwise have no genuine rest built into them.",
           "The ritual dimension of the head spa experience adds to its value in ways that are hard to quantify but easy to feel. Having a standing appointment that you look forward to, that marks off reliable time for genuine care, creates a relationship with self-maintenance that extends beyond the session itself. It becomes part of how you think about your own wellbeing — proactively, with intention.",
         ],
       },
     ],
     conclusion:
-      "The head spa\'s popularity is not a coincidence and it is not a moment. It reflects a genuine reorientation toward self-care practices that deliver real results, honor the body\'s actual needs, and offer a quality of experience worth returning to. At Lather Head Spa in Greenville, NC, we are proud to be the place where eastern North Carolina residents come to experience this for themselves. If you\'ve been curious, now is a wonderful time to begin.",
+      "The head spa\'s popularity is not a coincidence and it is not a moment. It reflects a genuine reorientation toward self-care practices that deliver real results, honor the body\'s actual needs, and offer a quality of experience worth returning to. At Lather Spa & Wellness in Greenville, NC, we are proud to be the place where eastern North Carolina residents come to experience this for themselves. If you\'ve been curious, now is a wonderful time to begin.",
   },
   {
     slug: "signs-scalp-needs-professional-care",
-    metaTitle: "Signs Your Scalp Needs Professional Care | Lather Head Spa",
+    metaTitle: "Signs Your Scalp Needs Professional Care | Lather Spa & Wellness",
     metaDescription:
       "Itchiness, flaking, oiliness, thinning, sensitivity — learn the signs that your scalp needs more than a home routine can provide and when to seek professional treatment.",
     category: "Hair Wellness",
@@ -396,11 +396,11 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "The scalp rarely announces its problems loudly — it speaks in itches, in flakes, in the subtle change in how your hair behaves over time. Learning to read those signals and respond to them with professional care, rather than waiting until they become significant, is one of the wisest things you can do for your hair\'s long-term health. At Lather Head Spa in Greenville, NC, our team is experienced in scalp assessment and ready to help you understand what your scalp is telling you — and what to do about it.",
+      "The scalp rarely announces its problems loudly — it speaks in itches, in flakes, in the subtle change in how your hair behaves over time. Learning to read those signals and respond to them with professional care, rather than waiting until they become significant, is one of the wisest things you can do for your hair\'s long-term health. At Lather Spa & Wellness in Greenville, NC, our team is experienced in scalp assessment and ready to help you understand what your scalp is telling you — and what to do about it.",
   },
   {
     slug: "scalp-massage-vs-head-spa",
-    metaTitle: "Scalp Massage vs. Head Spa: What\'s the Difference? | Lather Head Spa",
+    metaTitle: "Scalp Massage vs. Head Spa: What\'s the Difference? | Lather Spa & Wellness",
     metaDescription:
       "Understand the real differences between a scalp massage and a full head spa treatment — and why the complete head spa protocol delivers results that massage alone cannot.",
     category: "Education",
@@ -435,6 +435,6 @@ export const blogArticles: BlogArticle[] = [
       },
     ],
     conclusion:
-      "If you\'ve tried scalp massage and appreciated it, a full head spa session will be a revelation. And if you\'ve never tried either, the head spa is the place to begin — because it delivers the benefits of massage alongside a complete scalp health protocol that changes the condition of your scalp in ways that massage alone simply cannot. At Lather Head Spa in Greenville, NC, every session is the full experience: assessment, cleanse, treatment, and an extended massage that is the equal of the best standalone scalp massage you\'ve ever received. We\'d love to show you the difference.",
+      "If you\'ve tried scalp massage and appreciated it, a full head spa session will be a revelation. And if you\'ve never tried either, the head spa is the place to begin — because it delivers the benefits of massage alongside a complete scalp health protocol that changes the condition of your scalp in ways that massage alone simply cannot. At Lather Spa & Wellness in Greenville, NC, every session is the full experience: assessment, cleanse, treatment, and an extended massage that is the equal of the best standalone scalp massage you\'ve ever received. We\'d love to show you the difference.",
   },
 ];

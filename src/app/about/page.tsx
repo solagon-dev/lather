@@ -3,36 +3,48 @@ import Image from "next/image";
 import BookCTA from "@/components/BookCTA";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { BOOK_URL, business } from "@/lib/business";
-import { brandValues } from "@/lib/data";
+import { BOOK_URL } from "@/lib/business";
 
 export const metadata: Metadata = {
-  title: "About — Our Story & The Space",
+  title: "About — Our Story & Team",
   description:
-    "The story behind Lather Head Spa in Greenville, NC — bringing the Japanese head spa tradition to Eastern North Carolina in a sanctuary built for stillness. Meet the team and step inside.",
+    "The story behind Lather Spa & Wellness in Greenville, NC — founded by sisters Hannah DeMotts and Abigail Baldwin with longtime friend Stacia Friend, CNM. Our mission, values, and team.",
   alternates: { canonical: "/about" },
 };
 
-const team = [
+const founders = [
   {
-    image: "/media/team/madison-hoffschneider.webp",
-    role: "Founder & Lead Therapist",
-    bio: "With years of experience in scalp health and wellness, our founder built Lather to bring the Japanese head spa tradition to eastern North Carolina. Every protocol, product, and detail reflects a commitment to results-driven care in a genuinely calming environment.",
+    name: "Hannah DeMotts",
+    role: "Co-Founder",
+    line: "One half of the sisters behind Lather, driven by a love of caring for others and creating spaces where people feel at ease.",
   },
   {
-    image: "/media/team/heidi-griggs.webp",
-    role: "Scalp Therapist",
-    bio: "Trained in therapeutic scalp techniques and advanced treatment protocols, our scalp therapist brings precision and intuition to every session. Her approach blends technical expertise with a warm, attentive presence — ensuring every guest feels both cared for and restored.",
+    name: "Abigail Baldwin",
+    role: "Co-Founder",
+    line: "The other half of the pair, shaping the Lather experience around genuine hospitality and thoughtful, elevated design.",
+  },
+  {
+    name: "Stacia Friend, CNM",
+    role: "Co-Founder · Certified Nurse Midwife",
+    line: "A longtime friend and Lather's wellness lead, bringing a whole-person, preventative approach to personalized care.",
   },
 ];
 
+const values = [
+  { title: "Education", body: "Informed guests make the best decisions. We take the time to explain, answer, and guide." },
+  { title: "Compassion", body: "Every guest is met with genuine care, and never with judgment." },
+  { title: "Excellence", body: "Licensed providers, considered protocols, and a standard we hold to on every visit." },
+  { title: "Community", body: "Built for Greenville and invested in the people we serve." },
+  { title: "Whole-person wellness", body: "We care for the whole person — skin, body, and long-term well-being." },
+];
+
 const gallery = [
-  { src: "/media/gallery/interior-waiting-room.webp", alt: "The quiet waiting lounge at Lather Head Spa" },
-  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the Lather treatment room" },
-  { src: "/media/gallery/treatment-waterfall.webp", alt: "Warm water poured over the scalp at the treatment basin" },
-  { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp glowing softly inside Lather Head Spa" },
-  { src: "/media/gallery/interior-diffuser.webp", alt: "Aromatherapy diffuser detail in the treatment space" },
-  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Head Spa in Greenville, NC" },
+  { src: "/media/gallery/interior-waiting-room.webp", alt: "The lounge at Lather Spa & Wellness" },
+  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the treatment room" },
+  { src: "/media/gallery/treatment-waterfall.webp", alt: "A restorative treatment at Lather" },
+  { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp glowing inside Lather Spa & Wellness" },
+  { src: "/media/gallery/interior-diffuser.webp", alt: "Aromatherapy detail in the treatment space" },
+  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather in Greenville, NC" },
 ];
 
 export default function AboutPage() {
@@ -41,22 +53,22 @@ export default function AboutPage() {
       <PageHero
         title={
           <>
-            Built for <span className="italic">stillness</span>
+            Built on <span className="italic">relationships</span>
           </>
         }
-        sub="A facial for your scalp — and a quiet answer to the question of where Eastern North Carolina goes to truly slow down."
+        sub="Lather Spa & Wellness was founded by two sisters and a lifelong friend — on shared experience, trust, and a passion for caring for others."
         image="/media/about/about-hero.webp"
-        imageAlt="The entrance of Lather Head Spa in Greenville, NC"
+        imageAlt="Inside Lather Spa & Wellness in Greenville, NC"
       />
 
-      {/* ── STORY / PHILOSOPHY ───────────────────────────────── */}
+      {/* ── STORY ────────────────────────────────────────────── */}
       <section className="section-pad bg-porcelain">
         <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
           <Reveal className="relative mx-auto w-full max-w-md lg:max-w-none">
             <div className="arch relative aspect-[3/4]">
               <Image
                 src="/media/about/spa-detail.webp"
-                alt="Quiet interior details inside Lather Head Spa"
+                alt="Quiet interior details inside Lather Spa & Wellness"
                 fill
                 sizes="(min-width: 1024px) 45vw, 90vw"
                 className="object-cover"
@@ -64,80 +76,98 @@ export default function AboutPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              A tradition, transplanted
-            </h2>
-            <p className="mt-8 max-w-xl text-umber">{business.description}</p>
-            <p className="mt-5 max-w-xl text-umber">
-              Lather began with a simple observation: the Japanese head spa tradition — careful,
-              methodical, deeply restorative — had reached the coasts and the big cities, but not
-              here. Eastern North Carolina had salons, and it had spas, but nowhere devoted entirely
-              to the scalp. So we built one, in Greenville, from the ground up.
+            <h2 className="h-display text-balance text-4xl sm:text-5xl">How Lather began</h2>
+            <p className="mt-8 max-w-xl text-umber">
+              Lather started with the relationships between sisters Hannah DeMotts and Abigail
+              Baldwin and their longtime friend Stacia Friend, CNM — built on shared experience,
+              trust, and a genuine passion for caring for others.
             </p>
             <p className="mt-5 max-w-xl text-umber">
-              Everything about the space was chosen for stillness — the light, the temperature, the
-              absence of a busy salon floor. Appointments are private and one-on-one. You recline
-              beneath the arch of warm water, and for an hour or so, nothing is asked of you at all.
+              They saw the same gap, again and again: you could find a spa, or you could find
+              clinical wellness care, but rarely both — and almost never in a place that felt calm,
+              personal, and truly elevated. So they built one. A single, thoughtfully designed space
+              where restorative spa experiences and advanced wellness care live side by side.
+            </p>
+            <p className="mt-5 max-w-xl text-umber">
+              That&rsquo;s Lather: modern wellness and elevated self-care, delivered by people who
+              genuinely care how you feel when you leave.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* ── VALUES ───────────────────────────────────────────── */}
+      {/* ── MISSION + VALUES ─────────────────────────────────── */}
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              Three things we believe
-            </h2>
+          <Reveal className="max-w-3xl">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-light">
+              Our mission
+            </p>
+            <p className="mt-6 font-display text-2xl font-light leading-relaxed sm:text-3xl">
+              To create experiences that leave people feeling refreshed, restored, and genuinely
+              cared for.
+            </p>
           </Reveal>
-          <div className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
-            {brandValues.map((v, i) => (
-              <Reveal key={v.title} delay={i * 80}>
-                <p className="font-display text-3xl font-light text-brass-light/70">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-4 font-display text-2xl">{v.title}</h3>
-                <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{v.body}</p>
+          <div className="mt-16 grid gap-x-10 gap-y-10 border-t border-ivory/10 pt-12 sm:grid-cols-2 lg:grid-cols-3">
+            {values.map((v, i) => (
+              <Reveal key={v.title} delay={i * 70}>
+                <h3 className="font-display text-2xl text-brass-light">{v.title}</h3>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-ivory/65">{v.body}</p>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── THE TEAM ─────────────────────────────────────────── */}
+      {/* ── FOUNDERS + TEAM ──────────────────────────────────── */}
       <section className="section-pad bg-bone">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">
-              Skilled hands, quiet presence
-            </h2>
+            <h2 className="h-display text-4xl sm:text-5xl">The people behind Lather</h2>
+            <p className="mt-6 text-umber">
+              Two sisters, one lifelong friend, and a team of licensed providers who care for you
+              like they know you.
+            </p>
           </Reveal>
-          <div className="mt-14 grid gap-12 md:grid-cols-2">
-            {team.map((member, i) => (
-              <Reveal key={member.role} delay={i * 100}>
-                <div className="arch relative aspect-[3/4] max-w-md">
-                  <Image
-                    src={member.image}
-                    alt={`${member.role} at Lather Head Spa`}
-                    fill
-                    sizes="(min-width: 768px) 45vw, 90vw"
-                    className="object-cover object-top"
-                  />
-                </div>
-                <p className="mt-6 text-[0.7rem] uppercase tracking-kicker text-taupe">{member.role}</p>
-                <p className="mt-3 max-w-md text-umber">{member.bio}</p>
+
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {founders.map((f, i) => (
+              <Reveal key={f.name} delay={i * 90} className="border-t hairline pt-6">
+                <p className="font-display text-2xl">{f.name}</p>
+                <p className="mt-1 text-[0.7rem] uppercase tracking-wideish text-brass-dark">{f.role}</p>
+                <p className="mt-4 text-[0.95rem] leading-relaxed text-umber">{f.line}</p>
               </Reveal>
             ))}
           </div>
-          <Reveal className="mt-14 border-t hairline pt-8">
-            <p className="max-w-xl text-umber">
-              Have a preference? You&rsquo;re welcome to request your therapist when you{" "}
-              <a href={BOOK_URL} target="_blank" rel="noopener" className="link-ul">
-                book on Vagaro
-              </a>
-              .
-            </p>
+
+          <Reveal delay={120} className="mt-14">
+            <div className="relative aspect-[16/9] overflow-hidden">
+              <Image
+                src="/media/team/team-atmosphere.webp"
+                alt="The team at Lather Spa & Wellness"
+                fill
+                sizes="(min-width: 1024px) 72rem, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+
+          <Reveal className="mt-12 grid gap-6 border-t hairline pt-8 lg:grid-cols-[1fr_1.2fr]">
+            <h3 className="font-display text-2xl">Our team</h3>
+            <div>
+              <p className="max-w-xl text-umber">
+                Behind every visit is a team of licensed estheticians, cosmetologists, massage
+                therapists, nurse injectors, and guest coordinators — each here for the same reason:
+                to help you feel genuinely well.
+              </p>
+              <p className="mt-5 max-w-xl text-umber">
+                Have a preference?{" "}
+                <a href={BOOK_URL} target="_blank" rel="noopener" className="link-ul">
+                  Request your provider when you book
+                </a>
+                .
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -146,9 +176,7 @@ export default function AboutPage() {
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap">
           <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">
-              Step inside
-            </h2>
+            <h2 className="h-display text-4xl sm:text-5xl">Step inside</h2>
           </Reveal>
           <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
             {gallery.map((g, i) => (

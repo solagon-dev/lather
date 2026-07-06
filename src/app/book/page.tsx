@@ -10,21 +10,22 @@ import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Book Your Ritual — Online Scheduling",
   description:
-    "Book your head spa ritual at Lather in Greenville, NC. Secure online scheduling through Vagaro — choose your ritual, pick your time, and arrive five minutes early. We handle the rest.",
+    "Book your appointment at Lather Spa & Wellness in Greenville, NC. Head spa rituals book instantly online through Vagaro; facials, wellness care, and more are scheduled by consultation. Pick your time and arrive five minutes early.",
   alternates: { canonical: "/book" },
 };
 
 const steps = [
   {
     number: "01",
-    title: "Choose your ritual",
+    title: "Choose your service",
     body: (
       <>
-        Browse the{" "}
+        Our four{" "}
         <Link href="/services" className="link-ul text-ivory">
-          service menu
+          head spa rituals
         </Link>{" "}
-        — four rituals, 45 to 90 minutes, from a quick blowout to the full Luxe experience.
+        book instantly online — 45 to 90 minutes. For facials, wellness care, and everything else,
+        reach out and we&rsquo;ll schedule you personally.
       </>
     ),
   },
@@ -65,7 +66,7 @@ export default function BookPage() {
         }
         sub="Booking takes under a minute through Vagaro — our secure scheduling partner. Sessions are by appointment only, and every slot is reserved exclusively for you."
         image="/media/pages/book-hero.webp"
-        imageAlt="A treatment chair awaiting the next guest at Lather Head Spa"
+        imageAlt="A treatment chair awaiting the next guest at Lather Spa & Wellness"
       />
 
       {/* ── THREE STEPS ──────────────────────────────────────── */}
@@ -98,8 +99,16 @@ export default function BookPage() {
         <div className="wrap">
           <Reveal className="max-w-2xl">
             <h2 className="h-display text-4xl sm:text-5xl">
-              Four rituals, one price list
+              The head spa ritual menu
             </h2>
+            <p className="mt-6 text-umber">
+              Our head spa rituals book online below. Facials, massage, skin, and wellness services
+              are scheduled by consultation — just{" "}
+              <a href={business.phoneHref} className="link-ul">
+                call or text
+              </a>
+              .
+            </p>
           </Reveal>
           <div className="mt-14 border-t hairline">
             {services.map((s, i) => (

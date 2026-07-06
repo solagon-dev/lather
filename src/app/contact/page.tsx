@@ -12,7 +12,7 @@ import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Contact, Hours & Directions — Greenville, NC",
   description:
-    "Find Lather Head Spa at 620 Lynndale Court, Unit B in Greenville, NC. Hours, phone, directions, and free parking — a quiet, adults-focused head spa, by appointment only.",
+    "Find Lather Spa & Wellness at 101 Fox Haven Drive in Greenville, NC. Hours, phone, directions, and free parking. By appointment — new guests welcome.",
   alternates: { canonical: "/contact" },
 };
 
@@ -52,9 +52,9 @@ export default function ContactPage() {
             Come find your <span className="italic">quiet</span>
           </>
         }
-        sub="Tucked off Lynndale Court in Greenville, North Carolina — a private, adults-focused sanctuary with free parking at the door."
+        sub="On Fox Haven Drive in Greenville, North Carolina — a calm, elevated space with free parking at the door. Designed with women in mind, all guests welcome."
         image="/media/pages/contact-hero.webp"
-        imageAlt="The calm interior of Lather Head Spa in Greenville, NC"
+        imageAlt="The calm interior of Lather Spa & Wellness in Greenville, NC"
       />
 
       {/* ── NAP + MAP ────────────────────────────────────────── */}
@@ -107,7 +107,7 @@ export default function ContactPage() {
             </div>
 
             <p className="mt-8 text-[0.85rem] text-taupe">
-              By appointment only · Free parking · A quiet, adults-focused space
+              By appointment · Free parking · New guests welcome
             </p>
           </Reveal>
 
@@ -116,10 +116,10 @@ export default function ContactPage() {
               <iframe
                 src={
                   "https://www.google.com/maps?q=" +
-                  encodeURIComponent("Lather Head Spa, 620 Lynndale Court, Greenville, NC 27858") +
+                  encodeURIComponent(`${business.name}, ${business.address.full}`) +
                   "&output=embed"
                 }
-                title="Map to Lather Head Spa"
+                title={`Map to ${business.name}`}
                 loading="lazy"
                 className="h-full min-h-[420px] w-full border-0"
                 allowFullScreen

@@ -11,7 +11,7 @@ import { breadcrumbSchema, faqSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
-    "Everything to know before your first head spa visit — what a head spa is, how long sessions last, how to prepare, and answers about each Lather ritual in Greenville, NC.",
+    "Answers about Lather Spa & Wellness in Greenville, NC — our spa and wellness services, wellness consultations, booking and policies, what to expect on your first visit, plus head spa ritual details.",
   alternates: { canonical: "/faq" },
 };
 
@@ -34,9 +34,9 @@ export default function FaqPage() {
             Everything you&rsquo;re <span className="italic">wondering</span>
           </>
         }
-        sub="Most of our guests are first-timers — curiosity is part of the experience. Here's everything people ask before they settle into the chair."
+        sub="New to Lather? Curiosity is part of it. Here's everything guests ask about our spa and wellness care — before they ever settle in."
         image="/media/pages/faq-hero.webp"
-        imageAlt="A quiet corner of Lather Head Spa in Greenville, NC"
+        imageAlt="A quiet corner of Lather Spa & Wellness in Greenville, NC"
       />
 
       {/* ── GENERAL FAQS ─────────────────────────────────────── */}
@@ -47,8 +47,8 @@ export default function FaqPage() {
               Before you book
             </h2>
             <p className="mt-6 max-w-md text-umber">
-              The questions we hear most — from what a head spa actually is to how often you should
-              come back.
+              The questions we hear most — from what makes Lather different to how our wellness
+              consultations work.
             </p>
           </Reveal>
           <Reveal delay={120}>
@@ -61,7 +61,7 @@ export default function FaqPage() {
       <section className="relative h-[42vh] min-h-[320px] overflow-hidden">
         <Image
           src="/media/pages/faq-detail-01.webp"
-          alt="Soft light and calm details inside Lather Head Spa"
+          alt="Soft light and calm details inside Lather Spa & Wellness"
           fill
           sizes="100vw"
           className="object-cover"
@@ -80,11 +80,11 @@ export default function FaqPage() {
         <div className="wrap">
           <Reveal className="max-w-2xl">
             <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              Ritual by ritual
+              Head spa, ritual by ritual
             </h2>
             <p className="mt-6 text-umber">
-              Each treatment has its own rhythm — and its own questions. Answers below, grouped by
-              ritual.
+              Our signature head spa comes in four rituals — each with its own rhythm, and its own
+              questions. Answers below, grouped by ritual.
             </p>
           </Reveal>
           <div className="mt-14 space-y-16">
@@ -111,7 +111,7 @@ export default function FaqPage() {
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-umber">
               If your question isn&rsquo;t answered here, call us during business hours or send a
-              DM on Instagram — we&rsquo;re happy to talk you through any ritual before you book.
+              DM on Instagram — we&rsquo;re happy to talk you through any service before you book.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a href={business.phoneHref} className="btn-solid">

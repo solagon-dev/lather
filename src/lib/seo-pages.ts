@@ -157,16 +157,16 @@ export const seoServiceTypes: SeoServiceType[] = [
     heroTagline: "The Complete Scalp Ritual",
     h1: (city, state) => `Luxury Head Spa Near ${city}, ${state}`,
     heroSub: (city, driveTime) =>
-      `Lather Head Spa in Greenville offers a full Japanese-inspired head spa experience just ${driveTime} from ${city}. Scalp care, massage, and restoration — all in one unhurried ritual.`,
+      `Lather Spa & Wellness in Greenville offers a full Japanese-inspired head spa experience just ${driveTime} from ${city}. Scalp care, massage, and restoration — all in one unhurried ritual.`,
     metaTitle: (city, state) =>
-      `Luxury Head Spa Near ${city} ${state} | Lather Head Spa Greenville`,
+      `Luxury Head Spa Near ${city} ${state} | Lather Spa & Wellness Greenville`,
     metaDesc: (city, state, driveTime) =>
-      `Looking for a luxury head spa near ${city}, ${state}? Lather Head Spa in Greenville is just ${driveTime} away. Book your Japanese-inspired scalp ritual today.`,
+      `Looking for a luxury head spa near ${city}, ${state}? Lather Spa & Wellness in Greenville is just ${driveTime} away. Book your Japanese-inspired scalp ritual today.`,
     introH2: "What Is a Head Spa — and Why Is Everyone Talking About It?",
     introP1: (city) =>
       `Guests from ${city} and across Eastern North Carolina have been discovering what the head spa experience actually delivers — and why it's so unlike anything a conventional salon offers. A head spa is a complete, protocol-driven scalp and hair wellness ritual rooted in Japanese beauty tradition. It combines professional cleansing, exfoliation, targeted scalp treatments, and extended therapeutic massage into a single, seamless experience.`,
     introP2:
-      "At Lather Head Spa in Greenville, every session begins with a scalp analysis. We assess hydration, buildup, and follicle health before personalizing your treatment, so the work goes deeper than a good cleanse. Guests consistently describe leaving with hair that feels lighter, softer, and more alive, and a clarity of mind that's harder to explain but impossible to miss.",
+      "At Lather Spa & Wellness in Greenville, the head spa is one of our signature services — and every session begins with a scalp analysis. We assess hydration, buildup, and follicle health before personalizing your treatment, so the work goes deeper than a good cleanse. Guests consistently describe leaving with hair that feels lighter, softer, and more alive, and a clarity of mind that's harder to explain but impossible to miss.",
     introP3: (city) =>
       `For ${city} residents, making the drive to Greenville for a head spa treatment has become a regular ritual rather than a rare occasion. The experience is that good, and the results compound over time. First visit out of curiosity or your standing monthly appointment — Lather is ready for you.`,
     benefits: [
@@ -193,8 +193,8 @@ export const seoServiceTypes: SeoServiceType[] = [
     ],
     whyLather: [
       {
-        title: "Purpose-Built for Scalp Care",
-        body: "Lather Head Spa is a dedicated head spa — not a salon that added a scalp service. Every element of the space and every product on the shelf exists specifically to deliver an exceptional scalp ritual.",
+        title: "A Dedicated Ritual, Not an Add-On",
+        body: "At Lather Spa & Wellness, the head spa is a dedicated ritual — not a scalp service tacked onto a salon appointment. Every element of the room and every product on the shelf exists specifically to deliver an exceptional scalp experience.",
       },
       {
         title: "Japanese-Inspired Protocols",
@@ -241,18 +241,18 @@ export const seoServiceTypes: SeoServiceType[] = [
     heroTagline: "Scalp Health. Hair Results.",
     h1: (city, state) => `Professional Scalp Treatment Near ${city}, ${state}`,
     heroSub: (city, driveTime) =>
-      `Guests from ${city} travel to Lather Head Spa in Greenville for targeted scalp treatments that address thinning, dryness, and buildup. Just ${driveTime} away — and worth every mile.`,
+      `Guests from ${city} travel to Lather Spa & Wellness in Greenville for targeted scalp treatments that address thinning, dryness, and buildup. Just ${driveTime} away — and worth every mile.`,
     metaTitle: (city, state) =>
-      `Scalp Treatment Near ${city} ${state} | Lather Head Spa Greenville`,
+      `Scalp Treatment Near ${city} ${state} | Lather Spa & Wellness Greenville`,
     metaDesc: (city, state, driveTime) =>
-      `Looking for professional scalp treatment near ${city}, ${state}? Lather Head Spa in Greenville is just ${driveTime} away. Expert scalp care for hair growth, dryness, and wellness.`,
+      `Looking for professional scalp treatment near ${city}, ${state}? Lather Spa & Wellness in Greenville is just ${driveTime} away. Expert scalp care for hair growth, dryness, and wellness.`,
     introH2: "Why Scalp Health Is the Foundation of Healthy Hair",
     introP1: (city) =>
       `Many ${city} residents are discovering what dermatologists and hair specialists have long understood: scalp health is the single most important factor in the long-term health and appearance of your hair. A chronically dry, congested, or inflamed scalp can lead to thinning, breakage, and loss of density that no shampoo or conditioner can fully address. Professional scalp treatment targets the root cause — literally.`,
     introP2:
-      "At Lather Head Spa in Greenville, our scalp treatments begin with a detailed consultation and visual scalp analysis. We assess buildup levels, hydration, sebum production, and follicle density before selecting the appropriate treatment protocol. Targeted serums, exfoliation, steam, and therapeutic massage work in combination to restore scalp balance, stimulate circulation, and create the healthiest possible environment for hair growth.",
+      "At Lather Spa & Wellness in Greenville, our scalp treatments begin with a detailed consultation and visual scalp analysis. We assess buildup levels, hydration, sebum production, and follicle density before selecting the appropriate treatment protocol. Targeted serums, exfoliation, steam, and therapeutic massage work in combination to restore scalp balance, stimulate circulation, and create the healthiest possible environment for hair growth.",
     introP3: (city) =>
-      `For those coming from ${city} and surrounding communities, a professional scalp treatment at Lather represents an investment in long-term hair health — not just a one-time indulgence. Regular scalp care compounds over time, and guests who commit to a monthly or bimonthly routine consistently report visible improvements in hair density, scalp comfort, and overall wellbeing.`,
+      `For those coming from ${city} and surrounding communities, a professional scalp treatment at Lather represents an investment in long-term hair health — not just a one-time treat. Regular scalp care compounds over time, and guests who commit to a monthly or bimonthly routine consistently report visible improvements in hair density, scalp comfort, and overall wellbeing.`,
     benefits: [
       {
         title: "Targeted Scalp Analysis",
@@ -325,14 +325,14 @@ export const seoServiceTypes: SeoServiceType[] = [
     heroTagline: "Rooted in Japanese Wellness Tradition",
     h1: (city, state) => `Japanese Head Spa Near ${city}, ${state}`,
     heroSub: (city, driveTime) =>
-      `Lather Head Spa brings an authentic Japanese-inspired scalp ritual to Eastern North Carolina. Serving guests from ${city} — just ${driveTime} from Greenville, NC.`,
+      `Lather Spa & Wellness brings an authentic Japanese-inspired scalp ritual to Eastern North Carolina. Serving guests from ${city} — just ${driveTime} from Greenville, NC.`,
     metaTitle: (city, state) =>
-      `Japanese Head Spa Near ${city} ${state} | Lather Head Spa Greenville`,
+      `Japanese Head Spa Near ${city} ${state} | Lather Spa & Wellness Greenville`,
     metaDesc: (city, state, driveTime) =>
-      `Experience an authentic Japanese head spa near ${city}, ${state}. Lather Head Spa in Greenville is just ${driveTime} away — offering Japanese-inspired scalp rituals and hair wellness.`,
+      `Experience an authentic Japanese head spa near ${city}, ${state}. Lather Spa & Wellness in Greenville is just ${driveTime} away — offering Japanese-inspired scalp rituals and hair wellness.`,
     introH2: "The Art of the Japanese Head Spa — Brought to Eastern NC",
     introP1: (city) =>
-      `The Japanese head spa is one of wellness culture's most distinctive experiences — meticulous, protocol-driven, and unlike anything a conventional Western salon offers. Originating in Japan, where scalp and hair health are regarded as fundamental components of overall wellness, the Japanese head spa weaves together clinical scalp care, therapeutic massage, and mindful ritual into an experience that is as restorative mentally as it is beneficial physically. For residents of ${city} curious about the treatment, Lather Head Spa in Greenville brings it close to home.`,
+      `The Japanese head spa is one of wellness culture's most distinctive experiences — meticulous, protocol-driven, and unlike anything a conventional Western salon offers. Originating in Japan, where scalp and hair health are regarded as fundamental components of overall wellness, the Japanese head spa weaves together clinical scalp care, therapeutic massage, and mindful ritual into an experience that is as restorative mentally as it is beneficial physically. For residents of ${city} curious about the treatment, Lather Spa & Wellness in Greenville brings it close to home.`,
     introP2:
       "What separates a Japanese head spa from a standard scalp treatment is the depth of the protocol. Each session at Lather begins with a professional scalp analysis — assessing hydration, sebum levels, and follicle health — before moving through a carefully sequenced series of steps: a detoxifying cleanse, gentle exfoliation, targeted serum application, steam infusion, and an extended massage that addresses the scalp, neck, and shoulders. Nothing is rushed. The philosophy is to give the scalp exactly what it needs — no more, no less.",
     introP3: (city) =>
@@ -361,8 +361,8 @@ export const seoServiceTypes: SeoServiceType[] = [
     ],
     whyLather: [
       {
-        title: "Eastern North Carolina's Only Dedicated Head Spa",
-        body: "Lather is not a salon add-on. We are a purpose-built Japanese-inspired head spa — the first of its kind in this region. Our entire practice is organized around the head spa experience and nothing else.",
+        title: "A Head Spa Done Properly, Not as an Add-On",
+        body: "Our Japanese-inspired head spa is a dedicated ritual, not a scalp service bolted onto a haircut. It's a signature offering of Lather Spa & Wellness — the first of its kind in this region — designed and staffed to honor the tradition it comes from.",
       },
       {
         title: "Authentic Technique, Thoughtful Adaptation",
@@ -409,14 +409,14 @@ export const seoServiceTypes: SeoServiceType[] = [
     heroTagline: "Tension Released. Mind Quieted.",
     h1: (city, state) => `Professional Scalp Massage Near ${city}, ${state}`,
     heroSub: (city, driveTime) =>
-      `Lather Head Spa in Greenville offers therapeutic scalp massage as part of every head spa ritual. Serving guests from ${city} — just ${driveTime} away.`,
+      `Lather Spa & Wellness in Greenville offers therapeutic scalp massage as part of every head spa ritual. Serving guests from ${city} — just ${driveTime} away.`,
     metaTitle: (city, state) =>
-      `Scalp Massage Near ${city} ${state} | Lather Head Spa Greenville`,
+      `Scalp Massage Near ${city} ${state} | Lather Spa & Wellness Greenville`,
     metaDesc: (city, state, driveTime) =>
-      `Looking for professional scalp massage near ${city}, ${state}? Lather Head Spa in Greenville is just ${driveTime} away. Therapeutic scalp massage for relaxation and hair wellness.`,
+      `Looking for professional scalp massage near ${city}, ${state}? Lather Spa & Wellness in Greenville is just ${driveTime} away. Therapeutic scalp massage for relaxation and hair wellness.`,
     introH2: "The Therapeutic Power of Professional Scalp Massage",
     introP1: (city) =>
-      `For ${city} residents dealing with chronic tension, stress, or the particular exhaustion of modern daily life, professional scalp massage at Lather Head Spa offers something increasingly rare: an hour of genuine stillness and skilled, purposeful touch. The scalp is one of the most tension-dense areas of the body. Years of stress, screen time, and poor posture create patterns of holding that most people don't even notice — until someone begins to release them.`,
+      `For ${city} residents dealing with chronic tension, stress, or the particular exhaustion of modern daily life, professional scalp massage at Lather Spa & Wellness offers something increasingly rare: an hour of genuine stillness and skilled, purposeful touch. The scalp is one of the most tension-dense areas of the body. Years of stress, screen time, and poor posture create patterns of holding that most people don't even notice — until someone begins to release them.`,
     introP2:
       "At Lather, scalp massage is not an afterthought — it is a central, extended component of every head spa ritual. Our therapists use a combination of traditional Japanese scalp massage techniques and therapeutic pressure work to address the scalp, neck, and shoulder tension that accumulates over time. The effect is cumulative: each session builds on the last, gradually releasing chronic holding patterns and improving overall scalp circulation.",
     introP3: (city) =>

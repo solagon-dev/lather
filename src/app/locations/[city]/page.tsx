@@ -82,7 +82,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             <div className="arch relative aspect-[3/4]">
               <Image
                 src="/media/editorial/value-prop.webp"
-                alt="A quiet moment during a Lather Head Spa ritual"
+                alt="A quiet moment at Lather Spa & Wellness"
                 fill
                 sizes="(min-width: 1024px) 42vw, 90vw"
                 className="object-cover"

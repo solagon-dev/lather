@@ -8,9 +8,9 @@ import { locations } from "@/lib/locations";
 import { seoServiceTypes } from "@/lib/seo-pages";
 
 export const metadata: Metadata = {
-  title: "Areas We Serve — Head Spa for Eastern North Carolina",
+  title: "Areas We Serve — Spa & Wellness for Eastern North Carolina",
   description:
-    "Lather Head Spa in Greenville, NC welcomes guests from Winterville, Ayden, Farmville, Washington, New Bern, and across Eastern North Carolina. Find your drive time.",
+    "Lather Spa & Wellness in Greenville, NC welcomes guests from Winterville, Ayden, Farmville, Washington, New Bern, and across Eastern North Carolina. Find your drive time.",
   alternates: { canonical: "/locations" },
 };
 
@@ -25,7 +25,7 @@ export default function LocationsPage() {
         }
         sub="Guests drive from every corner of the region for an hour that belongs entirely to them. Find your city — and your drive time — below."
         image="/media/pages/locations-hero.webp"
-        imageAlt="The quiet interior of Lather Head Spa in Greenville, NC"
+        imageAlt="The quiet interior of Lather Spa & Wellness in Greenville, NC"
       />
 
       {/* ── INTRO ────────────────────────────────────────────── */}
@@ -37,9 +37,9 @@ export default function LocationsPage() {
               from all over Eastern North Carolina to be here.
             </p>
             <p className="mt-6 max-w-xl text-umber">
-              For most of the region, a genuinely restorative head spa ritual is closer than you
-              think. The pages below cover what the drive looks like from your city, and why so
-              many of your neighbors have already made it a habit.
+              For most of the region, a genuinely restorative spa and wellness experience is closer
+              than you think. The pages below cover what the drive looks like from your city, and why
+              so many of your neighbors have already made it a habit.
             </p>
           </Reveal>
         </div>

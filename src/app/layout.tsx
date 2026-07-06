@@ -23,20 +23,21 @@ const figtree = Figtree({
 export const metadata: Metadata = {
   metadataBase: new URL(business.siteUrl),
   title: {
-    default: "Lather Head Spa | Luxury Head Spa in Greenville, NC",
-    template: "%s | Lather Head Spa",
+    default: "Lather Spa & Wellness | Modern Wellness in Greenville, NC",
+    template: "%s | Lather Spa & Wellness",
   },
   description:
-    "Lather Head Spa is Greenville, NC's premier luxury head spa — Japanese-inspired scalp rituals, therapeutic massage, and hair wellness. A facial for your scalp. Book on Vagaro.",
+    "Lather Spa & Wellness is a luxury wellness destination in Greenville, NC — restorative spa experiences and advanced, personalized wellness care. Where modern wellness meets elevated self-care.",
   keywords: [
+    "spa Greenville NC",
+    "wellness Greenville NC",
+    "medical spa Greenville NC",
+    "facials Greenville NC",
     "head spa Greenville NC",
-    "Japanese head spa North Carolina",
-    "scalp treatment Greenville",
-    "scalp massage Greenville NC",
+    "massage Greenville NC",
+    "hormone therapy Greenville NC",
+    "injectables Greenville NC",
     "luxury spa Greenville",
-    "hair wellness Greenville",
-    "blowout Greenville NC",
-    "head spa near me",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -44,16 +45,16 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: business.siteUrl,
     siteName: business.name,
-    title: "Lather Head Spa | Luxury Head Spa in Greenville, NC",
+    title: "Lather Spa & Wellness | Modern Wellness in Greenville, NC",
     description:
-      "A facial for your scalp. Japanese-inspired scalp rituals, therapeutic massage, and hair wellness in Greenville, North Carolina.",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Lather Head Spa — Greenville, NC" }],
+      "Where modern wellness meets elevated self-care. Restorative spa experiences and advanced wellness care in Greenville, North Carolina.",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Lather Spa & Wellness — Greenville, NC" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lather Head Spa | Luxury Head Spa in Greenville, NC",
+    title: "Lather Spa & Wellness | Modern Wellness in Greenville, NC",
     description:
-      "A facial for your scalp. Japanese-inspired scalp rituals in Greenville, NC.",
+      "Where modern wellness meets elevated self-care — Greenville, NC.",
     images: ["/og.jpg"],
   },
   robots: {

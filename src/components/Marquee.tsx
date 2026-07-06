@@ -1,8 +1,8 @@
 const phrases = [
-  "A Facial for Your Scalp",
+  "Modern Wellness",
+  "Elevated Self-Care",
   "Greenville, North Carolina",
-  "Japanese-Inspired Rituals",
-  "By Appointment Only",
+  "Spa & Wellness Destination",
 ];
 
 export default function Marquee({ dark = false }: { dark?: boolean }) {

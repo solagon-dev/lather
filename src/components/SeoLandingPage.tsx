@@ -64,7 +64,7 @@ export default function SeoLandingPage({ city, service }: SeoLandingPageProps) {
             <div className="arch relative aspect-[3/4]">
               <Image
                 src="/media/services/service-treatment.webp"
-                alt="A scalp treatment in progress at Lather Head Spa"
+                alt="A scalp treatment in progress at Lather Spa & Wellness"
                 fill
                 sizes="(min-width: 1024px) 42vw, 90vw"
                 className="object-cover"

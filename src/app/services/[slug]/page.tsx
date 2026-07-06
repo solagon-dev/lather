@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const price = service.id === "blowout" ? `from $${service.price}` : `$${service.price}`;
   return {
     title: `${service.name} — ${service.duration}, ${price}`,
-    description: `${service.tagline}. ${service.description.slice(0, 140)}… Book at Lather Head Spa in Greenville, NC.`,
+    description: `${service.tagline}. ${service.description.slice(0, 140)}… Book at Lather Spa & Wellness in Greenville, NC.`,
     alternates: { canonical: `/services/${service.id}` },
   };
 }

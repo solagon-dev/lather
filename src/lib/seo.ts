@@ -15,7 +15,7 @@ export function localBusinessSchema() {
     email: business.email,
     image: `${business.siteUrl}/og.jpg`,
     logo: `${business.siteUrl}/icon.svg`,
-    priceRange: "$50–$200",
+    priceRange: "$$$",
     currenciesAccepted: "USD",
     address: {
       "@type": "PostalAddress",
@@ -56,7 +56,7 @@ export function localBusinessSchema() {
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Head Spa Services",
+      name: "Spa & Wellness Services",
       itemListElement: services.map((s) => ({
         "@type": "Offer",
         price: s.price,

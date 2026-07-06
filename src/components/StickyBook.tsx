@@ -33,7 +33,7 @@ export default function StickyBook() {
         rel="noopener"
         className="flex flex-[2] items-center justify-center bg-ivory py-4 text-[0.7rem] font-semibold uppercase tracking-kicker text-ink"
       >
-        Book Your Ritual
+        Book Appointment
       </a>
     </div>
   );

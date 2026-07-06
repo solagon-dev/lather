@@ -8,8 +8,8 @@ interface BookCTAProps {
 }
 
 export default function BookCTA({
-  title = "Your scalp has been waiting.",
-  body = "Sessions are by appointment only — every time slot is held exclusively for you. Book online in under a minute, or call and we'll take care of the rest.",
+  title = "Ready when you are.",
+  body = "Book your appointment online in a minute, or call and we'll help you find the right treatment. New guests always welcome.",
 }: BookCTAProps) {
   return (
     <section className="grain relative overflow-hidden bg-noir text-ivory">

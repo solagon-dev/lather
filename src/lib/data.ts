@@ -3,7 +3,7 @@ export const services = [
   {
     id: "luxe-ritual",
     name: "The Luxe Ritual",
-    tagline: "Our most indulgent experience — scalp, hair, and skin",
+    tagline: "Our most complete experience — scalp, hair, and skin",
     price: 200,
     duration: "90 min",
     durationMin: 90,
@@ -18,8 +18,8 @@ export const services = [
       "Rose petal jelly facial",
       "Professional blowout finish",
     ],
-    bestFor: "Special occasions · Deep relaxation · Full pampering",
-    bestForTags: ["Special occasions", "Deep relaxation", "Pampering", "Gift-worthy"],
+    bestFor: "Special occasions · Deep relaxation · Full restoration",
+    bestForTags: ["Special occasions", "Deep relaxation", "Restorative", "Gift-worthy"],
     intensity: 4,
     luxuryLevel: 5,
     firstTimeFit: "possible" as const,
@@ -159,7 +159,7 @@ export const treatmentFAQs: Record<string, { question: string; answer: string }[
   "luxe-ritual": [
     {
       question: "What makes The Luxe Ritual different from The Classic?",
-      answer: "The Luxe Ritual builds on everything in The Classic — adding an extended massage, a rejuvenating rose petal jelly facial, and a professional blowout. It's our most comprehensive single-session experience, designed for guests who want the full pampering treatment.",
+      answer: "The Luxe Ritual builds on everything in The Classic — adding an extended massage, a rejuvenating rose petal jelly facial, and a professional blowout. It's our most comprehensive single-session experience, designed for guests who want the most complete treatment.",
     },
     {
       question: "What is the rose petal jelly mask?",
@@ -239,7 +239,7 @@ export const treatmentDetails: Record<string, {
 }> = {
   "luxe-ritual": {
     whoItsFor:
-      "Anyone seeking the most complete, indulgent experience Lather offers. Ideal for special occasions, milestone celebrations, or guests who simply want to be fully taken care of — scalp, hair, and skin.",
+      "Anyone seeking the most complete, restorative experience Lather offers. Ideal for special occasions, milestone celebrations, or guests who simply want to be fully taken care of — scalp, hair, and skin.",
     beforeVisit: [
       "Arrive with your hair in its natural state if possible",
       "Come makeup-free or light — we'll be applying a facial mask",
@@ -358,41 +358,89 @@ export const testimonials = [
 ];
 
 // ── FAQs ─────────────────────────────────────────────────────
+// Broad spa & wellness questions — used on /faq and the /contact teaser.
+// Covers the brand blueprint's categories: general, services, wellness
+// consultations, booking, policies, and expectations.
 export const faqs = [
   {
-    question: "What is a head spa?",
+    question: "What is Lather Spa & Wellness?",
     answer:
-      "A head spa is a therapeutic treatment focused on scalp health and hair wellness. Rooted in Japanese beauty tradition, it combines deep cleansing, gentle exfoliation, scalp massage, and targeted treatments to purify, stimulate, and nourish the scalp. Unlike a traditional hair wash, a head spa is a complete sensory ritual with measurable scalp-care results.",
+      "Lather is a modern wellness destination in Greenville, NC that blends restorative spa experiences with advanced, personalized wellness care. We bridge the gap between clinical wellness and a luxury spa — offering both in one thoughtfully designed space, so you can restore, renew, and invest in yourself without ever feeling rushed.",
   },
   {
-    question: "How long does a session last?",
+    question: "How is Lather different from a traditional spa or a medspa?",
     answer:
-      "Sessions range from 45 minutes to 90 minutes depending on the service you choose. Our Blowout is approximately 45 minutes, the Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a full 90-minute experience. All sessions are by appointment only and reserved exclusively for you.",
+      "We're neither, exactly — and that's the point. A traditional spa focuses on relaxation; clinical wellness focuses on results. Lather brings the two together: effective, results-driven treatments delivered in a calm, elevated environment by licensed providers. You never have to choose between feeling cared for and seeing real results.",
   },
   {
-    question: "How should I prepare for my appointment?",
+    question: "What services do you offer?",
     answer:
-      "Arrive with your hair in its natural, unwashed state if possible — no need to pre-shampoo. Avoid heavy oils or styling products on the scalp the day before. Come ready to relax. Wear comfortable clothing, and plan to give yourself some quiet time afterward to enjoy the renewed feeling.",
+      "Our care lives in two pillars. Spa Experiences include facials, our signature head spa, massage, skin treatments, brows, and red light therapy. Wellness Services include personalized consultations, hormone therapy, peptides, injectables, and vitamin therapy. Our full menu and pricing are being finalized — reach out any time and we'll guide you to the right treatment.",
   },
   {
-    question: "Are your services suitable for all hair types?",
+    question: "What is a wellness consultation?",
     answer:
-      "Yes. All of our rituals are thoughtfully formulated for a wide range of hair types and scalp conditions — from fine and oily to thick and dry. During your consultation at the start of each session, we assess your scalp and customize the treatment protocol to match your specific needs.",
+      "It's a one-on-one assessment with a licensed provider — led by Stacia Friend, CNM — designed to understand your body, your goals, and your history, then build a personalized wellness plan around them. It's the ideal starting point for anyone new to our wellness services, and where every wellness journey at Lather begins.",
   },
   {
-    question: "Do the treatments include a blowdry?",
+    question: "Who provides care at Lather?",
     answer:
-      "The Classic Ritual includes a professional blowdry finish, and The Luxe Ritual includes a full professional blowout. We also offer a standalone Blowout service for guests who want styling without a scalp treatment. The Gentleman's Recharge includes a clean finish appropriate for men's styling.",
+      "Every visit is delivered by licensed professionals — estheticians, cosmetologists, massage therapists, and nurse injectors — with our wellness care led by Stacia Friend, CNM. You're always in trusted, credentialed hands.",
   },
   {
-    question: "How often should I come in?",
+    question: "Do I need to know exactly what I want before I book?",
     answer:
-      "For general scalp maintenance and wellbeing, once a month is ideal. If you're addressing a specific concern — such as dryness, buildup, or stress-related tension — we may recommend more frequent visits initially. We'll discuss a personalized cadence during your first visit.",
+      "Not at all. If you're unsure where to start, book a wellness consultation or simply reach out — we'll listen, assess, and recommend a plan built around your goals rather than fitting you to a menu.",
   },
   {
     question: "How do I book an appointment?",
     answer:
-      "You can book directly through our website by clicking Book Now, or call us during business hours. Sessions are by appointment only — each time slot is held exclusively for you. We recommend booking in advance, especially for weekend appointments.",
+      "Book online any time through our scheduling partner, Vagaro, or call or text us during business hours. Everything at Lather is by appointment, so each time slot is reserved exclusively for you — we recommend booking ahead, especially for weekends.",
+  },
+  {
+    question: "Is Lather only for women?",
+    answer:
+      "Our environment is designed with women in mind, but we warmly welcome all guests who value a high-end, personalized experience. Everyone deserves to slow down and feel genuinely cared for.",
+  },
+  {
+    question: "What should I expect on my first visit?",
+    answer:
+      "Expect to be genuinely cared for. Arrive a few minutes early to settle in, and your provider will guide you from there — no pressure, no upselling, just thoughtful, unhurried care. Most guests tell us they leave feeling better than when they arrived. That's the whole idea.",
+  },
+];
+
+// ── HEAD-SPA FAQs ────────────────────────────────────────────
+// Specific to the Head Spa service line — used on /what-is-a-head-spa.
+export const headSpaFaqs = [
+  {
+    question: "What is a head spa?",
+    answer:
+      "A head spa is a therapeutic treatment focused on scalp health and hair wellness. Rooted in Japanese tradition, it combines deep cleansing, gentle exfoliation, scalp massage, and targeted treatments to purify, stimulate, and nourish the scalp. Unlike a traditional hair wash, a head spa is a complete sensory ritual with measurable scalp-care results — one of the signature spa experiences at Lather.",
+  },
+  {
+    question: "How long does a head spa session last?",
+    answer:
+      "Sessions range from 45 to 90 minutes depending on the ritual you choose. Our Blowout is approximately 45 minutes, the Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a full 90-minute experience. All sessions are by appointment and reserved exclusively for you.",
+  },
+  {
+    question: "How should I prepare for my head spa appointment?",
+    answer:
+      "Arrive with your hair in its natural, unwashed state if possible — no need to pre-shampoo. Avoid heavy oils or styling products on the scalp the day before. Come ready to relax, wear comfortable clothing, and give yourself some quiet time afterward to enjoy the renewed feeling.",
+  },
+  {
+    question: "Are your head spa treatments suitable for all hair types?",
+    answer:
+      "Yes. Every ritual is thoughtfully formulated for a wide range of hair types and scalp conditions — from fine and oily to thick and dry. During the consultation at the start of each session, we assess your scalp and customize the protocol to match your specific needs.",
+  },
+  {
+    question: "Do the head spa treatments include a blowdry?",
+    answer:
+      "The Classic Ritual includes a professional blowdry finish, and The Luxe Ritual includes a full professional blowout. We also offer a standalone Blowout service for guests who want styling without a scalp treatment. The Gentleman's Recharge includes a clean finish appropriate for men's styling.",
+  },
+  {
+    question: "How often should I come in for a head spa?",
+    answer:
+      "For general scalp maintenance and wellbeing, once a month is ideal. If you're addressing a specific concern — such as dryness, buildup, or stress-related tension — we may recommend more frequent visits initially. We'll discuss a personalized cadence during your first visit.",
   },
 ];
 
@@ -400,14 +448,14 @@ export const faqs = [
 export const brandValues = [
   {
     title: "Intentional Care",
-    body: "Every touch, every product, every moment is chosen with purpose. We believe in treatments that honor both science and ritual.",
+    body: "Every treatment, product, and moment is chosen with purpose — personalized to you, never fit to a template.",
   },
   {
-    title: "Rooted in Wellness",
-    body: "The scalp is the foundation of healthy hair. Our protocols are designed to restore balance from the very root.",
+    title: "Results & Restoration",
+    body: "Advanced, effective care delivered in a space built for genuine relaxation. You never have to choose between the two.",
   },
   {
     title: "Quiet Luxury",
-    body: "No noise, no rush. Lather is a sanctuary — an unhurried space where you are the only priority.",
+    body: "No noise, no pressure, no rush. Lather is an unhurried space where your well-being is the only priority.",
   },
 ];

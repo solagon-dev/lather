@@ -133,7 +133,7 @@ export default function ScalpConcernsPage() {
         }
         sub="Every scalp tells a story. Find yours below, and we'll point you to the ritual that answers it."
         image="/media/scalp-concerns/concerns-hero.webp"
-        imageAlt="A therapist assessing a guest's scalp at Lather Head Spa"
+        imageAlt="A therapist assessing a guest's scalp at Lather Spa & Wellness"
       />
 
       {/* ── CONCERNS 1–3 ─────────────────────────────────────── */}

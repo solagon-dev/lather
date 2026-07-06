@@ -13,7 +13,7 @@ export default function NotFound() {
             Return Home
           </Link>
           <Link href="/services" className="btn-outline">
-            Explore the Rituals
+            Explore Services
           </Link>
         </div>
       </div>

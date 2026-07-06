@@ -5,14 +5,14 @@ import FaqAccordion from "@/components/FaqAccordion";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { blogArticles } from "@/lib/blog";
-import { faqs } from "@/lib/data";
+import { headSpaFaqs } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
 import { breadcrumbSchema, faqSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "What Is a Head Spa? The Complete Guide",
   description:
-    "What is a head spa, exactly? Learn the Japanese origins, how it differs from a salon wash, what happens during a session, and why it works — from Lather Head Spa in Greenville, NC.",
+    "What is a head spa, exactly? Learn the Japanese origins, how it differs from a salon wash, what happens during a session, and why it works — from Lather Spa & Wellness in Greenville, NC.",
   alternates: { canonical: "/what-is-a-head-spa" },
 };
 
@@ -42,7 +42,7 @@ const comparison = {
 };
 
 export default function WhatIsAHeadSpaPage() {
-  const pageFaqs = faqs.slice(0, 5);
+  const pageFaqs = headSpaFaqs;
 
   return (
     <>

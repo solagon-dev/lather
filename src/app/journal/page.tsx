@@ -7,9 +7,9 @@ import Reveal from "@/components/Reveal";
 import { blogArticles } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "The Journal — Scalp Health & Head Spa Education",
+  title: "The Journal — Head Spa & Wellness Notes",
   description:
-    "Essays and guides on scalp health, Japanese head spa tradition, and hair wellness from Lather Head Spa in Greenville, NC. Read before your first ritual.",
+    "Essays and guides on scalp health, Japanese head spa tradition, and hair wellness from Lather Spa & Wellness in Greenville, NC. Read before your first visit.",
   alternates: { canonical: "/journal" },
 };
 
@@ -41,7 +41,7 @@ export default function JournalPage() {
         }
         sub="Slow reading for a slow ritual — essays on head spa tradition, scalp science, and the quiet case for taking better care of yourself."
         image="/media/pages/journal-hero.webp"
-        imageAlt="Editorial still life inside Lather Head Spa"
+        imageAlt="Editorial still life inside Lather Spa & Wellness"
       />
 
       {/* ── FEATURE ──────────────────────────────────────────── */}

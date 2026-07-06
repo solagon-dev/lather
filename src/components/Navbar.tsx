@@ -7,7 +7,7 @@ import { BOOK_URL, business } from "@/lib/business";
 
 const links = [
   { href: "/services", label: "Services" },
-  { href: "/experience", label: "The Experience" },
+  { href: "/experience", label: "The Head Spa" },
   { href: "/about", label: "About" },
   { href: "/gift-cards", label: "Gift Cards" },
   { href: "/journal", label: "Journal" },
@@ -61,7 +61,7 @@ export default function Navbar() {
             LATHER
           </span>
           <span className={`mt-1 text-[0.55rem] font-medium uppercase tracking-[0.5em] opacity-70 ${open ? "text-ivory" : ""}`}>
-            Head Spa
+            Spa &amp; Wellness
           </span>
         </Link>
 
@@ -130,7 +130,7 @@ export default function Navbar() {
         </ul>
         <div className="mt-auto flex flex-col gap-6">
           <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light w-full">
-            Book Your Ritual
+            Book Appointment
           </a>
           <div className="text-center text-xs uppercase tracking-kicker text-ivory/50">
             {business.address.city}, {business.address.state} ·{" "}

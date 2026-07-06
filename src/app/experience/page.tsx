@@ -8,7 +8,7 @@ import { treatmentDetails } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
 
 export const metadata: Metadata = {
-  title: "The Experience — What Happens During a Head Spa Session",
+  title: "The Head Spa Experience — What Happens During a Session",
   description:
     "Walk through the five movements of a Lather head spa ritual — consultation, cleanse, massage, treatment, and renewal — and what to know before you arrive in Greenville, NC.",
   alternates: { canonical: "/experience" },
@@ -43,7 +43,7 @@ export default function ExperiencePage() {
             One unhurried hour, <span className="italic">five movements</span>
           </>
         }
-        sub="Every ritual at Lather follows the same quiet arc — assessed, cleansed, massaged, treated, renewed. Here is what actually happens once you recline."
+        sub="Our signature head spa is one of Lather's Spa Experiences — and every ritual follows the same quiet arc: assessed, cleansed, massaged, treated, renewed. Here is what actually happens once you recline."
         image="/media/experience/step-03-massage.webp"
         imageAlt="Slow, intentional scalp massage during a Lather head spa ritual"
       />

@@ -9,7 +9,7 @@ import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Gift Cards — Give the Ritual",
   description:
-    "Give the gift of stillness. Digital gift certificates for Lather Head Spa in Greenville, NC — any amount, purchased securely through Vagaro and delivered instantly by email.",
+    "Give the gift of stillness. Digital gift certificates for Lather Spa & Wellness in Greenville, NC — any amount, redeemable toward any spa or wellness service, purchased securely through Vagaro and delivered instantly by email.",
   alternates: { canonical: "/gift-cards" },
 };
 
@@ -27,7 +27,7 @@ const steps = [
   {
     number: "03",
     title: "They book their ritual",
-    body: "Redeemable toward any ritual on the menu, whenever the moment is right. No printing, no fine print.",
+    body: "Redeemable toward any service on the menu, whenever the moment is right. No printing, no fine print.",
   },
 ];
 
@@ -50,7 +50,7 @@ export default function GiftCardsPage() {
     luxe && {
       price: luxe.price,
       name: luxe.name,
-      note: "The most indulgent gift on the menu — scalp, hair, and skin.",
+      note: "The most complete gift on the menu — a full head spa ritual for scalp, hair, and skin.",
     },
   ].filter(Boolean) as { price: number; name: string; note: string }[];
 
@@ -71,9 +71,9 @@ export default function GiftCardsPage() {
             The <span className="italic">&ldquo;sorry, I have plans&rdquo;</span> gift
           </>
         }
-        sub="A Lather gift card is an hour of stillness with someone else's name on it — digital, instant, and redeemable toward any ritual on the menu."
+        sub="A Lather gift card is an hour of stillness with someone else's name on it — digital, instant, and redeemable toward any spa or wellness service on the menu."
         image="/media/editorial/gift-card-detail.webp"
-        imageAlt="A Lather Head Spa gift card styled with quiet, editorial detail"
+        imageAlt="A Lather Spa & Wellness gift card styled with quiet, editorial detail"
       />
 
       {/* ── INTRO ────────────────────────────────────────────── */}
@@ -86,7 +86,7 @@ export default function GiftCardsPage() {
             <p className="mt-8 max-w-xl text-umber">
               Lather gift certificates are digital, purchased securely through Vagaro — our
               scheduling and payments partner — in any amount you choose. They arrive by email and
-              can be put toward any ritual on the menu.
+              can be put toward any spa or wellness service on the menu.
             </p>
             <p className="mt-5 max-w-xl text-umber">
               And because a gift card never feels rushed, your recipient books whenever the moment
@@ -117,11 +117,11 @@ export default function GiftCardsPage() {
         <div className="wrap relative">
           <Reveal className="max-w-2xl">
             <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              Amounts that map to a ritual
+              Amounts that map to a head spa ritual
             </h2>
             <p className="mt-6 text-ivory/70">
-              Any amount works — but if you want the gift to cover a full session, these are the
-              numbers to know.
+              Any amount works toward any service — but if you want the gift to cover a full head spa
+              ritual, these are the numbers to know.
             </p>
           </Reveal>
           <div className="mt-14 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">

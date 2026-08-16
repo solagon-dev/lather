@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
-import PageHero from "@/components/PageHero";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { services } from "@/lib/data";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Scalp Concerns — Find the Right Ritual",
+  title: "Scalp Concerns",
   description:
-    "Thinning, dryness, buildup, tension, sensitivity, or damage — match your scalp concern to the right head spa ritual at Lather in Greenville, NC.",
+    "Thinning, dryness, buildup, tension, sensitivity or damage — match your scalp concern to the right head spa ritual at Lather in Greenville, NC.",
   alternates: { canonical: "/scalp-concerns" },
 };
 
@@ -91,12 +92,12 @@ function ConcernCard({ concern, index }: { concern: Concern; index: number }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-8">
-        <p className="text-[0.62rem] uppercase tracking-kicker text-taupe">{concern.subtitle}</p>
+        <p className="text-[0.68rem] uppercase tracking-kicker text-taupe">{concern.subtitle}</p>
         <h3 className="mt-3 font-display text-2xl">{concern.title}</h3>
         <p className="mt-4 flex-1 text-[0.9rem] leading-relaxed text-umber">{concern.body}</p>
         {concern.note && <p className="mt-4 text-[0.8rem] italic text-taupe">{concern.note}</p>}
         <div className="mt-6 border-t hairline pt-5">
-          <p className="text-[0.62rem] uppercase tracking-kicker text-taupe">We recommend</p>
+          <p className="text-[0.68rem] uppercase tracking-kicker text-taupe">We recommend</p>
           <Link
             href={`/services/${service.id}`}
             className="link-ul mt-2 inline-block font-display text-xl text-ink"
@@ -125,15 +126,14 @@ export default function ScalpConcernsPage() {
         )}
       />
 
-      <PageHero
+      <UtilityHero
+        kicker="Find your ritual"
         title={
           <>
-            What is your scalp <span className="italic">telling you?</span>
+            Start with <Em>what you feel.</Em>
           </>
         }
         sub="Every scalp tells a story. Find yours below, and we'll point you to the ritual that answers it."
-        image="/media/scalp-concerns/concerns-hero.webp"
-        imageAlt="A therapist assessing a guest's scalp at Lather Spa & Wellness"
       />
 
       {/* ── CONCERNS 1–3 ─────────────────────────────────────── */}

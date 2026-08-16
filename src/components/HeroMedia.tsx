@@ -1,34 +1,40 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Homepage hero media, tuned per viewport:
+ * Homepage hero media, tuned per viewport.
  *
- * - Desktop (≥768px): the montage plays full-bleed behind the headline, dimmed
- *   under a gradient so the text stays legible — the immersive treatment.
- * - Mobile (<768px): a landscape montage cover-cropped to a tall phone loses
- *   ~75% of every frame, so instead the same footage plays in a 4:5, arch-topped
- *   panel (echoing the site's arch motif and the gold basin faucet in the shot).
- *   The full cinematography stays visible and the headline sits on solid noir
- *   below it for maximum readability.
+ * Desktop (≥768px): a full-bleed landscape still with a slow ken-burns push,
+ * dimmed under a gradient so the headline stays legible.
  *
- * Only the matching viewport's <video> is mounted, so phones never fetch the
- * 2MB desktop encode and desktops never fetch the mobile one. Posters are CSS
- * background images (loaded only for the displayed panel — display:none skips
- * the fetch) and the mobile panel reserves its aspect ratio in markup, so
- * swapping in the video causes no layout shift. Reduced-motion and Data-Saver
- * users keep the still poster.
+ * Why a still and not the montage: every source clip is stored 1280×720 with
+ * SAR 81:256, i.e. horizontally squeezed 9:16 phone footage. Corrected to
+ * square pixels its true resolution is only 404×720 — fine inside a ~350px
+ * phone panel, nowhere near enough for a 1440px-wide background, and cropping
+ * a 9:16 frame to a wide hero threw away ~61% of it (the subject included).
+ * A 1920×1281 still is sharp at any desktop width. Restore a moving desktop
+ * hero when there is footage actually shot landscape.
+ *
+ * Mobile (<768px): the corrected clip runs edge to edge in a 5:4 frame — a
+ * inset rounded card reads as generic UI rather than as cinema. The video
+ * is encoded pre-cropped to exactly that frame, so object-cover has nothing
+ * left to discard and the poster and first frame line up precisely. The ratio
+ * is set by the fold, not by taste: at 4:5 and even at 1:1 the hero's Book
+ * button fell below 844px of viewport, and the primary CTA on the busiest
+ * page should not need a scroll.
+ *
+ * The phone clip is only mounted on phones, so desktops never fetch it.
+ * Reduced-motion and Data-Saver users keep the still poster.
  */
 export default function HeroMedia() {
-  const [mode, setMode] = useState<"desktop" | "mobile" | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [playVideo, setPlayVideo] = useState(false);
-  const desktopRef = useRef<HTMLVideoElement>(null);
-  const mobileRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-    setMode(isDesktop ? "desktop" : "mobile");
+    setIsMobile(!window.matchMedia("(min-width: 768px)").matches);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // @ts-expect-error saveData is non-standard but widely supported on mobile
@@ -37,46 +43,33 @@ export default function HeroMedia() {
   }, []);
 
   useEffect(() => {
-    if (!playVideo) return;
-    const ref = mode === "desktop" ? desktopRef : mobileRef;
-    ref.current?.play().catch(() => {});
-  }, [playVideo, mode]);
+    if (playVideo && isMobile) videoRef.current?.play().catch(() => {});
+  }, [playVideo, isMobile]);
 
   return (
     <>
-      {/* DESKTOP — full-bleed background */}
-      <div
-        className="absolute inset-0 hidden bg-cover bg-center md:block"
-        style={{ backgroundImage: "url(/media/hero/hero-poster.webp)" }}
-      >
+      {/* DESKTOP — full-bleed still */}
+      <div className="absolute inset-0 hidden overflow-hidden md:block">
+        <Image
+          src="/media/about/spa-detail.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="kenburns object-cover object-[60%_50%]"
+        />
         <div className="absolute inset-0 bg-noir/45" />
-        {mode === "desktop" && playVideo && (
-          <video
-            ref={desktopRef}
-            className="kenburns relative h-full w-full object-cover opacity-70"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/media/hero/hero-poster.webp"
-            aria-hidden
-          >
-            <source src="/media/video/hero-welcome.mp4" type="video/mp4" />
-          </video>
-        )}
         <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/40 to-noir/50" />
       </div>
 
-      {/* MOBILE — framed cinematic still/loop in normal flow. The landscape
-          montage keeps its full composition here (a tall crop would reduce it
-          to abstract closeups), framed as an editorial film still. */}
+      {/* MOBILE — framed cinematic panel in normal flow */}
       <figure
-        className="relative mx-5 aspect-[4/3] overflow-hidden rounded-[10px] bg-cover bg-center shadow-[0_26px_55px_-26px_rgba(0,0,0,0.8)] ring-1 ring-brass/25 md:hidden"
+        className="relative aspect-[404/322] w-full overflow-hidden bg-cover bg-center md:hidden"
         style={{ backgroundImage: "url(/media/hero/hero-poster-mobile.webp)" }}
       >
-        {mode === "mobile" && playVideo && (
+        {isMobile && playVideo && (
           <video
-            ref={mobileRef}
+            ref={videoRef}
             className="absolute inset-0 h-full w-full object-cover"
             autoPlay
             muted
@@ -88,8 +81,9 @@ export default function HeroMedia() {
             <source src="/media/video/hero-welcome-mobile.mp4" type="video/mp4" />
           </video>
         )}
-        {/* inner hairline for a crisp framed edge */}
-        <div className="pointer-events-none absolute inset-0 rounded-[10px] ring-1 ring-inset ring-white/5" />
+        {/* Feathered bottom edge so the frame dissolves into the noir the
+            headline sits on, rather than ending on a hard line. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-noir to-transparent" />
       </figure>
     </>
   );

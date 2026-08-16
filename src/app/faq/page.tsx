@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import BookCTA from "@/components/BookCTA";
 import FaqAccordion from "@/components/FaqAccordion";
-import PageHero from "@/components/PageHero";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { business } from "@/lib/business";
 import { faqs, services, treatmentFAQs } from "@/lib/data";
 import { breadcrumbSchema, faqSchema, jsonLd } from "@/lib/seo";
@@ -11,7 +12,7 @@ import { breadcrumbSchema, faqSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
-    "Answers about Lather Spa & Wellness in Greenville, NC — our spa and wellness services, wellness consultations, booking and policies, what to expect on your first visit, plus head spa ritual details.",
+    "Answers about Lather Spa & Wellness in Greenville, NC — services, wellness consultations, booking, policies, and what to expect on a first visit.",
   alternates: { canonical: "/faq" },
 };
 
@@ -28,15 +29,14 @@ export default function FaqPage() {
           ])
         )}
       />
-      <PageHero
+      <UtilityHero
+        kicker="Questions"
         title={
           <>
-            Everything you&rsquo;re <span className="italic">wondering</span>
+            Everything you&rsquo;re <Em>wondering.</Em>
           </>
         }
         sub="New to Lather? Curiosity is part of it. Here's everything guests ask about our spa and wellness care — before they ever settle in."
-        image="/media/pages/faq-hero.webp"
-        imageAlt="A quiet corner of Lather Spa & Wellness in Greenville, NC"
       />
 
       {/* ── GENERAL FAQS ─────────────────────────────────────── */}
@@ -66,7 +66,7 @@ export default function FaqPage() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 flex items-center justify-center bg-noir/35 px-6">
+        <div className="absolute inset-0 flex items-center justify-center bg-noir/55 px-6">
           <Reveal>
             <p className="h-display max-w-2xl text-center text-3xl italic text-ivory sm:text-4xl">
               The only wrong question is the one you didn&rsquo;t ask.
@@ -117,7 +117,7 @@ export default function FaqPage() {
               <a href={business.phoneHref} className="btn-solid">
                 Call {business.phone}
               </a>
-              <a href={business.instagram} target="_blank" rel="noopener" className="btn-outline">
+              <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="btn-outline">
                 DM {business.instagramHandle}
               </a>
             </div>

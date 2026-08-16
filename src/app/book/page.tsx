@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
-import PageHero from "@/components/PageHero";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { BOOK_URL, business } from "@/lib/business";
 import { services } from "@/lib/data";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Book Your Ritual — Online Scheduling",
+  title: "Book & Head Spa Pricing",
   description:
-    "Book your appointment at Lather Spa & Wellness in Greenville, NC. Head spa rituals book instantly online through Vagaro; facials, wellness care, and more are scheduled by consultation. Pick your time and arrive five minutes early.",
+    "Book your appointment at Lather Spa & Wellness, Greenville NC. Head spa rituals $50–$200, bookable online. Wellness care by consultation.",
   alternates: { canonical: "/book" },
 };
 
@@ -21,9 +22,9 @@ const steps = [
     body: (
       <>
         Our four{" "}
-        <Link href="/services" className="link-ul text-ivory">
+        <a href="#ritual-menu" className="link-ul text-ivory">
           head spa rituals
-        </Link>{" "}
+        </a>{" "}
         book instantly online — 45 to 90 minutes. For facials, wellness care, and everything else,
         reach out and we&rsquo;ll schedule you personally.
       </>
@@ -31,11 +32,11 @@ const steps = [
   },
   {
     number: "02",
-    title: "Pick your time on Vagaro",
+    title: "Pick your time",
     body: (
       <>
-        Booking happens through Vagaro, our secure scheduling partner. Choose a time that suits you
-        — it takes under a minute.
+        Choose the day and time that suits you on our secure booking page — it takes under a
+        minute.
       </>
     ),
   },
@@ -58,15 +59,14 @@ export default function BookPage() {
           ])
         )}
       />
-      <PageHero
+      <UtilityHero
+        kicker="Book"
         title={
           <>
-            Your hour of <span className="italic">stillness</span> starts here
+            Your hour of <Em>stillness</Em> starts here.
           </>
         }
-        sub="Booking takes under a minute through Vagaro — our secure scheduling partner. Sessions are by appointment only, and every slot is reserved exclusively for you."
-        image="/media/pages/book-hero.webp"
-        imageAlt="A treatment chair awaiting the next guest at Lather Spa & Wellness"
+        sub="Booking takes under a minute on our secure booking page. Sessions are by appointment only, and every slot is reserved exclusively for you."
       />
 
       {/* ── THREE STEPS ──────────────────────────────────────── */}
@@ -80,22 +80,22 @@ export default function BookPage() {
           <ol className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
             {steps.map((step, i) => (
               <Reveal key={step.number} as="li" delay={i * 80}>
-                <p className="font-display text-3xl font-light text-brass-light/70">{step.number}</p>
+                <p className="font-display text-3xl text-brass-light/70">{step.number}</p>
                 <h3 className="mt-4 font-display text-2xl">{step.title}</h3>
                 <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{step.body}</p>
               </Reveal>
             ))}
           </ol>
           <Reveal className="mt-14">
-            <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
-              Book on Vagaro
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+              Book Appointment
             </a>
           </Reveal>
         </div>
       </section>
 
       {/* ── PRICE LIST ───────────────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-porcelain">
+      <section id="ritual-menu" className="section-pad border-t hairline bg-porcelain scroll-mt-28">
         <div className="wrap">
           <Reveal className="max-w-2xl">
             <h2 className="h-display text-4xl sm:text-5xl">
@@ -130,7 +130,7 @@ export default function BookPage() {
                 <a
                   href={BOOK_URL}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   className="link-ul text-[0.75rem] font-semibold uppercase tracking-kicker"
                 >
                   Book →

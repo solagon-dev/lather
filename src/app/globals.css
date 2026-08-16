@@ -35,11 +35,23 @@
 
 @layer components {
   .h-display {
-    @apply font-display font-light leading-[1.08] tracking-[-0.01em];
+    @apply font-display leading-[1.08] tracking-[-0.005em];
   }
 
   .btn {
     @apply inline-flex w-full items-center justify-center gap-3 px-8 py-4 font-body text-[0.72rem] font-semibold uppercase tracking-kicker transition-all duration-500 ease-luxe sm:w-auto;
+  }
+  /* The floating translucent control used in the page corners and over
+     imagery. Backdrop blur keeps it legible on both porcelain and photography
+     without committing to a solid fill. */
+  .pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-body text-[0.68rem] font-medium uppercase tracking-[0.2em] backdrop-blur-md transition-colors duration-500 ease-luxe;
+  }
+  .pill-light {
+    @apply pill bg-ivory/85 text-ink hover:bg-ivory;
+  }
+  .pill-dark {
+    @apply pill bg-noir/45 text-ivory ring-1 ring-inset ring-ivory/25 hover:bg-noir/70;
   }
   .btn-solid {
     @apply btn bg-ink text-ivory hover:bg-brass-dark;
@@ -58,12 +70,41 @@
     @apply border-ink/10;
   }
 
+  /* Default section rhythm. Generous — a statement needs air around it more
+     than it needs a bigger font size. */
   .section-pad {
-    @apply px-5 py-16 sm:px-10 sm:py-24 md:py-32 lg:px-16;
+    @apply px-5 py-24 sm:px-10 sm:py-32 md:py-40 lg:px-16;
+  }
+  /* For sections whose own content already carries the space (full-bleed
+     panels, image rows) or that sit directly against another padded block. */
+  .section-pad-tight {
+    @apply px-5 py-16 sm:px-10 sm:py-20 md:py-24 lg:px-16;
   }
 
   .wrap {
     @apply mx-auto w-full max-w-content;
+  }
+  /* A narrow centred column for statement + paragraph blocks. */
+  .wrap-narrow {
+    @apply mx-auto w-full max-w-[64rem];
+  }
+
+  /* Escapes the padded container to run edge to edge, without the horizontal
+     overflow that `width:100vw` causes once a scrollbar is present. */
+  .bleed {
+    width: 100%;
+    margin-inline: 0;
+  }
+  @screen sm {
+    .bleed {
+      margin-inline: calc(-1 * theme(spacing.10));
+      width: auto;
+    }
+  }
+  @screen lg {
+    .bleed {
+      margin-inline: -4rem;
+    }
   }
 
   /* Arch-topped image frame — echoes the brass arch faucets in the spa */
@@ -104,19 +145,10 @@
   }
 }
 
-/* ── Scroll reveal ──────────────────────────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.9s var(--ease-luxe),
-    transform 0.9s var(--ease-luxe);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
+/* Scroll reveals are handled by framer-motion (see src/components/Reveal.tsx).
+   The `.reveal` class is the no-JS hook — the <noscript> block in the root
+   layout forces those elements visible when JavaScript is off — and the
+   reduced-motion hook, see the media query at the bottom of this file. */
 
 /* ── Marquee ────────────────────────────────────────────────── */
 @keyframes marquee {
@@ -150,13 +182,22 @@
   html {
     scroll-behavior: auto;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
   .marquee-track,
   .kenburns {
     animation: none;
+  }
+
+  /* Scroll reveals: show the content, skip the motion.
+     Reveal and LineReveal render the same markup on server and client
+     precisely so this can be a stylesheet concern — `!important` is required
+     because framer-motion drives the reveal through inline styles. Without
+     this rule the elements would still animate in; without the matching
+     SSR/client markup this rule would be papering over a hydration mismatch.
+     Both halves are needed. */
+  .reveal,
+  .reveal-line {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

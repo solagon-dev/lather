@@ -2,25 +2,28 @@ import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import { business } from "@/lib/business";
 
-// Lather's own photography — the same shoots that fill their Instagram feed.
+// Lather's own photography. Deliberately drawn from shots that appear nowhere
+// else on the homepage — seven of these previously repeated the "Step inside"
+// gallery and the intro image a few hundred pixels further up, so the same
+// photos passed the visitor twice in one scroll.
 const rowOne = [
-  { src: "/media/gallery/interior-team-portrait.webp", alt: "The Lather team" },
-  { src: "/media/experience/step-03-massage.webp", alt: "A scalp massage in progress" },
-  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold mirror detail in the treatment room" },
+  { src: "/media/founders/founders-social.webp", alt: "Lather's founders" },
+  { src: "/media/hero/hero-poster.webp", alt: "A guest at the basin under the brass arch" },
+  { src: "/media/gallery/interior-crystal-lamp.webp", alt: "Crystal lamp detail" },
   { src: "/media/editorial/value-prop.webp", alt: "A quiet moment at Lather" },
   { src: "/media/treatments/blowout-card.webp", alt: "A finished blowout" },
-  { src: "/media/gallery/treatment-waterfall.webp", alt: "Warm water over the scalp" },
-  { src: "/media/experience/step-01-consultation.webp", alt: "The consultation" },
+  { src: "/media/experience/step-05-renewal.webp", alt: "The finishing touches" },
+  { src: "/media/gallery/interior-diffuser.webp", alt: "Diffuser detail in the treatment room" },
 ];
 
 const rowTwo = [
-  { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge" },
-  { src: "/media/experience/step-05-renewal.webp", alt: "The finishing touches" },
-  { src: "/media/editorial/secondary-treatment.webp", alt: "A treatment detail" },
-  { src: "/media/gallery/interior-crystal-lamp.webp", alt: "Crystal lamp detail" },
-  { src: "/media/team/team-atmosphere.webp", alt: "Inside the spa" },
-  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details" },
+  { src: "/media/gallery/interior-team-portrait.webp", alt: "The Lather team" },
   { src: "/media/experience/step-02-cleanse.webp", alt: "The cleanse" },
+  { src: "/media/editorial/secondary-treatment.webp", alt: "A treatment detail" },
+  { src: "/media/experience/step-04-treatment.webp", alt: "Targeted scalp treatment" },
+  { src: "/media/treatments/classic-ritual.webp", alt: "The Classic Ritual" },
+  { src: "/media/editorial/gift-card-detail.webp", alt: "A Lather gift card" },
+  { src: "/media/founders/founders-steps.webp", alt: "The founders on the steps" },
 ];
 
 function PhotoRow({ images, duration }: { images: typeof rowOne; duration: string }) {
@@ -69,18 +72,20 @@ export default function SocialSection() {
 
       <Reveal className="wrap relative z-10 text-center [text-shadow:0_2px_18px_rgba(0,0,0,0.9)]">
         <h2 className="h-display text-4xl sm:text-5xl md:text-6xl">Follow the ritual</h2>
+        {/* No "new looks every week" and no follower count: this strip is a
+            hard-coded set of stills, not a live feed, and a number written into
+            the source goes stale the day after it ships. */}
         <p className="mx-auto mt-5 max-w-md text-ivory/80">
-          Inside the space, the treatments, and the quiet moments in between — new looks every week.
+          Inside the space, the treatments, and the quiet moments in between.
         </p>
         <a
           href={business.instagram}
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           className="btn-solid-light mx-auto mt-8 w-full sm:w-auto"
         >
           Follow {business.instagramHandle}
         </a>
-        <p className="mt-6 text-[0.8rem] text-ivory/45">Join 1,900+ following along on Instagram</p>
       </Reveal>
     </section>
   );

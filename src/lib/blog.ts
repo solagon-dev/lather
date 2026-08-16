@@ -19,7 +19,7 @@ export interface BlogArticle {
 export const blogArticles: BlogArticle[] = [
   {
     slug: "what-is-a-head-spa",
-    metaTitle: "What Is a Head Spa and Why Is It So Popular? | Lather Spa & Wellness",
+    metaTitle: "What Is a Head Spa and Why Is It So Popular? | Lather Spa",
     metaDescription:
       "Discover the origins of the head spa, what makes it different from a standard salon treatment, and why it has become one of the most sought-after wellness experiences.",
     category: "Education",
@@ -59,7 +59,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "benefits-of-scalp-treatments",
-    metaTitle: "Benefits of Scalp Treatments for Hair Health | Lather Spa & Wellness",
+    metaTitle: "Benefits of Scalp Treatments for Hair Health | Lather Spa",
     metaDescription:
       "Learn how regular professional scalp treatments improve hair health from the root up — addressing buildup, circulation, follicle function, and long-term growth.",
     category: "Hair Wellness",
@@ -105,7 +105,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "japanese-head-spa-vs-traditional",
-    metaTitle: "Japanese Head Spa vs. Traditional Hair Treatments | Lather Spa & Wellness",
+    metaTitle: "Japanese Head Spa vs. Salon Treatments | Lather Spa",
     metaDescription:
       "Understand the key differences between a Japanese head spa and traditional salon hair treatments — in philosophy, technique, and the results you can expect.",
     category: "Education",
@@ -145,7 +145,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "how-often-scalp-treatment",
-    metaTitle: "How Often Should You Get a Scalp Treatment? | Lather Spa & Wellness",
+    metaTitle: "How Often Should You Get a Scalp Treatment? | Lather Spa",
     metaDescription:
       "Find out how frequently you should get professional scalp treatments based on your scalp type, hair concerns, and wellness goals — expert guidance from Lather Spa & Wellness.",
     category: "Hair Wellness",
@@ -184,7 +184,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "scalp-health-hair-growth",
-    metaTitle: "Why Scalp Health Matters for Hair Growth | Lather Spa & Wellness",
+    metaTitle: "Why Scalp Health Matters for Hair Growth | Lather Spa",
     metaDescription:
       "Explore the science behind how scalp health directly influences hair growth — from follicle function and blood flow to DHT buildup and how professional treatments help.",
     category: "Hair Wellness",
@@ -231,7 +231,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "what-happens-head-spa-treatment",
-    metaTitle: "What Happens During a Head Spa Treatment? | Lather Spa & Wellness",
+    metaTitle: "What Happens During a Head Spa Treatment? | Lather Spa",
     metaDescription:
       "A step-by-step look at what to expect during a head spa treatment at Lather — from scalp consultation to massage. Perfect for first-timers curious about the experience.",
     category: "Experience",
@@ -278,7 +278,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "head-spa-stress-relief",
-    metaTitle: "Is a Head Spa Good for Stress Relief? | Lather Spa & Wellness",
+    metaTitle: "Is a Head Spa Good for Stress Relief? | Lather Spa",
     metaDescription:
       "Explore the science behind head spa stress relief — how scalp massage affects cortisol, the parasympathetic nervous system, and your overall sense of wellbeing.",
     category: "Wellness",
@@ -317,7 +317,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "luxury-self-care-head-spa-trending",
-    metaTitle: "Why Head Spa Treatments Are Trending | Lather Spa & Wellness",
+    metaTitle: "Why Head Spa Treatments Are Trending | Lather Spa",
     metaDescription:
       "Head spas are one of the fastest-growing luxury wellness trends. Explore why this treatment resonates so deeply with modern self-care culture and what makes it worth the investment.",
     category: "Lifestyle",
@@ -355,7 +355,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "signs-scalp-needs-professional-care",
-    metaTitle: "Signs Your Scalp Needs Professional Care | Lather Spa & Wellness",
+    metaTitle: "Signs Your Scalp Needs Professional Care | Lather Spa",
     metaDescription:
       "Itchiness, flaking, oiliness, thinning, sensitivity — learn the signs that your scalp needs more than a home routine can provide and when to seek professional treatment.",
     category: "Hair Wellness",
@@ -400,7 +400,7 @@ export const blogArticles: BlogArticle[] = [
   },
   {
     slug: "scalp-massage-vs-head-spa",
-    metaTitle: "Scalp Massage vs. Head Spa: What\'s the Difference? | Lather Spa & Wellness",
+    metaTitle: "Scalp Massage vs. Head Spa: The Difference | Lather Spa",
     metaDescription:
       "Understand the real differences between a scalp massage and a full head spa treatment — and why the complete head spa protocol delivers results that massage alone cannot.",
     category: "Education",

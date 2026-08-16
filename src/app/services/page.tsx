@@ -3,16 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
 import Marquee from "@/components/Marquee";
-import PageHero from "@/components/PageHero";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { BOOK_URL } from "@/lib/business";
 import { featuredProvider, pillars } from "@/lib/menu";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Services — Spa & Wellness in Greenville, NC",
+  title: "Spa & Wellness Services",
   description:
-    "Explore Lather Spa & Wellness services in Greenville, NC — spa experiences (head spa, facials, massage, skin, brows, red light) and wellness care (consultations, hormone therapy, peptides, injectables, vitamin therapy).",
+    "Spa experiences — head spa, facials, massage, skin, brows, red light — and wellness care in Greenville, NC. Two pillars of care under one roof.",
   alternates: { canonical: "/services" },
 };
 
@@ -28,23 +29,26 @@ export default function ServicesPage() {
           ])
         )}
       />
-      <PageHero
+      <UtilityHero
+        kicker="Two pillars"
         title={
           <>
-            Spa &amp; wellness <span className="italic">services</span>
+            Care, <Em>in two forms.</Em>
           </>
         }
-        sub="Two pillars of care under one roof. Restorative spa experiences and advanced, personalized wellness — tailored to your goals."
-        image="/media/treatments/treatments-hero.webp"
-        imageAlt="A treatment in progress at Lather Spa & Wellness"
+        sub="Restorative spa experiences and advanced, personalized wellness — tailored to your goals."
       />
 
       {/* Menu-pending note */}
       <section className="border-b hairline bg-porcelain px-5 py-10 sm:px-10 lg:px-16">
         <Reveal className="wrap">
           <p className="max-w-3xl text-umber">
-            Our full menu and pricing are being finalized. Here&rsquo;s everything we offer today —
-            book online, or reach out and we&rsquo;ll guide you to the right treatment.
+            Our four head spa rituals are priced and bookable online —{" "}
+            <Link href="/book" className="link-ul font-medium text-ink">
+              see the menu and pricing
+            </Link>
+            . Everything else is arranged directly with us while the full menu is being finalized:
+            tap any treatment below and we&rsquo;ll help you choose and get you scheduled.
           </p>
         </Reveal>
       </section>
@@ -68,13 +72,14 @@ export default function ServicesPage() {
                   alt={pillar.label}
                   fill
                   sizes="40vw"
+                  style={{ objectPosition: pillar.imagePosition }}
                   className="object-cover"
                 />
               </div>
               <a
                 href={BOOK_URL}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="btn-solid mt-8 w-full sm:w-auto"
               >
                 Book {pillar.label}
@@ -82,23 +87,27 @@ export default function ServicesPage() {
             </Reveal>
 
             <div className="divide-y hairline border-y hairline">
+              {/* Every row is a link. Services without a detail page previously
+                  ended in the words "By consultation" and nothing to click —
+                  a dead end on the page people land on to choose a treatment.
+                  Until the full menu is priced they route to Visit & Contact,
+                  which is where those bookings are actually arranged. */}
               {pillar.items.map((item, i) => (
-                <Reveal key={item.name} as="div" delay={i * 50} className="py-6">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-2xl">
-                      {item.href ? (
-                        <Link href={item.href} className="link-ul !py-0 hover:text-brass-dark">
-                          {item.name}
-                        </Link>
-                      ) : (
-                        item.name
-                      )}
-                    </h3>
-                    <span className="shrink-0 text-[0.7rem] uppercase tracking-wideish text-taupe">
-                      {item.href ? "Learn more →" : "By consultation"}
-                    </span>
-                  </div>
-                  <p className="mt-2 max-w-2xl text-[0.95rem] text-umber">{item.blurb}</p>
+                <Reveal key={item.name} as="div" delay={i * 50}>
+                  <Link
+                    href={item.href ?? "/contact"}
+                    className="group block py-6 transition-colors duration-300 hover:bg-ink/[0.03]"
+                  >
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h3 className="font-display text-2xl transition-colors duration-300 group-hover:text-brass-dark">
+                        {item.name}
+                      </h3>
+                      <span className="shrink-0 text-[0.7rem] uppercase tracking-wideish text-brass-dark">
+                        {item.href ? "Learn more →" : "Ask about this →"}
+                      </span>
+                    </div>
+                    <p className="mt-2 max-w-2xl text-[0.95rem] text-umber">{item.blurb}</p>
+                  </Link>
                 </Reveal>
               ))}
 
@@ -114,7 +123,7 @@ export default function ServicesPage() {
                   <a
                     href={BOOK_URL}
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     className="btn-solid-light mt-6 w-full sm:w-auto"
                   >
                     Book a Consultation

@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
-import PageHero from "@/components/PageHero";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { blogArticles } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "The Journal — Head Spa & Wellness Notes",
+  title: "The Journal — Scalp Care Notes",
   description:
-    "Essays and guides on scalp health, Japanese head spa tradition, and hair wellness from Lather Spa & Wellness in Greenville, NC. Read before your first visit.",
+    "Essays and guides on scalp health, Japanese head spa tradition, and hair wellness from Lather Spa & Wellness in Greenville, NC.",
   alternates: { canonical: "/journal" },
 };
 
@@ -33,15 +34,14 @@ export default function JournalPage() {
 
   return (
     <>
-      <PageHero
+      <UtilityHero
+        kicker="The Journal"
         title={
           <>
-            Notes on the art of <span className="italic">scalp care</span>
+            Notes on the art of <Em>scalp care.</Em>
           </>
         }
         sub="Slow reading for a slow ritual — essays on head spa tradition, scalp science, and the quiet case for taking better care of yourself."
-        image="/media/pages/journal-hero.webp"
-        imageAlt="Editorial still life inside Lather Spa & Wellness"
       />
 
       {/* ── FEATURE ──────────────────────────────────────────── */}

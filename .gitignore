@@ -8,5 +8,6 @@ node_modules/
 # Raw source media (kept locally, never deployed)
 public/Photos/
 public/Videos/
+public/July_-_Greenville_Living_Magazine/
 .DS_Store
 tsconfig.tsbuildinfo

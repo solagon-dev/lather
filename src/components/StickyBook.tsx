@@ -30,7 +30,7 @@ export default function StickyBook() {
       <a
         href={BOOK_URL}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         className="flex flex-[2] items-center justify-center bg-ivory py-4 text-[0.7rem] font-semibold uppercase tracking-kicker text-ink"
       >
         Book Appointment

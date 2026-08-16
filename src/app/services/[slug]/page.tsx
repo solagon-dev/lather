@@ -5,9 +5,10 @@ import { notFound } from "next/navigation";
 import BookCTA from "@/components/BookCTA";
 import FaqAccordion from "@/components/FaqAccordion";
 import Reveal from "@/components/Reveal";
+import ServiceDetailHero from "@/components/heroes/ServiceDetailHero";
 import { BOOK_URL } from "@/lib/business";
 import { addOns, services, treatmentDetails, treatmentFAQs } from "@/lib/data";
-import { breadcrumbSchema, faqSchema, jsonLd, serviceSchema } from "@/lib/seo";
+import { breadcrumbSchema, clampDescription, faqSchema, jsonLd, serviceSchema } from "@/lib/seo";
 
 interface Params {
   slug: string;
@@ -24,7 +25,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const price = service.id === "blowout" ? `from $${service.price}` : `$${service.price}`;
   return {
     title: `${service.name} — ${service.duration}, ${price}`,
-    description: `${service.tagline}. ${service.description.slice(0, 140)}… Book at Lather Spa & Wellness in Greenville, NC.`,
+    description: clampDescription(
+      `${service.tagline}. ${service.duration}, ${price}. Book at Lather Spa & Wellness in Greenville, NC.`
+    ),
     alternates: { canonical: `/services/${service.id}` },
   };
 }
@@ -57,55 +60,32 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
       />
 
       {/* ── HEADER ───────────────────────────────────────────── */}
-      <section className="border-b hairline bg-porcelain px-6 pt-32 sm:px-10 md:pt-40 lg:px-16">
-        <div className="wrap grid gap-12 pb-16 md:grid-cols-[1.15fr_1fr] md:pb-24">
-          <Reveal>
-            <nav aria-label="Breadcrumb" className="text-[0.7rem] uppercase tracking-kicker text-taupe">
-              <Link href="/services" className="link-ul">
-                Services
-              </Link>{" "}
-              / {service.name}
-            </nav>
-            <h1 className="h-display mt-6 text-balance text-4xl sm:text-5xl md:text-6xl">{service.name}</h1>
-            <p className="mt-4 font-display text-xl italic text-brass-dark">{service.tagline}</p>
-            <div className="mt-8 flex flex-wrap gap-8 border-y hairline py-5 text-[0.75rem] uppercase tracking-kicker text-umber">
-              <span>
-                {service.id === "blowout" ? `From $${service.price}` : `$${service.price}`}
-              </span>
-              <span>{service.duration}</span>
-              <span>{service.bestFor}</span>
-            </div>
-            <p className="mt-8 max-w-xl text-umber">{service.description}</p>
-            {service.note && <p className="mt-4 text-[0.85rem] italic text-taupe">{service.note}</p>}
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid">
-                Book This Ritual
-              </a>
-              <Link href="/services" className="btn-outline">
-                Compare Rituals
-              </Link>
-            </div>
-          </Reveal>
-          <Reveal delay={150} className="relative">
-            <div className="arch relative mx-auto aspect-[3/4] w-full max-w-md md:max-w-none">
-              <Image
-                src={service.image}
-                alt={service.name}
-                fill
-                sizes="(min-width: 768px) 45vw, 90vw"
-                priority
-                className="object-cover"
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <ServiceDetailHero
+        name={service.name}
+        tagline={service.tagline}
+        price={service.id === "blowout" ? `From $${service.price}` : `$${service.price}`}
+        duration={service.duration}
+        bestFor={service.bestFor}
+        description={service.description}
+        note={service.note}
+        image={{ src: service.image, alt: service.name }}
+        actions={
+          <>
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
+              Book This Ritual
+            </a>
+            <Link href="/services" className="btn-outline">
+              Compare Rituals
+            </Link>
+          </>
+        }
+      />
 
       {/* ── HIGHLIGHTS + WHO IT'S FOR ────────────────────────── */}
       <section className="section-pad bg-ivory">
         <div className="wrap grid gap-14 lg:grid-cols-2">
           <Reveal>
-            <h3 className="font-display text-2xl">Included in your session</h3>
+            <h2 className="font-display text-2xl">Included in your session</h2>
             <ul className="mt-8 space-y-4">
               {service.highlights.map((h) => (
                 <li key={h} className="border-b hairline pb-4">
@@ -116,8 +96,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           </Reveal>
           {details && (
             <Reveal delay={120}>
-              <h3 className="font-display text-2xl">Who it&rsquo;s for</h3>
-              <p className="mt-8 font-display text-2xl font-light leading-relaxed">{details.whoItsFor}</p>
+              <h2 className="font-display text-2xl">Who it&rsquo;s for</h2>
+              <p className="mt-8 font-display text-2xl leading-relaxed">{details.whoItsFor}</p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {service.bestForTags.map((t) => (
                   <span key={t} className="border hairline px-3 py-1.5 text-[0.7rem] uppercase tracking-wideish text-umber">
@@ -142,7 +122,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
             <ol className="mt-14 grid gap-8 border-t border-ivory/10 pt-10 md:grid-cols-2">
               {details.whatToExpect.map((step, i) => (
                 <Reveal key={step} as="li" delay={i * 60} className="flex gap-5">
-                  <span className="font-display text-2xl font-light text-brass-light/70">
+                  <span className="font-display text-2xl text-brass-light/70">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <p className="text-ivory/75">{step}</p>
@@ -181,7 +161,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
           <div className="wrap grid gap-14 lg:grid-cols-[1.2fr_1fr]">
             {recommended.length > 0 && (
               <Reveal>
-                <h3 className="font-display text-2xl">Recommended enhancements</h3>
+                <h2 className="font-display text-2xl">Recommended enhancements</h2>
                 <div className="mt-8 grid gap-px overflow-hidden border hairline bg-ink/10 sm:grid-cols-2">
                   {recommended.map((a) => (
                     <div key={a.id} className="bg-ivory p-7">
@@ -198,7 +178,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
             {upgrade && (
               <Reveal delay={120} className="flex flex-col justify-between bg-noir p-10 text-ivory">
                 <div>
-                  <h3 className="h-display text-3xl">{upgrade.name}</h3>
+                  <h2 className="h-display text-3xl">{upgrade.name}</h2>
                   <p className="mt-4 text-[0.95rem] text-ivory/70">{service.suggestedUpgradeReason}</p>
                 </div>
                 <Link

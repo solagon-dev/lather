@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Image from "next/image";
 import BookCTA from "@/components/BookCTA";
-import PageHero from "@/components/PageHero";
+import EditorialSplitHero from "@/components/heroes/EditorialSplitHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { BOOK_URL } from "@/lib/business";
 
 export const metadata: Metadata = {
   title: "About — Our Story & Team",
   description:
-    "The story behind Lather Spa & Wellness in Greenville, NC — founded by sisters Hannah DeMotts and Abigail Baldwin with longtime friend Stacia Friend, CNM. Our mission, values, and team.",
+    "The story behind Lather Spa & Wellness in Greenville, NC — founded by sisters Hannah DeMotts and Abigail Baldwin with Stacia Friend, CNM.",
   alternates: { canonical: "/about" },
 };
 
@@ -50,15 +52,18 @@ const gallery = [
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        title={
-          <>
-            Built on <span className="italic">relationships</span>
-          </>
-        }
+      <EditorialSplitHero
+        src="/media/founders/founders-hero.webp"
+        alt="Lather Spa & Wellness founders Hannah DeMotts, Abigail Baldwin, and Stacia Friend, CNM"
+        side="right"
+        kicker="Who we are"
+        lines={[
+          <Fragment key="a">Built on</Fragment>,
+          <Fragment key="b">
+            <Em>relationships.</Em>
+          </Fragment>,
+        ]}
         sub="Lather Spa & Wellness was founded by two sisters and a lifelong friend — on shared experience, trust, and a passion for caring for others."
-        image="/media/about/about-hero.webp"
-        imageAlt="Inside Lather Spa & Wellness in Greenville, NC"
       />
 
       {/* ── STORY ────────────────────────────────────────────── */}
@@ -67,8 +72,8 @@ export default function AboutPage() {
           <Reveal className="relative mx-auto w-full max-w-md lg:max-w-none">
             <div className="arch relative aspect-[3/4]">
               <Image
-                src="/media/about/spa-detail.webp"
-                alt="Quiet interior details inside Lather Spa & Wellness"
+                src="/media/founders/founders-story.webp"
+                alt="The three founders of Lather Spa & Wellness together at golden hour"
                 fill
                 sizes="(min-width: 1024px) 45vw, 90vw"
                 className="object-cover"
@@ -103,14 +108,14 @@ export default function AboutPage() {
             <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-light">
               Our mission
             </p>
-            <p className="mt-6 font-display text-2xl font-light leading-relaxed sm:text-3xl">
+            <p className="mt-6 font-display text-2xl leading-relaxed sm:text-3xl">
               To create experiences that leave people feeling refreshed, restored, and genuinely
               cared for.
             </p>
           </Reveal>
-          <div className="mt-16 grid gap-x-10 gap-y-10 border-t border-ivory/10 pt-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-16 flex flex-wrap justify-center gap-x-10 gap-y-10 border-t border-ivory/10 pt-12">
             {values.map((v, i) => (
-              <Reveal key={v.title} delay={i * 70}>
+              <Reveal key={v.title} delay={i * 70} className="w-full sm:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-1.667rem)]">
                 <h3 className="font-display text-2xl text-brass-light">{v.title}</h3>
                 <p className="mt-3 text-[0.95rem] leading-relaxed text-ivory/65">{v.body}</p>
               </Reveal>
@@ -143,8 +148,8 @@ export default function AboutPage() {
           <Reveal delay={120} className="mt-14">
             <div className="relative aspect-[16/9] overflow-hidden">
               <Image
-                src="/media/team/team-atmosphere.webp"
-                alt="The team at Lather Spa & Wellness"
+                src="/media/founders/founders-steps.webp"
+                alt="Lather's three founders together on the front steps"
                 fill
                 sizes="(min-width: 1024px) 72rem, 100vw"
                 className="object-cover"
@@ -162,7 +167,7 @@ export default function AboutPage() {
               </p>
               <p className="mt-5 max-w-xl text-umber">
                 Have a preference?{" "}
-                <a href={BOOK_URL} target="_blank" rel="noopener" className="link-ul">
+                <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="link-ul">
                   Request your provider when you book
                 </a>
                 .

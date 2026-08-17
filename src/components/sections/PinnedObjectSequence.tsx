@@ -23,9 +23,12 @@ import CinematicHeading from "@/components/ui/CinematicHeading";
  * screen-space mask can only imitate that, and imitates it badly, because it
  * cuts in the same place no matter where the object actually is.
  *
- * It opens fully in frame with air around it and pushes in as you scroll,
- * ending cropped on detail. Seeing the whole thing before being taken into it
- * is what makes the close-up read as intent rather than as bad framing.
+ * It is cropped to the upper body from the first frame and pushes in from
+ * there. Showing the garment whole first was the original intent, but this
+ * robe cannot be shown whole: it has no body in it, so the neck opening ends
+ * in a flat cut plane and the hem in another, and both give away the mesh the
+ * moment they are in shot. A crop that sits between them is not a compromise
+ * here — it is the only framing in which the thing reads as cloth.
  *
  * Every beat is in the DOM at all times, so the sequence stays readable in
  * document order for search engines and assistive tech at any scroll position.
@@ -75,25 +78,30 @@ export default function PinnedObjectSequence({
   const glide = useSpring(scrollYProgress, { stiffness: 58, damping: 26, mass: 1.1 });
   const markProgress = useMotionNumber(glide);
 
-  // Rises from below the frame to above it, at one constant rate.
-  // Rises into an upper-body framing, then holds it.
+  // The garment does not move vertically, and the canvas is never translated.
   //
-  // The frame deliberately starts *below* the garment's neckline.
+  // It used to rise into frame, which meant translating the canvas — and a
+  // canvas moved down its own panel is *clipped at its own top edge*, drawing
+  // a hard horizontal line straight across the garment. That line was being
+  // read as the model's cut-off shoulder. It was not the model at all.
   //
-  // There is no body in this robe, so its neck opening is an open hole and the
-  // shoulder line ends in a flat cut edge. Shown, that edge is the single thing
-  // that gives away that it is a mesh — it is what has read as "the top is cut
-  // off". Carrying it above the top of frame removes it entirely and leaves the
-  // shot on the chest, the mark, and the belt: the parts that look like cloth.
+  // Framing is done in the scene instead, where nothing can be clipped:
+  // `yOffset` pushes the garment down until the flat cut edge at its neck
+  // opening — there is no body in it, so the opening ends in a flat plane — is
+  // above the top of frame, and `fillFrom`/`fillTo` crop in until what is left
+  // is chest, mark and belt. The parts that look like cloth.
   //
-  // The offsets are measured from the render, not derived. `fill` scales the
+  // Both numbers are measured from the render, not derived. `fill` scales the
   // model by its *largest* dimension, and this robe's sleeves are outstretched,
-  // so width governs and the garment is shorter than its fill value implies.
+  // so width governs and the garment is far shorter than its fill implies.
   //
-  // Before that it starts at 160%, which is below the frame entirely — so it
-  // travels up into shot rather than appearing in place.
-  const driftY = useTransform(glide, [0, 0.34, 1], ["112%", "-9%", "4%"]);
-  const driftOpacity = useTransform(glide, [0, 0.05, 0.74, 0.9], [0, 1, 1, 0]);
+  // Arrival is the fade and the push-in, nothing else. The garment is fully in
+  // place within the first twentieth of the section rather than still climbing
+  // into it a third of the way through.
+  const driftOpacity = useTransform(
+    glide,
+    (p) => ramp(p, 0, 0.05) * (1 - ramp(p, 0.84, 0.95))
+  );
 
   return (
     <section
@@ -116,7 +124,7 @@ export default function PinnedObjectSequence({
 
         {/* ── the garment: untouched by CSS ────────────────────── */}
         <motion.div
-          style={{ y: driftY, opacity: driftOpacity }}
+          style={{ opacity: driftOpacity }}
           className="pointer-events-none absolute inset-0 z-10"
         >
           <ModelScene
@@ -126,9 +134,9 @@ export default function PinnedObjectSequence({
             yaw={-0.34}
             tilt={0.02}
             travel={0}
-            yOffset={0}
-            fillFrom={1.24}
-            fillTo={1.58}
+            yOffset={-2.3}
+            fillFrom={2.35}
+            fillTo={2.85}
             fogColor="#F4EFE7"
             exposure={1.0}
             decal="/brand/lather-mark.svg"
@@ -240,6 +248,11 @@ function Beat({
  * MotionValues deliberately bypass React so they can update without a
  * re-render. This is the one place the two systems have to meet.
  */
+/** 0 before `a`, 1 after `b`, linear between — and flat at both ends. */
+function ramp(v: number, a: number, b: number) {
+  return Math.min(1, Math.max(0, (v - a) / (b - a)));
+}
+
 function useMotionNumber(value: MotionValue<number>) {
   const [n, setN] = useState(0);
   useEffect(() => value.on("change", setN), [value]);

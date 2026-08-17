@@ -56,7 +56,7 @@ export default function Logo({
   title = "Lather Spa & Wellness",
 }: LogoProps) {
   const showMark = variant === "stacked" || variant === "mark";
-  const showWord = variant !== "mark" && variant !== "descriptor";
+  const showLetters = variant === "stacked" || variant === "wordmark" || variant === "letters";
   const showDescriptor =
     variant === "stacked" || variant === "wordmark" || variant === "descriptor";
   const markFill = markTone === "brass" ? "#AC8D6B" : "currentColor";
@@ -78,11 +78,15 @@ export default function Logo({
           ))}
         </g>
       )}
-      {showWord && (
+      {/* The descriptor is its own decision, not a rider on the wordmark. It
+          used to be nested inside the wordmark's group, which meant the one
+          variant named after it — `descriptor`, the one the navbar uses —
+          rendered an empty SVG: correctly sized by its viewBox, and containing
+          nothing at all. */}
+      {(showLetters || showDescriptor) && (
         <g fill="currentColor">
-          {WORDMARK_PATHS.map((d, i) => (
-            <path key={`w${i}`} d={d} />
-          ))}
+          {showLetters &&
+            WORDMARK_PATHS.map((d, i) => <path key={`w${i}`} d={d} />)}
           {showDescriptor &&
             DESCRIPTOR_PATHS.map((d, i) => <path key={`d${i}`} d={d} />)}
         </g>

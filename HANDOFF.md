@@ -67,10 +67,22 @@ not guessed at:
 - Object opens fully framed with air, then pushes in. Section ≈ 2.8 viewport
   heights.
 
-**The robe's "cut off" top is the model, not the framing.** There is no body in
-the garment, so the neck opening is an open hole ending in a flat cut edge. It
-cannot be uncropped — the only fix is to carry it above the top of frame, which
-is what the current `driftY` does.
+**The robe's "cut off" top was two different things, and only one of them was
+the model.** There is no body in the garment, so the neck opening ends in a
+flat cut plane and the hem in another; neither can be uncropped, and the only
+fix is to keep both outside the frame. But the hard horizontal line that kept
+being read as that cut edge was **the canvas's own top border**: the section
+used to translate the canvas down the panel to raise the garment, and a canvas
+moved down its own box is clipped at its own edge, drawing a straight line
+across whatever it was rendering. Framing is now done entirely inside the
+scene, with `yOffset` and `fillFrom`/`fillTo`, and the canvas is never moved.
+**Do not reintroduce a CSS translate on the canvas.**
+
+**`Logo variant="descriptor"` used to render an empty SVG.** The descriptor
+paths were nested inside the wordmark's `<g>`, which that variant switches off
+— so it produced a correctly-sized box containing nothing, and the navbar's
+SPA & WELLNESS line had never once appeared. It measures right in the DOM,
+which is why it survived so long; only a screenshot shows it.
 
 **`fill` scales by the model's largest dimension.** The robe's sleeves are
 outstretched, so *width* governs and the garment is much shorter than its

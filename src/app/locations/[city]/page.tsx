@@ -67,7 +67,6 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       />
 
       <UtilityHero
-        kicker="Areas we serve"
         title={
           <>
             Spa &amp; wellness {home ? "in" : "near"}{" "}
@@ -98,7 +97,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="section-pad bg-porcelain">
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
           <Reveal className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-dark">
+            <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-dark">
               Plan your visit
             </p>
             <h2 className="h-display mt-4 text-balance text-3xl sm:text-4xl">
@@ -119,7 +118,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                 { k: "Parking", v: "Free, on site" },
               ].map((row) => (
                 <div key={row.k} className="bg-ivory p-5">
-                  <dt className="text-[0.68rem] uppercase tracking-kicker text-taupe">{row.k}</dt>
+                  <dt className="text-[0.68rem] tracking-[0.02em] text-taupe">{row.k}</dt>
                   <dd className="mt-2 font-display text-lg leading-snug">{row.v}</dd>
                 </div>
               ))}
@@ -159,7 +158,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             {pillars.map((pillar, i) => (
               <Reveal key={pillar.key} delay={i * 120} className="h-full">
                 <div className="flex h-full flex-col border hairline bg-porcelain p-8">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-dark">
+                  <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-dark">
                     {pillar.tagline}
                   </p>
                   <h3 className="mt-3 font-display text-2xl">{pillar.label}</h3>
@@ -168,7 +167,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                     {pillar.items.map((item) => (
                       <li
                         key={item.name}
-                        className="border hairline px-3 py-1.5 text-[0.72rem] uppercase tracking-wideish text-umber"
+                        className="border hairline px-3 py-1.5 text-[0.72rem] tracking-[0.015em] text-umber"
                       >
                         {item.name}
                       </li>
@@ -176,7 +175,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                   </ul>
                   <Link
                     href="/services"
-                    className="link-ul mt-auto inline-block pt-8 text-[0.75rem] font-semibold uppercase tracking-kicker"
+                    className="link-ul mt-auto inline-block pt-8 text-[0.75rem] font-semibold tracking-[0.02em]"
                   >
                     View {pillar.label} →
                   </Link>
@@ -199,7 +198,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             </p>
             <Link
               href="/book"
-              className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker"
+              className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em]"
             >
               Full Menu &amp; Booking →
             </Link>
@@ -215,7 +214,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                     <span className="font-display text-xl transition-colors group-hover:text-brass-dark sm:text-2xl">
                       {s.name}
                     </span>
-                    <span className="shrink-0 text-[0.75rem] uppercase tracking-kicker text-taupe">
+                    <span className="shrink-0 text-[0.75rem] tracking-[0.02em] text-taupe">
                       {s.duration} · {s.tier === "express" ? `from $${s.price}` : `$${s.price}`}
                     </span>
                   </Link>
@@ -238,14 +237,14 @@ export default async function LocationPage({ params }: { params: Promise<Params>
       <section className="section-pad border-t hairline bg-porcelain">
         <div className="wrap">
           <Reveal className="mx-auto max-w-3xl text-center">
-            <p aria-hidden className="mb-6 text-[0.85rem] tracking-[0.35em] text-brass-dark">
+            <p aria-hidden className="mb-6 text-[0.85rem] tracking-[0.02em] text-brass-dark">
               ★★★★★
             </p>
             <span className="sr-only">Rated 5 out of 5 stars.</span>
             <blockquote className="h-display text-balance text-2xl italic leading-relaxed sm:text-3xl">
               &ldquo;{testimonial.quote}&rdquo;
             </blockquote>
-            <footer className="mt-8 text-[0.75rem] uppercase tracking-kicker text-taupe">
+            <footer className="mt-8 text-[0.75rem] tracking-[0.02em] text-taupe">
               <span className="font-semibold text-ink">{testimonial.name}</span> · {testimonial.service}
               <br />
               <span className="text-[0.7rem]">{testimonial.location}</span>
@@ -261,7 +260,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             <h2 className="h-display text-3xl sm:text-4xl">Also driving in from</h2>
             <Link
               href="/locations"
-              className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker text-brass-light"
+              className="link-ul mb-2 text-[0.75rem] font-semibold tracking-[0.02em] text-brass-light"
             >
               All Areas We Serve →
             </Link>
@@ -276,7 +275,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                   <p className="font-display text-xl transition-colors group-hover:text-brass-light">
                     {n.city}
                   </p>
-                  <span className="mt-8 text-[0.7rem] uppercase tracking-kicker text-ivory/65">
+                  <span className="mt-8 text-[0.7rem] tracking-[0.02em] text-ivory/65">
                     {isHome(n) ? "Right in Greenville" : `${n.driveTime} away`} →
                   </span>
                 </Link>

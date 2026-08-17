@@ -41,7 +41,7 @@ export default function ArticleHero({
       <div className="mx-auto max-w-[52rem]">
         {breadcrumb && (
           <Reveal>
-            <nav aria-label="Breadcrumb" className="text-[0.7rem] uppercase tracking-kicker text-taupe">
+            <nav aria-label="Breadcrumb" className="text-[0.7rem] tracking-[0.02em] text-taupe">
               <Link href={breadcrumb.href} className="link-ul">
                 {breadcrumb.label}
               </Link>
@@ -52,7 +52,7 @@ export default function ArticleHero({
 
         {meta && (
           <Reveal delay={80}>
-            <p className="mt-8 text-[0.7rem] uppercase tracking-kicker text-brass-dark">{meta}</p>
+            <p className="mt-8 text-[0.7rem] tracking-[0.02em] text-brass-dark">{meta}</p>
           </Reveal>
         )}
 

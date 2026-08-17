@@ -32,7 +32,7 @@ function PhotoRow({ images, duration }: { images: typeof rowOne; duration: strin
       {images.map((img, i) => (
         <div
           key={`${img.src}-${i}`}
-          className="relative mx-2 h-44 w-32 shrink-0 overflow-hidden rounded-xl sm:mx-2.5 sm:h-52 sm:w-40 md:h-60 md:w-48"
+          className="relative mx-2 h-44 w-32 shrink-0 overflow-hidden sm:mx-2.5 sm:h-52 sm:w-40 md:h-60 md:w-48"
         >
           <Image
             src={img.src}

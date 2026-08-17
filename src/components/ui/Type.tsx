@@ -70,7 +70,7 @@ export function Kicker({
 }) {
   return (
     <Tag
-      className={`font-body text-[0.7rem] font-semibold uppercase tracking-[0.28em] sm:text-[0.72rem] ${className}`}
+      className={`font-body text-[0.7rem] font-semibold tracking-[0.02em] sm:text-[0.72rem] ${className}`}
     >
       {children}
     </Tag>

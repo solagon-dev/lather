@@ -30,7 +30,6 @@ export default function ServicesPage() {
         )}
       />
       <UtilityHero
-        kicker="Two pillars"
         title={
           <>
             Care, <Em>in two forms.</Em>
@@ -61,12 +60,12 @@ export default function ServicesPage() {
         >
           <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
             <Reveal className="lg:sticky lg:top-28 lg:self-start">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-dark">
+              <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-dark">
                 {pillar.tagline}
               </p>
               <h2 className="h-display mt-4 text-4xl sm:text-5xl">{pillar.label}</h2>
               <p className="mt-6 max-w-md text-umber">{pillar.intro}</p>
-              <div className="relative mt-8 hidden aspect-[4/3] w-full max-w-md overflow-hidden rounded-xl lg:block">
+              <div className="relative mt-8 hidden aspect-[4/3] w-full max-w-md overflow-hidden lg:block">
                 <Image
                   src={pillar.image}
                   alt={pillar.label}
@@ -102,7 +101,7 @@ export default function ServicesPage() {
                       <h3 className="font-display text-2xl transition-colors duration-300 group-hover:text-brass-dark">
                         {item.name}
                       </h3>
-                      <span className="shrink-0 text-[0.7rem] uppercase tracking-wideish text-brass-dark">
+                      <span className="shrink-0 text-[0.7rem] tracking-[0.015em] text-brass-dark">
                         {item.href ? "Learn more →" : "Ask about this →"}
                       </span>
                     </div>
@@ -113,7 +112,7 @@ export default function ServicesPage() {
 
               {pillar.key === "wellness" && (
                 <Reveal className="bg-noir p-8 text-ivory">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-light">
+                  <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-light">
                     Start here
                   </p>
                   <p className="mt-4 font-display text-2xl">

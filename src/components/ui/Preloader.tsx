@@ -1,96 +1,203 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import Logo from "@/components/ui/Logo";
+import { AnimatePresence, motion, useMotionValue, useTransform } from "framer-motion";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { Em } from "@/components/ui/Type";
 
 /**
- * First-visit overlay: the mark draws in over a counted progress line, then
- * lifts to reveal the hero.
+ * The opening. A statement holds a small window onto the room; as the page
+ * loads the window grows, and when it is full it opens into the hero.
  *
- * Three rules keep this from becoming the thing everyone hates about
- * preloaders:
+ * It is not a screen that gets taken away — the tile expands into exactly the
+ * image the hero is already showing, so the overlay can simply fade and
+ * nothing appears to change hands. The hero then plays the same move in
+ * reverse on scroll (see CollapsingHero), which makes the opening feel like
+ * one continuous zoom.
  *
- * 1. It only runs once per session (sessionStorage), so moving around the site
- *    never costs you the animation again.
- * 2. It is capped at ~1.6s and resolves on `load` — it never holds content
- *    hostage to a slow asset.
- * 3. It is skipped entirely under prefers-reduced-motion, and it renders
- *    nothing on the server, so no markup has to be un-done on hydration.
+ * Performance: progress lives in a MotionValue, not React state. Driving this
+ * from state re-rendered the whole overlay sixty times a second and restarted
+ * framer's tween on every one of those renders, which is what made the growth
+ * visibly step rather than glide. Now the rAF loop writes one number, the tile
+ * and the rule read it directly, and React re-renders only when the phase
+ * changes — three times in the entire sequence.
  *
- * Because it mounts after hydration it can never hide content from a crawler
- * or from a reader with JS disabled.
+ * Three rules keep it from becoming the thing everyone hates about preloaders:
+ *
+ * 1. Homepage only, and once per session in production.
+ * 2. Capped at ~1.9s and resolves regardless of network.
+ * 3. Skipped entirely under prefers-reduced-motion, and it renders nothing on
+ *    the server, so no markup has to be undone on hydration.
  */
 
 const SEEN_KEY = "lather:intro-seen";
+/** Must match the hero exactly so the hand-off is invisible — same still
+ *  underneath, same clip over it, same opacity. */
+const HERO_IMAGE = "/media/hero/hero-landscape.webp";
+const HERO_VIDEO = "/media/video/hero-landscape.mp4";
+
+type Phase = "loading" | "opening" | "done";
 
 export default function Preloader() {
-  const [active, setActive] = useState(false);
-  const [pct, setPct] = useState(0);
+  const [phase, setPhase] = useState<Phase>("done");
+  const pathname = usePathname();
+
+  // The single source of truth for the whole animation.
+  const progress = useMotionValue(0);
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  const tileW = useTransform(progress, [0, 1], [150, 268]);
+  const tileH = useTransform(tileW, (w) => w * 0.66);
+  const ruleScale = useTransform(progress, [0, 1], [0, 1]);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || sessionStorage.getItem(SEEN_KEY)) return;
+    // The tile opens into the homepage hero image — on any other route it
+    // expands into a picture that page never shows.
+    if (pathname !== "/") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // "skip" is an explicit override that wins in every environment — it is
+    // what automated visual checks set. Otherwise: once per session in
+    // production, always in development so the thing being worked on is
+    // actually visible.
+    const seen = sessionStorage.getItem(SEEN_KEY);
+    if (seen === "skip") return;
+    if (seen && process.env.NODE_ENV === "production") return;
 
     sessionStorage.setItem(SEEN_KEY, "1");
-    setActive(true);
+    setPhase("loading");
 
     const started = performance.now();
-    const DURATION = 1600;
+    const DURATION = 1900;
     let raf = 0;
+    let lastShown = -1;
 
     const tick = (now: number) => {
       const t = Math.min(1, (now - started) / DURATION);
       // ease-out so the count decelerates into 100 rather than snapping
-      setPct(Math.round((1 - Math.pow(1 - t, 3)) * 100));
+      const eased = 1 - Math.pow(1 - t, 3);
+      progress.set(eased);
+
+      // Write the number straight to the DOM, and only when it changes.
+      const shown = Math.round(eased * 100);
+      if (shown !== lastShown && countRef.current) {
+        countRef.current.textContent = String(shown);
+        lastShown = shown;
+      }
+
       if (t < 1) raf = requestAnimationFrame(tick);
-      else setTimeout(() => setActive(false), 260);
+      else setPhase("opening");
     };
     raf = requestAnimationFrame(tick);
-
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [pathname, progress]);
 
-  // The lock is derived from `active` in one place. Setting it imperatively in
-  // the mount effect above and clearing it in a second effect keyed on `active`
-  // silently cancelled itself: on the first render `active` is still false, so
-  // the clear ran immediately after the set and the page was never locked.
+  // Retire the overlay on a timer once the tile has opened. This used to hang
+  // off onAnimationComplete on the overlay itself, which deadlocked: that
+  // element only has an `exit` animation, exit only runs once the phase leaves
+  // "opening", and the phase was waiting on the callback.
   useEffect(() => {
-    document.documentElement.style.overflow = active ? "hidden" : "";
+    if (phase !== "opening") return;
+    const EXPAND_MS = 1150;
+    const t = setTimeout(() => setPhase("done"), EXPAND_MS + 100);
+    return () => clearTimeout(t);
+  }, [phase]);
+
+  // The overlay owns the scrollbar while it is up.
+  useEffect(() => {
+    document.documentElement.style.overflow = phase !== "done" ? "hidden" : "";
     return () => {
       document.documentElement.style.overflow = "";
     };
-  }, [active]);
+  }, [phase]);
+
+  const opening = phase === "opening";
 
   return (
     <AnimatePresence>
-      {active && (
+      {phase !== "done" && (
         <motion.div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-porcelain"
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
+          className="fixed inset-0 z-[100] overflow-hidden bg-noir"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
           aria-hidden
         >
+          <div className="flex h-full flex-col items-center justify-center px-6 text-center">
+            <motion.p
+              className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] leading-[1.1] tracking-[-0.008em] text-ivory"
+              animate={{ opacity: opening ? 0 : 1, y: opening ? -18 : 0 }}
+              transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            >
+              Where modern wellness
+            </motion.p>
+
+            {/* Space held in the flow so the two lines sit where they will
+                stay; the tile itself is fixed and centred, so it grows to fill
+                the screen from its own centre rather than springing to a
+                corner the moment it leaves the flex column. */}
+            <motion.div aria-hidden className="my-5 sm:my-7" style={{ width: tileW, height: tileH }} />
+
+            <motion.p
+              className="font-display text-[clamp(1.75rem,4.4vw,3.4rem)] leading-[1.1] tracking-[-0.008em] text-ivory"
+              animate={{ opacity: opening ? 0 : 1, y: opening ? 18 : 0 }}
+              transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
+            >
+              meets <Em>elevated self-care.</Em>
+            </motion.p>
+          </div>
+
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none fixed left-1/2 top-1/2 overflow-hidden bg-[#241d18]"
+            style={
+              opening
+                ? { x: "-50%", y: "-50%" }
+                : { x: "-50%", y: "-50%", width: tileW, height: tileH }
+            }
+            animate={opening ? { width: "100vw", height: "100vh" } : undefined}
+            transition={{ duration: 1.15, ease: [0.76, 0, 0.24, 1] }}
           >
-            <Logo variant="stacked" className="h-24 w-auto text-ink sm:h-32" title="" />
+            {/* Plain <img>: this is the one image on the site that must be
+                decoded before it is shown, and next/image's lazy pipeline
+                would let the tile open onto an empty box. The clip rides on
+                top of it at the same opacity the hero uses, so the tile is
+                already showing the hero's exact composite before it opens. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={HERO_IMAGE} alt="" className="h-full w-full object-cover" />
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden
+            >
+              <source src={HERO_VIDEO} type="video/mp4" />
+            </video>
           </motion.div>
 
-          {/* progress line + count, pinned to the bottom edge */}
-          <div className="absolute inset-x-5 bottom-6 sm:inset-x-10 sm:bottom-8">
-            <div className="mb-3 text-right font-body text-[0.68rem] tabular-nums tracking-[0.2em] text-taupe">
-              {pct}%
+          {/* count + rule along the bottom edge */}
+          <motion.div
+            className="absolute inset-x-5 bottom-6 sm:inset-x-10 sm:bottom-8"
+            animate={{ opacity: opening ? 0 : 1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
+            <div className="mb-4 flex items-baseline justify-between">
+              <span className="font-body text-[0.62rem] tracking-[0.02em] text-brass-light/70">
+                Lather Spa &amp; Wellness
+              </span>
+              <span className="font-display text-[clamp(2.5rem,7vw,5rem)] leading-none tabular-nums text-ivory">
+                <span ref={countRef}>0</span>
+                <span className="ml-1 align-top font-body text-[0.7rem] tracking-[0.02em] text-brass-light/70">
+                  %
+                </span>
+              </span>
             </div>
-            <div className="h-px w-full bg-ink/15">
-              <div
-                className="h-px bg-ink/70 transition-[width] duration-100 ease-linear"
-                style={{ width: `${pct}%` }}
-              />
+            {/* scaleX rather than width: a transform is composited, so the rule
+                advances without laying out the page on every frame. */}
+            <div className="h-px w-full bg-ivory/15">
+              <motion.div className="h-px origin-left bg-brass-light" style={{ scaleX: ruleScale }} />
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

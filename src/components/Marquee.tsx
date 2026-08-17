@@ -18,7 +18,15 @@ export default function Marquee({ dark = false }: { dark?: boolean }) {
       {phrases.map((p) => (
         <span key={p} className="flex items-center">
           <span className="px-8 font-display text-lg italic tracking-wide sm:text-xl">{p}</span>
-          <span className={`text-base ${dark ? "text-brass-light" : "text-brass"}`}>·</span>
+          {/* A separator, not a word — hidden from the reading order, and set
+              in the text-safe brass rather than the decorative one, which is
+              a rule-and-mark colour and measures 2.56:1 on bone. */}
+          <span
+            aria-hidden
+            className={`text-base ${dark ? "text-brass-light" : "text-brass-dark"}`}
+          >
+            ·
+          </span>
         </span>
       ))}
     </div>

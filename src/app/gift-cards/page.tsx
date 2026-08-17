@@ -70,7 +70,6 @@ export default function GiftCardsPage() {
         src="/media/editorial/gift-card-detail.webp"
         alt="A Lather Spa & Wellness gift card styled with quiet, editorial detail"
         side="left"
-        kicker="Gift cards"
         title={
           <>
             The <Em>&ldquo;sorry, I have plans&rdquo;</Em> gift.

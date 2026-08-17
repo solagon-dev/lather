@@ -30,7 +30,6 @@ export default function FaqPage() {
         )}
       />
       <UtilityHero
-        kicker="Questions"
         title={
           <>
             Everything you&rsquo;re <Em>wondering.</Em>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
 import LineReveal from "@/components/ui/LineReveal";
-import { Kicker, Statement } from "@/components/ui/Type";
+import { Statement } from "@/components/ui/Type";
 
 /**
  * Asymmetric image-and-text masthead, for the pages whose subject is a
@@ -29,7 +29,6 @@ interface EditorialSplitHeroPropsBase {
   src: string;
   alt: string;
   sub?: ReactNode;
-  kicker?: ReactNode;
   /** Which edge the photograph runs to. */
   side?: "left" | "right";
   focal?: string;
@@ -44,7 +43,6 @@ export default function EditorialSplitHero({
   title,
   lines,
   sub,
-  kicker,
   side = "right",
   focal,
   children,
@@ -57,12 +55,7 @@ export default function EditorialSplitHero({
             side === "left" ? "lg:order-2" : ""
           }`}
         >
-          {kicker && (
-            <Reveal>
-              <Kicker className="text-brass-dark">{kicker}</Kicker>
-            </Reveal>
-          )}
-          <Reveal delay={kicker ? 90 : 0} className={kicker ? "mt-6" : ""}>
+          <Reveal>
             <Statement as="h1" size="md">
               {lines ? <LineReveal lines={lines} /> : title}
             </Statement>

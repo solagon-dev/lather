@@ -15,7 +15,7 @@ import { DESCRIPTOR_PATHS, LOGO_VIEWBOX, MARK_PATHS, WORDMARK_PATHS } from "@/li
  * favicon or a reversed footer.
  */
 
-type Variant = "stacked" | "wordmark" | "letters" | "mark";
+type Variant = "stacked" | "wordmark" | "letters" | "mark" | "descriptor";
 
 interface LogoProps {
   /**
@@ -24,6 +24,8 @@ interface LogoProps {
    * letters  LATHER only — for small sizes where the descriptor would set
    *          below ~7px and turn to mud
    * mark     fountain only
+   * descriptor SPA & WELLNESS only — for pairing beneath `letters` when the
+   *          two need to animate independently
    */
   variant?: Variant;
   /** brass keeps the fountain in the brand metal; current makes the whole logo one colour */
@@ -44,6 +46,7 @@ const VIEWBOX: Record<Variant, string> = {
   wordmark: "0 982 2400 533",
   letters: "0 982 2400 277",
   mark: "870.7 0 631.8 820.2",
+  descriptor: "387.3 1423.8 1612.3 91.2",
 };
 
 export default function Logo({
@@ -53,8 +56,9 @@ export default function Logo({
   title = "Lather Spa & Wellness",
 }: LogoProps) {
   const showMark = variant === "stacked" || variant === "mark";
-  const showWord = variant !== "mark";
-  const showDescriptor = variant === "stacked" || variant === "wordmark";
+  const showWord = variant !== "mark" && variant !== "descriptor";
+  const showDescriptor =
+    variant === "stacked" || variant === "wordmark" || variant === "descriptor";
   const markFill = markTone === "brass" ? "#AC8D6B" : "currentColor";
 
   return (

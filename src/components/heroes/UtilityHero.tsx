@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
 import LineReveal from "@/components/ui/LineReveal";
-import { Kicker, Statement } from "@/components/ui/Type";
+import { Statement } from "@/components/ui/Type";
 
 /**
  * Compact typographic masthead — the default for pages people arrive at with
@@ -31,7 +31,6 @@ type HeroTitle =
 
 interface UtilityHeroPropsBase {
   sub?: ReactNode;
-  kicker?: ReactNode;
   meta?: ReactNode;
   aside?: { src: string; alt: string; focal?: string };
   children?: ReactNode;
@@ -43,19 +42,13 @@ export default function UtilityHero({
   title,
   lines,
   sub,
-  kicker,
   meta,
   aside,
   children,
 }: UtilityHeroProps) {
   const text = (
     <>
-      {kicker && (
-        <Reveal>
-          <Kicker className="text-brass-dark">{kicker}</Kicker>
-        </Reveal>
-      )}
-      <Reveal delay={kicker ? 90 : 0} className={kicker ? "mt-6" : ""}>
+      <Reveal>
         <Statement as="h1" size="md">
           {lines ? <LineReveal lines={lines} /> : title}
         </Statement>
@@ -67,7 +60,7 @@ export default function UtilityHero({
       )}
       {meta && (
         <Reveal delay={240}>
-          <p className="mt-6 border-t hairline pt-5 text-[0.72rem] uppercase tracking-wideish text-taupe">
+          <p className="mt-6 border-t hairline pt-5 text-[0.72rem] tracking-[0.015em] text-taupe">
             {meta}
           </p>
         </Reveal>

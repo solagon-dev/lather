@@ -35,7 +35,6 @@ export default function JournalPage() {
   return (
     <>
       <UtilityHero
-        kicker="The Journal"
         title={
           <>
             Notes on the art of <Em>scalp care.</Em>
@@ -66,10 +65,10 @@ export default function JournalPage() {
                   {feature.title}
                 </h2>
                 <p className="mt-6 max-w-xl text-umber">{excerpt(feature.intro)}</p>
-                <p className="mt-8 text-[0.7rem] uppercase tracking-kicker text-taupe">
+                <p className="mt-8 text-[0.7rem] tracking-[0.02em] text-taupe">
                   {feature.category} · {feature.readTime} · {formatDate(feature.publishDate)}
                 </p>
-                <span className="link-ul mt-6 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker text-ink">
+                <span className="link-ul mt-6 inline-block text-[0.75rem] font-semibold tracking-[0.02em] text-ink">
                   Read the Essay →
                 </span>
               </div>
@@ -94,7 +93,7 @@ export default function JournalPage() {
                     {a.title}
                   </h3>
                   <p className="mt-4 flex-1 text-[0.95rem] text-umber">{excerpt(a.intro)}</p>
-                  <p className="mt-6 border-t hairline pt-4 text-[0.7rem] uppercase tracking-kicker text-taupe">
+                  <p className="mt-6 border-t hairline pt-4 text-[0.7rem] tracking-[0.02em] text-taupe">
                     {a.category} · {a.readTime} · {formatDate(a.publishDate)}
                   </p>
                 </Link>

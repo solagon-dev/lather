@@ -18,7 +18,6 @@ export default function LocationsPage() {
   return (
     <>
       <UtilityHero
-        kicker="Areas we serve"
         title={
           <>
             One spa, all of <Em>Eastern North Carolina.</Em>
@@ -59,7 +58,7 @@ export default function LocationsPage() {
                 to our Greenville location.
               </caption>
               <thead>
-                <tr className="border-b hairline text-[0.68rem] uppercase tracking-kicker text-taupe">
+                <tr className="border-b hairline text-[0.68rem] tracking-[0.02em] text-taupe">
                   <th scope="col" className="py-4 pr-4 font-medium">City</th>
                   <th scope="col" className="py-4 pr-4 font-medium">Drive time</th>
                   <th scope="col" className="py-4 pr-4 font-medium">Distance</th>

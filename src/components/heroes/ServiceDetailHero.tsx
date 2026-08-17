@@ -40,7 +40,7 @@ export default function ServiceDetailHero({
     <section className="border-b hairline bg-porcelain px-6 pt-32 sm:px-10 md:pt-40 lg:px-16">
       <div className="wrap grid gap-12 pb-16 md:grid-cols-[1.15fr_1fr] md:pb-24">
         <Reveal>
-          <nav aria-label="Breadcrumb" className="text-[0.7rem] uppercase tracking-kicker text-taupe">
+          <nav aria-label="Breadcrumb" className="text-[0.7rem] tracking-[0.02em] text-taupe">
             <Link href="/services" className="link-ul">
               Services
             </Link>{" "}
@@ -55,7 +55,7 @@ export default function ServiceDetailHero({
 
           {/* The decision row. tabular-nums keeps the price from shifting the
               rule when a ritual is priced "From $50". */}
-          <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-y hairline py-5 text-[0.75rem] uppercase tracking-kicker text-umber">
+          <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-y hairline py-5 text-[0.75rem] tracking-[0.02em] text-umber">
             <div>
               <dt className="sr-only">Price</dt>
               <dd className="tabular-nums">{price}</dd>

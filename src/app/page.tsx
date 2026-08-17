@@ -1,19 +1,23 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
-import HeroMedia from "@/components/HeroMedia";
-import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import SocialSection from "@/components/SocialSection";
+import CollapsingHero from "@/components/sections/CollapsingHero";
 import FullBleedStatement from "@/components/sections/FullBleedStatement";
 import ImageRow from "@/components/sections/ImageRow";
-import MoodGrid from "@/components/sections/MoodGrid";
-import OversizedQuote from "@/components/sections/OversizedQuote";
-import PinnedSequence from "@/components/sections/PinnedSequence";
+import Ledger, { LedgerRow } from "@/components/sections/Ledger";
+import MatrixGallery from "@/components/sections/MatrixGallery";
+import CoinStatement from "@/components/sections/CoinStatement";
+import CTASection from "@/components/sections/CTASection";
+import PinnedObjectSequence from "@/components/sections/PinnedObjectSequence";
+import HorizontalSteps from "@/components/sections/HorizontalSteps";
 import SplitFeature from "@/components/sections/SplitFeature";
+import StickySplit, { SplitQuote } from "@/components/sections/StickySplit";
 import StatementSection from "@/components/sections/StatementSection";
 import LineReveal from "@/components/ui/LineReveal";
-import { Em, Kicker, Lede, Statement } from "@/components/ui/Type";
+import { Em, Lede, Statement } from "@/components/ui/Type";
+import { Soft } from "@/components/ui/CinematicHeading";
 import { BOOK_URL, business, hours } from "@/lib/business";
 import { testimonials } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
@@ -21,100 +25,131 @@ import { featuredProvider, pillars, whyLather } from "@/lib/menu";
 
 // The board that opens "Step inside" — interiors only, and deliberately none
 // of the photos the Instagram strip further down uses.
-const moodTiles = [
+const galleryTiles = [
   { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the Lather treatment room", ratio: "aspect-[3/4]" },
-  { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge", ratio: "aspect-[3/4]", offset: "md:translate-y-10" },
+  { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge", ratio: "aspect-[4/5]" },
   { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp detail at Lather Spa & Wellness", ratio: "aspect-[3/4]" },
-  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Spa & Wellness", ratio: "aspect-[3/4]", offset: "md:translate-y-10" },
+  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Spa & Wellness", ratio: "aspect-[4/5]" },
+  { src: "/media/gallery/interior-crystal-lamp.webp", alt: "Crystal lamp detail", ratio: "aspect-[4/5]" },
+  { src: "/media/gallery/interior-diffuser.webp", alt: "Diffuser detail in the treatment room", ratio: "aspect-[3/4]" },
+  { src: "/media/gallery/interior-team-portrait.webp", alt: "The Lather team", ratio: "aspect-[3/4]" },
+  { src: "/media/editorial/secondary-treatment.webp", alt: "A treatment detail", ratio: "aspect-[4/5]" },
+  { src: "/media/experience/step-04-treatment.webp", alt: "Targeted scalp treatment", ratio: "aspect-[3/4]" },
+  { src: "/media/editorial/value-prop.webp", alt: "A quiet moment at Lather", ratio: "aspect-[4/5]" },
+  { src: "/media/treatments/classic-ritual.webp", alt: "The Classic Ritual", ratio: "aspect-[3/4]" },
+  { src: "/media/gallery/treatment-waterfall.webp", alt: "Warm water over the scalp", ratio: "aspect-[4/5]" },
 ];
+
+/**
+ * The robe model.
+ *
+ * Converted from the purchased Marvelous Designer OBJ: 210k faces and two
+ * 8192px maps became 53k faces and 2048px WebP, meshopt-compressed —
+ * 11.1MB to 797KB. Point this at undefined to fall back to photography.
+ */
+const ROBE_MODEL: string | undefined = "/models/robe.glb";
 
 // The five movements, reused from /experience so the two pages can never drift.
 const ritualSteps = experienceSteps.map((s) => ({
   src: s.image,
   alt: `${s.title} — movement ${s.number} of the Lather head spa ritual`,
-  label: s.title,
-  caption: (
-    <>
-      <Em>{s.number}</Em> — {s.title}
-    </>
-  ),
+  number: s.number,
+  title: s.title,
+  body: s.body,
 }));
 
 export default function HomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="grain relative flex min-h-[100svh] flex-col justify-center gap-5 overflow-hidden bg-noir pt-20 text-ivory md:justify-end md:gap-0 md:pt-0">
-        <HeroMedia />
-
-        <div className="wrap relative z-10 px-6 pb-6 sm:px-10 md:pb-28 md:pt-44 lg:px-16">
-          <h1 className="h-display max-w-5xl text-[clamp(2.6rem,6.4vw,6rem)] leading-[1.02] tracking-[-0.012em]">
-            <LineReveal
-              lines={[
-                <Fragment key="a">Where modern wellness</Fragment>,
-                <Fragment key="b">
-                  meets <Em className="text-brass-light">elevated self-care.</Em>
-                </Fragment>,
-              ]}
-            />
-          </h1>
-
-          <Reveal delay={420}>
-            <p className="mt-6 max-w-xl text-base text-ivory/75 sm:mt-8 sm:text-lg">
-              A luxury wellness destination in Greenville, North Carolina — restorative spa
-              experiences and advanced, personalized wellness care, in one considered space.
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:mt-11 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-              <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
-                Book Appointment
-              </a>
-              <Link href="/services" className="btn-outline-light">
-                Explore Services
-              </Link>
-            </div>
-            {/* Trust integrated into the hero rather than parked in a badge. */}
-            <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.68rem] uppercase tracking-wideish text-ivory/60">
-              <span>{business.address.city}, {business.address.state}</span>
-              <span aria-hidden>·</span>
-              <span>Licensed providers</span>
-              <span aria-hidden>·</span>
-              <span>By appointment</span>
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <Marquee />
-
-      {/* ── THESIS ───────────────────────────────────────────── */}
-      <StatementSection
-        kicker="Two kinds of care"
-        body={
-          <Lede centered>
-            Lather blends restorative spa experiences with advanced, personalized wellness care —
-            bridging the gap between clinical wellness and the restorative spa, in one thoughtfully
-            designed space.
-          </Lede>
-        }
-        actions={
-          <Link href="/about" className="pill-light ring-1 ring-ink/10">
-            Our story
-          </Link>
+      {/* Opens full-bleed with the wordmark centred and draws back into a
+          centred tile as you scroll — the intro's expansion, run backwards. */}
+      <CollapsingHero
+        src="/media/hero/hero-landscape.webp"
+        video="/media/video/hero-landscape.mp4"
+        alt=""
+        tagline={
+          <p className="text-base text-ivory/80 sm:text-lg">
+            A luxury wellness destination in Greenville, North Carolina — restorative spa
+            experiences and advanced, personalized wellness care, in one considered space.
+          </p>
         }
       >
-        <Statement as="h2" size="lg">
-          <LineReveal
-            lines={[
-              <Fragment key="a">
-                One destination <Em>for</Em>
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+          <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+            Book Appointment
+          </a>
+          <Link href="/services" className="btn-outline-light">
+            Explore Services
+          </Link>
+        </div>
+      </CollapsingHero>
+
+      {/* h1 for the document, carried by the hero's wordmark visually. */}
+      <h1 className="sr-only">
+        Lather Spa &amp; Wellness — where modern wellness meets elevated self-care
+      </h1>
+
+      {/* ── THE FOUNTAIN, PINNED ─────────────────────────────── */}
+      {/* One object held across three beats: the mark rises and turns while
+          the argument changes over it. */}
+      <PinnedObjectSequence
+        modelSrc={ROBE_MODEL}
+        beats={[
+          {
+            place: "under",
+            lines: [
+              <Fragment key="1a">
+                One destination <Soft>for the</Soft>
               </Fragment>,
-              <Fragment key="b">
-                <Em>the</Em> whole of you.
+              <Fragment key="1b">whole of you</Fragment>,
+            ],
+          },
+          {
+            place: "left",
+            lines: [
+              <Fragment key="2a">
+                Restorative <Soft>spa,</Soft>
               </Fragment>,
-            ]}
-          />
-        </Statement>
-      </StatementSection>
+              <Fragment key="2b">
+                <Soft>and</Soft> clinical care
+              </Fragment>,
+            ],
+            note: "Two practices that usually live in different buildings, kept under one roof and one standard.",
+          },
+          {
+            place: "right",
+            lines: [
+              <Fragment key="3a">Results without</Fragment>,
+              <Fragment key="3b">
+                <Soft>the</Soft> trade-off
+              </Fragment>,
+            ],
+            note: "Outcomes you can measure, in a room that never once feels clinical.",
+          },
+          {
+            place: "centre",
+            lines: [
+              <Fragment key="4a">
+                <Soft>and every hour of it is</Soft>
+              </Fragment>,
+              <Fragment key="4b">yours alone</Fragment>,
+            ],
+            tail: (
+              <>
+                <Lede centered className="max-w-[52ch] text-umber">
+                  Lather blends restorative spa experiences with advanced, personalized wellness
+                  care — bridging the gap between clinical wellness and the restorative spa, in one
+                  thoughtfully designed space.
+                </Lede>
+                <Link href="/about" className="btn-outline pointer-events-auto mt-9">
+                  Our story
+                </Link>
+              </>
+            ),
+          },
+        ]}
+      />
 
       {/* ── THE TWO PILLARS ──────────────────────────────────── */}
       {pillars.map((pillar, i) => (
@@ -125,7 +160,6 @@ export default function HomePage() {
           focal={pillar.imagePosition}
           side={i % 2 === 0 ? "left" : "right"}
           tone={i % 2 === 0 ? "ivory" : "porcelain"}
-          kicker={pillar.tagline}
           body={
             <>
               <Lede>{pillar.intro}</Lede>
@@ -133,7 +167,7 @@ export default function HomePage() {
                 {pillar.items.map((item) => (
                   <li
                     key={item.name}
-                    className="border hairline px-3 py-1.5 text-[0.72rem] uppercase tracking-wideish text-umber"
+                    className="border hairline px-3 py-1.5 text-[0.72rem] tracking-[0.015em] text-umber"
                   >
                     {item.name}
                   </li>
@@ -154,7 +188,12 @@ export default function HomePage() {
       ))}
 
       {/* ── THE RITUAL, PINNED ───────────────────────────────── */}
-      <StatementSection tone="noir" kicker="The signature ritual" divided>
+      {/* The page's ground is light throughout; the only dark on it comes from
+          a photograph or a rendered object, never from a panel painted noir.
+          So the film below is dark because it *is* film, and the two beats
+          that bracket it are light — which is also what stops the ritual from
+          arriving as one undifferentiated black stretch. */}
+      <StatementSection tone="ivory">
         <Statement as="h2" size="lg">
           <LineReveal
             lines={[
@@ -169,19 +208,19 @@ export default function HomePage() {
         </Statement>
       </StatementSection>
 
-      <PinnedSequence steps={ritualSteps} />
+      <HorizontalSteps steps={ritualSteps} />
 
       <StatementSection
-        tone="noir"
+        tone="porcelain"
         body={
-          <Lede centered className="text-ivory/70">
+          <Lede centered className="text-umber">
             Assessed, cleansed, massaged, treated, renewed. Every appointment is private and held
             exclusively for you — nothing is rushed, because the slower the session moves, the
             better it works.
           </Lede>
         }
         actions={
-          <Link href="/experience" className="btn-solid-light">
+          <Link href="/experience" className="btn-solid">
             The full experience
           </Link>
         }
@@ -196,14 +235,13 @@ export default function HomePage() {
         src="/media/team/team-atmosphere.webp"
         alt="Inside Lather Spa & Wellness"
         side="right"
-        tone="noir"
-        kicker="Start here"
+        tone="ivory"
         body={
           <>
-            <Lede className="text-ivory/75">{featuredProvider.blurb}</Lede>
-            <p className="mt-8 font-display text-xl text-brass-light">
+            <Lede>{featuredProvider.blurb}</Lede>
+            <p className="mt-8 font-display text-xl text-brass-dark">
               {featuredProvider.name}
-              <span className="block text-[0.8rem] font-normal uppercase tracking-wideish text-ivory/65">
+              <span className="block text-[0.8rem] font-normal tracking-[0.015em] text-taupe">
                 {featuredProvider.role}
               </span>
             </p>
@@ -211,10 +249,10 @@ export default function HomePage() {
         }
         actions={
           <>
-            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
               Book a Consultation
             </a>
-            <Link href="/services" className="btn-outline-light">
+            <Link href="/services" className="btn-outline">
               All Wellness Services
             </Link>
           </>
@@ -226,6 +264,9 @@ export default function HomePage() {
       </SplitFeature>
 
       {/* ── WHY LATHER ───────────────────────────────────────── */}
+      {/* Five reasons read as an index rather than as a wrapped grid — the old
+          three-then-two layout left a ragged short row that read as a mistake,
+          and no amount of centring fixed it. */}
       <section className="section-pad bg-porcelain">
         <div className="wrap">
           <Reveal className="mx-auto max-w-3xl text-center">
@@ -233,52 +274,53 @@ export default function HomePage() {
               Why <Em>Lather</Em>
             </Statement>
           </Reveal>
-          <div className="mt-16 flex flex-wrap justify-center gap-x-10 gap-y-12">
-            {whyLather.map((item, i) => (
-              <Reveal
-                key={item.title}
-                as="div"
-                delay={i * 70}
-                className="w-full border-t hairline pt-6 sm:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-1.667rem)]"
-              >
-                <h3 className="font-display text-2xl">{item.title}</h3>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-umber">{item.body}</p>
-              </Reveal>
-            ))}
-          </div>
         </div>
+
+        <Ledger className="mt-10">
+          {whyLather.map((item, i) => (
+            <LedgerRow
+              key={item.title}
+              aside={String(i + 1).padStart(2, "0")}
+              lead={
+                <h3 className="font-display text-[clamp(1.5rem,2.8vw,2.35rem)] leading-[1.24]">
+                  {item.title}
+                </h3>
+              }
+              tail={
+                <p className="max-w-[54ch] text-[0.98rem] leading-relaxed text-umber">{item.body}</p>
+              }
+            />
+          ))}
+        </Ledger>
       </section>
 
       {/* ── FOUNDERS ─────────────────────────────────────────── */}
-      <SplitFeature
+      <StickySplit
         src="/media/founders/founders-staircase.webp"
         alt="Lather Spa & Wellness founders Hannah DeMotts, Abigail Baldwin, and Stacia Friend, CNM"
-        side="right"
+        side="left"
         tone="ivory"
-        kicker="Who we are"
-        body={
-          <>
-            <Lede>
-              Lather began with the relationships between sisters Hannah DeMotts and Abigail Baldwin
-              and their longtime friend Stacia Friend, CNM — built on shared experience, trust, and a
-              genuine passion for caring for others.
-            </Lede>
-            <Lede className="mt-5">
-              They saw the same gap again and again: you could find a spa, or you could find clinical
-              wellness care, but rarely both. So they built one.
-            </Lede>
-          </>
-        }
-        actions={
-          <Link href="/about" className="btn-outline">
-            Meet the Founders
-          </Link>
-        }
+        strip={[
+          { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge" },
+          { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the treatment room" },
+        ]}
       >
-        <Statement as="h2" size="md">
-          Two sisters <Em>and a</Em> lifelong friend.
-        </Statement>
-      </SplitFeature>
+        <SplitQuote
+          attribution="Hannah DeMotts, Abigail Baldwin & Stacia Friend, CNM"
+          role="founders of Lather"
+        >
+          &ldquo;You could find a spa, or you could find clinical wellness care, but almost never
+          both. We stopped waiting for someone else to build the room we wanted to walk into.&rdquo;
+        </SplitQuote>
+
+        <Reveal delay={260} className="mt-14">
+          <div className="flex justify-center">
+            <Link href="/about" className="btn-outline">
+              Meet the Founders
+            </Link>
+          </div>
+        </Reveal>
+      </StickySplit>
 
       {/* ── EDITORIAL BREAK ──────────────────────────────────── */}
       <FullBleedStatement
@@ -301,47 +343,80 @@ export default function HomePage() {
               <Em>In</Em> their words
             </Statement>
           </Reveal>
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 100} className="flex flex-col border hairline bg-ivory p-8">
-                <p aria-hidden className="mb-5 text-[0.8rem] tracking-[0.35em] text-brass-dark">
-                  ★★★★★
-                </p>
-                <span className="sr-only">Rated 5 out of 5 stars.</span>
-                <blockquote className="flex-1 font-display text-xl leading-relaxed">
+        </div>
+
+        <Ledger className="mt-10">
+          {testimonials.map((t, i) => (
+            <LedgerRow
+              key={t.name}
+              aside={String(i + 1).padStart(2, "0")}
+              lead={
+                <blockquote className="font-display text-[clamp(1.55rem,3.2vw,2.75rem)] leading-[1.24]">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
-                <footer className="mt-6 border-t hairline pt-4 text-[0.75rem] uppercase tracking-wideish text-taupe">
+              }
+              tail={
+                <footer className="font-body text-[0.8rem] tracking-[0.015em] text-taupe">
+                  {/* The rating stays next to the name rather than sitting above
+                      the quote. It is a real signal and worth carrying, but a row
+                      of stars set large is the loudest thing on a page whose whole
+                      argument is restraint. */}
+                  <span aria-hidden className="mr-2 text-[0.72rem] tracking-[0.08em] text-brass-dark">
+                    ★★★★★
+                  </span>
+                  <span className="sr-only">Rated 5 out of 5 stars. </span>
                   <span className="font-semibold text-ink">{t.name}</span> · {t.service}
-                  <br />
-                  <span className="text-[0.7rem]">{t.location}</span>
+                  <span className="mt-1 block text-[0.7rem]">{t.location}</span>
                 </footer>
-              </Reveal>
-            ))}
-          </div>
-        </div>
+              }
+            />
+          ))}
+        </Ledger>
       </section>
 
       {/* ── STEP INSIDE ──────────────────────────────────────── */}
-      <StatementSection kicker="The space" className="pb-0">
+      <StatementSection className="pb-0">
         <Statement as="h2" size="md">
           Step <Em>inside.</Em>
         </Statement>
       </StatementSection>
-      <MoodGrid tiles={moodTiles} cta={{ href: "/about", label: "Our space" }} />
+      <MatrixGallery tiles={galleryTiles} cta={{ href: "/about", label: "Our space" }} />
 
       {/* ── SOCIAL ───────────────────────────────────────────── */}
       <SocialSection />
 
       {/* ── A LINE TO LIVE BY ────────────────────────────────── */}
-      <OversizedQuote
-        tone="bone"
+      {/* The mark set into the middle of the line: the first half passes
+          behind it, the second half crosses in front. */}
+      <CoinStatement
         lines={[
-          <Fragment key="a">
-            Leave <Em>better</Em>
-          </Fragment>,
-          <Fragment key="b">than you arrived.</Fragment>,
+          { left: "You arrive", right: "carrying" },
+          { left: "the whole week", right: "in your neck," },
+          { left: "your jaw,", right: "your hands." },
+          { left: "You leave", right: "carrying none" },
+          { left: "of it, and better", right: "than you arrived." },
         ]}
+      />
+
+      {/* ── THE ASK ──────────────────────────────────────────── */}
+      <CTASection
+        lines={[
+          <Fragment key="c1">Come and see</Fragment>,
+          <Fragment key="c2">
+            what an hour <Em>can do.</Em>
+          </Fragment>,
+        ]}
+        body="Book a single ritual or a full afternoon. Either way the room is yours, and nothing about it is rushed."
+        actions={
+          <>
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+              Book appointment
+            </a>
+            <Link href="/services" className="btn-outline-light">
+              Explore services
+            </Link>
+          </>
+        }
       />
 
       {/* ── VISIT ────────────────────────────────────────────── */}
@@ -350,7 +425,6 @@ export default function HomePage() {
         alt="The lounge at Lather Spa & Wellness in Greenville, NC"
         side="left"
         tone="porcelain"
-        kicker="Visit"
         body={
           <>
             <address className="not-italic text-umber">
@@ -389,6 +463,7 @@ export default function HomePage() {
       </SplitFeature>
 
       <BookCTA />
+
     </>
   );
 }

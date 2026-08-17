@@ -62,7 +62,7 @@ export default function OversizedQuote({
           </p>
           {attribution && (
             <footer
-              className={`mt-12 text-center font-body text-[0.7rem] uppercase tracking-[0.28em] ${
+              className={`mt-12 text-center font-body text-[0.7rem] tracking-[0.02em] ${
                 dark ? "text-ivory/60" : "text-taupe"
               }`}
             >

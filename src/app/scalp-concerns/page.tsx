@@ -92,12 +92,12 @@ function ConcernCard({ concern, index }: { concern: Concern; index: number }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-8">
-        <p className="text-[0.68rem] uppercase tracking-kicker text-taupe">{concern.subtitle}</p>
+        <p className="text-[0.68rem] tracking-[0.02em] text-taupe">{concern.subtitle}</p>
         <h3 className="mt-3 font-display text-2xl">{concern.title}</h3>
         <p className="mt-4 flex-1 text-[0.9rem] leading-relaxed text-umber">{concern.body}</p>
         {concern.note && <p className="mt-4 text-[0.8rem] italic text-taupe">{concern.note}</p>}
         <div className="mt-6 border-t hairline pt-5">
-          <p className="text-[0.68rem] uppercase tracking-kicker text-taupe">We recommend</p>
+          <p className="text-[0.68rem] tracking-[0.02em] text-taupe">We recommend</p>
           <Link
             href={`/services/${service.id}`}
             className="link-ul mt-2 inline-block font-display text-xl text-ink"
@@ -127,7 +127,6 @@ export default function ScalpConcernsPage() {
       />
 
       <UtilityHero
-        kicker="Find your ritual"
         title={
           <>
             Start with <Em>what you feel.</Em>

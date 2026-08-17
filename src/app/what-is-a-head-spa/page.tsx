@@ -203,13 +203,13 @@ export default function WhatIsAHeadSpaPage() {
             <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
               <Link
                 href="/services"
-                className="link-ul text-[0.75rem] font-semibold uppercase tracking-kicker"
+                className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
               >
                 Browse the Rituals →
               </Link>
               <Link
                 href="/scalp-concerns"
-                className="link-ul text-[0.75rem] font-semibold uppercase tracking-kicker"
+                className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
               >
                 Start With Your Concern →
               </Link>

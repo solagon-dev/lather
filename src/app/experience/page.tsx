@@ -42,7 +42,6 @@ export default function ExperiencePage() {
       <CinematicHero
         src="/media/experience/step-03-massage.webp"
         alt="Slow, intentional scalp massage during a Lather head spa ritual"
-        kicker="The signature ritual"
         lines={[
           <Fragment key="a">One unhurried hour,</Fragment>,
           <Fragment key="b">

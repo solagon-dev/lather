@@ -23,7 +23,7 @@ export default function StickyBook() {
     >
       <a
         href={business.phoneHref}
-        className="flex flex-1 items-center justify-center py-4 text-[0.7rem] font-semibold uppercase tracking-kicker text-ivory/80"
+        className="flex flex-1 items-center justify-center py-4 text-[0.7rem] font-semibold tracking-[0.02em] text-ivory/80"
       >
         Call Us
       </a>
@@ -31,7 +31,7 @@ export default function StickyBook() {
         href={BOOK_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-[2] items-center justify-center bg-ivory py-4 text-[0.7rem] font-semibold uppercase tracking-kicker text-ink"
+        className="flex flex-[2] items-center justify-center bg-ivory py-4 text-[0.7rem] font-semibold tracking-[0.02em] text-ink"
       >
         Book Appointment
       </a>

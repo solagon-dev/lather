@@ -56,7 +56,6 @@ export default function AboutPage() {
         src="/media/founders/founders-hero.webp"
         alt="Lather Spa & Wellness founders Hannah DeMotts, Abigail Baldwin, and Stacia Friend, CNM"
         side="right"
-        kicker="Who we are"
         lines={[
           <Fragment key="a">Built on</Fragment>,
           <Fragment key="b">
@@ -105,7 +104,7 @@ export default function AboutPage() {
       <section className="grain relative section-pad bg-noir text-ivory">
         <div className="wrap relative">
           <Reveal className="max-w-3xl">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-light">
+            <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-light">
               Our mission
             </p>
             <p className="mt-6 font-display text-2xl leading-relaxed sm:text-3xl">
@@ -139,7 +138,7 @@ export default function AboutPage() {
             {founders.map((f, i) => (
               <Reveal key={f.name} delay={i * 90} className="border-t hairline pt-6">
                 <p className="font-display text-2xl">{f.name}</p>
-                <p className="mt-1 text-[0.7rem] uppercase tracking-wideish text-brass-dark">{f.role}</p>
+                <p className="mt-1 text-[0.7rem] tracking-[0.015em] text-brass-dark">{f.role}</p>
                 <p className="mt-4 text-[0.95rem] leading-relaxed text-umber">{f.line}</p>
               </Reveal>
             ))}

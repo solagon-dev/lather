@@ -39,13 +39,13 @@
   }
 
   .btn {
-    @apply inline-flex w-full items-center justify-center gap-3 px-8 py-4 font-body text-[0.72rem] font-semibold uppercase tracking-kicker transition-all duration-500 ease-luxe sm:w-auto;
+    @apply inline-flex w-full items-center justify-center gap-3 px-8 py-4 font-body text-[0.72rem] font-semibold tracking-[0.02em] transition-all duration-500 ease-luxe sm:w-auto;
   }
   /* The floating translucent control used in the page corners and over
      imagery. Backdrop blur keeps it legible on both porcelain and photography
      without committing to a solid fill. */
   .pill {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 font-body text-[0.68rem] font-medium uppercase tracking-[0.2em] backdrop-blur-md transition-colors duration-500 ease-luxe;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-body text-[0.68rem] font-medium tracking-[0.02em] backdrop-blur-md transition-colors duration-500 ease-luxe;
   }
   .pill-light {
     @apply pill bg-ivory/85 text-ink hover:bg-ivory;
@@ -200,4 +200,299 @@
     transform: none !important;
     transition: none !important;
   }
+}
+
+/* ── atmosphere for the pinned object ──────────────────────────────────────
+   A single object alone on flat porcelain reads as a render. These give it a
+   lit room to sit in: a warm bloom behind it, two slow drifting washes, a
+   vignette, and film grain over the whole frame. Everything animates on
+   transform/opacity only, so the compositor carries it and the pinned canvas
+   keeps its frame budget. */
+.ambient-bloom {
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgb(201 174 126 / 0.30) 0%,
+    rgb(201 174 126 / 0.13) 34%,
+    rgb(201 174 126 / 0) 68%
+  );
+  filter: blur(24px);
+}
+
+.ambient-drift {
+  border-radius: 9999px;
+  filter: blur(64px);
+  will-change: transform;
+}
+.ambient-drift-a {
+  background: radial-gradient(circle, rgb(172 141 107 / 0.22) 0%, rgb(172 141 107 / 0) 70%);
+  animation: ambient-drift-a 26s ease-in-out infinite alternate;
+}
+.ambient-drift-b {
+  background: radial-gradient(circle, rgb(120 94 58 / 0.16) 0%, rgb(120 94 58 / 0) 70%);
+  animation: ambient-drift-b 34s ease-in-out infinite alternate;
+}
+@keyframes ambient-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(6vw, -5vh, 0) scale(1.18); }
+}
+@keyframes ambient-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to   { transform: translate3d(-7vw, 4vh, 0) scale(0.92); }
+}
+
+/* Darkens the corners so the centre of the frame carries the eye. */
+.ambient-vignette {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgb(43 38 33 / 0) 42%,
+    rgb(43 38 33 / 0.07) 74%,
+    rgb(43 38 33 / 0.16) 100%
+  );
+}
+
+/* Fine grain, as a tiled turbulence tile rather than an image request. */
+.grain-overlay {
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-drift-a,
+  .ambient-drift-b {
+    animation: none;
+  }
+}
+
+/* The bloom, for dark grounds: a pool of warm light rather than a wash. */
+.ambient-bloom-dark {
+  background: radial-gradient(
+    circle at 50% 42%,
+    rgb(201 174 126 / 0.15) 0%,
+    rgb(172 141 107 / 0.07) 38%,
+    rgb(24 19 16 / 0) 70%
+  );
+  filter: blur(40px);
+}
+
+/* Grain for dark grounds — screen, not multiply, or it simply disappears. */
+.grain-overlay-light {
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* The scrim behind copy that sits over the garment. Directional, so the pool
+   is densest under the words and gone by the time it reaches open ground. */
+.scrim-left::before {
+  background: radial-gradient(
+    ellipse 68% 60% at 28% 50%,
+    rgb(20 16 13 / 0.94) 0%,
+    rgb(20 16 13 / 0.72) 42%,
+    rgb(20 16 13 / 0) 78%
+  );
+}
+.scrim-right::before {
+  background: radial-gradient(
+    ellipse 68% 60% at 72% 50%,
+    rgb(20 16 13 / 0.94) 0%,
+    rgb(20 16 13 / 0.72) 42%,
+    rgb(20 16 13 / 0) 78%
+  );
+}
+
+/* Footer links: the rule grows from the left on hover rather than switching on,
+   which is the difference between a link that acknowledges you and one that
+   blinks. transform-only, so it costs nothing. */
+.footer-link {
+  position: relative;
+  color: inherit;
+  transition: color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.15em;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.footer-link:hover,
+.footer-link:focus-visible {
+  color: rgb(250 247 241);
+}
+.footer-link:hover::after,
+.footer-link:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-link::after { transition: none; }
+}
+
+/* ── mist ──────────────────────────────────────────────────────────────────
+   Soft banks of warm haze drifting across the frame. Wider than the viewport
+   and translated horizontally so the edges never enter shot, blurred heavily
+   so they read as air rather than as shapes. Transform and opacity only, so
+   the compositor carries them and the pinned canvas keeps its frame budget. */
+.mist {
+  border-radius: 50%;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+.mist-a {
+  background: radial-gradient(
+    ellipse 50% 100% at 50% 100%,
+    rgb(226 214 198 / 0.16) 0%,
+    rgb(226 214 198 / 0.07) 45%,
+    rgb(226 214 198 / 0) 75%
+  );
+  filter: blur(48px);
+  animation: mist-drift-a 42s ease-in-out infinite alternate;
+}
+.mist-b {
+  background: radial-gradient(
+    ellipse 46% 100% at 40% 100%,
+    rgb(201 174 126 / 0.13) 0%,
+    rgb(201 174 126 / 0) 68%
+  );
+  filter: blur(64px);
+  animation: mist-drift-b 56s ease-in-out infinite alternate;
+}
+.mist-c {
+  background: radial-gradient(
+    ellipse 55% 100% at 60% 0%,
+    rgb(214 202 186 / 0.1) 0%,
+    rgb(214 202 186 / 0) 70%
+  );
+  filter: blur(72px);
+  animation: mist-drift-c 68s ease-in-out infinite alternate;
+}
+@keyframes mist-drift-a {
+  from { transform: translate3d(-5%, 0, 0) scaleY(1); opacity: 0.75; }
+  to   { transform: translate3d(6%, -6%, 0) scaleY(1.22); opacity: 1; }
+}
+@keyframes mist-drift-b {
+  from { transform: translate3d(7%, 3%, 0) scaleY(1.15); opacity: 1; }
+  to   { transform: translate3d(-6%, -4%, 0) scaleY(0.9); opacity: 0.7; }
+}
+@keyframes mist-drift-c {
+  from { transform: translate3d(4%, -2%, 0); opacity: 0.6; }
+  to   { transform: translate3d(-7%, 4%, 0); opacity: 0.95; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mist-a, .mist-b, .mist-c { animation: none; }
+}
+
+/* The hero's media tile, feathered at its edges.
+   As the hero draws back it becomes a rectangle of video on the dark ground,
+   and a hard edge there announces "here is where the hero stops". Softening
+   the boundary lets the footage fall away into the same dark the next section
+   is built on, so the hero hands over to the object sequence continuously. */
+.hero-tile {
+  -webkit-mask-image: radial-gradient(
+    ellipse 128% 122% at 50% 50%,
+    #000 58%,
+    rgb(0 0 0 / 0.65) 80%,
+    rgb(0 0 0 / 0) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 128% 122% at 50% 50%,
+    #000 58%,
+    rgb(0 0 0 / 0.65) 80%,
+    rgb(0 0 0 / 0) 100%
+  );
+}
+
+/* Ramps the hero's ground up to the ambient level of the section beneath it,
+   so the boundary between them carries no step in brightness. */
+.hero-tail {
+  background: linear-gradient(
+    to bottom,
+    rgb(201 174 126 / 0) 0%,
+    rgb(201 174 126 / 0.012) 45%,
+    rgb(201 174 126 / 0.032) 78%,
+    rgb(201 174 126 / 0.045) 100%
+  );
+}
+
+/* Continues the pinned sequence's ambient glow into the section beneath it,
+   fading to the plain ground. Mirrors `.hero-tail`, which does the same job on
+   the way in. */
+.ambient-carry {
+  background: linear-gradient(
+    to bottom,
+    rgb(201 174 126 / 0.05) 0%,
+    rgb(201 174 126 / 0.022) 40%,
+    rgb(201 174 126 / 0) 100%
+  );
+}
+
+/* ── atmosphere for the light object section ───────────────────────────────
+   Warm haze banks drifting behind the subject. Wider than the frame so their
+   edges never enter shot, heavily blurred so they read as air rather than as
+   shapes, and animated on transform/opacity only so the compositor carries
+   them and the pinned canvas keeps its frame budget. */
+.haze {
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+.haze-a {
+  background: radial-gradient(
+    ellipse 52% 100% at 50% 100%,
+    rgb(201 174 126 / 0.20) 0%,
+    rgb(201 174 126 / 0.07) 46%,
+    rgb(201 174 126 / 0) 76%
+  );
+  filter: blur(56px);
+  animation: haze-a 46s ease-in-out infinite alternate;
+}
+.haze-b {
+  background: radial-gradient(
+    ellipse 48% 100% at 38% 0%,
+    rgb(172 141 107 / 0.16) 0%,
+    rgb(172 141 107 / 0) 70%
+  );
+  filter: blur(70px);
+  animation: haze-b 62s ease-in-out infinite alternate;
+}
+.haze-c {
+  background: radial-gradient(
+    ellipse 60% 100% at 66% 50%,
+    rgb(231 222 206 / 0.5) 0%,
+    rgb(231 222 206 / 0) 72%
+  );
+  filter: blur(80px);
+  animation: haze-c 74s ease-in-out infinite alternate;
+}
+@keyframes haze-a {
+  from { transform: translate3d(-6%, 0, 0) scaleY(1); opacity: 0.7; }
+  to   { transform: translate3d(7%, -7%, 0) scaleY(1.24); opacity: 1; }
+}
+@keyframes haze-b {
+  from { transform: translate3d(6%, 2%, 0) scaleY(1.12); opacity: 1; }
+  to   { transform: translate3d(-7%, -3%, 0) scaleY(0.9); opacity: 0.65; }
+}
+@keyframes haze-c {
+  from { transform: translate3d(5%, -3%, 0); opacity: 0.55; }
+  to   { transform: translate3d(-6%, 5%, 0); opacity: 0.9; }
+}
+
+/* Falls off only at the corners, so it frames without touching the subject. */
+.frame-vignette {
+  background: radial-gradient(
+    ellipse 74% 68% at 50% 50%,
+    rgb(120 94 58 / 0) 62%,
+    rgb(120 94 58 / 0.05) 84%,
+    rgb(120 94 58 / 0.11) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .haze-a, .haze-b, .haze-c { animation: none; }
 }

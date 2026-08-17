@@ -1,7 +1,6 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
-import { Kicker } from "@/components/ui/Type";
+import ParallaxFrame from "@/components/ui/ParallaxFrame";
 
 /**
  * A photograph running to one screen edge, with a text column beside it.
@@ -16,7 +15,6 @@ interface SplitFeatureProps {
   alt: string;
   /** Which edge the photo runs to. */
   side?: "left" | "right";
-  kicker?: ReactNode;
   children: ReactNode;
   body?: ReactNode;
   actions?: ReactNode;
@@ -36,7 +34,6 @@ export default function SplitFeature({
   src,
   alt,
   side = "left",
-  kicker,
   children,
   body,
   actions,
@@ -48,30 +45,24 @@ export default function SplitFeature({
   return (
     <section className={`overflow-hidden ${TONE[tone]} ${className}`}>
       <div className="grid items-stretch lg:grid-cols-2">
-        <div
-          className={`relative min-h-[62svh] lg:min-h-[86svh] ${side === "right" ? "lg:order-2" : ""}`}
-        >
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            style={focal ? { objectPosition: focal } : undefined}
-            className="object-cover"
-          />
-        </div>
+        {/* The photograph drifts a little against the page as the section
+            crosses, so the frame reads as a window rather than a printed
+            rectangle. It costs no extra scroll, which is the only reason it
+            can go on every split on the site. */}
+        <ParallaxFrame
+          src={src}
+          alt={alt}
+          focal={focal}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className={`min-h-[62svh] lg:min-h-[86svh] ${side === "right" ? "lg:order-2" : ""}`}
+        />
 
         <div
           className={`flex flex-col justify-center px-6 py-20 sm:px-10 md:py-28 lg:px-16 lg:py-24 ${
             side === "right" ? "lg:order-1" : ""
           }`}
         >
-          {kicker && (
-            <Reveal>
-              <Kicker className={dark ? "text-brass-light" : "text-brass-dark"}>{kicker}</Kicker>
-            </Reveal>
-          )}
-          <Reveal delay={kicker ? 90 : 0} className={kicker ? "mt-6" : ""}>
+          <Reveal>
             {children}
           </Reveal>
           {body && (

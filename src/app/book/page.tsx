@@ -60,7 +60,6 @@ export default function BookPage() {
         )}
       />
       <UtilityHero
-        kicker="Book"
         title={
           <>
             Your hour of <Em>stillness</Em> starts here.
@@ -123,7 +122,7 @@ export default function BookPage() {
                   </h3>
                   <p className="mt-1 text-[0.85rem] text-taupe">{s.tagline}</p>
                 </Link>
-                <p className="text-[0.75rem] uppercase tracking-kicker text-taupe">{s.duration}</p>
+                <p className="text-[0.75rem] tracking-[0.02em] text-taupe">{s.duration}</p>
                 <p className="font-display text-xl text-brass-dark">
                   {s.tier === "express" ? `From $${s.price}` : `$${s.price}`}
                 </p>
@@ -131,7 +130,7 @@ export default function BookPage() {
                   href={BOOK_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="link-ul text-[0.75rem] font-semibold uppercase tracking-kicker"
+                  className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
                 >
                   Book →
                 </a>

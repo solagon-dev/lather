@@ -34,9 +34,12 @@ export interface SequenceStep {
 export default function PinnedSequence({
   steps,
   className = "",
+  stepHeight = 100,
 }: {
   steps: SequenceStep[];
   className?: string;
+  /** Screen-heights of scroll per step. Below 100 the sequence reads faster. */
+  stepHeight?: number;
 }) {
   const ref = useRef<HTMLElement>(null);
   const [reduced, setReduced] = useState(false);
@@ -88,7 +91,7 @@ export default function PinnedSequence({
   }
 
   return (
-    <section ref={ref} className={`relative bg-noir ${className}`} style={{ height: `${steps.length * 100}svh` }}>
+    <section ref={ref} className={`relative bg-noir ${className}`} style={{ height: `${steps.length * stepHeight}svh` }}>
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         {/* Painted in document order, so a panel fading in simply covers the
             ones before it. Nothing ever fades out — see Panel. */}

@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
 import LineReveal from "@/components/ui/LineReveal";
-import { Kicker, Statement } from "@/components/ui/Type";
+import { Statement } from "@/components/ui/Type";
 
 /**
  * Full-bleed media masthead, reserved for the two pages that are meant to feel
@@ -28,7 +28,6 @@ interface CinematicHeroPropsBase {
   src: string;
   alt?: string;
   sub?: ReactNode;
-  kicker?: ReactNode;
   focal?: string;
   children?: ReactNode;
 }
@@ -41,7 +40,6 @@ export default function CinematicHero({
   title,
   lines,
   sub,
-  kicker,
   focal,
   children,
 }: CinematicHeroProps) {
@@ -62,12 +60,7 @@ export default function CinematicHero({
 
       <div className="relative z-10 w-full px-6 pb-16 pt-32 text-ivory sm:px-10 md:pb-24 lg:px-16">
         <div className="wrap">
-          {kicker && (
-            <Reveal>
-              <Kicker className="text-brass-light">{kicker}</Kicker>
-            </Reveal>
-          )}
-          <Reveal delay={kicker ? 90 : 0} className={kicker ? "mt-6" : ""}>
+          <Reveal>
             <Statement as="h1" size="lg" className="max-w-5xl">
               {lines ? <LineReveal lines={lines} /> : title}
             </Statement>

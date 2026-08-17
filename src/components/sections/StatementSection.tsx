@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
-import { Kicker } from "@/components/ui/Type";
 
 /**
  * The reading beat: a small label, a large centred statement, a short
@@ -13,7 +12,6 @@ import { Kicker } from "@/components/ui/Type";
  * comfortable to read.
  */
 interface StatementSectionProps {
-  kicker?: ReactNode;
   children: ReactNode;
   /** Optional short paragraph beneath the statement. */
   body?: ReactNode;
@@ -34,7 +32,6 @@ const TONE = {
 };
 
 export default function StatementSection({
-  kicker,
   children,
   body,
   actions,
@@ -50,12 +47,7 @@ export default function StatementSection({
       className={`section-pad ${TONE[tone]} ${divided ? (dark ? "border-t border-ivory/10" : "border-t hairline") : ""} ${className}`}
     >
       <div className="wrap-narrow flex flex-col items-center text-center">
-        {kicker && (
-          <Reveal>
-            <Kicker className={dark ? "text-brass-light" : "text-brass-dark"}>{kicker}</Kicker>
-          </Reveal>
-        )}
-        <Reveal delay={kicker ? 90 : 0} className={kicker ? "mt-6 w-full" : "w-full"}>
+        <Reveal className="w-full">
           {children}
         </Reveal>
         {body && (

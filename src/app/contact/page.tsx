@@ -48,7 +48,6 @@ export default function ContactPage() {
         )}
       />
       <UtilityHero
-        kicker="Visit"
         title={
           <>
             Come find your <Em>quiet.</Em>
@@ -99,7 +98,7 @@ export default function ContactPage() {
             </address>
 
             <div className="mt-10 max-w-sm">
-              <p className="text-[0.68rem] uppercase tracking-kicker text-taupe">Hours</p>
+              <p className="text-[0.68rem] tracking-[0.02em] text-taupe">Hours</p>
               <ul className="mt-4 space-y-1 text-[0.9rem] text-umber">
                 {hours.map((h) => (
                   <li key={h.day} className="flex justify-between border-b hairline pb-1">
@@ -155,7 +154,7 @@ export default function ContactPage() {
             </p>
             <Link
               href="/faq"
-              className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker"
+              className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em]"
             >
               All Questions →
             </Link>

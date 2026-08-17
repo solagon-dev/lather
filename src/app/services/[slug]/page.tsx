@@ -100,7 +100,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
               <p className="mt-8 font-display text-2xl leading-relaxed">{details.whoItsFor}</p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {service.bestForTags.map((t) => (
-                  <span key={t} className="border hairline px-3 py-1.5 text-[0.7rem] uppercase tracking-wideish text-umber">
+                  <span key={t} className="border hairline px-3 py-1.5 text-[0.7rem] tracking-[0.015em] text-umber">
                     {t}
                   </span>
                 ))}
@@ -183,7 +183,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
                 </div>
                 <Link
                   href={`/services/${upgrade.id}`}
-                  className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker text-brass-light"
+                  className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em] text-brass-light"
                 >
                   View {upgrade.name} — ${upgrade.price} →
                 </Link>

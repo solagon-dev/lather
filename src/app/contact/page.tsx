@@ -2,22 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
 import FaqAccordion from "@/components/FaqAccordion";
-import PageHero from "@/components/PageHero";
+import MapEmbed from "@/components/MapEmbed";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { business, hours } from "@/lib/business";
 import { faqs } from "@/lib/data";
-import { seoCities } from "@/lib/seo-pages";
+import { getCity } from "@/lib/locations";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contact, Hours & Directions — Greenville, NC",
+  title: "Contact, Hours & Directions",
   description:
-    "Find Lather Spa & Wellness at 101 Fox Haven Drive in Greenville, NC. Hours, phone, directions, and free parking. By appointment — new guests welcome.",
+    "Lather Spa & Wellness, 101 Fox Haven Drive, Greenville NC. Hours, phone, directions and free parking. By appointment — new guests welcome.",
   alternates: { canonical: "/contact" },
 };
 
-const wintervilleDrive =
-  seoCities.find((c) => c.slug === "winterville-nc")?.driveTime ?? "about 10 minutes";
+const wintervilleDrive = getCity("winterville-nc")?.driveTime ?? "about 10 minutes";
 
 const gettingHere = [
   {
@@ -46,15 +47,17 @@ export default function ContactPage() {
           ])
         )}
       />
-      <PageHero
+      <UtilityHero
         title={
           <>
-            Come find your <span className="italic">quiet</span>
+            Come find your <Em>quiet.</Em>
           </>
         }
         sub="On Fox Haven Drive in Greenville, North Carolina — a calm, elevated space with free parking at the door. Designed with women in mind, all guests welcome."
-        image="/media/pages/contact-hero.webp"
-        imageAlt="The calm interior of Lather Spa & Wellness in Greenville, NC"
+        aside={{
+          src: "/media/pages/contact-hero.webp",
+          alt: "The calm interior of Lather Spa & Wellness in Greenville, NC",
+        }}
       />
 
       {/* ── NAP + MAP ────────────────────────────────────────── */}
@@ -68,7 +71,7 @@ export default function ContactPage() {
               <a
                 href={business.mapsUrl}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="link-ul font-display text-2xl text-ink"
               >
                 {business.address.street}
@@ -87,7 +90,7 @@ export default function ContactPage() {
                   </a>
                 </p>
                 <p>
-                  <a href={business.instagram} target="_blank" rel="noopener" className="link-ul">
+                  <a href={business.instagram} target="_blank" rel="noopener noreferrer" className="link-ul">
                     {business.instagramHandle}
                   </a>
                 </p>
@@ -95,7 +98,7 @@ export default function ContactPage() {
             </address>
 
             <div className="mt-10 max-w-sm">
-              <p className="text-[0.62rem] uppercase tracking-kicker text-taupe">Hours</p>
+              <p className="text-[0.68rem] tracking-[0.02em] text-taupe">Hours</p>
               <ul className="mt-4 space-y-1 text-[0.9rem] text-umber">
                 {hours.map((h) => (
                   <li key={h.day} className="flex justify-between border-b hairline pb-1">
@@ -112,18 +115,8 @@ export default function ContactPage() {
           </Reveal>
 
           <Reveal delay={120} className="flex">
-            <div className="w-full overflow-hidden border hairline">
-              <iframe
-                src={
-                  "https://www.google.com/maps?q=" +
-                  encodeURIComponent(`${business.name}, ${business.address.full}`) +
-                  "&output=embed"
-                }
-                title={`Map to ${business.name}`}
-                loading="lazy"
-                className="h-full min-h-[420px] w-full border-0"
-                allowFullScreen
-              />
+            <div className="flex w-full overflow-hidden border hairline">
+              <MapEmbed />
             </div>
           </Reveal>
         </div>
@@ -161,7 +154,7 @@ export default function ContactPage() {
             </p>
             <Link
               href="/faq"
-              className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker"
+              className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em]"
             >
               All Questions →
             </Link>

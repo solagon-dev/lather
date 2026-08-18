@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import BookCTA from "@/components/BookCTA";
 import Reveal from "@/components/Reveal";
 import { blogArticles } from "@/lib/blog";
-import { articleSchema, breadcrumbSchema, jsonLd } from "@/lib/seo";
+import { articleSchema, breadcrumbSchema, clampDescription, jsonLd } from "@/lib/seo";
 
 interface Params {
   slug: string;
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (!article) return {};
   return {
     title: { absolute: article.metaTitle },
-    description: article.metaDescription,
+    description: clampDescription(article.metaDescription),
     alternates: { canonical: `/journal/${article.slug}` },
   };
 }
@@ -61,14 +61,14 @@ export default async function JournalArticlePage({ params }: { params: Promise<P
       {/* ── ARTICLE HEADER ───────────────────────────────────── */}
       <section className="border-b hairline bg-porcelain px-6 pb-16 pt-40 sm:px-10 md:pb-20 md:pt-48">
         <Reveal className="mx-auto max-w-prose2">
-          <nav aria-label="Breadcrumb" className="text-[0.7rem] uppercase tracking-kicker text-taupe">
+          <nav aria-label="Breadcrumb" className="text-[0.7rem] tracking-[0.02em] text-taupe">
             <Link href="/journal" className="link-ul">
               The Journal
             </Link>{" "}
             / {article.category}
           </nav>
-          <p className="mt-8 text-[0.7rem] uppercase tracking-kicker text-brass">
-            {article.category} · {formatDate(article.publishDate)} · {article.readTime}
+          <p className="mt-8 text-[0.7rem] tracking-[0.02em] text-brass-dark">
+            {formatDate(article.publishDate)} · {article.readTime}
           </p>
           <h1 className="h-display mt-6 text-balance text-4xl sm:text-5xl md:text-6xl">{article.title}</h1>
         </Reveal>
@@ -78,7 +78,7 @@ export default async function JournalArticlePage({ params }: { params: Promise<P
       <article className="section-pad bg-ivory">
         <div className="mx-auto max-w-prose2">
           <Reveal>
-            <p className="font-display text-xl font-light italic leading-relaxed text-ink sm:text-2xl">
+            <p className="font-display text-xl italic leading-relaxed text-ink sm:text-2xl">
               {article.intro}
             </p>
           </Reveal>
@@ -120,7 +120,7 @@ export default async function JournalArticlePage({ params }: { params: Promise<P
                 More from the <span className="italic">Journal</span>
               </h2>
             </div>
-            <Link href="/journal" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">
+            <Link href="/journal" className="link-ul mb-2 text-[0.75rem] font-semibold tracking-[0.02em]">
               All Essays →
             </Link>
           </Reveal>
@@ -131,7 +131,7 @@ export default async function JournalArticlePage({ params }: { params: Promise<P
                   <h3 className="h-display flex-1 text-balance text-2xl transition-colors group-hover:text-brass-dark sm:text-3xl">
                     {a.title}
                   </h3>
-                  <p className="mt-6 border-t hairline pt-4 text-[0.7rem] uppercase tracking-kicker text-taupe">
+                  <p className="mt-6 border-t hairline pt-4 text-[0.7rem] tracking-[0.02em] text-taupe">
                     {a.category} · {a.readTime} · {formatDate(a.publishDate)}
                   </p>
                 </Link>

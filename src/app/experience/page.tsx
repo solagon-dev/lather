@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Image from "next/image";
 import BookCTA from "@/components/BookCTA";
 import LazyVideo from "@/components/LazyVideo";
-import PageHero from "@/components/PageHero";
+import CinematicHero from "@/components/heroes/CinematicHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { treatmentDetails } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
 
 export const metadata: Metadata = {
-  title: "The Head Spa Experience — What Happens During a Session",
+  title: "The Head Spa Experience",
   description:
-    "Walk through the five movements of a Lather head spa ritual — consultation, cleanse, massage, treatment, and renewal — and what to know before you arrive in Greenville, NC.",
+    "The five movements of a Lather head spa ritual — consultation, cleanse, massage, treatment, renewal — and what to know before you arrive.",
   alternates: { canonical: "/experience" },
 };
 
@@ -37,15 +39,16 @@ const goodToKnow = [
 export default function ExperiencePage() {
   return (
     <>
-      <PageHero
-        title={
-          <>
-            One unhurried hour, <span className="italic">five movements</span>
-          </>
-        }
+      <CinematicHero
+        src="/media/experience/step-03-massage.webp"
+        alt="Slow, intentional scalp massage during a Lather head spa ritual"
+        lines={[
+          <Fragment key="a">One unhurried hour,</Fragment>,
+          <Fragment key="b">
+            <Em>five movements.</Em>
+          </Fragment>,
+        ]}
         sub="Our signature head spa is one of Lather's Spa Experiences — and every ritual follows the same quiet arc: assessed, cleansed, massaged, treated, renewed. Here is what actually happens once you recline."
-        image="/media/experience/step-03-massage.webp"
-        imageAlt="Slow, intentional scalp massage during a Lather head spa ritual"
       />
 
       {/* ── THE FIVE MOVEMENTS ───────────────────────────────── */}
@@ -74,7 +77,7 @@ export default function ExperiencePage() {
                 </div>
               </Reveal>
               <Reveal className={imageFirst ? "" : "lg:order-1"}>
-                <p className="font-display text-5xl font-light text-brass/60">{step.number}</p>
+                <p className="font-display text-5xl text-brass-dark">{step.number}</p>
                 <h2 className="h-display mt-6 text-4xl sm:text-5xl">
                   {step.title}
                 </h2>
@@ -106,7 +109,9 @@ export default function ExperiencePage() {
             </p>
           </Reveal>
           <Reveal delay={120}>
-            <div className="relative aspect-[4/5] overflow-hidden">
+            {/* 4:5 matches the clip's encoded frame exactly — see HeroMedia for
+                why these sources are cropped at encode time rather than in CSS. */}
+            <div className="relative aspect-[404/506] overflow-hidden">
               <LazyVideo
                 className="absolute inset-0 h-full w-full object-cover"
                 src="/media/video/experience-cleanse.mp4"
@@ -129,7 +134,7 @@ export default function ExperiencePage() {
           <div className="mt-14 grid gap-px overflow-hidden border hairline bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
             {goodToKnow.map((g, i) => (
               <Reveal key={g.title} delay={i * 80} className="flex flex-col bg-ivory p-8">
-                <p className="font-display text-2xl font-light text-brass-dark">
+                <p className="font-display text-2xl text-brass-dark">
                   {String(i + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-4 font-display text-xl">{g.title}</h3>

@@ -2,8 +2,7 @@ import type { MetadataRoute } from "next";
 import { blogArticles } from "@/lib/blog";
 import { business } from "@/lib/business";
 import { services } from "@/lib/data";
-import { locations } from "@/lib/locations";
-import { seoCities, seoServiceTypes } from "@/lib/seo-pages";
+import { citiesWithPages } from "@/lib/locations";
 
 const BASE = business.siteUrl;
 
@@ -39,21 +38,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.55,
   }));
 
-  const locationPages: MetadataRoute.Sitemap = locations.map((l) => ({
-    url: `${BASE}/locations/${l.slug}`,
+  // One page per city served. The four service-prefixed families that used to
+  // sit alongside these were near-duplicates of each other and now 301 here.
+  const cityPages: MetadataRoute.Sitemap = citiesWithPages.map((c) => ({
+    url: `${BASE}/locations/${c.slug}`,
     lastModified: now,
     changeFrequency: "monthly",
-    priority: 0.6,
+    priority: c.distanceMiles === 0 ? 0.75 : 0.55,
   }));
 
-  const seoLandingPages: MetadataRoute.Sitemap = seoServiceTypes.flatMap((t) =>
-    seoCities.map((c) => ({
-      url: `${BASE}/${t.urlPrefix}/${c.slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: c.slug === "greenville-nc" ? 0.7 : 0.55,
-    }))
-  );
-
-  return [...core, ...servicePages, ...articlePages, ...locationPages, ...seoLandingPages];
+  return [...core, ...servicePages, ...articlePages, ...cityPages];
 }

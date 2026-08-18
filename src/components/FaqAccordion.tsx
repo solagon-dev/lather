@@ -12,7 +12,7 @@ export default function FaqAccordion({ faqs }: { faqs: Faq[] }) {
             <span>{f.question}</span>
             <span
               aria-hidden
-              className="shrink-0 font-body text-lg text-brass transition-transform duration-300 group-open:rotate-45"
+              className="shrink-0 font-body text-lg text-brass-dark transition-transform duration-300 group-open:rotate-45"
             >
               +
             </span>

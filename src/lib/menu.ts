@@ -16,6 +16,12 @@ export interface Pillar {
   tagline: string;
   intro: string;
   image: string;
+  /**
+   * object-position for the card image. These photos are tall portraits shown
+   * in landscape crops (16:10 / 4:3); a plain center crop decapitates standing
+   * subjects, so bias the focal point per image. Defaults to center.
+   */
+  imagePosition?: string;
   items: MenuItem[];
 }
 
@@ -27,6 +33,7 @@ export const pillars: Pillar[] = [
     intro:
       "Restorative treatments in a quiet, considered space — care for the scalp, skin, and body that leaves you feeling genuinely better than when you arrived.",
     image: "/media/experience/step-03-massage.webp",
+    imagePosition: "50% 35%",
     items: [
       {
         name: "Head Spa",
@@ -62,7 +69,11 @@ export const pillars: Pillar[] = [
     tagline: "Renew",
     intro:
       "Advanced, personalized care led by licensed providers — a whole-body approach to feeling well, delivered in a setting that never feels clinical.",
-    image: "/media/scalp-concerns/concerns-hero.webp",
+    // A provider-and-client consultation — the image that actually reads
+    // "wellness care," and visually distinct from the hands-on Spa photo above.
+    // Previously reused the same shampoo-basin shot as Spa.
+    image: "/media/experience/step-01-consultation.webp",
+    imagePosition: "50% 28%",
     items: [
       {
         name: "Wellness Consultations",

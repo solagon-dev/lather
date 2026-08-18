@@ -1,22 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree, Fraunces } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import StickyBook from "@/components/StickyBook";
+import Preloader from "@/components/ui/Preloader";
 import { business } from "@/lib/business";
-import { jsonLd, localBusinessSchema } from "@/lib/seo";
+import { jsonLd, localBusinessSchema, organizationSchema } from "@/lib/seo";
 import "./globals.css";
 
-const fraunces = Fraunces({
+// Instrument Serif ships a single weight plus a true italic — no light, no
+// bold. That is a feature here: the display voice is one roman and one italic,
+// and the italic does real work as the second half of every headline. Any
+// `font-light` on display type would only produce a faux weight, so there is
+// none left in the codebase.
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
   display: "swap",
-  axes: ["opsz", "SOFT", "WONK"],
 });
 
-const figtree = Figtree({
+// Manrope is variable, so the sans covers 200–800 from one file.
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-figtree",
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -27,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | Lather Spa & Wellness",
   },
   description:
-    "Lather Spa & Wellness is a luxury wellness destination in Greenville, NC — restorative spa experiences and advanced, personalized wellness care. Where modern wellness meets elevated self-care.",
+    "A luxury spa and wellness destination in Greenville, NC — restorative spa experiences and advanced, personalized wellness care, in one considered space.",
   keywords: [
     "spa Greenville NC",
     "wellness Greenville NC",
@@ -40,21 +48,20 @@ export const metadata: Metadata = {
     "luxury spa Greenville",
   ],
   alternates: { canonical: "/" },
+  // No `title`/`description` here on purpose. Setting them pinned every page's
+  // share card to the homepage copy — a link to /book or a journal essay showed
+  // the homepage title everywhere it was pasted. Left unset, Next derives
+  // og:title / og:description from each page's own metadata and falls back to
+  // the defaults above for the homepage.
   openGraph: {
     type: "website",
     locale: "en_US",
     url: business.siteUrl,
     siteName: business.name,
-    title: "Lather Spa & Wellness | Modern Wellness in Greenville, NC",
-    description:
-      "Where modern wellness meets elevated self-care. Restorative spa experiences and advanced wellness care in Greenville, North Carolina.",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Lather Spa & Wellness — Greenville, NC" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lather Spa & Wellness | Modern Wellness in Greenville, NC",
-    description:
-      "Where modern wellness meets elevated self-care — Greenville, NC.",
     images: ["/og.jpg"],
   },
   robots: {
@@ -77,15 +84,35 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${figtree.variable}`}>
+    <html lang="en" className={`${instrumentSerif.variable} ${manrope.variable}`}>
       <body>
         {/* Without JS the scroll reveals would never fire — show everything. */}
         <noscript>
-          <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
+          <style>{`.reveal,.reveal-line{opacity:1 !important;transform:none !important}`}</style>
         </noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(localBusinessSchema())} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema())} />
+        <Preloader />
         <Navbar />
         <main id="main">{children}</main>
+        {/* One piece of film running over the whole page, not a texture each
+            section carries for itself.
+
+            Per-section grain is a flat multiply that stops dead at the panel
+            it belongs to, so wherever a grained section met an ungrained one
+            there was a hard tonal step straight across the viewport — most
+            visibly right where the hero hands over to the section below it,
+            which is the one boundary meant to read as continuous.
+
+            Fixed rather than absolute, so the texture stays put while the page
+            moves under it. Grain that scrolls with the content reads as a
+            pattern printed on the page; grain that holds still reads as the
+            grain of the thing you are looking through. Below the header's
+            z-index, so the bar is never multiplied. */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-40 grain-overlay opacity-[0.13]"
+        />
         <Footer />
         <StickyBook />
       </body>

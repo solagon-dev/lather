@@ -1,296 +1,439 @@
-import Image from "next/image";
+import { Fragment } from "react";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
-import HeroMedia from "@/components/HeroMedia";
-import Marquee from "@/components/Marquee";
 import Reveal from "@/components/Reveal";
 import SocialSection from "@/components/SocialSection";
+import CollapsingHero from "@/components/sections/CollapsingHero";
+import FullBleedStatement from "@/components/sections/FullBleedStatement";
+import ImageRow from "@/components/sections/ImageRow";
+import Ledger, { LedgerRow } from "@/components/sections/Ledger";
+import MatrixGallery from "@/components/sections/MatrixGallery";
+import CoinStatement from "@/components/sections/CoinStatement";
+import CTASection from "@/components/sections/CTASection";
+import PinnedObjectSequence from "@/components/sections/PinnedObjectSequence";
+import HorizontalSteps from "@/components/sections/HorizontalSteps";
+import SplitFeature from "@/components/sections/SplitFeature";
+import StickySplit, { SplitQuote } from "@/components/sections/StickySplit";
+import StatementSection from "@/components/sections/StatementSection";
+import LineReveal from "@/components/ui/LineReveal";
+import { Em, Lede, Statement } from "@/components/ui/Type";
+import { Soft } from "@/components/ui/CinematicHeading";
 import { BOOK_URL, business, hours } from "@/lib/business";
 import { testimonials } from "@/lib/data";
+import { experienceSteps } from "@/lib/experience";
 import { featuredProvider, pillars, whyLather } from "@/lib/menu";
 
-const galleryStrip = [
-  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the Lather treatment room" },
-  { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge" },
-  { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp detail at Lather Spa & Wellness" },
-  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Spa & Wellness" },
+// The board that opens "Step inside" — interiors only, and deliberately none
+// of the photos the Instagram strip further down uses.
+const galleryTiles = [
+  { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the Lather treatment room", ratio: "aspect-[3/4]" },
+  { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge", ratio: "aspect-[4/5]" },
+  { src: "/media/gallery/interior-lamp-brass.webp", alt: "Brass lamp detail at Lather Spa & Wellness", ratio: "aspect-[3/4]" },
+  { src: "/media/gallery/interior-reception-detail.webp", alt: "Reception details at Lather Spa & Wellness", ratio: "aspect-[4/5]" },
+  { src: "/media/gallery/interior-crystal-lamp.webp", alt: "Crystal lamp detail", ratio: "aspect-[4/5]" },
+  { src: "/media/gallery/interior-diffuser.webp", alt: "Diffuser detail in the treatment room", ratio: "aspect-[3/4]" },
+  { src: "/media/gallery/interior-team-portrait.webp", alt: "The Lather team", ratio: "aspect-[3/4]" },
+  { src: "/media/editorial/secondary-treatment.webp", alt: "A treatment detail", ratio: "aspect-[4/5]" },
+  { src: "/media/experience/step-04-treatment.webp", alt: "Targeted scalp treatment", ratio: "aspect-[3/4]" },
+  { src: "/media/editorial/value-prop.webp", alt: "A quiet moment at Lather", ratio: "aspect-[4/5]" },
+  { src: "/media/treatments/classic-ritual.webp", alt: "The Classic Ritual", ratio: "aspect-[3/4]" },
+  { src: "/media/gallery/treatment-waterfall.webp", alt: "Warm water over the scalp", ratio: "aspect-[4/5]" },
 ];
+
+/**
+ * The robe model.
+ *
+ * Converted from the purchased Marvelous Designer OBJ: 210k faces and two
+ * 8192px maps became 53k faces and 2048px WebP, meshopt-compressed —
+ * 11.1MB to 797KB. Point this at undefined to fall back to photography.
+ */
+const ROBE_MODEL: string | undefined = "/models/robe.glb";
+
+// The five movements, reused from /experience so the two pages can never drift.
+const ritualSteps = experienceSteps.map((s) => ({
+  src: s.image,
+  alt: `${s.title} — movement ${s.number} of the Lather head spa ritual`,
+  number: s.number,
+  title: s.title,
+  body: s.body,
+}));
 
 export default function HomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="grain relative flex min-h-[100svh] flex-col justify-center gap-7 overflow-hidden bg-noir pt-20 text-ivory md:justify-end md:gap-0 md:pt-0">
-        <HeroMedia />
-
-        <div className="wrap relative z-10 px-6 pb-6 sm:px-10 md:pb-24 md:pt-44 lg:px-16">
-          <Reveal>
-            <h1 className="h-display max-w-4xl text-balance text-4xl leading-[1.05] sm:text-5xl md:text-6xl lg:text-7xl">
-              Where modern wellness meets <span className="italic text-brass-light">elevated self-care.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-base text-ivory/75 sm:mt-8 sm:text-lg">
-              A luxury wellness destination in Greenville, North Carolina — restorative spa
-              experiences and advanced, personalized wellness care, in one considered space.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-              <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
-                Book Appointment
-              </a>
-              <Link href="/services" className="btn-outline-light">
-                Explore Services
-              </Link>
-            </div>
-          </Reveal>
+      {/* Opens full-bleed with the wordmark centred and draws back into a
+          centred tile as you scroll — the intro's expansion, run backwards. */}
+      <CollapsingHero
+        src="/media/hero/hero-landscape.webp"
+        video="/media/video/hero-landscape.mp4"
+        alt=""
+        tagline={
+          <p className="text-base text-ivory/80 sm:text-lg">
+            A luxury wellness destination in Greenville, North Carolina — restorative spa
+            experiences and advanced, personalized wellness care, in one considered space.
+          </p>
+        }
+      >
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+          <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+            Book Appointment
+          </a>
+          <Link href="/services" className="btn-outline-light">
+            Explore Services
+          </Link>
         </div>
+      </CollapsingHero>
 
-        <div className="absolute bottom-8 right-8 hidden items-center gap-3 text-[0.65rem] uppercase tracking-kicker text-ivory/50 md:flex">
-          <span>Scroll</span>
-          <span className="block h-10 w-px animate-pulse bg-ivory/40" />
-        </div>
-      </section>
+      {/* h1 for the document, carried by the hero's wordmark visually. */}
+      <h1 className="sr-only">
+        Lather Spa &amp; Wellness — where modern wellness meets elevated self-care
+      </h1>
 
-      <Marquee />
+      {/* ── THE FOUNTAIN, PINNED ─────────────────────────────── */}
+      {/* One object held across three beats: the mark rises and turns while
+          the argument changes over it. */}
+      <PinnedObjectSequence
+        modelSrc={ROBE_MODEL}
+        beats={[
+          {
+            place: "under",
+            lines: [
+              <Fragment key="1a">
+                One destination <Soft>for the</Soft>
+              </Fragment>,
+              <Fragment key="1b">whole of you</Fragment>,
+            ],
+          },
+          {
+            place: "left",
+            lines: [
+              <Fragment key="2a">
+                Restorative <Soft>spa,</Soft>
+              </Fragment>,
+              <Fragment key="2b">
+                <Soft>and</Soft> clinical care
+              </Fragment>,
+            ],
+            note: "Two practices that usually live in different buildings, kept under one roof and one standard.",
+          },
+          {
+            place: "right",
+            lines: [
+              <Fragment key="3a">Results without</Fragment>,
+              <Fragment key="3b">
+                <Soft>the</Soft> trade-off
+              </Fragment>,
+            ],
+            note: "Outcomes you can measure, in a room that never once feels clinical.",
+          },
+          {
+            place: "centre",
+            lines: [
+              <Fragment key="4a">
+                <Soft>and every hour of it is</Soft>
+              </Fragment>,
+              <Fragment key="4b">yours alone</Fragment>,
+            ],
+            tail: (
+              <>
+                <Lede centered className="max-w-[52ch] text-umber">
+                  Lather blends restorative spa experiences with advanced, personalized wellness
+                  care — bridging the gap between clinical wellness and the restorative spa, in one
+                  thoughtfully designed space.
+                </Lede>
+                <Link href="/about" className="btn-outline pointer-events-auto mt-9">
+                  Our story
+                </Link>
+              </>
+            ),
+          },
+        ]}
+      />
 
-      {/* ── INTRO ────────────────────────────────────────────── */}
-      <section className="section-pad bg-porcelain">
-        <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr]">
-          <Reveal className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="arch relative aspect-[3/4]">
-              <Image
-                src="/media/gallery/treatment-waterfall.webp"
-                alt="A restorative treatment at Lather Spa & Wellness"
-                fill
-                sizes="(min-width: 1024px) 45vw, 90vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-5 right-2 bg-noir px-5 py-4 text-ivory sm:-bottom-6 sm:-right-4 sm:px-6 sm:py-5 md:-right-10">
-              <p className="font-display text-3xl text-brass-light">5.0</p>
-              <p className="mt-1 text-[0.6rem] uppercase tracking-kicker text-ivory/60">Guest Rating</p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              Two kinds of care, one destination
-            </h2>
-            <p className="mt-8 max-w-xl text-umber">
-              Lather Spa &amp; Wellness blends restorative spa experiences with advanced, personalized
-              wellness care. We bridge the gap between clinical wellness and restorative spa — offering
-              both in one thoughtfully designed space.
-            </p>
-            <p className="mt-5 max-w-xl text-umber">
-              Results-driven treatments in a calm, elevated environment. Somewhere to slow down, feel
-              genuinely cared for, and invest in yourself without guilt.
-            </p>
-            <dl className="mt-10 grid grid-cols-1 gap-5 border-t hairline pt-8 sm:grid-cols-3 sm:gap-6">
-              <div>
-                <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Located</dt>
-                <dd className="mt-2 font-display text-lg">Greenville, NC</dd>
-              </div>
-              <div>
-                <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Every plan</dt>
-                <dd className="mt-2 font-display text-lg">Personalized</dd>
-              </div>
-              <div>
-                <dt className="text-[0.62rem] uppercase tracking-kicker text-taupe">Delivered by</dt>
-                <dd className="mt-2 font-display text-lg">Licensed providers</dd>
-              </div>
-            </dl>
-            <Link href="/about" className="link-ul mt-10 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker">
-              Our Story →
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── PILLARS ──────────────────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-ivory">
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">
-              Spa <span className="italic text-brass-dark">&amp;</span> wellness
-            </h2>
-            <p className="mt-6 text-umber">
-              Two pillars of care under one roof — restore the body and skin, and renew your
-              long-term well-being.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid gap-8 lg:grid-cols-2">
-            {pillars.map((pillar, i) => (
-              <Reveal key={pillar.key} delay={i * 120} className="group flex flex-col border hairline bg-porcelain">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={pillar.image}
-                    alt={pillar.label}
-                    fill
-                    sizes="(min-width: 1024px) 45vw, 100vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-luxe group-hover:scale-105"
-                  />
-                  <span className="absolute left-5 top-5 bg-noir/80 px-3 py-1.5 text-[0.6rem] font-semibold uppercase tracking-kicker text-brass-light backdrop-blur-sm">
-                    {pillar.tagline}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-8">
-                  <h3 className="font-display text-3xl">{pillar.label}</h3>
-                  <p className="mt-4 text-umber">{pillar.intro}</p>
-                  <ul className="mt-6 flex flex-wrap gap-2">
-                    {pillar.items.map((item) => (
-                      <li
-                        key={item.name}
-                        className="border hairline px-3 py-1.5 text-[0.72rem] uppercase tracking-wideish text-umber"
-                      >
-                        {item.name}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href="/services"
-                    className="link-ul mt-8 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker"
+      {/* ── THE TWO PILLARS ──────────────────────────────────── */}
+      {pillars.map((pillar, i) => (
+        <SplitFeature
+          key={pillar.key}
+          src={pillar.image}
+          alt={pillar.label}
+          focal={pillar.imagePosition}
+          side={i % 2 === 0 ? "left" : "right"}
+          tone={i % 2 === 0 ? "ivory" : "porcelain"}
+          body={
+            <>
+              <Lede>{pillar.intro}</Lede>
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {pillar.items.map((item) => (
+                  <li
+                    key={item.name}
+                    className="border hairline px-3 py-1.5 text-[0.72rem] tracking-[0.015em] text-umber"
                   >
-                    View {pillar.label} →
-                  </Link>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+            </>
+          }
+          actions={
+            <Link href="/services" className="btn-outline">
+              View {pillar.label}
+            </Link>
+          }
+        >
+          <Statement as="h2" size="md">
+            {pillar.label}
+          </Statement>
+        </SplitFeature>
+      ))}
 
-      {/* ── FEATURED: WELLNESS CONSULTATION ──────────────────── */}
-      <section className="grain relative overflow-hidden bg-noir text-ivory">
-        <div className="wrap grid items-stretch gap-0 lg:grid-cols-2">
-          <div className="relative min-h-[22rem] lg:min-h-[32rem]">
-            <Image
-              src="/media/team/team-atmosphere.webp"
-              alt="Inside Lather Spa & Wellness"
-              fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <Reveal className="flex flex-col justify-center px-6 py-16 sm:px-10 md:py-24 lg:px-16">
-            <p className="text-[0.7rem] font-semibold uppercase tracking-kicker text-brass-light">
-              Start here
-            </p>
-            <h2 className="h-display mt-5 text-balance text-4xl sm:text-5xl">
-              Begin with a wellness consultation
-            </h2>
-            <p className="mt-6 max-w-lg text-ivory/75">{featuredProvider.blurb}</p>
-            <p className="mt-6 font-display text-xl text-brass-light">
+      {/* ── THE RITUAL, PINNED ───────────────────────────────── */}
+      {/* The page's ground is light throughout; the only dark on it comes from
+          a photograph or a rendered object, never from a panel painted noir.
+          So the film below is dark because it *is* film, and the two beats
+          that bracket it are light — which is also what stops the ritual from
+          arriving as one undifferentiated black stretch. */}
+      <StatementSection tone="ivory">
+        <Statement as="h2" size="lg">
+          <LineReveal
+            lines={[
+              <Fragment key="a">
+                One unhurried hour, <Em>five</Em>
+              </Fragment>,
+              <Fragment key="b">
+                <Em>movements.</Em>
+              </Fragment>,
+            ]}
+          />
+        </Statement>
+      </StatementSection>
+
+      <HorizontalSteps steps={ritualSteps} />
+
+      <StatementSection
+        tone="porcelain"
+        body={
+          <Lede centered className="text-umber">
+            Assessed, cleansed, massaged, treated, renewed. Every appointment is private and held
+            exclusively for you — nothing is rushed, because the slower the session moves, the
+            better it works.
+          </Lede>
+        }
+        actions={
+          <Link href="/experience" className="btn-solid">
+            The full experience
+          </Link>
+        }
+      >
+        <Statement as="h2" size="md">
+          The slower it moves, <Em>the better</Em> it works.
+        </Statement>
+      </StatementSection>
+
+      {/* ── START HERE — WELLNESS ────────────────────────────── */}
+      <SplitFeature
+        src="/media/team/team-atmosphere.webp"
+        alt="Inside Lather Spa & Wellness"
+        side="right"
+        tone="ivory"
+        body={
+          <>
+            <Lede>{featuredProvider.blurb}</Lede>
+            <p className="mt-8 font-display text-xl text-brass-dark">
               {featuredProvider.name}
-              <span className="block text-[0.8rem] font-normal uppercase tracking-wideish text-ivory/50">
+              <span className="block text-[0.8rem] font-normal tracking-[0.015em] text-taupe">
                 {featuredProvider.role}
               </span>
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <a href={BOOK_URL} target="_blank" rel="noopener" className="btn-solid-light">
-                Book a Consultation
-              </a>
-              <Link href="/services" className="btn-outline-light">
-                All Wellness Services
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+          </>
+        }
+        actions={
+          <>
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
+              Book a Consultation
+            </a>
+            <Link href="/services" className="btn-outline">
+              All Wellness Services
+            </Link>
+          </>
+        }
+      >
+        <Statement as="h2" size="md">
+          Begin with a <Em>wellness</Em> consultation.
+        </Statement>
+      </SplitFeature>
 
       {/* ── WHY LATHER ───────────────────────────────────────── */}
+      {/* Five reasons read as an index rather than as a wrapped grid — the old
+          three-then-two layout left a ragged short row that read as a mistake,
+          and no amount of centring fixed it. */}
       <section className="section-pad bg-porcelain">
         <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">Why Lather</h2>
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <Statement as="h2" size="md">
+              Why <Em>Lather</Em>
+            </Statement>
           </Reveal>
-          <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {whyLather.map((item, i) => (
-              <Reveal key={item.title} as="div" delay={i * 70} className="border-t hairline pt-6">
-                <p className="font-display text-2xl">{item.title}</p>
-                <p className="mt-3 text-[0.95rem] leading-relaxed text-umber">{item.body}</p>
-              </Reveal>
-            ))}
-          </div>
         </div>
+
+        <Ledger className="mt-10">
+          {whyLather.map((item, i) => (
+            <LedgerRow
+              key={item.title}
+              aside={String(i + 1).padStart(2, "0")}
+              lead={
+                <h3 className="font-display text-[clamp(1.5rem,2.8vw,2.35rem)] leading-[1.24]">
+                  {item.title}
+                </h3>
+              }
+              tail={
+                <p className="max-w-[54ch] text-[0.98rem] leading-relaxed text-umber">{item.body}</p>
+              }
+            />
+          ))}
+        </Ledger>
       </section>
 
+      {/* ── FOUNDERS ─────────────────────────────────────────── */}
+      <StickySplit
+        src="/media/founders/founders-staircase.webp"
+        alt="Lather Spa & Wellness founders Hannah DeMotts, Abigail Baldwin, and Stacia Friend, CNM"
+        side="left"
+        tone="ivory"
+        strip={[
+          { src: "/media/gallery/interior-waiting-room.webp", alt: "The Lather lounge" },
+          { src: "/media/gallery/interior-gold-mirror.webp", alt: "Gold-framed mirror in the treatment room" },
+        ]}
+      >
+        <SplitQuote
+          attribution="Hannah DeMotts, Abigail Baldwin & Stacia Friend, CNM"
+          role="founders of Lather"
+        >
+          &ldquo;You could find a spa, or you could find clinical wellness care, but almost never
+          both. We stopped waiting for someone else to build the room we wanted to walk into.&rdquo;
+        </SplitQuote>
+
+        <Reveal delay={260} className="mt-14">
+          <div className="flex justify-center">
+            <Link href="/about" className="btn-outline">
+              Meet the Founders
+            </Link>
+          </div>
+        </Reveal>
+      </StickySplit>
+
       {/* ── EDITORIAL BREAK ──────────────────────────────────── */}
-      <section className="relative h-[52vh] min-h-[380px] overflow-hidden">
-        <Image
-          src="/media/editorial/editorial-break.webp"
-          alt="Quiet ambiance inside Lather Spa & Wellness"
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center bg-noir/40 px-6">
-          <Reveal>
-            <p className="h-display max-w-3xl text-center text-3xl italic text-ivory sm:text-4xl md:text-5xl">
-              Leave better than you arrived.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <FullBleedStatement
+        src="/media/editorial/editorial-break.webp"
+        alt=""
+        scrim="strong"
+        height="short"
+      >
+        <Statement as="p" size="md" className="mx-auto max-w-4xl">
+          Somewhere <Em>to slow down,</Em> feel genuinely cared for, <Em>and</Em> invest in yourself{" "}
+          <Em>without guilt.</Em>
+        </Statement>
+      </FullBleedStatement>
 
       {/* ── TESTIMONIALS ─────────────────────────────────────── */}
       <section className="section-pad bg-bone">
         <div className="wrap">
-          <Reveal className="text-center">
-            <h2 className="h-display text-4xl sm:text-5xl">In their words</h2>
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <Statement as="h2" size="md">
+              <Em>In</Em> their words
+            </Statement>
           </Reveal>
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <Reveal key={t.name} delay={i * 100} className="flex flex-col border hairline bg-ivory p-8">
-                <blockquote className="flex-1 font-display text-xl font-light leading-relaxed">
+        </div>
+
+        <Ledger className="mt-10">
+          {testimonials.map((t, i) => (
+            <LedgerRow
+              key={t.name}
+              aside={String(i + 1).padStart(2, "0")}
+              lead={
+                <blockquote className="font-display text-[clamp(1.55rem,3.2vw,2.75rem)] leading-[1.24]">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
-                <footer className="mt-6 border-t hairline pt-4 text-[0.75rem] uppercase tracking-wideish text-taupe">
+              }
+              tail={
+                <footer className="font-body text-[0.8rem] tracking-[0.015em] text-taupe">
+                  {/* The rating stays next to the name rather than sitting above
+                      the quote. It is a real signal and worth carrying, but a row
+                      of stars set large is the loudest thing on a page whose whole
+                      argument is restraint. */}
+                  <span aria-hidden className="mr-2 text-[0.72rem] tracking-[0.08em] text-brass-dark">
+                    ★★★★★
+                  </span>
+                  <span className="sr-only">Rated 5 out of 5 stars. </span>
                   <span className="font-semibold text-ink">{t.name}</span> · {t.service}
-                  <br />
-                  <span className="text-[0.65rem]">{t.location}</span>
+                  <span className="mt-1 block text-[0.7rem]">{t.location}</span>
                 </footer>
-              </Reveal>
-            ))}
-          </div>
-        </div>
+              }
+            />
+          ))}
+        </Ledger>
       </section>
 
-      {/* ── SPACE / GALLERY STRIP ────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-porcelain">
-        <div className="wrap">
-          <Reveal className="flex flex-wrap items-end justify-between gap-6">
-            <h2 className="h-display text-4xl sm:text-5xl">Step inside</h2>
-            <Link href="/about" className="link-ul mb-2 text-[0.75rem] font-semibold uppercase tracking-kicker">
-              Our Space →
-            </Link>
-          </Reveal>
-          <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {galleryStrip.map((g, i) => (
-              <Reveal key={g.src} delay={i * 80} className={i % 2 === 1 ? "md:mt-10" : ""}>
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <Image
-                    src={g.src}
-                    alt={g.alt}
-                    fill
-                    sizes="(min-width: 768px) 25vw, 50vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-luxe hover:scale-105"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── STEP INSIDE ──────────────────────────────────────── */}
+      <StatementSection className="pb-0">
+        <Statement as="h2" size="md">
+          Step <Em>inside.</Em>
+        </Statement>
+      </StatementSection>
+      <MatrixGallery tiles={galleryTiles} cta={{ href: "/about", label: "Our space" }} />
 
-      {/* ── SOCIAL / INSTAGRAM ───────────────────────────────── */}
+      {/* ── SOCIAL ───────────────────────────────────────────── */}
       <SocialSection />
 
+      {/* ── A LINE TO LIVE BY ────────────────────────────────── */}
+      {/* The mark set into the middle of the line: the first half passes
+          behind it, the second half crosses in front. */}
+      <CoinStatement
+        lines={[
+          { left: "You arrive", right: "carrying" },
+          { left: "the whole week", right: "in your neck," },
+          { left: "your jaw,", right: "your hands." },
+          { left: "You leave", right: "carrying none" },
+          { left: "of it, and better", right: "than you arrived." },
+        ]}
+      />
+
+      {/* ── THE ASK ──────────────────────────────────────────── */}
+      <CTASection
+        lines={[
+          <Fragment key="c1">Come and see</Fragment>,
+          <Fragment key="c2">
+            what an hour <Em>can do.</Em>
+          </Fragment>,
+        ]}
+        body="Book a single ritual or a full afternoon. Either way the room is yours, and nothing about it is rushed."
+        actions={
+          <>
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+              Book appointment
+            </a>
+            <Link href="/services" className="btn-outline-light">
+              Explore services
+            </Link>
+          </>
+        }
+      />
+
       {/* ── VISIT ────────────────────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-porcelain">
-        <div className="wrap grid items-center gap-14 lg:grid-cols-2">
-          <Reveal>
-            <h2 className="h-display text-4xl sm:text-5xl">In the heart of Greenville</h2>
-            <address className="mt-8 not-italic text-umber">
-              <a href={business.mapsUrl} target="_blank" rel="noopener" className="link-ul font-display text-2xl text-ink">
+      <SplitFeature
+        src="/media/pages/locations-hero.webp"
+        alt="The lounge at Lather Spa & Wellness in Greenville, NC"
+        side="left"
+        tone="porcelain"
+        body={
+          <>
+            <address className="not-italic text-umber">
+              <a
+                href={business.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-ul font-display text-2xl text-ink"
+              >
                 {business.address.street}
               </a>
               <br />
@@ -301,32 +444,26 @@ export default function HomePage() {
               </a>
             </address>
             <p className="mt-4 text-[0.85rem] text-taupe">{business.parking} · By appointment</p>
-            <div className="mt-8 max-w-sm">
-              <ul className="space-y-1 text-[0.9rem] text-umber">
-                {hours.map((h) => (
-                  <li key={h.day} className="flex justify-between border-b hairline pb-1">
-                    <span>{h.day}</span>
-                    <span>{h.open ? `${h.open} – ${h.close}` : "Closed"}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-          <Reveal delay={120} className="relative">
-            <div className="arch relative aspect-[3/4] max-h-[560px] w-full">
-              <Image
-                src="/media/about/about-hero.webp"
-                alt="Lather Spa & Wellness in Greenville, NC"
-                fill
-                sizes="(min-width: 1024px) 45vw, 90vw"
-                className="object-cover"
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+            <ul className="mt-8 max-w-sm space-y-1 text-[0.9rem] text-umber">
+              {hours.map((h) => (
+                <li key={h.day} className="flex justify-between gap-3 border-b hairline pb-1">
+                  <span className="whitespace-nowrap">{h.day}</span>
+                  <span className="whitespace-nowrap">
+                    {h.open ? `${h.open} – ${h.close}` : "Closed"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        }
+      >
+        <Statement as="h2" size="md">
+          <Em>In the heart of</Em> Greenville.
+        </Statement>
+      </SplitFeature>
 
       <BookCTA />
+
     </>
   );
 }

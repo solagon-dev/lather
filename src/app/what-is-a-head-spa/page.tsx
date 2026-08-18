@@ -2,17 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
 import FaqAccordion from "@/components/FaqAccordion";
-import PageHero from "@/components/PageHero";
+import ArticleHero from "@/components/heroes/ArticleHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { blogArticles } from "@/lib/blog";
 import { headSpaFaqs } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
 import { breadcrumbSchema, faqSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "What Is a Head Spa? The Complete Guide",
+  title: "What Is a Head Spa?",
   description:
-    "What is a head spa, exactly? Learn the Japanese origins, how it differs from a salon wash, what happens during a session, and why it works — from Lather Spa & Wellness in Greenville, NC.",
+    "What a head spa is, its Japanese origins, how it differs from a salon wash, what happens in a session, and what it costs. A complete guide.",
   alternates: { canonical: "/what-is-a-head-spa" },
 };
 
@@ -57,15 +58,19 @@ export default function WhatIsAHeadSpaPage() {
         )}
       />
 
-      <PageHero
+      <ArticleHero
+        breadcrumb={{ href: "/journal", label: "The Journal" }}
+        category="Guide"
         title={
           <>
-            What is a <span className="italic">head spa?</span>
+            What is a <Em>head spa?</Em>
           </>
         }
-        sub={article.intro}
-        image="/media/pages/head-spa-guide-hero.webp"
-        imageAlt="A head spa treatment in progress at Lather in Greenville, NC"
+        dek={article.intro}
+        image={{
+          src: "/media/pages/head-spa-guide-hero.webp",
+          alt: "A head spa treatment in progress at Lather in Greenville, NC",
+        }}
       />
 
       {/* ── SECTION 1: ORIGINS ───────────────────────────────── */}
@@ -171,7 +176,7 @@ export default function WhatIsAHeadSpaPage() {
           <ol className="mt-16 grid gap-10 border-t border-ivory/10 pt-12 sm:grid-cols-2 lg:grid-cols-5">
             {experienceSteps.map((step, i) => (
               <Reveal key={step.number} as="li" delay={i * 80}>
-                <p className="font-display text-3xl font-light text-brass-light/70">{step.number}</p>
+                <p className="font-display text-3xl text-brass-light/70">{step.number}</p>
                 <h3 className="mt-4 font-display text-2xl">{step.title}</h3>
                 <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{step.body}</p>
               </Reveal>
@@ -198,13 +203,13 @@ export default function WhatIsAHeadSpaPage() {
             <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
               <Link
                 href="/services"
-                className="link-ul text-[0.75rem] font-semibold uppercase tracking-kicker"
+                className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
               >
                 Browse the Rituals →
               </Link>
               <Link
                 href="/scalp-concerns"
-                className="link-ul text-[0.75rem] font-semibold uppercase tracking-kicker"
+                className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
               >
                 Start With Your Concern →
               </Link>

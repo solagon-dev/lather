@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import BookCTA from "@/components/BookCTA";
-import PageHero from "@/components/PageHero";
+import EditorialSplitHero from "@/components/heroes/EditorialSplitHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { GIFT_CARD_URL } from "@/lib/business";
 import { services } from "@/lib/data";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
@@ -9,7 +10,7 @@ import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Gift Cards — Give the Ritual",
   description:
-    "Give the gift of stillness. Digital gift certificates for Lather Spa & Wellness in Greenville, NC — any amount, redeemable toward any spa or wellness service, purchased securely through Vagaro and delivered instantly by email.",
+    "Digital gift certificates for Lather Spa & Wellness in Greenville, NC. Any amount, any service, delivered instantly by email.",
   alternates: { canonical: "/gift-cards" },
 };
 
@@ -17,7 +18,7 @@ const steps = [
   {
     number: "01",
     title: "Choose an amount",
-    body: "Any amount you like — purchased securely through Vagaro, Lather's scheduling and payments partner.",
+    body: "Any amount you like, bought through our secure payment page.",
   },
   {
     number: "02",
@@ -65,15 +66,16 @@ export default function GiftCardsPage() {
           ])
         )}
       />
-      <PageHero
+      <EditorialSplitHero
+        src="/media/editorial/gift-card-detail.webp"
+        alt="A Lather Spa & Wellness gift card styled with quiet, editorial detail"
+        side="left"
         title={
           <>
-            The <span className="italic">&ldquo;sorry, I have plans&rdquo;</span> gift
+            The <Em>&ldquo;sorry, I have plans&rdquo;</Em> gift.
           </>
         }
         sub="A Lather gift card is an hour of stillness with someone else's name on it — digital, instant, and redeemable toward any spa or wellness service on the menu."
-        image="/media/editorial/gift-card-detail.webp"
-        imageAlt="A Lather Spa & Wellness gift card styled with quiet, editorial detail"
       />
 
       {/* ── INTRO ────────────────────────────────────────────── */}
@@ -84,24 +86,24 @@ export default function GiftCardsPage() {
               Stillness, gift-wrapped
             </h2>
             <p className="mt-8 max-w-xl text-umber">
-              Lather gift certificates are digital, purchased securely through Vagaro — our
-              scheduling and payments partner — in any amount you choose. They arrive by email and
-              can be put toward any spa or wellness service on the menu.
+              Lather gift certificates are digital and bought securely online in any amount you
+              choose. They arrive by email and can be put toward any spa or wellness service on the
+              menu.
             </p>
             <p className="mt-5 max-w-xl text-umber">
               And because a gift card never feels rushed, your recipient books whenever the moment
               is right — this month or six months from now.
             </p>
             <div className="mt-10">
-              <a href={GIFT_CARD_URL} target="_blank" rel="noopener" className="btn-solid">
-                Buy a Gift Card on Vagaro
+              <a href={GIFT_CARD_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
+                Buy a Gift Card
               </a>
             </div>
           </Reveal>
           <ol className="space-y-8 border-t hairline pt-8">
             {steps.map((step, i) => (
               <Reveal key={step.number} as="li" delay={i * 80} className="flex gap-6">
-                <p className="font-display text-3xl font-light text-brass">{step.number}</p>
+                <p className="font-display text-3xl text-brass-dark">{step.number}</p>
                 <div>
                   <h3 className="font-display text-2xl">{step.title}</h3>
                   <p className="mt-2 text-[0.95rem] text-umber">{step.body}</p>
@@ -127,15 +129,15 @@ export default function GiftCardsPage() {
           <div className="mt-14 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
             {amounts.map((a, i) => (
               <Reveal key={a.name} delay={i * 80}>
-                <p className="font-display text-4xl font-light text-brass-light">${a.price}</p>
+                <p className="font-display text-4xl text-brass-light">${a.price}</p>
                 <h3 className="mt-4 font-display text-2xl">{a.name}</h3>
                 <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{a.note}</p>
               </Reveal>
             ))}
           </div>
           <Reveal className="mt-14">
-            <a href={GIFT_CARD_URL} target="_blank" rel="noopener" className="btn-solid-light">
-              Buy a Gift Card on Vagaro
+            <a href={GIFT_CARD_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
+              Buy a Gift Card
             </a>
           </Reveal>
         </div>

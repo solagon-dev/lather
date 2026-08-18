@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import BookCTA from "@/components/BookCTA";
-import PageHero from "@/components/PageHero";
+import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
+import { Em } from "@/components/ui/Type";
 import { blogArticles } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "The Journal — Head Spa & Wellness Notes",
+  title: "The Journal — Scalp Care Notes",
   description:
-    "Essays and guides on scalp health, Japanese head spa tradition, and hair wellness from Lather Spa & Wellness in Greenville, NC. Read before your first visit.",
+    "Essays and guides on scalp health, Japanese head spa tradition, and hair wellness from Lather Spa & Wellness in Greenville, NC.",
   alternates: { canonical: "/journal" },
 };
 
@@ -33,15 +34,13 @@ export default function JournalPage() {
 
   return (
     <>
-      <PageHero
+      <UtilityHero
         title={
           <>
-            Notes on the art of <span className="italic">scalp care</span>
+            Notes on the art of <Em>scalp care.</Em>
           </>
         }
         sub="Slow reading for a slow ritual — essays on head spa tradition, scalp science, and the quiet case for taking better care of yourself."
-        image="/media/pages/journal-hero.webp"
-        imageAlt="Editorial still life inside Lather Spa & Wellness"
       />
 
       {/* ── FEATURE ──────────────────────────────────────────── */}
@@ -66,10 +65,10 @@ export default function JournalPage() {
                   {feature.title}
                 </h2>
                 <p className="mt-6 max-w-xl text-umber">{excerpt(feature.intro)}</p>
-                <p className="mt-8 text-[0.7rem] uppercase tracking-kicker text-taupe">
+                <p className="mt-8 text-[0.7rem] tracking-[0.02em] text-taupe">
                   {feature.category} · {feature.readTime} · {formatDate(feature.publishDate)}
                 </p>
-                <span className="link-ul mt-6 inline-block text-[0.75rem] font-semibold uppercase tracking-kicker text-ink">
+                <span className="link-ul mt-6 inline-block text-[0.75rem] font-semibold tracking-[0.02em] text-ink">
                   Read the Essay →
                 </span>
               </div>
@@ -94,7 +93,7 @@ export default function JournalPage() {
                     {a.title}
                   </h3>
                   <p className="mt-4 flex-1 text-[0.95rem] text-umber">{excerpt(a.intro)}</p>
-                  <p className="mt-6 border-t hairline pt-4 text-[0.7rem] uppercase tracking-kicker text-taupe">
+                  <p className="mt-6 border-t hairline pt-4 text-[0.7rem] tracking-[0.02em] text-taupe">
                     {a.category} · {a.readTime} · {formatDate(a.publishDate)}
                   </p>
                 </Link>

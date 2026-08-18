@@ -1,8 +1,15 @@
+// Enough phrases that the loop does not visibly repeat inside one screen —
+// four ran out well before the right edge at 1440px and wider, so the track
+// read as a stutter rather than a drift.
 const phrases = [
   "Modern Wellness",
   "Elevated Self-Care",
   "Greenville, North Carolina",
   "Spa & Wellness Destination",
+  "Restorative Spa Experiences",
+  "Licensed Providers",
+  "Personalized Wellness Care",
+  "By Appointment Only",
 ];
 
 export default function Marquee({ dark = false }: { dark?: boolean }) {
@@ -10,8 +17,16 @@ export default function Marquee({ dark = false }: { dark?: boolean }) {
     <div aria-hidden={ariaHidden} className="flex shrink-0 items-center">
       {phrases.map((p) => (
         <span key={p} className="flex items-center">
-          <span className="px-8 font-display text-lg font-light italic tracking-wide sm:text-xl">{p}</span>
-          <span className={`text-base ${dark ? "text-brass-light" : "text-brass"}`}>·</span>
+          <span className="px-8 font-display text-lg italic tracking-wide sm:text-xl">{p}</span>
+          {/* A separator, not a word — hidden from the reading order, and set
+              in the text-safe brass rather than the decorative one, which is
+              a rule-and-mark colour and measures 2.56:1 on bone. */}
+          <span
+            aria-hidden
+            className={`text-base ${dark ? "text-brass-light" : "text-brass-dark"}`}
+          >
+            ·
+          </span>
         </span>
       ))}
     </div>

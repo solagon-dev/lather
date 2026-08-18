@@ -67,6 +67,17 @@ export interface ModelSceneProps {
   /** Share of the range the rise takes. Small: it should arrive, not travel. */
   riseIn?: number;
   /**
+   * Share of the model's own height, measured from its top, across which it
+   * dissolves into `fogColor`.
+   *
+   * For a garment with no body in it this is what makes the top usable at all:
+   * the cloth fades out before the geometry reaches the flat plane where its
+   * neck opening ends, so that plane is never on screen wherever the object
+   * happens to be. Needs `fogColor` — there is nothing to dissolve into
+   * otherwise. 0 disables it.
+   */
+  topFade?: number;
+  /**
    * World units the model keeps climbing across the whole range, on top of the
    * rise. The rise is an arrival; this is the drift underneath it that never
    * stops, so the object is never quite still while the section is on screen.
@@ -114,6 +125,7 @@ export default function ModelScene({
   decal,
   rise = 0,
   riseIn = 0.12,
+  topFade = 0,
   drift = 0,
   yaw = 0,
   tilt = 0,
@@ -210,6 +222,53 @@ export default function ModelScene({
       // and a robe is an open garment — single-sided faces let you see straight
       // through the sleeves and the front opening.
       const span = Math.max(size.x, size.y, size.z) * fit;
+
+      // ── the vanishing top ────────────────────────────────────────────────
+      // The garment dissolves into the page across its own topmost stretch.
+      //
+      // There is no body in it, so the neck opening ends in a flat plane, and
+      // that plane is the one thing that gives away that this is a mesh. Every
+      // way of hiding it by *framing* costs something: keep it above the frame
+      // and the object can never rise into shot from below; rush it past and
+      // the movement reads as a snap. So it is dissolved in the shader
+      // instead — the cloth fades to the page colour before the geometry ever
+      // reaches its own edge, at every position and every scale, which means
+      // the framing is free to do whatever the section wants.
+      //
+      // It fades to the ground colour rather than to alpha on purpose.
+      // Transparency would put a self-overlapping garment into the depth-sort
+      // and cost far more than it buys; against a ground this exact, mixing to
+      // the colour is indistinguishable and completely safe.
+      //
+      // The band is driven by a uniform in world space, updated per frame, so
+      // it tracks the model as it climbs instead of being baked into geometry.
+      const fadeTop = { value: 0 };
+      const fadeBand = { value: size.y * fit * topFade };
+      const fadeColor = { value: new THREE.Color(fogColor ?? "#ffffff") };
+      const dissolveTop = (m: ThreeNS.Material) => {
+        m.onBeforeCompile = (shader) => {
+          shader.uniforms.uFadeTop = fadeTop;
+          shader.uniforms.uFadeBand = fadeBand;
+          shader.uniforms.uFadeColor = fadeColor;
+          shader.vertexShader = shader.vertexShader
+            .replace("void main() {", "varying float vFadeY;\nvoid main() {")
+            .replace(
+              "#include <fog_vertex>",
+              "#include <fog_vertex>\n  vFadeY = (modelMatrix * vec4(transformed, 1.0)).y;"
+            );
+          shader.fragmentShader = shader.fragmentShader
+            .replace(
+              "void main() {",
+              "uniform float uFadeTop;\nuniform float uFadeBand;\nuniform vec3 uFadeColor;\nvarying float vFadeY;\nvoid main() {"
+            )
+            .replace(
+              "#include <dithering_fragment>",
+              "#include <dithering_fragment>\n  gl_FragColor.rgb = mix(gl_FragColor.rgb, uFadeColor, smoothstep(uFadeTop - uFadeBand, uFadeTop, vFadeY));"
+            );
+        };
+        m.needsUpdate = true;
+      };
+
       model.traverse((o) => {
         const mesh = o as ThreeNS.Mesh;
         if (!mesh.isMesh) return;
@@ -218,6 +277,7 @@ export default function ModelScene({
         for (const mat of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
           const m = mat as ThreeNS.MeshStandardMaterial;
           if (!m) continue;
+          if (topFade > 0 && fogColor) dissolveTop(m);
           m.side = THREE.DoubleSide;
           m.metalness = 0;
           m.roughness = 0.95;
@@ -332,6 +392,11 @@ export default function ModelScene({
           drift * t -
           (size.y / 2) * s -
           rise * (1 - ramp(t, 0, riseIn));
+        // The dissolve band rides the model. Its width scales with the model
+        // too, so the garment fades across the same share of itself however
+        // far the push-in has gone.
+        fadeTop.value = pivot.position.y + (size.y / 2) * s;
+        fadeBand.value = size.y * s * topFade;
         renderer.render(scene, camera);
         raf = requestAnimationFrame(render);
       };
@@ -393,7 +458,7 @@ export default function ModelScene({
       disposed = true;
       cleanup?.();
     };
-  }, [src, turn, headroom, fill, decal, rise, riseIn, drift, yaw, tilt, exposure, fillFrom, fillTo, fogColor]);
+  }, [src, turn, headroom, fill, decal, rise, riseIn, topFade, drift, yaw, tilt, exposure, fillFrom, fillTo, fogColor]);
 
   return (
     <div ref={hostRef} className={`relative ${className}`} aria-hidden>

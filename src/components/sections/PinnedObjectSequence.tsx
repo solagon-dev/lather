@@ -110,26 +110,23 @@ export default function PinnedObjectSequence({
   // rendering. That line was being read as the model's cut-off shoulder for a
   // long time. It was never the model. Do not put a translate back on it.
   //
-  // There is exactly one movement, and it runs the whole length of the
-  // section: the garment climbs, grows and turns at a constant unhurried rate
-  // from the moment it appears until the moment it goes. No arrival, no
-  // settle, nothing that finishes early and then waits.
+  // The garment comes up from below the bottom of the frame and keeps coming
+  // for the whole section, growing and turning as it goes. One movement, one
+  // rate, no arrival that finishes early and then waits.
   //
-  // It deliberately does *not* fly up from below the bottom of the frame,
-  // which is the obvious way to do an entrance and does not work here. The
-  // topmost point of this garment is the flat plane where its neck opening
-  // ends — there is no body in it — so anything rising from fully below frame
-  // parades that plane up the entire screen before anything else arrives. The
-  // faster you run it the less you see, which is why the version before this
-  // whipped it past in a tenth of the section and still read as a snap. Slow
-  // it down for the cinematic pan and the flaw is on screen for seconds.
+  // That entrance is only possible because of `topFade`. The topmost point of
+  // this mesh is the flat plane where its neck opening ends — there is no body
+  // in it — and anything rising from below frame carries that plane up the
+  // whole screen ahead of itself. Framing cannot solve it: hold the plane
+  // above the frame and the object can never rise into shot at all; rush it
+  // past and the movement reads as a snap. `topFade` dissolves the cloth into
+  // the ground colour before the geometry reaches its own edge, so the plane
+  // is not there to be seen at any position, and the framing is free.
   //
-  // So the climb starts already cropped. `headroom` hangs the garment from the
-  // top of its own bounding box, holding that plane above the frame at every
-  // scale, and `drift` walks it upward from there for the whole range.
-  // Climbing carries the frame down the garment while growing crops it back
-  // up; the growth is set to win by a little, so the object visibly travels
-  // and the shot still tightens toward the collar rather than sliding off it.
+  // `rise` is the climb from below; `drift` carries on after it so nothing
+  // ever comes to rest. Climbing walks the frame down the garment while
+  // growing crops it back up, and the growth is set to win by a little — which
+  // is what lets the object travel this far and still finish on the collar.
   //
   // The numbers are measured from the render, not derived. `fill` scales the
   // model by its *largest* dimension, and this robe's sleeves are outstretched,
@@ -169,8 +166,11 @@ export default function PinnedObjectSequence({
             turn={Math.PI * 0.48}
             yaw={-0.34}
             tilt={0.02}
+            rise={7.4}
+            riseIn={0.62}
             drift={1.35}
             headroom={0.18}
+            topFade={0.14}
             fillFrom={2.15}
             fillTo={3.85}
             fogColor="#F4EFE7"

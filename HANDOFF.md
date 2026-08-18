@@ -94,15 +94,25 @@ paths were nested inside the wordmark's `<g>`, which that variant switches off
 SPA & WELLNESS line had never once appeared. It measures right in the DOM,
 which is why it survived so long; only a screenshot shows it.
 
-**The robe cannot rise from below the frame.** The topmost point of the mesh
-is the flat plane where the neck opening ends, so anything entering from fully
-below parades that plane up the whole screen before the garment arrives. Fast
-enough to hide it is fast enough to read as a snap; slow enough to be
-cinematic puts the flaw on screen for seconds. There is no setting that gets
-both. The climb therefore starts *already cropped* — `headroom` holds the
-plane above the frame and `drift` walks the garment up from there for the
-whole section, with `fillFrom`/`fillTo` growing slightly faster so the shot
-tightens toward the collar instead of sliding down to the hem.
+**The flat neck plane is solved in the shader, not by framing.** `topFade`
+dissolves the cloth into `fogColor` across the top share of the model's own
+height, driven by a world-space uniform that rides the model as it moves. The
+geometry never reaches its own edge on screen, at any position or scale.
+
+This is worth understanding before touching it, because every *framing* answer
+to that plane is a dead end and two were tried. Holding it above the frame
+with `headroom` works but forbids the object ever rising into shot from below
+— the topmost point of the mesh is the plane, so anything climbing from under
+the frame carries it up the whole screen ahead of itself. Whipping it past
+fast enough to go unnoticed is fast enough to read as a snap. With the fade in
+place the framing is free and the section can do the slow climb it wanted all
+along: `rise` brings the garment up from below, `drift` keeps it going, and
+`fillFrom`/`fillTo` grow slightly faster than the climb so the shot still
+finishes on the collar rather than sliding down to the hem.
+
+It fades to the ground colour rather than to alpha deliberately — transparency
+would put a self-overlapping garment into the depth sort for no visible gain
+against a ground this exact.
 
 **The hero video is source-limited.** `hero-landscape.mp4` is 1440×810 now,
 but the detail in it is far smaller than that — it is corrected phone footage

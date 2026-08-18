@@ -78,26 +78,24 @@ export default function PinnedObjectSequence({
   const glide = useSpring(scrollYProgress, { stiffness: 58, damping: 26, mass: 1.1 });
   const markProgress = useMotionNumber(glide);
 
-  // The garment does not move vertically, and the canvas is never translated.
+  // The canvas is never translated. The garment rises *inside* the scene.
   //
-  // It used to rise into frame, which meant translating the canvas — and a
-  // canvas moved down its own panel is *clipped at its own top edge*, drawing
-  // a hard horizontal line straight across the garment. That line was being
-  // read as the model's cut-off shoulder. It was not the model at all.
+  // This section used to raise the garment by moving its canvas down the
+  // panel, and a canvas moved down its own box is clipped at its own top
+  // border — drawing a hard horizontal line straight across whatever it is
+  // rendering. That line was being read as the model's cut-off shoulder for a
+  // long time. It was never the model. Do not put a translate back on it.
   //
-  // Framing is done in the scene instead, where nothing can be clipped:
-  // `yOffset` pushes the garment down until the flat cut edge at its neck
-  // opening — there is no body in it, so the opening ends in a flat plane — is
-  // above the top of frame, and `fillFrom`/`fillTo` crop in until what is left
-  // is chest, mark and belt. The parts that look like cloth.
+  // So `rise` carries the garment up from below the frame in world space,
+  // where nothing can clip it, and `headroom` hangs it from the top of its own
+  // bounding box so the flat plane at its neck opening — there is no body in
+  // it, so the opening ends in a plane — stays just out of shot at every
+  // scale. `fillFrom`/`fillTo` then crop downward from that fixed top edge,
+  // which is what keeps the shot on the top of the robe as it pushes in.
   //
-  // Both numbers are measured from the render, not derived. `fill` scales the
+  // The numbers are measured from the render, not derived. `fill` scales the
   // model by its *largest* dimension, and this robe's sleeves are outstretched,
   // so width governs and the garment is far shorter than its fill implies.
-  //
-  // Arrival is the fade and the push-in, nothing else. The garment is fully in
-  // place within the first twentieth of the section rather than still climbing
-  // into it a third of the way through.
   const driftOpacity = useTransform(
     glide,
     (p) => ramp(p, 0, 0.05) * (1 - ramp(p, 0.84, 0.95))
@@ -133,10 +131,11 @@ export default function PinnedObjectSequence({
             turn={Math.PI * 0.48}
             yaw={-0.34}
             tilt={0.02}
-            travel={0}
-            yOffset={-2.3}
-            fillFrom={2.35}
-            fillTo={2.85}
+            rise={5.6}
+            riseIn={0.13}
+            headroom={0.42}
+            fillFrom={2.9}
+            fillTo={3.4}
             fogColor="#F4EFE7"
             exposure={1.0}
             decal="/brand/lather-mark.svg"

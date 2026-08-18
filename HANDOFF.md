@@ -74,9 +74,19 @@ fix is to keep both outside the frame. But the hard horizontal line that kept
 being read as that cut edge was **the canvas's own top border**: the section
 used to translate the canvas down the panel to raise the garment, and a canvas
 moved down its own box is clipped at its own edge, drawing a straight line
-across whatever it was rendering. Framing is now done entirely inside the
-scene, with `yOffset` and `fillFrom`/`fillTo`, and the canvas is never moved.
+across whatever it was rendering. Framing and the rise are now done entirely
+inside the scene, and the canvas is never moved.
 **Do not reintroduce a CSS translate on the canvas.**
+
+**`ModelScene` hangs the model from the top of its bounding box, not its
+centre.** `headroom` is world units holding that top edge above the top of
+frame. This is what lets the push-in work at all: growing a model about its
+*centre* drives its top and bottom apart, so a crop tuned to sit just under
+the neckline at one scale sits well below it at the next and the flat neck
+plane walks back into shot partway through. Anchored at the top, the plane
+stays out of shot at every scale and `fillFrom`/`fillTo` can only crop further
+*down* the garment. `rise` then carries it up from below at the start of the
+range, in world space.
 
 **`Logo variant="descriptor"` used to render an empty SVG.** The descriptor
 paths were nested inside the wordmark's `<g>`, which that variant switches off

@@ -37,8 +37,16 @@ export interface ModelSceneProps {
   className?: string;
   /** Radians of Y rotation swept across the range. */
   turn?: number;
-  /** Nudge the framing if the model sits oddly in its own bounds. */
-  yOffset?: number;
+  /**
+   * World units to hold the *top* of the model above the top of frame.
+   *
+   * The model hangs from the top of its own bounding box rather than from its
+   * centre, so this is the one number that decides how much of the object gets
+   * cut off the top — and it means the same thing at every scale, which a
+   * centre offset cannot. Positive carries the top edge out of shot; 0 sits it
+   * exactly on the frame line.
+   */
+  headroom?: number;
   /**
    * Share of the frame the model's largest dimension fills, 0–1. Left short of
    * 1 so the scroll-driven rise cannot push the model out of frame.
@@ -47,11 +55,17 @@ export interface ModelSceneProps {
   /** SVG or image to lay on the garment's chest, e.g. the house mark. */
   decal?: string;
   /**
-   * World units the model rises across the range, travelling upward. A static
-   * mesh has no skeleton to re-pose, so presentation comes from how it is
-   * carried through the frame rather than from the mesh itself.
+   * World units the model climbs into place from below at the start of the
+   * range. A static mesh has no skeleton to re-pose, so presentation comes
+   * from how it is carried into the frame rather than from the mesh itself.
+   *
+   * This happens in world space, inside the scene. Doing it by translating the
+   * canvas — which is what this section used to do — clips the render at the
+   * canvas's own edge and draws a hard line straight across the object.
    */
-  travel?: number;
+  rise?: number;
+  /** Share of the range the rise takes. Small: it should arrive, not travel. */
+  riseIn?: number;
   /** Base yaw, in radians. Off-axis reads as a considered three-quarter view. */
   yaw?: number;
   /** Slight lean, in radians, so the garment is not standing to attention. */
@@ -85,10 +99,11 @@ export default function ModelScene({
   fallback,
   className = "",
   turn = Math.PI * 1.2,
-  yOffset = 0,
+  headroom = 0,
   fill = 0.88,
   decal,
-  travel = 0.16,
+  rise = 0,
+  riseIn = 0.12,
   yaw = 0,
   tilt = 0,
   exposure = 1.12,
@@ -175,6 +190,10 @@ export default function ModelScene({
       pivot.scale.setScalar(fit);
       camera.position.set(0, 0.35, 9.2);
       camera.lookAt(0, 0, 0);
+      // World Y of the frame's top edge at z = 0, which is what `headroom`
+      // measures from. Derived from the lens and the camera height rather than
+      // tuned, so it stays true if either changes.
+      const frameTopY = camera.position.y + frame / 2;
 
       // Terry cloth is matte and non-metallic whatever the exporter guessed,
       // and a robe is an open garment — single-sided faces let you see straight
@@ -283,8 +302,21 @@ export default function ModelScene({
         if (fillFrom !== undefined && fillTo !== undefined) {
           pivot.scale.setScalar(fitAt(fillFrom + (fillTo - fillFrom) * t));
         }
-        // Rises through the frame as it turns: enters low, leaves high.
-        pivot.position.y = yOffset + (t - 0.5) * travel;
+        // ── framing ───────────────────────────────────────────────────
+        // The model hangs from the *top of its own bounding box*, not from its
+        // centre.
+        //
+        // Centre-anchored framing cannot survive a push-in: growing the model
+        // about its middle drives its top and bottom apart, so a crop tuned to
+        // sit just under the neckline at one scale sits well below it at the
+        // next, and the flat plane where the garment's neck opening ends walks
+        // back into shot partway through. Hanging it from the top instead
+        // pins that plane `headroom` units above the frame at every scale, and
+        // the push-in can only ever crop further *down* the garment — which is
+        // the whole intent: stay on the top of the robe.
+        const s = pivot.scale.x;
+        pivot.position.y =
+          frameTopY + headroom - (size.y / 2) * s - rise * (1 - ramp(t, 0, riseIn));
         renderer.render(scene, camera);
         raf = requestAnimationFrame(render);
       };
@@ -346,7 +378,7 @@ export default function ModelScene({
       disposed = true;
       cleanup?.();
     };
-  }, [src, turn, yOffset, fill, decal, travel, yaw, tilt, exposure, fillFrom, fillTo, fogColor]);
+  }, [src, turn, headroom, fill, decal, rise, riseIn, yaw, tilt, exposure, fillFrom, fillTo, fogColor]);
 
   return (
     <div ref={hostRef} className={`relative ${className}`} aria-hidden>
@@ -385,4 +417,9 @@ async function loadArtwork(url: string, THREE: typeof import("three")) {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.anisotropy = 4;
   return texture;
+}
+
+/** 0 before `a`, 1 after `b`, linear between — and flat at both ends. */
+function ramp(v: number, a: number, b: number) {
+  return Math.min(1, Math.max(0, (v - a) / (b - a)));
 }

@@ -131,11 +131,6 @@ export default function HorizontalSteps({
             <Panel key={s.number} step={s} index={i} total={steps.length} progress={scrollYProgress} />
           ))}
         </motion.div>
-
-        {/* Grain over the whole frame, not per panel, so it reads as one
-            piece of film running rather than five images that each have
-            texture of their own. */}
-        <div className="pointer-events-none absolute inset-0 z-20 grain-overlay opacity-[0.18]" />
       </div>
     </section>
   );

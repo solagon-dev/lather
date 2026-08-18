@@ -48,7 +48,6 @@ export default function Preloader() {
 
   const tileW = useTransform(progress, [0, 1], [150, 268]);
   const tileH = useTransform(tileW, (w) => w * 0.66);
-  const ruleScale = useTransform(progress, [0, 1], [0, 1]);
 
   useEffect(() => {
     // The tile opens into the homepage hero image — on any other route it
@@ -175,28 +174,25 @@ export default function Preloader() {
             </video>
           </motion.div>
 
-          {/* count + rule along the bottom edge */}
+          {/* The count along the bottom edge. There is no bar under it: a
+              progress rule is a utility read from software, and it was the one
+              thing on this screen that looked like a download. The count alone
+              still says how long there is left, which is all the bar was
+              actually for. */}
           <motion.div
-            className="absolute inset-x-5 bottom-6 sm:inset-x-10 sm:bottom-8"
+            className="absolute inset-x-5 bottom-6 flex items-baseline justify-between sm:inset-x-10 sm:bottom-8"
             animate={{ opacity: opening ? 0 : 1 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
-            <div className="mb-4 flex items-baseline justify-between">
-              <span className="font-body text-[0.62rem] tracking-[0.02em] text-brass-light/70">
-                Lather Spa &amp; Wellness
+            <span className="font-body text-[0.62rem] tracking-[0.02em] text-brass-light/70">
+              Lather Spa &amp; Wellness
+            </span>
+            <span className="font-display text-[clamp(2.5rem,7vw,5rem)] leading-none tabular-nums text-ivory">
+              <span ref={countRef}>0</span>
+              <span className="ml-1 align-top font-body text-[0.7rem] tracking-[0.02em] text-brass-light/70">
+                %
               </span>
-              <span className="font-display text-[clamp(2.5rem,7vw,5rem)] leading-none tabular-nums text-ivory">
-                <span ref={countRef}>0</span>
-                <span className="ml-1 align-top font-body text-[0.7rem] tracking-[0.02em] text-brass-light/70">
-                  %
-                </span>
-              </span>
-            </div>
-            {/* scaleX rather than width: a transform is composited, so the rule
-                advances without laying out the page on every frame. */}
-            <div className="h-px w-full bg-ivory/15">
-              <motion.div className="h-px origin-left bg-brass-light" style={{ scaleX: ruleScale }} />
-            </div>
+            </span>
           </motion.div>
         </motion.div>
       )}

@@ -65,6 +65,30 @@ export default function PinnedObjectSequence({
 }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  // The object runs on its own clock, which starts *before* the section does.
+  //
+  // The copy is timed to the pinned stretch, because that is when it can be
+  // read. The object should not be: if it waits for the pin, the section
+  // begins with a screen of nothing and the garment arrives after you have
+  // already got there. Starting it while the section is still climbing into
+  // view means the garment is rising from the bottom of the frame at the same
+  // moment the hero's tile is drifting off the top — the two are on screen
+  // together, and one hands over to the other instead of cutting.
+  const { scrollYProgress: objectProgress } = useScroll({
+    target: ref,
+    offset: ["start 82%", "end end"],
+  });
+  // 0 where the object's clock starts, 1 the moment the panel pins. Anything
+  // that only makes sense once this box *is* the frame hangs off this.
+  const { scrollYProgress: settling } = useScroll({
+    target: ref,
+    offset: ["start 82%", "start start"],
+  });
+  // Held at nothing until the panel is nearly home. A vignette easing in over
+  // the whole approach is still a visible edge for most of it, just a fainter
+  // one; arriving in the last stretch puts the edge near the top of the screen
+  // where there is no room left for it to read as a band.
+  const vignette = useTransform(settling, (p) => ramp(p, 0.72, 1));
   // The object follows a spring-smoothed copy of the scroll rather than the
   // scroll itself.
   //
@@ -75,7 +99,7 @@ export default function PinnedObjectSequence({
   // separates a scroll-driven object that feels filmed from one that feels
   // scrubbed. The copy stays on raw progress: its beats are timed to abut
   // exactly, and a lag there would let two statements overlap.
-  const glide = useSpring(scrollYProgress, { stiffness: 58, damping: 26, mass: 1.1 });
+  const glide = useSpring(objectProgress, { stiffness: 58, damping: 26, mass: 1.1 });
   const markProgress = useMotionNumber(glide);
 
   // The canvas is never translated. The garment rises *inside* the scene.
@@ -86,12 +110,26 @@ export default function PinnedObjectSequence({
   // rendering. That line was being read as the model's cut-off shoulder for a
   // long time. It was never the model. Do not put a translate back on it.
   //
-  // So `rise` carries the garment up from below the frame in world space,
-  // where nothing can clip it, and `headroom` hangs it from the top of its own
-  // bounding box so the flat plane at its neck opening — there is no body in
-  // it, so the opening ends in a plane — stays just out of shot at every
-  // scale. `fillFrom`/`fillTo` then crop downward from that fixed top edge,
-  // which is what keeps the shot on the top of the robe as it pushes in.
+  // There is exactly one movement, and it runs the whole length of the
+  // section: the garment climbs, grows and turns at a constant unhurried rate
+  // from the moment it appears until the moment it goes. No arrival, no
+  // settle, nothing that finishes early and then waits.
+  //
+  // It deliberately does *not* fly up from below the bottom of the frame,
+  // which is the obvious way to do an entrance and does not work here. The
+  // topmost point of this garment is the flat plane where its neck opening
+  // ends — there is no body in it — so anything rising from fully below frame
+  // parades that plane up the entire screen before anything else arrives. The
+  // faster you run it the less you see, which is why the version before this
+  // whipped it past in a tenth of the section and still read as a snap. Slow
+  // it down for the cinematic pan and the flaw is on screen for seconds.
+  //
+  // So the climb starts already cropped. `headroom` hangs the garment from the
+  // top of its own bounding box, holding that plane above the frame at every
+  // scale, and `drift` walks it upward from there for the whole range.
+  // Climbing carries the frame down the garment while growing crops it back
+  // up; the growth is set to win by a little, so the object visibly travels
+  // and the shot still tightens toward the collar rather than sliding off it.
   //
   // The numbers are measured from the render, not derived. `fill` scales the
   // model by its *largest* dimension, and this robe's sleeves are outstretched,
@@ -131,11 +169,10 @@ export default function PinnedObjectSequence({
             turn={Math.PI * 0.48}
             yaw={-0.34}
             tilt={0.02}
-            rise={5.6}
-            riseIn={0.13}
-            headroom={0.42}
-            fillFrom={2.9}
-            fillTo={3.4}
+            drift={1.35}
+            headroom={0.18}
+            fillFrom={2.15}
+            fillTo={3.85}
             fogColor="#F4EFE7"
             exposure={1.0}
             decal="/brand/lather-mark.svg"
@@ -155,15 +192,26 @@ export default function PinnedObjectSequence({
         </motion.div>
 
         {/* Corners only — the centre stays clear so the subject is never
-            veiled by the thing meant to be framing it. */}
-        <div className="pointer-events-none absolute inset-0 z-[15] frame-vignette" />
+            veiled by the thing meant to be framing it.
+
+            It fades in as the panel pins, because a vignette darkens the edges
+            of its own box and this box only *is* the frame once it is pinned.
+            Before that, its top edge sits somewhere in the middle of the
+            screen and the darkening stops dead along it — a hard band edge
+            straight across the viewport, at precisely the moment the hero is
+            supposed to be handing over without a seam. */}
+        <motion.div
+          style={{ opacity: vignette }}
+          className="pointer-events-none absolute inset-0 z-[15] frame-vignette"
+        />
 
         {/* ── the copy ─────────────────────────────────────────── */}
         {beats.map((beat, i) => (
           <Beat key={i} beat={beat} index={i} total={beats.length} progress={scrollYProgress} />
         ))}
 
-        <div className="pointer-events-none absolute inset-0 z-30 grain-overlay opacity-[0.13]" />
+        {/* No grain here — it runs across the whole page from the layout, so
+            this section's ground matches the one it hands over from. */}
       </div>
     </section>
   );
@@ -195,8 +243,16 @@ function Beat({
   const isLast = index === total - 1;
 
   // A generous arrival window: a short one reads as the words switching on.
-  const inA = isFirst ? 0 : start - slice * 0.34;
-  const inB = isFirst ? 0.0001 : start - slice * 0.04;
+  //
+  // The first beat has no room *before* the section to arrive in, so it takes
+  // its window from the front of its own slice instead. That is deliberate,
+  // and it is what puts the garment on screen first: the object has been
+  // climbing since before the section pinned, so by the time these words start
+  // to rise there is already something for them to rise over. It also means
+  // the opening statement gets the same reveal every other beat gets — it used
+  // to snap on inside a thousandth of the section, which is to say not at all.
+  const inA = isFirst ? 0.02 : start - slice * 0.34;
+  const inB = isFirst ? slice * 0.3 : start - slice * 0.04;
   // A beat must be gone by the moment the next one starts arriving, or two
   // statements are legible at once and the section reads as a double exposure.
   // With the arrival window opening at `start - 0.34·slice`, the departure has

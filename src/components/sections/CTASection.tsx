@@ -1,18 +1,27 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
 /**
  * The closing ask.
  *
- * Everything arrives on one orchestrated reveal rather than each element
- * fading in on its own schedule: the rule draws itself, the statement rises out
- * of a mask, then the actions. A single sequence reads as the page arriving at
- * a conclusion; several independent fades read as a list of things loading.
+ * Everything arrives on one orchestrated sequence rather than each element
+ * fading in on its own schedule: the statement rises out of a mask, then the
+ * body, then the actions. One sequence reads as the page arriving at a
+ * conclusion; several independent fades read as a list of things loading.
  *
- * It fires once, on entry, and never replays — a CTA that re-animates every
- * time it scrolls back into view is asking for attention it has already had.
+ * That sequence is *scrubbed by scroll*, and it starts while this section is
+ * still climbing into view — which is the whole point. Above it sits the coin,
+ * on a pinned panel that is drifting up and out of frame at exactly that
+ * moment. Beginning the ask before the coin has finished leaving puts both in
+ * the same frame, moving opposite ways, and the two sections dissolve into
+ * each other instead of cutting. Waiting until this section is a third on
+ * screen — which a `useInView` trigger does — guarantees the cut.
+ *
+ * The cost is that it plays backwards on the way up, where the old triggered
+ * version fired once and stayed put. Worth it: a hand-off you can only see by
+ * scrolling down past it at the right speed is not a hand-off.
  */
 
 export interface CTASectionProps {
@@ -31,16 +40,25 @@ export default function CTASection({
   className = "",
 }: CTASectionProps) {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.35 });
   const dark = tone === "noir";
 
-  // One shared clock. Each element takes its own slice of it, so the order is
+  // Opens the moment this section's top edge clears the bottom of the frame —
+  // while the section above is still on screen — and is complete by the time
+  // that edge is a third of the way up.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 30%"] });
+
+  // One shared clock; each element takes its own slice of it, so the order is
   // guaranteed rather than being whatever the animations happen to resolve to.
-  const at = (i: number) => ({
-    initial: { opacity: 0, y: 34 },
-    animate: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 34 },
-    transition: { duration: 1.05, delay: 0.12 + i * 0.13, ease: [0.22, 1, 0.36, 1] as const },
-  });
+  // Declared flat and unconditionally — `body` and `actions` are optional, and
+  // a hook behind an `if` is a hook that changes count between renders.
+  //
+  // Clamped functions, never keyframe pairs: handed stops and values,
+  // framer-motion may hoist the value onto a scroll-linked Web Animations
+  // timeline, where a range narrower than [0,1] does not hold at its endpoint.
+  const bodyIn = useTransform(scrollYProgress, (p) => ramp(p, 0.34, 0.86));
+  const actionsIn = useTransform(scrollYProgress, (p) => ramp(p, 0.45, 0.97));
+  const bodyY = useTransform(bodyIn, (t) => (1 - t) * 34);
+  const actionsY = useTransform(actionsIn, (t) => (1 - t) * 34);
 
   return (
     <section
@@ -59,28 +77,15 @@ export default function CTASection({
           }`}
         >
           {lines.map((l, i) => (
-            // The mask is the wrapper; the line rides up out of it. Extra bottom
-            // padding so descenders are not shaved by the reveal itself.
-            <span key={i} className="block overflow-hidden pb-[0.14em]">
-              <motion.span
-                initial={{ y: "110%" }}
-                animate={inView ? { y: "0%" } : { y: "110%" }}
-                transition={{
-                  duration: 1.15,
-                  delay: 0.2 + i * 0.11,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="block"
-              >
-                {l}
-              </motion.span>
-            </span>
+            <Line key={i} index={i} progress={scrollYProgress}>
+              {l}
+            </Line>
           ))}
         </h2>
 
         {body && (
           <motion.div
-            {...at(3)}
+            style={{ opacity: bodyIn, y: bodyY }}
             className={`mt-9 max-w-[46ch] text-[1.02rem] leading-relaxed ${
               dark ? "text-ivory/70" : "text-umber"
             }`}
@@ -90,11 +95,50 @@ export default function CTASection({
         )}
 
         {actions && (
-          <motion.div {...at(4)} className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+          <motion.div
+            style={{ opacity: actionsIn, y: actionsY }}
+            className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:gap-4"
+          >
             {actions}
           </motion.div>
         )}
       </div>
     </section>
   );
+}
+
+/**
+ * One line of the statement, riding up out of its own mask.
+ *
+ * A component rather than a loop body so each line can own its hooks: the
+ * number of lines is a prop, and hooks called in a loop over a prop are hooks
+ * whose count can change between renders.
+ */
+function Line({
+  index,
+  progress,
+  children,
+}: {
+  index: number;
+  progress: MotionValue<number>;
+  children: ReactNode;
+}) {
+  const a = 0.12 + index * 0.1;
+  const t = useTransform(progress, (p) => ramp(p, a, Math.min(1, a + 0.58)));
+  const y = useTransform(t, (v) => `${(1 - v) * 110}%`);
+
+  return (
+    // The mask is the wrapper; the line rides up out of it. Extra bottom
+    // padding so descenders are not shaved by the reveal itself.
+    <span className="block overflow-hidden pb-[0.14em]">
+      <motion.span style={{ y }} className="block">
+        {children}
+      </motion.span>
+    </span>
+  );
+}
+
+/** 0 before `a`, 1 after `b`, linear between — and flat at both ends. */
+function ramp(v: number, a: number, b: number) {
+  return Math.min(1, Math.max(0, (v - a) / (b - a)));
 }

@@ -66,6 +66,16 @@ export interface ModelSceneProps {
   rise?: number;
   /** Share of the range the rise takes. Small: it should arrive, not travel. */
   riseIn?: number;
+  /**
+   * World units the model keeps climbing across the whole range, on top of the
+   * rise. The rise is an arrival; this is the drift underneath it that never
+   * stops, so the object is never quite still while the section is on screen.
+   *
+   * It works against `fillFrom`/`fillTo`: climbing walks the frame *down* the
+   * object while growing crops it back *up*. Let the growth win and the shot
+   * tightens toward the top while the object still visibly moves.
+   */
+  drift?: number;
   /** Base yaw, in radians. Off-axis reads as a considered three-quarter view. */
   yaw?: number;
   /** Slight lean, in radians, so the garment is not standing to attention. */
@@ -104,6 +114,7 @@ export default function ModelScene({
   decal,
   rise = 0,
   riseIn = 0.12,
+  drift = 0,
   yaw = 0,
   tilt = 0,
   exposure = 1.12,
@@ -316,7 +327,11 @@ export default function ModelScene({
         // the whole intent: stay on the top of the robe.
         const s = pivot.scale.x;
         pivot.position.y =
-          frameTopY + headroom - (size.y / 2) * s - rise * (1 - ramp(t, 0, riseIn));
+          frameTopY +
+          headroom +
+          drift * t -
+          (size.y / 2) * s -
+          rise * (1 - ramp(t, 0, riseIn));
         renderer.render(scene, camera);
         raf = requestAnimationFrame(render);
       };
@@ -378,7 +393,7 @@ export default function ModelScene({
       disposed = true;
       cleanup?.();
     };
-  }, [src, turn, headroom, fill, decal, rise, riseIn, yaw, tilt, exposure, fillFrom, fillTo, fogColor]);
+  }, [src, turn, headroom, fill, decal, rise, riseIn, drift, yaw, tilt, exposure, fillFrom, fillTo, fogColor]);
 
   return (
     <div ref={hostRef} className={`relative ${className}`} aria-hidden>

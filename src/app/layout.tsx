@@ -95,6 +95,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Preloader />
         <Navbar />
         <main id="main">{children}</main>
+        {/* One piece of film running over the whole page, not a texture each
+            section carries for itself.
+
+            Per-section grain is a flat multiply that stops dead at the panel
+            it belongs to, so wherever a grained section met an ungrained one
+            there was a hard tonal step straight across the viewport — most
+            visibly right where the hero hands over to the section below it,
+            which is the one boundary meant to read as continuous.
+
+            Fixed rather than absolute, so the texture stays put while the page
+            moves under it. Grain that scrolls with the content reads as a
+            pattern printed on the page; grain that holds still reads as the
+            grain of the thing you are looking through. Below the header's
+            z-index, so the bar is never multiplied. */}
+        <div
+          aria-hidden
+          className="pointer-events-none fixed inset-0 z-40 grain-overlay opacity-[0.13]"
+        />
         <Footer />
         <StickyBook />
       </body>

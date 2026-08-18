@@ -94,6 +94,23 @@ paths were nested inside the wordmark's `<g>`, which that variant switches off
 SPA & WELLNESS line had never once appeared. It measures right in the DOM,
 which is why it survived so long; only a screenshot shows it.
 
+**The robe cannot rise from below the frame.** The topmost point of the mesh
+is the flat plane where the neck opening ends, so anything entering from fully
+below parades that plane up the whole screen before the garment arrives. Fast
+enough to hide it is fast enough to read as a snap; slow enough to be
+cinematic puts the flaw on screen for seconds. There is no setting that gets
+both. The climb therefore starts *already cropped* — `headroom` holds the
+plane above the frame and `drift` walks the garment up from there for the
+whole section, with `fillFrom`/`fillTo` growing slightly faster so the shot
+tightens toward the collar instead of sliding down to the hem.
+
+**The hero video is source-limited.** `hero-landscape.mp4` is 1440×810 now,
+but the detail in it is far smaller than that — it is corrected phone footage
+that was already an upscale. It has been denoised, sharpened and re-encoded
+(`hqdn3d` → `unsharp` → lanczos, CRF 21), which is as far as processing can
+take it. If it still reads soft the answer is landscape footage shot for the
+purpose, not another encode.
+
 **`fill` scales by the model's largest dimension.** The robe's sleeves are
 outstretched, so *width* governs and the garment is much shorter than its
 `fill` value implies. The offsets in `PinnedObjectSequence` are measured from

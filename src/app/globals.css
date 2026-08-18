@@ -251,8 +251,12 @@
 }
 
 /* Fine grain, as a tiled turbulence tile rather than an image request. */
+/* No opacity here on purpose. It used to carry `opacity: 0.4`, which silently
+   beat the `opacity-[…]` utility every caller sets — so a section asking for
+   0.13 got three times that, and because this layer is a flat multiply across
+   a whole panel, the extra showed up as a hard tonal step along the panel's
+   own top edge. Against the section above it, that read as a seam. */
 .grain-overlay {
-  opacity: 0.4;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
   background-size: 160px 160px;
@@ -411,13 +415,20 @@
 
 /* Ramps the hero's ground up to the ambient level of the section beneath it,
    so the boundary between them carries no step in brightness. */
+/* The hero's ground ramped up to meet the section below it.
+   The end stop has to land on the *clipped* level of that section's haze, not
+   on nothing: those layers start above their own panel and are cut off by its
+   overflow, so they arrive at the boundary already part-way up rather than at
+   zero. Ending this ramp short of them leaves a hard line across the full
+   width exactly where the two sections meet — which is the one place the page
+   is trying to read as continuous. */
 .hero-tail {
   background: linear-gradient(
     to bottom,
     rgb(201 174 126 / 0) 0%,
-    rgb(201 174 126 / 0.012) 45%,
-    rgb(201 174 126 / 0.032) 78%,
-    rgb(201 174 126 / 0.045) 100%
+    rgb(201 174 126 / 0.014) 45%,
+    rgb(201 174 126 / 0.038) 78%,
+    rgb(201 174 126 / 0.055) 100%
   );
 }
 

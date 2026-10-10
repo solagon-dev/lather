@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type * as ThreeNS from "three";
 import { MARK_PATHS, WORDMARK_PATHS, LOGO_VIEWBOX } from "@/lib/logo-paths";
+
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 /**
  * The house mark struck into a brass coin, turning on scroll.
@@ -45,7 +47,10 @@ export default function CoinScene({
   const hostRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const progressRef = useRef(progress);
-  progressRef.current = progress;
+
+  useIsomorphicLayoutEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -223,7 +228,8 @@ export default function CoinScene({
       const io = new IntersectionObserver(
         ([e]) => {
           onScreen = e.isIntersecting;
-          onScreen ? start() : stop();
+          if (onScreen) start();
+          else stop();
         },
         { rootMargin: "10% 0px" }
       );

@@ -263,7 +263,8 @@ function HeroVideo({ src }: { src: string }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     // @ts-expect-error saveData is non-standard but widely supported on mobile
     if (navigator.connection?.saveData === true) return;
-    setPlay(true);
+    const frame = requestAnimationFrame(() => setPlay(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {

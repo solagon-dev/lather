@@ -35,12 +35,14 @@ const links = [
  */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   // What the wordmark is currently sitting on. The page alternates porcelain
   // and noir sections, so a fixed colour is wrong for half the scroll.
   const [onDark, setOnDark] = useState(true);
   const pathname = usePathname();
+  const [menuState, setMenuState] = useState({ pathname, open: false });
+  if (menuState.pathname !== pathname) setMenuState({ pathname, open: false });
+  const open = menuState.pathname === pathname && menuState.open;
   const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -86,10 +88,6 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
     return () => {
       document.documentElement.style.overflow = "";
@@ -97,9 +95,9 @@ export default function Navbar() {
   }, [open]);
 
   const close = useCallback(() => {
-    setOpen(false);
+    setMenuState({ pathname, open: false });
     toggleRef.current?.focus();
-  }, []);
+  }, [pathname]);
 
   // While the panel is open it owns the keyboard: Escape closes it and Tab
   // cycles inside it, so focus can never land on the page underneath.
@@ -157,7 +155,7 @@ export default function Navbar() {
         <button
           ref={toggleRef}
           type="button"
-          onClick={() => setOpen(!open)}
+          onClick={() => setMenuState({ pathname, open: !open })}
           aria-expanded={open}
           aria-controls="site-menu"
           className={`pointer-events-auto relative z-[60] flex items-center gap-2.5 px-5 py-3 font-body text-[0.66rem] font-medium tracking-[0.02em] ring-1 backdrop-blur-md transition-colors duration-500 ease-luxe ${

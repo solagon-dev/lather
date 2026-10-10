@@ -64,8 +64,6 @@ export default function Preloader() {
     if (seen && process.env.NODE_ENV === "production") return;
 
     sessionStorage.setItem(SEEN_KEY, "1");
-    setPhase("loading");
-
     const started = performance.now();
     const DURATION = 1900;
     let raf = 0;
@@ -87,7 +85,10 @@ export default function Preloader() {
       if (t < 1) raf = requestAnimationFrame(tick);
       else setPhase("opening");
     };
-    raf = requestAnimationFrame(tick);
+    raf = requestAnimationFrame((now) => {
+      setPhase("loading");
+      tick(now);
+    });
     return () => cancelAnimationFrame(raf);
   }, [pathname, progress]);
 

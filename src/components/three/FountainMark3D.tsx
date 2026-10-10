@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 /**
  * The Lather fountain, extruded into a real 3D object and driven by scroll.
@@ -72,7 +74,10 @@ export default function FountainMark3D({
   const [active, setActive] = useState(false);
   // Kept in a ref so scroll updates never re-render React — the loop reads it.
   const progressRef = useRef(progress);
-  progressRef.current = progress;
+
+  useIsomorphicLayoutEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -193,7 +198,8 @@ export default function FountainMark3D({
       const io = new IntersectionObserver(
         ([e]) => {
           onScreen = e.isIntersecting;
-          onScreen ? start() : stop();
+          if (onScreen) start();
+          else stop();
         },
         { rootMargin: "10% 0px" }
       );

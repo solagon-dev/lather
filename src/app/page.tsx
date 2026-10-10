@@ -5,7 +5,6 @@ import Reveal from "@/components/Reveal";
 import SocialSection from "@/components/SocialSection";
 import CollapsingHero from "@/components/sections/CollapsingHero";
 import FullBleedStatement from "@/components/sections/FullBleedStatement";
-import ImageRow from "@/components/sections/ImageRow";
 import Ledger, { LedgerRow } from "@/components/sections/Ledger";
 import MatrixGallery from "@/components/sections/MatrixGallery";
 import CoinStatement from "@/components/sections/CoinStatement";

@@ -34,12 +34,14 @@ export default function HeroMedia() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    setIsMobile(!window.matchMedia("(min-width: 768px)").matches);
-
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // @ts-expect-error saveData is non-standard but widely supported on mobile
     const saveData = navigator.connection?.saveData === true;
-    if (!reducedMotion && !saveData) setPlayVideo(true);
+    const frame = requestAnimationFrame(() => {
+      setIsMobile(!window.matchMedia("(min-width: 768px)").matches);
+      if (!reducedMotion && !saveData) setPlayVideo(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {

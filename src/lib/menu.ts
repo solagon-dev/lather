@@ -23,6 +23,15 @@ export interface Pillar {
    */
   imagePosition?: string;
   items: MenuItem[];
+  /**
+   * The pillar is announced but not yet open for booking. Lather Wellness is
+   * launching after the spa, so its menu is public as a preview while the
+   * treatments themselves are still "coming soon" — the surfaces that list it
+   * say so rather than offering a booking that cannot yet be honoured.
+   */
+  comingSoon?: boolean;
+  /** A short line shown with the pillar's status, e.g. under a "coming soon". */
+  comingSoonNote?: string;
 }
 
 export const pillars: Pillar[] = [
@@ -67,33 +76,61 @@ export const pillars: Pillar[] = [
     key: "wellness",
     label: "Wellness Services",
     tagline: "Renew",
+    // Lather Wellness is women's wellness, led by Stacia Friend, CNM — a place
+    // with time to talk, where symptoms are not dismissed and care is not
+    // one-size-fits-all. The menu below is the public sneak peek; the care
+    // itself is opening after the spa (see `comingSoon`).
     intro:
-      "Advanced, personalized care led by licensed providers — a whole-body approach to feeling well, delivered in a setting that never feels clinical.",
+      "Women's wellness, reimagined — led by Stacia Friend, CNM. A place where you have time to talk, where your symptoms aren't dismissed, and where your care is never one-size-fits-all.",
     // A provider-and-client consultation — the image that actually reads
     // "wellness care," and visually distinct from the hands-on Spa photo above.
-    // Previously reused the same shampoo-basin shot as Spa.
     image: "/media/experience/step-01-consultation.webp",
     imagePosition: "50% 28%",
+    comingSoon: true,
+    comingSoonNote: "Opening after the spa — book the spa now and be first to hear when wellness opens.",
+    // Verbatim from the Lather Wellness sneak-peek menu. Foundations Wellness
+    // leads because it is the entry point every plan is built from — the visit
+    // where we listen first and prescribe second.
     items: [
       {
-        name: "Wellness Consultations",
-        blurb: "A one-on-one assessment to build a wellness plan around your goals.",
+        name: "Foundations Wellness",
+        blurb:
+          "Your personalized starting point — an unhurried visit to hear your symptoms, your story, and your goals, then build a plan that's yours.",
       },
       {
-        name: "Hormone Therapy",
-        blurb: "Personalized hormone support for balance, energy, and vitality.",
+        name: "Hormone + Midlife Wellness",
+        blurb: "Perimenopause, menopause, and hormone care.",
       },
       {
-        name: "Peptides",
-        blurb: "Targeted peptide therapy to support recovery and whole-body wellness.",
+        name: "Metabolic + Body Wellness",
+        blurb:
+          "Medical weight management, GLP-1 therapy when appropriate, body composition, and muscle-focused wellness.",
       },
       {
-        name: "Injectables",
-        blurb: "Administered by licensed nurse injectors and tailored to you.",
+        name: "Sexual Wellness",
+        blurb: "Private, personalized care for women's intimate wellness.",
       },
       {
-        name: "Vitamin Therapy",
-        blurb: "Vitamin and nutrient support to help you feel your best.",
+        name: "Postpartum + Mom Wellness",
+        blurb:
+          "Support for women through the physical and hormonal changes of motherhood.",
+      },
+      {
+        name: "Peptide + Longevity Wellness",
+        blurb:
+          "Individualized therapies for wellness, recovery, and healthy aging, when medically appropriate.",
+      },
+      {
+        name: "Vitamin + Wellness Injections",
+        blurb: "B12, Lipo-B, L-Carnitine, and Glutathione.",
+      },
+      {
+        name: "Body + Recovery",
+        blurb: "Red light therapy, truFlex muscle conditioning, and body composition.",
+      },
+      {
+        name: "Botox + Aesthetics",
+        blurb: "Natural-looking treatments with a thoughtful approach.",
       },
     ],
   },
@@ -103,9 +140,12 @@ export const pillars: Pillar[] = [
 export const featuredProvider = {
   name: "Stacia Friend, CNM",
   role: "Certified Nurse Midwife",
-  service: "Wellness Consultation",
+  service: "Foundations Wellness Visit",
+  // From the Lather Wellness sneak peek — "It starts with you." You don't have
+  // to know which hormone, lab, or treatment you need before you walk in; the
+  // Foundations visit exists to listen first and build the plan from there.
   blurb:
-    "Start with a personalized wellness consultation. Stacia brings a whole-person, preventative approach to help you understand your body and build a plan that fits your life.",
+    "You don't have to know which hormone, lab, or treatment you need before you walk in. The Foundations Wellness Visit is time to listen — to your symptoms, your story, and your goals — and to build a plan that's yours.",
 };
 
 export const whyLather = [

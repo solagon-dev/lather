@@ -158,9 +158,16 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             {pillars.map((pillar, i) => (
               <Reveal key={pillar.key} delay={i * 120} className="h-full">
                 <div className="flex h-full flex-col border hairline bg-porcelain p-8">
-                  <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-dark">
-                    {pillar.tagline}
-                  </p>
+                  <div className="flex items-center gap-3">
+                    <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-dark">
+                      {pillar.tagline}
+                    </p>
+                    {pillar.comingSoon && (
+                      <span className="rounded-full border border-brass-dark/40 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-[0.16em] text-brass-dark">
+                        Opening soon
+                      </span>
+                    )}
+                  </div>
                   <h3 className="mt-3 font-display text-2xl">{pillar.label}</h3>
                   <p className="mt-4 text-[0.95rem] leading-relaxed text-umber">{pillar.intro}</p>
                   <ul className="mt-6 flex flex-wrap gap-2">

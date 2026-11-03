@@ -168,11 +168,11 @@ export default function PinnedObjectSequence({
             tilt={0.02}
             rise={7.4}
             riseIn={0.62}
-            drift={1.35}
-            headroom={0.18}
-            topFade={0.14}
-            fillFrom={2.15}
-            fillTo={3.85}
+            drift={1.2}
+            headroom={0.62}
+            topFade={0.06}
+            fillFrom={1.75}
+            fillTo={3.05}
             fogColor="#F4EFE7"
             exposure={1.0}
             decal="/brand/lather-mark.svg"

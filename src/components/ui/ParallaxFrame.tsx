@@ -38,6 +38,7 @@ export default function ParallaxFrame({
   sizes,
   focal,
   priority = false,
+  invert = false,
   className = "",
 }: {
   src: string;
@@ -46,6 +47,12 @@ export default function ParallaxFrame({
   /** `object-position`, when the subject is not in the middle. */
   focal?: string;
   priority?: boolean;
+  /**
+   * Flip the drift direction. Two frames side by side with one inverted move
+   * oppositely as the page scrolls, which reads as a pair leaning against each
+   * other rather than two copies of the same motion.
+   */
+  invert?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,7 +74,10 @@ export default function ParallaxFrame({
   // A clamped function, not a keyframe pair: handed stops and values,
   // framer-motion may hoist the value onto a scroll-linked Web Animations
   // timeline, where a range narrower than [0,1] does not hold at its endpoints.
-  const y = useTransform(scrollYProgress, (p) => `${(0.5 - Math.min(1, Math.max(0, p))) * 2 * TRAVEL}%`);
+  const y = useTransform(scrollYProgress, (p) => {
+    const drift = (0.5 - Math.min(1, Math.max(0, p))) * 2 * TRAVEL;
+    return `${invert ? -drift : drift}%`;
+  });
 
   const image = (
     <Image

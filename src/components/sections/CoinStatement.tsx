@@ -67,17 +67,31 @@ export default function CoinStatement({ lines, className = "" }: CoinStatementPr
     };
   }, []);
 
-  // Reveals just clear of the header and leaves below the frame.
+  // The coin drops in at the very top of the section — above the first line —
+  // and falls the whole way down and out.
   //
-  // It must not start above the top edge: the navigation is fixed at z-50 and
-  // the coin lives at z-20 inside the section, so anything entering from off
-  // the top slides *underneath* the bar and wears the wordmark and the booking
-  // button across its face. Beginning below the header — and arriving by
-  // scaling up rather than by sliding in — keeps its face clear the whole way.
-  const coinY = useTransform(glide, [0, 1], [m.viewH * 0.1, m.viewH * 1.16]);
-  // Reveals as it arrives, and is gone by the time it clears the bottom.
-  const coinOpacity = useTransform(glide, [0, 0.09, 0.9, 1], [0, 1, 1, 0]);
-  const coinScale = useTransform(glide, [0, 0.09], [0.55, 1]);
+  // `coinY` is the coin box's *top*, and its disc sits ~half a box lower, so
+  // the box starts higher than the disc reads. It is pushed as far up as the
+  // navigation allows: the bar is fixed at z-50 and the coin at z-20, so a coin
+  // whose face reaches under the bar wears the wordmark across it. Starting the
+  // box just below that line lands the disc up at the first line of type — the
+  // top of the passage — rather than down in the middle of it, then it falls.
+  // Not linear: an eased fall so the coin *dwells* at the top before dropping
+  // away. A constant-rate descent from the top reads as "passing through the
+  // middle" because that is where the eye tends to catch it; holding it up at
+  // the first lines for the opening third of the section, then letting it fall
+  // through the rest, is what makes it read as arriving from the top.
+  const coinTop = 0.13;
+  const coinEnd = 1.16;
+  const coinY = useTransform(glide, (p) => {
+    const t = Math.min(1, Math.max(0, p));
+    return m.viewH * (coinTop + Math.pow(t, 1.5) * (coinEnd - coinTop));
+  });
+  // Present from the first frame — a two-percent fade so it resolves rather
+  // than pops — and gone by the time it clears the bottom.
+  const coinOpacity = useTransform(glide, [0, 0.02, 0.9, 1], [0, 1, 1, 0]);
+  // A small settle, not an arrival: it is already up top, just easing to full.
+  const coinScale = useTransform(glide, [0, 0.06], [0.86, 1]);
 
   const blockH = lines.length * m.lineH;
   const blockTop = (m.viewH - blockH) / 2;

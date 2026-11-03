@@ -11,6 +11,7 @@ import MatrixGallery from "@/components/sections/MatrixGallery";
 import CoinStatement from "@/components/sections/CoinStatement";
 import CTASection from "@/components/sections/CTASection";
 import PinnedObjectSequence from "@/components/sections/PinnedObjectSequence";
+import PillarDiptych from "@/components/sections/PillarDiptych";
 import HorizontalSteps from "@/components/sections/HorizontalSteps";
 import SplitFeature from "@/components/sections/SplitFeature";
 import StickySplit, { SplitQuote } from "@/components/sections/StickySplit";
@@ -152,40 +153,18 @@ export default function HomePage() {
       />
 
       {/* ── THE TWO PILLARS ──────────────────────────────────── */}
-      {pillars.map((pillar, i) => (
-        <SplitFeature
-          key={pillar.key}
-          src={pillar.image}
-          alt={pillar.label}
-          focal={pillar.imagePosition}
-          side={i % 2 === 0 ? "left" : "right"}
-          tone={i % 2 === 0 ? "ivory" : "porcelain"}
-          body={
-            <>
-              <Lede>{pillar.intro}</Lede>
-              <ul className="mt-8 flex flex-wrap gap-2">
-                {pillar.items.map((item) => (
-                  <li
-                    key={item.name}
-                    className="border hairline px-3 py-1.5 text-[0.72rem] tracking-[0.015em] text-umber"
-                  >
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
-            </>
-          }
-          actions={
-            <Link href="/services" className="btn-outline">
-              View {pillar.label}
-            </Link>
-          }
-        >
-          <Statement as="h2" size="md">
-            {pillar.label}
-          </Statement>
-        </SplitFeature>
-      ))}
+      {/* One diptych rather than two stacked splits: the two practices sit as
+          equal columns under a single seam, so the "one roof, one standard"
+          idea is legible in the layout instead of only in the copy. */}
+      <PillarDiptych
+        pillars={pillars}
+        kicker="The two pillars"
+        heading={
+          <>
+            One roof, <Em>one standard.</Em>
+          </>
+        }
+      />
 
       {/* ── THE RITUAL, PINNED ───────────────────────────────── */}
       {/* The page's ground is light throughout; the only dark on it comes from
@@ -249,17 +228,27 @@ export default function HomePage() {
         }
         actions={
           <>
-            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
-              Book a Consultation
-            </a>
-            <Link href="/services" className="btn-outline">
-              All Wellness Services
+            <Link href="/services" className="btn-solid">
+              Preview Wellness
             </Link>
+            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-outline">
+              Book the Spa
+            </a>
           </>
         }
       >
+        {/* Wellness is opening after the spa (see menu.ts `comingSoon`), so the
+            entry point is named as the Foundations visit and the call to
+            action previews it rather than booking a visit that is not yet
+            available. */}
+        <p className="mb-4 inline-flex items-center gap-2 font-body text-[0.7rem] uppercase tracking-[0.18em] text-brass-dark">
+          Lather Wellness
+          <span className="rounded-full border border-brass-dark/40 px-2.5 py-0.5 text-[0.6rem] tracking-[0.16em]">
+            Opening soon
+          </span>
+        </p>
         <Statement as="h2" size="md">
-          Begin with a <Em>wellness</Em> consultation.
+          It starts <Em>with you.</Em>
         </Statement>
       </SplitFeature>
 

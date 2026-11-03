@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@types/three": "^0.185.4",

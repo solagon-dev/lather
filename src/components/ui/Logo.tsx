@@ -1,4 +1,4 @@
-import { DESCRIPTOR_PATHS, LOGO_VIEWBOX, MARK_PATHS, WORDMARK_PATHS } from "@/lib/logo-paths";
+import { DESCRIPTOR_PATHS, MARK_PATHS, WORDMARK_PATHS } from "@/lib/logo-paths";
 
 /**
  * The Lather identity, inlined so it can be tinted and animated.

@@ -223,7 +223,8 @@ export default function CoinScene({
       const io = new IntersectionObserver(
         ([e]) => {
           onScreen = e.isIntersecting;
-          onScreen ? start() : stop();
+          if (onScreen) start();
+          else stop();
         },
         { rootMargin: "10% 0px" }
       );

@@ -23,9 +23,10 @@ const { chromium } = await import(PW);
 
 const BASE = process.argv[2] || "http://localhost:3000";
 const ROUTES = [
-  "/", "/about", "/services", "/experience", "/journal", "/locations",
-  "/contact", "/book", "/faq", "/gift-cards", "/scalp-concerns",
-  "/what-is-a-head-spa", "/services/luxe-ritual", "/locations/greenville-nc",
+  "/", "/spa", "/spa/head-spa", "/spa/head-spa/luxe-ritual", "/spa/facials",
+  "/spa/massage", "/wellness", "/wellness/secret-rf-pro", "/pricing", "/book",
+  "/about", "/journal", "/locations", "/contact", "/faq", "/gift-cards",
+  "/scalp-concerns", "/what-is-a-head-spa", "/locations/greenville-nc",
   "/journal/what-is-a-head-spa",
 ];
 const WIDTHS = [

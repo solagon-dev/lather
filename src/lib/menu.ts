@@ -1,8 +1,9 @@
 // ── SERVICE MENU (STRUCTURE) ─────────────────────────────────
-// Two pillars — Spa and Wellness — per the brand blueprint. The final menu
-// and pricing are pending, so services are listed by name and intent only.
-// Head spa is retained as a Spa service line (its ritual pages still live
-// under /services and /experience).
+// Two pillars — Spa and Wellness — per the brand blueprint. Each books on its
+// own Vagaro profile (see business.ts). Head spa is retained as a Spa service
+// line (its ritual pages still live under /services and /experience).
+
+import { BOOK_URL, WELLNESS_BOOK_URL } from "@/lib/business";
 
 export interface MenuItem {
   name: string;
@@ -23,11 +24,12 @@ export interface Pillar {
    */
   imagePosition?: string;
   items: MenuItem[];
+  /** Where this pillar books — the spa and the wellness practice are separate Vagaro profiles. */
+  bookUrl: string;
   /**
-   * The pillar is announced but not yet open for booking. Lather Wellness is
-   * launching after the spa, so its menu is public as a preview while the
-   * treatments themselves are still "coming soon" — the surfaces that list it
-   * say so rather than offering a booking that cannot yet be honoured.
+   * The pillar is announced but not yet open for booking — the surfaces that
+   * list it say so rather than offering a booking that cannot yet be honoured.
+   * Lather Wellness launched this way; it is now open and the flag is off.
    */
   comingSoon?: boolean;
   /** A short line shown with the pillar's status, e.g. under a "coming soon". */
@@ -43,6 +45,7 @@ export const pillars: Pillar[] = [
       "Restorative treatments in a quiet, considered space — care for the scalp, skin, and body that leaves you feeling genuinely better than when you arrived.",
     image: "/media/experience/step-03-massage.webp",
     imagePosition: "50% 35%",
+    bookUrl: BOOK_URL,
     items: [
       {
         name: "Head Spa",
@@ -52,11 +55,12 @@ export const pillars: Pillar[] = [
       },
       {
         name: "Facials",
-        blurb: "Personalized facials that clarify, hydrate, and renew the skin.",
+        blurb:
+          "Glo2Facial Essential and Advanced — exfoliation, oxygenation, and ultrasound, with RF technology in the Advanced for firming.",
       },
       {
         name: "Massage",
-        blurb: "Therapeutic massage to release held tension and restore the body.",
+        blurb: "Therapeutic massage in 45, 60, or 90 minutes to release held tension and restore the body.",
       },
       {
         name: "Skin Treatments",
@@ -78,17 +82,16 @@ export const pillars: Pillar[] = [
     tagline: "Renew",
     // Lather Wellness is women's wellness, led by Stacia Friend, CNM — a place
     // with time to talk, where symptoms are not dismissed and care is not
-    // one-size-fits-all. The menu below is the public sneak peek; the care
-    // itself is opening after the spa (see `comingSoon`).
+    // one-size-fits-all. The menu below follows the sneak peek, corrected to
+    // what the practice actually books on Vagaro.
     intro:
       "Women's wellness, reimagined — led by Stacia Friend, CNM. A place where you have time to talk, where your symptoms aren't dismissed, and where your care is never one-size-fits-all.",
     // A provider-and-client consultation — the image that actually reads
     // "wellness care," and visually distinct from the hands-on Spa photo above.
     image: "/media/experience/step-01-consultation.webp",
     imagePosition: "50% 28%",
-    comingSoon: true,
-    comingSoonNote: "Opening after the spa — book the spa now and be first to hear when wellness opens.",
-    // Verbatim from the Lather Wellness sneak-peek menu. Foundations Wellness
+    bookUrl: WELLNESS_BOOK_URL,
+    // From the Lather Wellness sneak-peek menu. Foundations Wellness
     // leads because it is the entry point every plan is built from — the visit
     // where we listen first and prescribe second.
     items: [
@@ -126,11 +129,14 @@ export const pillars: Pillar[] = [
       },
       {
         name: "Body + Recovery",
-        blurb: "Red light therapy, truFlex muscle conditioning, and body composition.",
+        blurb:
+          "truSculpt body contouring, truFlex muscle conditioning, red light therapy, and body composition.",
       },
       {
-        name: "Botox + Aesthetics",
-        blurb: "Natural-looking treatments with a thoughtful approach.",
+        // The practice uses Xeomin, not Botox — "Botox" is both inaccurate and
+        // someone else's trademark.
+        name: "Injectables + Aesthetics",
+        blurb: "Xeomin® wrinkle relaxer and natural-looking aesthetic treatments, with a thoughtful approach.",
       },
     ],
   },
@@ -141,6 +147,7 @@ export const featuredProvider = {
   name: "Stacia Friend, CNM",
   role: "Certified Nurse Midwife",
   service: "Foundations Wellness Visit",
+  price: 175,
   // From the Lather Wellness sneak peek — "It starts with you." You don't have
   // to know which hormone, lab, or treatment you need before you walk in; the
   // Foundations visit exists to listen first and build the plan from there.
@@ -168,5 +175,56 @@ export const whyLather = [
   {
     title: "Licensed providers",
     body: "Estheticians, cosmetologists, massage therapists, and nurse injectors you can trust with your care.",
+  },
+];
+
+// ── PRICE LIST (BEYOND THE HEAD SPA RITUALS) ─────────────────
+// The four rituals carry their own pages and live in data.ts; everything else
+// bookable online is listed here for /book. Copied from the two Vagaro
+// profiles on 2026-11-02 — Vagaro is the source of truth, so re-check it there
+// when prices change rather than editing these from memory.
+
+export interface PriceItem {
+  name: string;
+  price: number;
+  detail?: string;
+}
+
+export interface PriceGroup {
+  heading: string;
+  /** Which business the group books with. */
+  bookUrl: string;
+  bookLabel: string;
+  items: PriceItem[];
+}
+
+export const priceGroups: PriceGroup[] = [
+  {
+    heading: "More from the spa",
+    bookUrl: BOOK_URL,
+    bookLabel: "Book the Spa",
+    items: [
+      { name: "Couples Head Spa Retreat", price: 250, detail: "Side by side, for two" },
+      { name: "Glo2Facial Essential", price: 225, detail: "Exfoliation, oxygenation, ultrasound" },
+      { name: "Glo2Facial Advanced", price: 275, detail: "Adds RF technology for firming" },
+      { name: "Therapeutic Massage", price: 85, detail: "45 minutes" },
+      { name: "Therapeutic Massage", price: 100, detail: "60 minutes" },
+      { name: "Therapeutic Massage", price: 150, detail: "90 minutes" },
+    ],
+  },
+  {
+    heading: "Lather Wellness",
+    bookUrl: WELLNESS_BOOK_URL,
+    bookLabel: "Request a Visit",
+    items: [
+      { name: "Foundations Visit", price: 175, detail: "Your starting point, with Stacia Friend, CNM" },
+      { name: "Wellness Follow-Up", price: 85, detail: "After your Foundations visit" },
+      { name: "Body Contouring Consultation", price: 50, detail: "truSculpt and truFlex" },
+      { name: "Wellness Injection Consultation", price: 50 },
+      { name: "B12 Injection", price: 30 },
+      { name: "Lipo-B Injection", price: 40 },
+      { name: "L-Carnitine Injection", price: 40 },
+      { name: "Glutathione Injection", price: 45 },
+    ],
   },
 ];

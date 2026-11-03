@@ -42,12 +42,12 @@ export default function ServicesPage() {
       <section className="border-b hairline bg-porcelain px-5 py-10 sm:px-10 lg:px-16">
         <Reveal className="wrap">
           <p className="max-w-3xl text-umber">
-            Our four head spa rituals are priced and bookable online —{" "}
+            Head spa rituals, Glo2Facials, and massage book online with the spa. Wellness visits
+            are requested online with Lather Wellness, and the practice confirms your time.{" "}
             <Link href="/book" className="link-ul font-medium text-ink">
-              see the menu and pricing
+              See the full menu and pricing
             </Link>
-            . Everything else is arranged directly with us while the full menu is being finalized:
-            tap any treatment below and we&rsquo;ll help you choose and get you scheduled.
+            , or tap any treatment below and we&rsquo;ll help you choose.
           </p>
         </Reveal>
       </section>
@@ -98,7 +98,7 @@ export default function ServicesPage() {
                 </>
               ) : (
                 <a
-                  href={BOOK_URL}
+                  href={pillar.bookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-solid mt-8 w-full sm:w-auto"
@@ -152,15 +152,15 @@ export default function ServicesPage() {
                   </p>
                   <p className="mt-3 max-w-xl text-[0.95rem] text-ivory/70">{featuredProvider.blurb}</p>
                   <p className="mt-5 text-[0.8rem] tracking-[0.015em] text-brass-light">
-                    Opening after the spa — book the spa now and be first to hear when wellness opens.
+                    ${featuredProvider.price} · Requested online, confirmed by the practice
                   </p>
                   <a
-                    href={BOOK_URL}
+                    href={pillar.bookUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-solid-light mt-6 w-full sm:w-auto"
                   >
-                    Book the Spa
+                    Request a Foundations Visit
                   </a>
                 </Reveal>
               )}

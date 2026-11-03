@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/ui/Logo";
-import { BOOK_URL, GIFT_CARD_URL, business, hours } from "@/lib/business";
+import { BOOK_URL, GIFT_CARD_URL, WELLNESS_BOOK_URL, business, hours, wellnessHoursShort } from "@/lib/business";
 
 const visitLinks = [
   { href: "/services", label: "Services" },
@@ -78,7 +78,15 @@ export default function Footer() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
-              Book Appointment
+              Book the Spa
+            </a>
+            <a
+              href={WELLNESS_BOOK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-light"
+            >
+              Book Wellness
             </a>
             <a
               href={GIFT_CARD_URL}
@@ -117,7 +125,8 @@ export default function Footer() {
             </a>
           </address>
 
-          <ul className="mt-8 space-y-1.5 text-[0.82rem] tabular-nums text-ivory/55">
+          <p className="mt-8 text-[0.72rem] tracking-[0.02em] text-ivory/55">Spa hours</p>
+          <ul className="mt-2 space-y-1.5 text-[0.82rem] tabular-nums text-ivory/55">
             {hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-4">
                 <span className="whitespace-nowrap">{h.day}</span>
@@ -127,6 +136,9 @@ export default function Footer() {
               </li>
             ))}
           </ul>
+          <p className="mt-4 text-[0.82rem] tabular-nums text-ivory/55">
+            <span className="text-ivory/70">Wellness</span> · {wellnessHoursShort}
+          </p>
         </div>
       </div>
 

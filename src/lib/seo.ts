@@ -1,4 +1,4 @@
-import { business, openingHoursSpec } from "@/lib/business";
+import { business, openingHoursSpec, openingHoursSpecFor, wellness, wellnessHours } from "@/lib/business";
 import { services, testimonials } from "@/lib/data";
 
 /**
@@ -24,7 +24,7 @@ export function localBusinessSchema() {
     logo: `${business.siteUrl}/icon.svg`,
     priceRange: "$$$",
     currenciesAccepted: "USD",
-    paymentAccepted: "Cash, Credit Card, Debit Card",
+    paymentAccepted: business.paymentAccepted,
     address: {
       "@type": "PostalAddress",
       streetAddress: business.address.street,
@@ -85,6 +85,45 @@ export function localBusinessSchema() {
         },
       })),
     },
+  };
+}
+
+/**
+ * Lather Wellness Center PLLC — the medical practice under the same roof.
+ *
+ * A separate legal entity with its own hours and booking profile, so it is
+ * its own node rather than a service of the spa. It shares the address and
+ * phone, and points at the brand Organization as its parent.
+ */
+export function wellnessSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "@id": `${business.siteUrl}/#wellness`,
+    name: wellness.name,
+    legalName: wellness.legalName,
+    url: `${business.siteUrl}/services`,
+    telephone: business.phone,
+    image: `${business.siteUrl}/og.jpg`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: business.address.street,
+      addressLocality: business.address.city,
+      addressRegion: business.address.state,
+      postalCode: business.address.zip,
+      addressCountry: "US",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: business.geo.latitude,
+      longitude: business.geo.longitude,
+    },
+    openingHoursSpecification: openingHoursSpecFor(wellnessHours).map((s) => ({
+      "@type": "OpeningHoursSpecification",
+      ...s,
+    })),
+    parentOrganization: { "@id": `${business.siteUrl}/#organization` },
+    sameAs: [wellness.vagaro.profile],
   };
 }
 

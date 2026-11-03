@@ -6,7 +6,7 @@ import MapEmbed from "@/components/MapEmbed";
 import UtilityHero from "@/components/heroes/UtilityHero";
 import Reveal from "@/components/Reveal";
 import { Em } from "@/components/ui/Type";
-import { business, hours } from "@/lib/business";
+import { business, hours, wellnessHours } from "@/lib/business";
 import { faqs } from "@/lib/data";
 import { getCity } from "@/lib/locations";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
@@ -97,16 +97,26 @@ export default function ContactPage() {
               </div>
             </address>
 
-            <div className="mt-10 max-w-sm">
-              <p className="text-[0.68rem] tracking-[0.02em] text-taupe">Hours</p>
-              <ul className="mt-4 space-y-1 text-[0.9rem] text-umber">
-                {hours.map((h) => (
-                  <li key={h.day} className="flex justify-between border-b hairline pb-1">
-                    <span>{h.day}</span>
-                    <span>{h.open ? `${h.open} – ${h.close}` : "Closed"}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* The spa and the wellness practice keep separate hours. */}
+            <div className="mt-10 grid max-w-2xl gap-10 sm:grid-cols-2">
+              {[
+                { label: "Spa hours", table: hours },
+                { label: "Wellness hours", table: wellnessHours },
+              ].map(({ label, table }) => (
+                <div key={label}>
+                  <p className="text-[0.68rem] tracking-[0.02em] text-taupe">{label}</p>
+                  <ul className="mt-4 space-y-1 text-[0.9rem] text-umber">
+                    {table.map((h) => (
+                      <li key={h.day} className="flex justify-between gap-3 border-b hairline pb-1">
+                        <span>{h.day}</span>
+                        <span className="whitespace-nowrap">
+                          {h.open ? `${h.open} – ${h.close}` : "Closed"}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
 
             <p className="mt-8 text-[0.85rem] text-taupe">

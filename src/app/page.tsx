@@ -19,7 +19,7 @@ import StatementSection from "@/components/sections/StatementSection";
 import LineReveal from "@/components/ui/LineReveal";
 import { Em, Lede, Statement } from "@/components/ui/Type";
 import { Soft } from "@/components/ui/CinematicHeading";
-import { BOOK_URL, business, hours } from "@/lib/business";
+import { BOOK_URL, WELLNESS_BOOK_URL, business, hours, wellnessHoursShort } from "@/lib/business";
 import { testimonials } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
 import { featuredProvider, pillars, whyLather } from "@/lib/menu";
@@ -228,24 +228,20 @@ export default function HomePage() {
         }
         actions={
           <>
-            <Link href="/services" className="btn-solid">
-              Preview Wellness
-            </Link>
-            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-outline">
-              Book the Spa
+            <a href={WELLNESS_BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
+              Request a Foundations Visit
             </a>
+            <Link href="/services" className="btn-outline">
+              Explore Wellness
+            </Link>
           </>
         }
       >
-        {/* Wellness is opening after the spa (see menu.ts `comingSoon`), so the
-            entry point is named as the Foundations visit and the call to
-            action previews it rather than booking a visit that is not yet
-            available. */}
-        <p className="mb-4 inline-flex items-center gap-2 font-body text-[0.7rem] uppercase tracking-[0.18em] text-brass-dark">
+        {/* Every wellness plan starts with the Foundations visit, so that is
+            the one thing this section asks for. It books on the wellness
+            practice's own Vagaro profile, not the spa's. */}
+        <p className="mb-4 font-body text-[0.7rem] uppercase tracking-[0.18em] text-brass-dark">
           Lather Wellness
-          <span className="rounded-full border border-brass-dark/40 px-2.5 py-0.5 text-[0.6rem] tracking-[0.16em]">
-            Opening soon
-          </span>
         </p>
         <Statement as="h2" size="md">
           It starts <Em>with you.</Em>
@@ -433,7 +429,8 @@ export default function HomePage() {
               </a>
             </address>
             <p className="mt-4 text-[0.85rem] text-taupe">{business.parking} · By appointment</p>
-            <ul className="mt-8 max-w-sm space-y-1 text-[0.9rem] text-umber">
+            <p className="mt-8 text-[0.68rem] tracking-[0.02em] text-taupe">Spa hours</p>
+            <ul className="mt-3 max-w-sm space-y-1 text-[0.9rem] text-umber">
               {hours.map((h) => (
                 <li key={h.day} className="flex justify-between gap-3 border-b hairline pb-1">
                   <span className="whitespace-nowrap">{h.day}</span>
@@ -443,6 +440,9 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
+            <p className="mt-4 max-w-sm text-[0.9rem] text-umber">
+              Wellness <span className="text-taupe">·</span> {wellnessHoursShort}
+            </p>
           </>
         }
       >

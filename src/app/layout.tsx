@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import StickyBook from "@/components/StickyBook";
 import Preloader from "@/components/ui/Preloader";
 import { business } from "@/lib/business";
-import { jsonLd, localBusinessSchema, organizationSchema } from "@/lib/seo";
+import { jsonLd, localBusinessSchema, organizationSchema, wellnessSchema } from "@/lib/seo";
 import "./globals.css";
 
 // Instrument Serif ships a single weight plus a true italic — no light, no
@@ -92,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(localBusinessSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema())} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(wellnessSchema())} />
         <Preloader />
         <Navbar />
         <main id="main">{children}</main>

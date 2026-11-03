@@ -44,6 +44,8 @@ const nextConfig: NextConfig = {
       { source: "/team", destination: "/about", permanent: true },
       { source: "/memberships", destination: "/gift-cards", permanent: true },
       { source: "/spa-parties", destination: "/contact", permanent: true },
+      // The standalone Blowout was retired from the menu in November 2026.
+      { source: "/services/blowout", destination: "/book", permanent: true },
 
       // Routes consolidated in the 2026 duplicate-content cleanup
       ...renamedCityPages,

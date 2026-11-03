@@ -221,7 +221,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                       {s.name}
                     </span>
                     <span className="shrink-0 text-[0.75rem] tracking-[0.02em] text-taupe">
-                      {s.duration} · {s.tier === "express" ? `from $${s.price}` : `$${s.price}`}
+                      {s.duration} · ${s.price}
                     </span>
                   </Link>
                 </li>

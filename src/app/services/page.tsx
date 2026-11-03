@@ -13,7 +13,7 @@ import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Spa & Wellness Services",
   description:
-    "Spa experiences — head spa, facials, massage, skin, brows, red light — and wellness care in Greenville, NC. Two pillars of care under one roof.",
+    "Head spa, Glo2Facials and massage, plus women's wellness, laser hair removal and Secret RF & PRO in Greenville, NC. Two pillars of care under one roof.",
   alternates: { canonical: "/services" },
 };
 

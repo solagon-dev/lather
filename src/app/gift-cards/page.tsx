@@ -33,15 +33,15 @@ const steps = [
 ];
 
 export default function GiftCardsPage() {
-  const blowout = services.find((s) => s.id === "blowout");
+  const recharge = services.find((s) => s.id === "gentlemans-recharge");
   const classic = services.find((s) => s.id === "classic-ritual");
   const luxe = services.find((s) => s.id === "luxe-ritual");
 
   const amounts = [
-    blowout && {
-      price: blowout.price,
-      name: blowout.name,
-      note: "A polished wash, blowdry, and style — the perfect small luxury.",
+    recharge && {
+      price: recharge.price,
+      name: recharge.name,
+      note: "A focused hour of scalp care and massage — an easy yes for him.",
     },
     classic && {
       price: classic.price,

@@ -6,13 +6,13 @@ import Reveal from "@/components/Reveal";
 import { Em } from "@/components/ui/Type";
 import { BOOK_URL, business } from "@/lib/business";
 import { services } from "@/lib/data";
-import { priceGroups } from "@/lib/menu";
+import { couplesRetreat, priceGroups } from "@/lib/menu";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Book & Pricing",
   description:
-    "Book Lather Spa & Wellness in Greenville, NC. Head spa rituals, Glo2Facials and massage online; wellness visits with Stacia Friend, CNM by request.",
+    "Prices for Lather Spa & Wellness in Greenville, NC: head spa, Glo2Facials, massage, wellness visits, laser hair removal, and Secret RF & PRO.",
   alternates: { canonical: "/book" },
 };
 
@@ -101,7 +101,8 @@ export default function BookPage() {
               The head spa ritual menu
             </h2>
             <p className="mt-6 text-umber">
-              Our head spa rituals book online below, followed by facials, massage, and wellness.
+              Head spa rituals first, then facials and massage, then Lather Wellness — visits,
+              laser hair removal, and Secret RF &amp; PRO.
               Not sure what to choose?{" "}
               <a href={business.phoneHref} className="link-ul">
                 Call or text
@@ -124,7 +125,7 @@ export default function BookPage() {
                 </Link>
                 <p className="text-[0.75rem] tracking-[0.02em] text-taupe">{s.duration}</p>
                 <p className="font-display text-xl text-brass-dark">
-                  {s.tier === "express" ? `From $${s.price}` : `$${s.price}`}
+                  ${s.price}
                 </p>
                 <a
                   href={BOOK_URL}
@@ -136,36 +137,100 @@ export default function BookPage() {
                 </a>
               </Reveal>
             ))}
-          </div>
-          {/* Everything else bookable online, grouped by the business it books
-              with — the spa and Lather Wellness are separate Vagaro profiles. */}
-          {priceGroups.map((group) => (
-            <div key={group.heading} className="mt-20">
-              <Reveal>
-                <h2 className="h-display text-3xl sm:text-4xl">{group.heading}</h2>
-              </Reveal>
-              <div className="mt-8 border-t hairline">
-                {group.items.map((item, i) => (
-                  <Reveal
-                    key={`${item.name}-${item.price}`}
-                    delay={i * 50}
-                    className="grid items-baseline gap-2 border-b hairline py-5 sm:grid-cols-[1.6fr_auto] sm:gap-8"
-                  >
-                    <div>
-                      <h3 className="font-display text-xl">{item.name}</h3>
-                      {item.detail && <p className="mt-1 text-[0.85rem] text-taupe">{item.detail}</p>}
-                    </div>
-                    <p className="font-display text-xl text-brass-dark">${item.price}</p>
-                  </Reveal>
-                ))}
+            <Reveal className="grid items-baseline gap-2 border-b hairline py-6 sm:grid-cols-[1.6fr_auto_auto] sm:gap-8">
+              <div>
+                <h3 className="font-display text-2xl">{couplesRetreat.name}</h3>
+                <p className="mt-1 text-[0.85rem] text-taupe">{couplesRetreat.tagline}</p>
               </div>
-              <Reveal className="mt-8">
-                <a href={group.bookUrl} target="_blank" rel="noopener noreferrer" className="btn-solid">
-                  {group.bookLabel}
-                </a>
-              </Reveal>
-            </div>
-          ))}
+              <p className="font-display text-xl text-brass-dark">${couplesRetreat.price}</p>
+              <a
+                href={BOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
+              >
+                Book →
+              </a>
+            </Reveal>
+          </div>
+          {/* Everything else on the menu. Spa groups come first and wellness
+              after, and each business's booking door follows its last group,
+              since the spa and Lather Wellness book on separate profiles. */}
+          {priceGroups.map((group) => {
+            const priced = group.columns ?? [];
+            const long = !group.columns && group.items.length > 8;
+            const fmt = (n: number) => `$${n.toLocaleString("en-US")}`;
+            return (
+              <div key={group.heading} className="mt-20">
+                <Reveal>
+                  <h2 className="h-display text-3xl sm:text-4xl">{group.heading}</h2>
+                  {group.intro && <p className="mt-3 text-[0.9rem] text-taupe">{group.intro}</p>}
+                </Reveal>
+
+                {priced.length > 0 && (
+                  <div
+                    aria-hidden
+                    className="mt-8 hidden gap-8 text-[0.7rem] tracking-[0.02em] text-taupe sm:grid sm:grid-cols-[1.6fr_repeat(3,7rem)]"
+                  >
+                    <span />
+                    {priced.map((c) => (
+                      <span key={c} className="text-right">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <div
+                  className={`border-t hairline ${priced.length ? "mt-3" : "mt-8"} ${
+                    long ? "md:grid md:grid-cols-2 md:gap-x-12" : ""
+                  }`}
+                >
+                  {group.items.map((item, i) => (
+                    <Reveal
+                      key={`${item.name}-${item.detail ?? ""}`}
+                      delay={Math.min(i, 8) * 40}
+                      className={`grid items-baseline gap-2 border-b hairline py-5 ${
+                        priced.length
+                          ? "sm:grid-cols-[1.6fr_repeat(3,7rem)] sm:gap-8"
+                          : "grid-cols-[1fr_auto] gap-6"
+                      }`}
+                    >
+                      <div>
+                        <h3 className="font-display text-xl">{item.name}</h3>
+                        {item.detail && <p className="mt-1 text-[0.85rem] text-taupe">{item.detail}</p>}
+                      </div>
+                      {priced.length ? (
+                        // On a phone the column headings are hidden, so each
+                        // price carries its own label instead.
+                        item.prices.map((p, j) => (
+                          <p
+                            key={priced[j]}
+                            className={`flex justify-between font-display text-xl sm:block sm:text-right ${
+                              j === priced.length - 1 ? "text-brass-dark" : "text-umber"
+                            }`}
+                          >
+                            <span className="font-body text-[0.75rem] text-taupe sm:hidden">{priced[j]}</span>
+                            {fmt(p)}
+                          </p>
+                        ))
+                      ) : (
+                        <p className="font-display text-xl text-brass-dark">{fmt(item.prices[0])}</p>
+                      )}
+                    </Reveal>
+                  ))}
+                </div>
+
+                {group.book && (
+                  <Reveal className="mt-8">
+                    <a href={group.book.url} target="_blank" rel="noopener noreferrer" className="btn-solid">
+                      {group.book.label}
+                    </a>
+                  </Reveal>
+                )}
+              </div>
+            );
+          })}
 
           <Reveal className="mt-14 max-w-2xl">
             <p className="text-[0.85rem] text-taupe">

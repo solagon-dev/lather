@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const service = services.find((s) => s.id === slug);
   if (!service) return {};
-  const price = service.id === "blowout" ? `from $${service.price}` : `$${service.price}`;
+  const price = `$${service.price}`;
   return {
     title: `${service.name} — ${service.duration}, ${price}`,
     description: clampDescription(
@@ -62,7 +62,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
       <ServiceDetailHero
         name={service.name}
         tagline={service.tagline}
-        price={service.id === "blowout" ? `From $${service.price}` : `$${service.price}`}
+        price={`$${service.price}`}
         duration={service.duration}
         bestFor={service.bestFor}
         description={service.description}

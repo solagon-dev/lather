@@ -60,19 +60,8 @@ export const pillars: Pillar[] = [
       },
       {
         name: "Massage",
-        blurb: "Therapeutic massage in 45, 60, or 90 minutes to release held tension and restore the body.",
-      },
-      {
-        name: "Skin Treatments",
-        blurb: "Advanced, results-driven treatments tailored to your skin goals.",
-      },
-      {
-        name: "Brows",
-        blurb: "Shaping and tinting for a clean, natural finish.",
-      },
-      {
-        name: "Red Light Therapy",
-        blurb: "Non-invasive light therapy to support skin health and recovery.",
+        blurb:
+          "Therapeutic massage in 45, 60, or 90 minutes, and prenatal massage for expecting mothers.",
       },
     ],
   },
@@ -133,6 +122,15 @@ export const pillars: Pillar[] = [
           "truSculpt body contouring, truFlex muscle conditioning, red light therapy, and body composition.",
       },
       {
+        name: "Laser Hair Removal",
+        blurb: "Lasting hair reduction for face and body, priced by area.",
+      },
+      {
+        name: "Secret RF + Secret PRO",
+        blurb:
+          "RF microneedling and CO₂ resurfacing for texture, tone, firmness, and stretch marks.",
+      },
+      {
         // The practice uses Xeomin, not Botox — "Botox" is both inaccurate and
         // someone else's trademark.
         name: "Injectables + Aesthetics",
@@ -179,52 +177,100 @@ export const whyLather = [
 ];
 
 // ── PRICE LIST (BEYOND THE HEAD SPA RITUALS) ─────────────────
-// The four rituals carry their own pages and live in data.ts; everything else
-// bookable online is listed here for /book. Copied from the two Vagaro
-// profiles on 2026-11-02 — Vagaro is the source of truth, so re-check it there
-// when prices change rather than editing these from memory.
+// The three rituals carry their own pages and live in data.ts; everything else
+// on the menu is listed here for /book. From the client's own menu, 2026-11-02.
+// Laser and Secret RF/PRO are not on either Vagaro profile yet, so their
+// groups send people to request a visit with the wellness practice.
 
 export interface PriceItem {
   name: string;
-  price: number;
   detail?: string;
+  /** One price per column — a single price unless the group has `columns`. */
+  prices: number[];
 }
 
 export interface PriceGroup {
   heading: string;
-  /** Which business the group books with. */
-  bookUrl: string;
-  bookLabel: string;
+  intro?: string;
+  /** Column headings for groups priced more than one way (single, packs). */
+  columns?: string[];
   items: PriceItem[];
+  /** Shown after the group; groups that share a booking door can leave it to the last one. */
+  book?: { url: string; label: string };
 }
+
+/** The one head-spa booking without a page of its own. Listed with the rituals on /book. */
+export const couplesRetreat = {
+  name: "Couples Head Spa Retreat",
+  tagline: "Side by side, for two — scalp treatment, cleanse, hydration, and massage",
+  price: 250,
+};
 
 export const priceGroups: PriceGroup[] = [
   {
-    heading: "More from the spa",
-    bookUrl: BOOK_URL,
-    bookLabel: "Book the Spa",
+    heading: "Facials",
     items: [
-      { name: "Couples Head Spa Retreat", price: 250, detail: "Side by side, for two" },
-      { name: "Glo2Facial Essential", price: 225, detail: "Exfoliation, oxygenation, ultrasound" },
-      { name: "Glo2Facial Advanced", price: 275, detail: "Adds RF technology for firming" },
-      { name: "Therapeutic Massage", price: 85, detail: "45 minutes" },
-      { name: "Therapeutic Massage", price: 100, detail: "60 minutes" },
-      { name: "Therapeutic Massage", price: 150, detail: "90 minutes" },
+      { name: "Glo2Facial Essential", detail: "Exfoliation, oxygenation, and ultrasound", prices: [225] },
+      { name: "Glo2Facial Advanced", detail: "Adds RF technology for firming", prices: [275] },
     ],
   },
   {
-    heading: "Lather Wellness",
-    bookUrl: WELLNESS_BOOK_URL,
-    bookLabel: "Request a Visit",
+    heading: "Massage",
     items: [
-      { name: "Foundations Visit", price: 175, detail: "Your starting point, with Stacia Friend, CNM" },
-      { name: "Wellness Follow-Up", price: 85, detail: "After your Foundations visit" },
-      { name: "Body Contouring Consultation", price: 50, detail: "truSculpt and truFlex" },
-      { name: "Wellness Injection Consultation", price: 50 },
-      { name: "B12 Injection", price: 30 },
-      { name: "Lipo-B Injection", price: 40 },
-      { name: "L-Carnitine Injection", price: 40 },
-      { name: "Glutathione Injection", price: 45 },
+      { name: "Therapeutic Massage", detail: "45 minutes", prices: [85] },
+      { name: "Therapeutic Massage", detail: "60 minutes", prices: [100] },
+      { name: "Therapeutic Massage", detail: "90 minutes", prices: [150] },
+      { name: "Prenatal Massage", detail: "60 minutes", prices: [100] },
+      { name: "Prenatal Massage", detail: "90 minutes", prices: [150] },
     ],
+    book: { url: BOOK_URL, label: "Book the Spa" },
+  },
+  {
+    heading: "Wellness visits",
+    items: [
+      { name: "Foundations Visit", detail: "Your starting point, with Stacia Friend, CNM", prices: [175] },
+      { name: "Wellness Follow-Up", detail: "After your Foundations visit", prices: [85] },
+      { name: "Body Contouring Consultation", detail: "truSculpt and truFlex", prices: [50] },
+      { name: "Wellness Injection Consultation", prices: [50] },
+      { name: "B12 Injection", prices: [30] },
+      { name: "Lipo-B Injection", prices: [40] },
+      { name: "L-Carnitine Injection", prices: [40] },
+      { name: "Glutathione Injection", prices: [45] },
+    ],
+  },
+  {
+    heading: "Laser hair removal",
+    intro: "Priced per area, per session.",
+    items: [
+      { name: "Upper lip", prices: [125] },
+      { name: "Chin", prices: [125] },
+      { name: "Lower face & neck", prices: [200] },
+      { name: "Underarms", prices: [200] },
+      { name: "Forearms", prices: [250] },
+      { name: "Chest", prices: [275] },
+      { name: "Lower back", prices: [250] },
+      { name: "Full back", prices: [400] },
+      { name: "Bikini line", prices: [175] },
+      { name: "Extended bikini", prices: [250] },
+      { name: "French bikini", prices: [300] },
+      { name: "Full Brazilian", prices: [350] },
+      { name: "Lower legs", prices: [350] },
+      { name: "Upper legs", prices: [400] },
+      { name: "Full legs", prices: [700] },
+    ],
+  },
+  {
+    heading: "Secret RF & Secret PRO",
+    intro: "RF microneedling and CO₂ resurfacing. Launch pricing on three-session packages.",
+    columns: ["Single", "3-pack", "Launch 3-pack"],
+    items: [
+      { name: "Secret RF — Face", prices: [375, 900, 750] },
+      { name: "Secret RF — Face & Neck", prices: [425, 1050, 900] },
+      { name: "Secret RF — Stretch Marks", prices: [225, 600, 500] },
+      { name: "Secret PRO — Gentle CO₂", prices: [375, 900, 750] },
+      { name: "Secret PRO — CO₂ Resurfacing", prices: [1750, 4200, 3500] },
+      { name: "Secret PRO — RF + CO₂ Combo", prices: [2000, 4800, 4000] },
+    ],
+    book: { url: WELLNESS_BOOK_URL, label: "Request a Wellness Visit" },
   },
 ];

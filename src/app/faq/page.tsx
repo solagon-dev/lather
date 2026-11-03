@@ -82,7 +82,7 @@ export default function FaqPage() {
               Head spa, ritual by ritual
             </h2>
             <p className="mt-6 text-umber">
-              Our signature head spa comes in four rituals — each with its own rhythm, and its own
+              Our signature head spa comes in three rituals — each with its own rhythm, and its own
               questions. Answers below, grouped by ritual.
             </p>
           </Reveal>

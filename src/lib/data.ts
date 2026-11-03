@@ -4,7 +4,7 @@ export const services = [
     id: "luxe-ritual",
     name: "The Luxe Ritual",
     tagline: "Our most complete experience — scalp, hair, and skin",
-    price: 200,
+    price: 175,
     duration: "90 min",
     durationMin: 90,
     tier: "premium" as const,
@@ -84,33 +84,6 @@ export const services = [
     suggestedUpgradeReason: "Want more? The Classic Ritual extends the massage and adds a nourishing hair mask with steam infusion.",
     image: "/media/treatments/gentlemans-recharge.webp",
     concerns: ["Stress", "General maintenance", "Tension"],
-  },
-  {
-    id: "blowout",
-    name: "Blowout",
-    tagline: "Smooth, voluminous, effortlessly styled",
-    price: 50,
-    duration: "45 min",
-    durationMin: 45,
-    tier: "express" as const,
-    description:
-      "Get smooth, voluminous, and effortlessly styled hair with our signature blowout. This service includes a professional wash and blowdry style tailored to your desired look. Perfect for any occasion or just because!",
-    note: "Starting at $50. Price may vary by hair length and thickness.",
-    highlights: [
-      "Professional wash",
-      "Blowdry & style",
-      "Tailored to your look",
-    ],
-    bestFor: "Any occasion · Quick refresh",
-    bestForTags: ["Quick refresh", "Events", "Date night", "Just because"],
-    intensity: 1,
-    luxuryLevel: 3,
-    firstTimeFit: "recommended" as const,
-    recommendedAddOns: [] as string[],
-    suggestedUpgrade: "classic-ritual",
-    suggestedUpgradeReason: "Want the full head spa experience? The Classic Ritual adds scalp treatment, massage, and steam infusion — plus a blowdry finish.",
-    image: "/media/treatments/blowout-card.webp",
-    concerns: ["Styling", "Special occasion prep"],
   },
 ];
 
@@ -210,24 +183,6 @@ export const treatmentFAQs: Record<string, { question: string; answer: string }[
       answer: "The Classic Ritual or The Luxe Ritual both offer deeper scalp treatment protocols. If thinning is a primary concern, let us know when you book and we can tailor the treatment to focus on scalp stimulation and circulation.",
     },
   ],
-  "blowout": [
-    {
-      question: "What styles can I get with the blowout?",
-      answer: "Our blowout is fully customizable — sleek and smooth, voluminous bounce, soft waves, or a polished natural look. Let your stylist know your vision and we'll make it happen.",
-    },
-    {
-      question: "Why does the price say 'starting at'?",
-      answer: "The $50 base price covers most hair lengths and types. Longer, thicker, or more textured hair may require additional time and product, which can adjust the price slightly. We'll always confirm before we begin.",
-    },
-    {
-      question: "Can I add a blowout to another treatment?",
-      answer: "The Classic Ritual already includes a blowdry finish. The Luxe Ritual includes a full professional blowout. The blowout service is designed as a standalone option for guests who want styling without a full scalp treatment.",
-    },
-    {
-      question: "How long does the blowout last?",
-      answer: "With proper care, most blowouts last 2–3 days. We'll share tips for extending your style when you leave.",
-    },
-  ],
 };
 
 // ── TREATMENT DETAILS (before/after, who it's for) ───────────
@@ -306,27 +261,6 @@ export const treatmentDetails: Record<string, {
       "A focused scalp massage — firm, intentional pressure to dissolve tension",
       "Application of a lightweight revitalizing treatment for scalp and hair",
       "A clean finish — you'll leave looking sharp and feeling completely recharged",
-    ],
-  },
-  "blowout": {
-    whoItsFor:
-      "Anyone wanting smooth, voluminous, beautifully styled hair — whether for a special event, date night, or just because you deserve it. No scalp treatment required.",
-    beforeVisit: [
-      "Arrive with dry or damp hair — either works",
-      "Let us know your desired style when you arrive",
-      "No special preparation needed",
-      "Sessions are approximately 45 minutes",
-    ],
-    afterCare: [
-      "Sleep on a silk pillowcase to extend your blowout",
-      "Avoid getting your hair wet for as long as possible",
-      "Use dry shampoo at the roots to maintain volume",
-      "Most blowouts last 2–3 days with proper care",
-    ],
-    whatToExpect: [
-      "A professional wash using premium products",
-      "A blowdry and style tailored to your desired look",
-      "Final touches for a polished, camera-ready finish",
     ],
   },
 };
@@ -420,7 +354,7 @@ export const headSpaFaqs = [
   {
     question: "How long does a head spa session last?",
     answer:
-      "Sessions range from 45 to 90 minutes depending on the ritual you choose. Our Blowout is approximately 45 minutes, the Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a full 90-minute experience. All sessions are by appointment and reserved exclusively for you.",
+      "Head spa sessions range from 60 to 90 minutes depending on the ritual you choose. The Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a full 90-minute experience. All sessions are by appointment and reserved exclusively for you.",
   },
   {
     question: "How should I prepare for my head spa appointment?",
@@ -435,7 +369,7 @@ export const headSpaFaqs = [
   {
     question: "Do the head spa treatments include a blowdry?",
     answer:
-      "The Classic Ritual includes a professional blowdry finish, and The Luxe Ritual includes a full professional blowout. We also offer a standalone Blowout service for guests who want styling without a scalp treatment. The Gentleman's Recharge includes a clean finish appropriate for men's styling.",
+      "The Classic Ritual includes a professional blowdry finish, and The Luxe Ritual includes a full professional blowout. The Gentleman's Recharge includes a clean finish appropriate for men's styling.",
   },
   {
     question: "How often should I come in for a head spa?",

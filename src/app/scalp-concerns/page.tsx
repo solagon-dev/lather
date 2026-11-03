@@ -105,7 +105,7 @@ function ConcernCard({ concern, index }: { concern: Concern; index: number }) {
             {service.name} →
           </Link>
           <p className="mt-1 text-[0.75rem] text-taupe">
-            {service.duration} · {service.id === "blowout" ? `from $${service.price}` : `$${service.price}`}
+            {service.duration} · ${service.price}
           </p>
         </div>
       </div>

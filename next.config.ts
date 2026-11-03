@@ -38,14 +38,22 @@ const nextConfig: NextConfig = {
     }));
 
     return [
+      // The November 2026 restructure: two hubs (/spa, /wellness) replace the
+      // single /services overview, the head spa rituals move under the spa,
+      // and the price list moves to /pricing (/book is now the Spa-or-Wellness
+      // chooser). Older routes point straight at their final home, no chains.
+      // The standalone Blowout was retired from the menu the same month.
+      { source: "/services/blowout", destination: "/pricing", permanent: true },
+      { source: "/services", destination: "/pricing", permanent: true },
+      { source: "/services/:slug", destination: "/spa/head-spa/:slug", permanent: true },
+      { source: "/experience", destination: "/spa/head-spa", permanent: true },
+
       // Routes renamed or removed in the 2026 redesign
-      { source: "/treatments", destination: "/services", permanent: true },
-      { source: "/treatments/:slug", destination: "/services/:slug", permanent: true },
+      { source: "/treatments", destination: "/pricing", permanent: true },
+      { source: "/treatments/:slug", destination: "/spa/head-spa/:slug", permanent: true },
       { source: "/team", destination: "/about", permanent: true },
       { source: "/memberships", destination: "/gift-cards", permanent: true },
       { source: "/spa-parties", destination: "/contact", permanent: true },
-      // The standalone Blowout was retired from the menu in November 2026.
-      { source: "/services/blowout", destination: "/book", permanent: true },
 
       // Routes consolidated in the 2026 duplicate-content cleanup
       ...renamedCityPages,

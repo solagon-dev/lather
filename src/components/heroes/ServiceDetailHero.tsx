@@ -41,8 +41,8 @@ export default function ServiceDetailHero({
       <div className="wrap grid gap-12 pb-16 md:grid-cols-[1.15fr_1fr] md:pb-24">
         <Reveal>
           <nav aria-label="Breadcrumb" className="text-[0.7rem] tracking-[0.02em] text-taupe">
-            <Link href="/services" className="link-ul">
-              Services
+            <Link href="/spa/head-spa" className="link-ul">
+              Head Spa
             </Link>{" "}
             / {name}
           </nav>

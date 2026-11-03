@@ -6,16 +6,23 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Logo from "@/components/ui/Logo";
 import { HERO_HANDOFF_VH, NAV_WORDMARK_ATTR } from "@/lib/hero-handoff";
 import { motion } from "framer-motion";
-import { BOOK_URL, business, hoursShort } from "@/lib/business";
+import { BookButton } from "@/components/BookDialog";
+import { business, hoursShort } from "@/lib/business";
 
+// Two doors first — the spa and the wellness practice are the two things
+// anyone arrives looking for — then what every visitor needs from either.
 const links = [
-  { href: "/services", label: "Services" },
-  { href: "/book", label: "Pricing" },
-  { href: "/experience", label: "Head Spa" },
+  { href: "/spa", label: "Spa" },
+  { href: "/wellness", label: "Wellness" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Visit" },
+];
+
+const secondaryLinks = [
   { href: "/gift-cards", label: "Gift Cards" },
   { href: "/journal", label: "Journal" },
-  { href: "/contact", label: "Contact" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 /**
@@ -189,10 +196,7 @@ export default function Navbar() {
             exactly two things in it, and making one of them a loud filled
             button would unbalance a header whose whole point is restraint.
             Hidden while the menu is open, which carries its own booking link. */}
-        <a
-          href={BOOK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <BookButton
           className={`pointer-events-auto relative z-[60] hidden items-center px-5 py-3 font-body text-[0.66rem] font-medium tracking-[0.02em] ring-1 backdrop-blur-md transition-colors duration-500 ease-luxe sm:inline-flex ${
             open ? "pointer-events-none opacity-0" : tone
           }`}
@@ -200,7 +204,7 @@ export default function Navbar() {
           aria-hidden={open}
         >
           Book appointment
-        </a>
+        </BookButton>
 
         {/* ── the name, arriving from the hero ───────────────── */}
         <motion.div
@@ -287,6 +291,24 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+          </ul>
+          <ul className="mx-auto mt-8 flex w-full max-w-5xl flex-wrap gap-x-8 gap-y-2">
+            {secondaryLinks.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  aria-current={isActive(l.href) ? "page" : undefined}
+                  className="link-ul inline-block py-1 text-[0.95rem] text-umber"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <BookButton className="link-ul inline-block py-1 text-[0.95rem] font-semibold text-ink">
+                Book an appointment
+              </BookButton>
+            </li>
           </ul>
         </nav>
 

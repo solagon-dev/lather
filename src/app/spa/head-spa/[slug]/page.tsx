@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     description: clampDescription(
       `${service.tagline}. ${service.duration}, ${price}. Book at Lather Spa & Wellness in Greenville, NC.`
     ),
-    alternates: { canonical: `/services/${service.id}` },
+    alternates: { canonical: `/spa/head-spa/${service.id}` },
   };
 }
 
@@ -52,8 +52,9 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
         dangerouslySetInnerHTML={jsonLd(
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Services", path: "/services" },
-            { name: service.name, path: `/services/${service.id}` },
+            { name: "Spa", path: "/spa" },
+            { name: "Head Spa", path: "/spa/head-spa" },
+            { name: service.name, path: `/spa/head-spa/${service.id}` },
           ])
         )}
       />
@@ -73,7 +74,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
             <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
               Book This Ritual
             </a>
-            <Link href="/services" className="btn-outline">
+            <Link href="/spa/head-spa" className="btn-outline">
               Compare Rituals
             </Link>
           </>
@@ -181,7 +182,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<Pa
                   <p className="mt-4 text-[0.95rem] text-ivory/70">{service.suggestedUpgradeReason}</p>
                 </div>
                 <Link
-                  href={`/services/${upgrade.id}`}
+                  href={`/spa/head-spa/${upgrade.id}`}
                   className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em] text-brass-light"
                 >
                   View {upgrade.name} — ${upgrade.price} →

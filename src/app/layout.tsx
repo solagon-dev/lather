@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Manrope } from "next/font/google";
+import BookDialog from "@/components/BookDialog";
+import BookOptions from "@/components/BookOptions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import StickyBook from "@/components/StickyBook";
-import Preloader from "@/components/ui/Preloader";
 import { business } from "@/lib/business";
 import { jsonLd, localBusinessSchema, organizationSchema, wellnessSchema } from "@/lib/seo";
 import "./globals.css";
@@ -93,7 +94,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(localBusinessSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(wellnessSchema())} />
-        <Preloader />
         <Navbar />
         <main id="main">{children}</main>
         {/* One piece of film running over the whole page, not a texture each
@@ -116,6 +116,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <Footer />
         <StickyBook />
+        <BookDialog>
+          <BookOptions />
+        </BookDialog>
       </body>
     </html>
   );

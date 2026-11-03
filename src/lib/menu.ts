@@ -1,9 +1,12 @@
 // ── SERVICE MENU (STRUCTURE) ─────────────────────────────────
 // Two pillars — Spa and Wellness — per the brand blueprint. Each books on its
-// own Vagaro profile (see business.ts). Head spa is retained as a Spa service
-// line (its ritual pages still live under /services and /experience).
+// own Vagaro profile (see business.ts), and each has its own hub page —
+// /spa and /wellness — with a page per service line beneath it.
 
+import type { ServiceCard } from "@/components/ServiceCards";
 import { BOOK_URL, WELLNESS_BOOK_URL } from "@/lib/business";
+import { services } from "@/lib/data";
+import { treatments } from "@/lib/wellness";
 
 export interface MenuItem {
   name: string;
@@ -24,6 +27,8 @@ export interface Pillar {
    */
   imagePosition?: string;
   items: MenuItem[];
+  /** The pillar's hub page. */
+  href: "/spa" | "/wellness";
   /** Where this pillar books — the spa and the wellness practice are separate Vagaro profiles. */
   bookUrl: string;
   /**
@@ -45,13 +50,14 @@ export const pillars: Pillar[] = [
       "Restorative treatments in a quiet, considered space — care for the scalp, skin, and body that leaves you feeling genuinely better than when you arrived.",
     image: "/media/experience/step-03-massage.webp",
     imagePosition: "50% 35%",
+    href: "/spa",
     bookUrl: BOOK_URL,
     items: [
       {
         name: "Head Spa",
         blurb:
           "Our signature Japanese-inspired scalp ritual — cleanse, exfoliation, extended massage, and targeted treatment.",
-        href: "/experience",
+        href: "/spa/head-spa",
       },
       {
         name: "Facials",
@@ -79,6 +85,7 @@ export const pillars: Pillar[] = [
     // "wellness care," and visually distinct from the hands-on Spa photo above.
     image: "/media/experience/step-01-consultation.webp",
     imagePosition: "50% 28%",
+    href: "/wellness",
     bookUrl: WELLNESS_BOOK_URL,
     // From the Lather Wellness sneak-peek menu. Foundations Wellness
     // leads because it is the entry point every plan is built from — the visit
@@ -190,6 +197,9 @@ export interface PriceItem {
 }
 
 export interface PriceGroup {
+  key: "facials" | "massage" | "wellness-visits" | "laser" | "secret";
+  /** Which pillar the group belongs to — /pricing splits on this. */
+  pillar: "spa" | "wellness";
   heading: string;
   intro?: string;
   /** Column headings for groups priced more than one way (single, packs). */
@@ -208,6 +218,8 @@ export const couplesRetreat = {
 
 export const priceGroups: PriceGroup[] = [
   {
+    key: "facials",
+    pillar: "spa",
     heading: "Facials",
     items: [
       { name: "Glo2Facial Essential", detail: "Exfoliation, oxygenation, and ultrasound", prices: [225] },
@@ -215,6 +227,8 @@ export const priceGroups: PriceGroup[] = [
     ],
   },
   {
+    key: "massage",
+    pillar: "spa",
     heading: "Massage",
     items: [
       { name: "Therapeutic Massage", detail: "45 minutes", prices: [85] },
@@ -226,6 +240,8 @@ export const priceGroups: PriceGroup[] = [
     book: { url: BOOK_URL, label: "Book the Spa" },
   },
   {
+    key: "wellness-visits",
+    pillar: "wellness",
     heading: "Wellness visits",
     items: [
       { name: "Foundations Visit", detail: "Your starting point, with Stacia Friend, CNM", prices: [175] },
@@ -239,6 +255,8 @@ export const priceGroups: PriceGroup[] = [
     ],
   },
   {
+    key: "laser",
+    pillar: "wellness",
     heading: "Laser hair removal",
     intro: "Priced per area, per session.",
     items: [
@@ -260,6 +278,8 @@ export const priceGroups: PriceGroup[] = [
     ],
   },
   {
+    key: "secret",
+    pillar: "wellness",
     heading: "Secret RF & Secret PRO",
     intro: "RF microneedling and CO₂ resurfacing. Launch pricing on three-session packages.",
     columns: ["Single", "3-pack", "Launch 3-pack"],
@@ -274,3 +294,57 @@ export const priceGroups: PriceGroup[] = [
     book: { url: WELLNESS_BOOK_URL, label: "Request a Wellness Visit" },
   },
 ];
+
+export function priceGroup(key: PriceGroup["key"]) {
+  return priceGroups.find((g) => g.key === key)!;
+}
+
+/** The lowest price in a group, for "from $X" lines. */
+export function fromPrice(key: PriceGroup["key"]) {
+  return Math.min(...priceGroup(key).items.map((i) => i.prices[0]));
+}
+
+// ── DOORS ────────────────────────────────────────────────────
+// The service cards on the homepage and the two hubs. One list each, so a
+// price or a photo changed here changes everywhere it is shown.
+
+const ritualFrom = Math.min(...services.map((s) => s.price));
+
+export const spaCards: ServiceCard[] = [
+  {
+    href: "/spa/head-spa",
+    title: "Head Spa",
+    body: "Our signature Japanese-inspired scalp ritual, in three versions and a couples retreat.",
+    price: `From $${ritualFrom}`,
+    image: { src: "/media/about/spa-detail.webp", alt: "Scalp massage during a Lather head spa ritual" },
+  },
+  {
+    href: "/spa/facials",
+    title: "Glo2Facial",
+    body: "Exfoliation, oxygenation, and ultrasound — with RF technology in the Advanced.",
+    price: `From $${fromPrice("facials")}`,
+    image: { src: "/media/editorial/secondary-treatment.webp", alt: "Skincare tools on marble" },
+  },
+  {
+    href: "/spa/massage",
+    title: "Massage",
+    body: "Therapeutic massage in 45, 60, or 90 minutes, and prenatal massage.",
+    price: `From $${fromPrice("massage")}`,
+    image: { src: "/media/experience/step-03-massage.webp", alt: "Massage at Lather Spa" },
+  },
+];
+
+const treatmentFrom: Record<string, string> = {
+  "laser-hair-removal": `From $${fromPrice("laser")}`,
+  "secret-rf-pro": `From $${fromPrice("secret")}`,
+  injectables: "From $30",
+  "body-contouring": "Consult $50",
+};
+
+export const wellnessCards: ServiceCard[] = treatments.map((t) => ({
+  href: `/wellness/${t.slug}`,
+  title: t.name,
+  body: t.tagline,
+  price: treatmentFrom[t.slug],
+  image: t.image,
+}));

@@ -3,19 +3,21 @@ import Logo from "@/components/ui/Logo";
 import { BOOK_URL, GIFT_CARD_URL, WELLNESS_BOOK_URL, business, hours, wellnessHoursShort } from "@/lib/business";
 
 const visitLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/book", label: "Book & Pricing" },
-  { href: "/experience", label: "The Head Spa Experience" },
+  { href: "/spa", label: "Spa" },
+  { href: "/spa/head-spa", label: "Head Spa" },
+  { href: "/spa/facials", label: "Glo2Facial" },
+  { href: "/spa/massage", label: "Massage" },
+  { href: "/wellness", label: "Wellness" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/gift-cards", label: "Gift Cards" },
-  { href: "/contact", label: "Visit & Contact" },
 ];
 
 const learnLinks = [
   { href: "/about", label: "About Lather" },
-  { href: "/what-is-a-head-spa", label: "What Is a Head Spa?" },
-  { href: "/scalp-concerns", label: "Scalp Concerns" },
-  { href: "/journal", label: "Journal" },
+  { href: "/contact", label: "Visit & Hours" },
   { href: "/faq", label: "FAQ" },
+  { href: "/journal", label: "Journal" },
+  { href: "/what-is-a-head-spa", label: "What Is a Head Spa?" },
   { href: "/locations", label: "Areas We Serve" },
 ];
 
@@ -99,8 +101,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <LinkColumn title="Visit" items={visitLinks} />
-        <LinkColumn title="Learn" items={learnLinks} />
+        <LinkColumn title="Services" items={visitLinks} />
+        <LinkColumn title="Lather" items={learnLinks} />
 
         <div>
           <ColumnLabel>Find us</ColumnLabel>

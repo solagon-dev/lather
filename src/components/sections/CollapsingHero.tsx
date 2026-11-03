@@ -7,12 +7,10 @@ import Logo from "@/components/ui/Logo";
 import { NAV_WORDMARK_ATTR, handoffAt } from "@/lib/hero-handoff";
 
 /**
- * The hero plays the preloader's move in reverse.
+ * The hero draws back from full bleed into a centred tile as you scroll.
  *
  * It opens full-bleed with the wordmark centred, and scroll draws the media
- * back down into a small centred tile — the same tile the intro opened out of
- * — revealing porcelain around it. Preloader expands, scroll contracts: one
- * continuous zoom axis rather than two unrelated animations.
+ * back down into a small centred tile, revealing porcelain around it.
  *
  * Mechanically it is a tall spacer with a sticky viewport inside it. Nothing is
  * pinned by intercepting the wheel, so trackpads, keyboards, the scrollbar and

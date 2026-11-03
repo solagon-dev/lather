@@ -3,6 +3,7 @@ import { blogArticles } from "@/lib/blog";
 import { business } from "@/lib/business";
 import { services } from "@/lib/data";
 import { citiesWithPages } from "@/lib/locations";
+import { treatments } from "@/lib/wellness";
 
 const BASE = business.siteUrl;
 
@@ -11,24 +12,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const core: MetadataRoute.Sitemap = [
     { url: `${BASE}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${BASE}/services`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
-    { url: `${BASE}/book`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/experience`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/spa`, lastModified: now, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/wellness`, lastModified: now, changeFrequency: "monthly", priority: 0.95 },
+    { url: `${BASE}/pricing`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/spa/head-spa`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/spa/facials`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/spa/massage`, lastModified: now, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${BASE}/book`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/gift-cards`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/what-is-a-head-spa`, lastModified: now, changeFrequency: "monthly", priority: 0.75 },
-    { url: `${BASE}/scalp-concerns`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/what-is-a-head-spa`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/scalp-concerns`, lastModified: now, changeFrequency: "monthly", priority: 0.65 },
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/journal`, lastModified: now, changeFrequency: "weekly", priority: 0.65 },
+    { url: `${BASE}/journal`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
     { url: `${BASE}/locations`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
   ];
 
   const servicePages: MetadataRoute.Sitemap = services.map((s) => ({
-    url: `${BASE}/services/${s.id}`,
+    url: `${BASE}/spa/head-spa/${s.id}`,
     lastModified: now,
     changeFrequency: "monthly",
     priority: 0.9,
+  }));
+
+  const wellnessPages: MetadataRoute.Sitemap = treatments.map((t) => ({
+    url: `${BASE}/wellness/${t.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.85,
   }));
 
   const articlePages: MetadataRoute.Sitemap = blogArticles.map((a) => ({
@@ -47,5 +59,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: c.distanceMiles === 0 ? 0.75 : 0.55,
   }));
 
-  return [...core, ...servicePages, ...articlePages, ...cityPages];
+  return [...core, ...servicePages, ...wellnessPages, ...articlePages, ...cityPages];
 }

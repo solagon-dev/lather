@@ -180,7 +180,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                     ))}
                   </ul>
                   <Link
-                    href="/services"
+                    href={pillar.href}
                     className="link-ul mt-auto inline-block pt-8 text-[0.75rem] font-semibold tracking-[0.02em]"
                   >
                     View {pillar.label} →
@@ -203,10 +203,10 @@ export default async function LocationPage({ params }: { params: Promise<Params>
               are scheduled by consultation.
             </p>
             <Link
-              href="/book"
+              href="/pricing"
               className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em]"
             >
-              Full Menu &amp; Booking →
+              Full Menu &amp; Pricing →
             </Link>
           </Reveal>
           <Reveal delay={120}>
@@ -214,7 +214,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
               {services.map((s) => (
                 <li key={s.id}>
                   <Link
-                    href={`/services/${s.id}`}
+                    href={`/spa/head-spa/${s.id}`}
                     className="group flex items-baseline justify-between gap-6 py-5"
                   >
                     <span className="font-display text-xl transition-colors group-hover:text-brass-dark sm:text-2xl">
@@ -301,7 +301,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
             <div className="grid gap-6 sm:grid-cols-2">
               {[
                 { href: "/what-is-a-head-spa", label: "What is a head spa?", body: "The Japanese origins, how it differs from a salon wash, and what it costs." },
-                { href: "/experience", label: "What happens in a session", body: "The five movements of the ritual, start to finish, and how to prepare." },
+                { href: "/spa/head-spa", label: "What happens in a session", body: "The five movements of the ritual, start to finish, and how to prepare." },
                 { href: "/scalp-concerns", label: "Find a ritual by concern", body: "Thinning, dryness, buildup, tension, sensitivity or damage — matched to a treatment." },
                 { href: "/faq", label: "Questions before booking", body: "Policies, timing, what to expect on a first visit, and how consultations work." },
               ].map((l) => (

@@ -115,7 +115,7 @@ function Panel({ pillar, invert }: { pillar: Pillar; invert: boolean }) {
         </ul>
 
         <Link
-          href="/services"
+          href={pillar.href}
           className="mt-9 inline-flex items-center gap-2 font-body text-[0.8rem] font-medium tracking-[0.02em] text-ink link-ul"
         >
           {pillar.comingSoon ? `Preview ${pillar.label}` : `View ${pillar.label}`}

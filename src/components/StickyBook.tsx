@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BOOK_URL, business } from "@/lib/business";
+import { BookButton } from "@/components/BookDialog";
+import { business } from "@/lib/business";
 
 /** Mobile-only booking bar that slides in after the visitor scrolls past the hero. */
 export default function StickyBook() {
@@ -27,14 +28,9 @@ export default function StickyBook() {
       >
         Call Us
       </a>
-      <a
-        href={BOOK_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex flex-[2] items-center justify-center bg-ivory py-4 text-[0.7rem] font-semibold tracking-[0.02em] text-ink"
-      >
+      <BookButton className="flex flex-[2] items-center justify-center bg-ivory py-4 text-[0.7rem] font-semibold tracking-[0.02em] text-ink">
         Book Appointment
-      </a>
+      </BookButton>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
 import Logo from "@/components/ui/Logo";
 import { Statement } from "@/components/ui/Type";
-import { BOOK_URL, business, hoursShort } from "@/lib/business";
+import { BOOK_URL, WELLNESS_BOOK_URL, business, hoursShort } from "@/lib/business";
 
 interface BookCTAProps {
   title?: ReactNode;
@@ -55,7 +55,11 @@ export default function BookCTA({
         <Reveal delay={240}>
           <div className="mt-11 flex flex-wrap items-center justify-center gap-4">
             <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
-              Book Appointment
+              Book the Spa
+            </a>
+            {/* Wellness books on its own Vagaro profile, so it gets its own door. */}
+            <a href={WELLNESS_BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">
+              Book Wellness
             </a>
             <a href={business.phoneHref} className="btn-outline-light">
               Call {business.phone}

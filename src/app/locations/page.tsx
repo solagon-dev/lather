@@ -121,10 +121,10 @@ export default function LocationsPage() {
           <Reveal delay={120}>
             <div className="grid gap-6 sm:grid-cols-2">
               {[
-                { href: "/services", label: "Spa & wellness services", body: "Head spa, facials, massage, skin, brows and red light — plus consultations, hormone therapy, peptides, injectables and vitamin therapy." },
-                { href: "/book", label: "Head spa pricing", body: "Four rituals, 45 to 90 minutes, $50 to $200 — bookable online any time." },
+                { href: "/menu", label: "Spa & wellness services", body: "Head spa, Glo2Facials and massage — plus wellness visits, hormone care, laser hair removal, Secret RF & PRO and injectables." },
+                { href: "/book", label: "Head spa pricing", body: "Three rituals and a couples retreat, 60 to 90 minutes, from $100 — bookable online any time." },
                 { href: "/what-is-a-head-spa", label: "What is a head spa?", body: "The Japanese origins, how it differs from a salon wash, and what to expect." },
-                { href: "/contact", label: "Hours & directions", body: "Free parking at the door, by appointment, new guests always welcome." },
+                { href: "/visit", label: "Hours & directions", body: "Free parking at the door, by appointment, new guests always welcome." },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="group flex flex-col border border-ivory/15 p-7 transition-colors hover:bg-ink">
                   <h3 className="font-display text-xl transition-colors group-hover:text-brass-light">

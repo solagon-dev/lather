@@ -99,13 +99,13 @@ function ConcernCard({ concern, index }: { concern: Concern; index: number }) {
         <div className="mt-6 border-t hairline pt-5">
           <p className="text-[0.68rem] tracking-[0.02em] text-taupe">We recommend</p>
           <Link
-            href={`/services/${service.id}`}
+            href={`/spa/head-spa#${service.id}`}
             className="link-ul mt-2 inline-block font-display text-xl text-ink"
           >
             {service.name} →
           </Link>
           <p className="mt-1 text-[0.75rem] text-taupe">
-            {service.duration} · {service.id === "blowout" ? `from $${service.price}` : `$${service.price}`}
+            {service.duration} · ${service.price}
           </p>
         </div>
       </div>
@@ -178,7 +178,7 @@ export default function ScalpConcernsPage() {
           <Reveal className="mt-14 border-t hairline pt-8">
             <p className="max-w-xl text-umber">
               Want to compare everything side by side?{" "}
-              <Link href="/services" className="link-ul">
+              <Link href="/spa/head-spa" className="link-ul">
                 Browse the full ritual menu
               </Link>
               .

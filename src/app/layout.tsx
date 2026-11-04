@@ -1,41 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import StickyBook from "@/components/StickyBook";
-import Preloader from "@/components/ui/Preloader";
+import { Gilda_Display, Jost, Marcellus } from "next/font/google";
+import BookBar from "@/components/site/BookBar";
+import BookSheet from "@/components/site/BookSheet";
+import Footer from "@/components/site/Footer";
+import Header from "@/components/site/Header";
 import { business } from "@/lib/business";
-import { jsonLd, localBusinessSchema, organizationSchema } from "@/lib/seo";
+import { jsonLd, localBusinessSchema, organizationSchema, wellnessSchema } from "@/lib/seo";
 import "./globals.css";
 
-// Instrument Serif ships a single weight plus a true italic — no light, no
-// bold. That is a feature here: the display voice is one roman and one italic,
-// and the italic does real work as the second half of every headline. Any
-// `font-light` on display type would only produce a faux weight, so there is
-// none left in the codebase.
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
-
-// Manrope is variable, so the sans covers 200–800 from one file.
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
-  display: "swap",
-});
+// The brochure's type. Gilda Display carries headings, names and prices;
+// Marcellus is kept for the LATHER logotype and the section numbers, where its
+// flared capitals echo the wordmark; Jost is the working sans. Gilda ships one
+// roman and no italic, so nothing on the site leans on italics.
+const gilda = Gilda_Display({ subsets: ["latin"], weight: "400", variable: "--font-gilda", display: "swap" });
+const marcellus = Marcellus({ subsets: ["latin"], weight: "400", variable: "--font-marcellus", display: "swap" });
+const jost = Jost({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-jost", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(business.siteUrl),
   title: {
-    default: "Lather Spa & Wellness | Modern Wellness in Greenville, NC",
+    default: "Lather Spa & Wellness | Head Spa & Wellness in Greenville, NC",
     template: "%s | Lather Spa & Wellness",
   },
   description:
-    "A luxury spa and wellness destination in Greenville, NC — restorative spa experiences and advanced, personalized wellness care, in one considered space.",
+    "A place to pause in Greenville, NC. Lather Spa offers head spa rituals, facials, and massage. Lather Wellness provides personalized medical and wellness care.",
   keywords: [
     "spa Greenville NC",
     "wellness Greenville NC",
@@ -77,14 +65,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#181310",
+  themeColor: "#F7F2EC",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${instrumentSerif.variable} ${manrope.variable}`}>
+    <html lang="en" className={`${gilda.variable} ${marcellus.variable} ${jost.variable}`}>
       <body>
         {/* Without JS the scroll reveals would never fire — show everything. */}
         <noscript>
@@ -92,29 +80,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(localBusinessSchema())} />
         <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(organizationSchema())} />
-        <Preloader />
-        <Navbar />
+        <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(wellnessSchema())} />
+        <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-ink focus:px-4 focus:py-3 focus:text-porcelain">
+          Skip to content
+        </a>
+        <Header />
         <main id="main">{children}</main>
-        {/* One piece of film running over the whole page, not a texture each
-            section carries for itself.
-
-            Per-section grain is a flat multiply that stops dead at the panel
-            it belongs to, so wherever a grained section met an ungrained one
-            there was a hard tonal step straight across the viewport — most
-            visibly right where the hero hands over to the section below it,
-            which is the one boundary meant to read as continuous.
-
-            Fixed rather than absolute, so the texture stays put while the page
-            moves under it. Grain that scrolls with the content reads as a
-            pattern printed on the page; grain that holds still reads as the
-            grain of the thing you are looking through. Below the header's
-            z-index, so the bar is never multiplied. */}
-        <div
-          aria-hidden
-          className="pointer-events-none fixed inset-0 z-40 grain-overlay opacity-[0.13]"
-        />
         <Footer />
-        <StickyBook />
+        <BookBar />
+        <BookSheet />
       </body>
     </html>
   );

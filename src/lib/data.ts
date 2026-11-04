@@ -4,7 +4,7 @@ export const services = [
     id: "luxe-ritual",
     name: "The Luxe Ritual",
     tagline: "Our most complete experience — scalp, hair, and skin",
-    price: 200,
+    price: 175,
     duration: "90 min",
     durationMin: 90,
     tier: "premium" as const,
@@ -85,73 +85,15 @@ export const services = [
     image: "/media/treatments/gentlemans-recharge.webp",
     concerns: ["Stress", "General maintenance", "Tension"],
   },
-  {
-    id: "blowout",
-    name: "Blowout",
-    tagline: "Smooth, voluminous, effortlessly styled",
-    price: 50,
-    duration: "45 min",
-    durationMin: 45,
-    tier: "express" as const,
-    description:
-      "Get smooth, voluminous, and effortlessly styled hair with our signature blowout. This service includes a professional wash and blowdry style tailored to your desired look. Perfect for any occasion or just because!",
-    note: "Starting at $50. Price may vary by hair length and thickness.",
-    highlights: [
-      "Professional wash",
-      "Blowdry & style",
-      "Tailored to your look",
-    ],
-    bestFor: "Any occasion · Quick refresh",
-    bestForTags: ["Quick refresh", "Events", "Date night", "Just because"],
-    intensity: 1,
-    luxuryLevel: 3,
-    firstTimeFit: "recommended" as const,
-    recommendedAddOns: [] as string[],
-    suggestedUpgrade: "classic-ritual",
-    suggestedUpgradeReason: "Want the full head spa experience? The Classic Ritual adds scalp treatment, massage, and steam infusion — plus a blowdry finish.",
-    image: "/media/treatments/blowout-card.webp",
-    concerns: ["Styling", "Special occasion prep"],
-  },
 ];
 
-// ── ADD-ONS ──────────────────────────────────────────────────
+// ── ENHANCEMENTS ─────────────────────────────────────────────
+// Head spa add-ons, exactly as the client's printed menu lists them.
 export const addOns = [
-  {
-    id: "scalp-analysis",
-    name: "Scalp Analysis",
-    price: 25,
-    duration: "+15 min",
-    description:
-      "A detailed scalp assessment using magnification to evaluate follicle health, oil balance, buildup, and circulation. Helps us tailor your current treatment and recommend your ideal ongoing protocol.",
-    bestWith: ["classic-ritual", "gentlemans-recharge"],
-  },
-  {
-    id: "extended-massage",
-    name: "Extended Massage",
-    price: 30,
-    duration: "+15 min",
-    description:
-      "Additional time for our signature scalp and neck massage — deeper pressure, slower tempo. Ideal for those carrying tension or simply wanting to extend the most relaxing part of the ritual.",
-    bestWith: ["classic-ritual", "luxe-ritual", "gentlemans-recharge"],
-  },
-  {
-    id: "aromatherapy",
-    name: "Aromatherapy Enhancement",
-    price: 20,
-    duration: "—",
-    description:
-      "A custom essential oil blend selected for your session — lavender for calm, peppermint for invigoration, or rosemary for stimulation. Infused into your massage and steam treatment.",
-    bestWith: ["classic-ritual", "luxe-ritual"],
-  },
-  {
-    id: "hot-towel",
-    name: "Hot Towel Compression",
-    price: 15,
-    duration: "—",
-    description:
-      "Warm herbal towel wraps applied to the scalp and neck during your treatment. Opens pores for deeper product absorption and adds an extra layer of sensory luxury.",
-    bestWith: ["classic-ritual", "luxe-ritual"],
-  },
+  { id: "extended-massage", name: "Extended massage, 15 minutes", price: 30 },
+  { id: "bond-repair", name: "Bond Repair Protocol", price: 30 },
+  { id: "anti-hair-loss", name: "Anti hair loss protocol", price: 30 },
+  { id: "extension-removal", name: "Extension removal (wefts only)", price: 25 },
 ];
 
 // ── TREATMENT-SPECIFIC FAQs ──────────────────────────────────
@@ -208,24 +150,6 @@ export const treatmentFAQs: Record<string, { question: string; answer: string }[
     {
       question: "I'm experiencing hair thinning — should I upgrade?",
       answer: "The Classic Ritual or The Luxe Ritual both offer deeper scalp treatment protocols. If thinning is a primary concern, let us know when you book and we can tailor the treatment to focus on scalp stimulation and circulation.",
-    },
-  ],
-  "blowout": [
-    {
-      question: "What styles can I get with the blowout?",
-      answer: "Our blowout is fully customizable — sleek and smooth, voluminous bounce, soft waves, or a polished natural look. Let your stylist know your vision and we'll make it happen.",
-    },
-    {
-      question: "Why does the price say 'starting at'?",
-      answer: "The $50 base price covers most hair lengths and types. Longer, thicker, or more textured hair may require additional time and product, which can adjust the price slightly. We'll always confirm before we begin.",
-    },
-    {
-      question: "Can I add a blowout to another treatment?",
-      answer: "The Classic Ritual already includes a blowdry finish. The Luxe Ritual includes a full professional blowout. The blowout service is designed as a standalone option for guests who want styling without a full scalp treatment.",
-    },
-    {
-      question: "How long does the blowout last?",
-      answer: "With proper care, most blowouts last 2–3 days. We'll share tips for extending your style when you leave.",
     },
   ],
 };
@@ -308,27 +232,6 @@ export const treatmentDetails: Record<string, {
       "A clean finish — you'll leave looking sharp and feeling completely recharged",
     ],
   },
-  "blowout": {
-    whoItsFor:
-      "Anyone wanting smooth, voluminous, beautifully styled hair — whether for a special event, date night, or just because you deserve it. No scalp treatment required.",
-    beforeVisit: [
-      "Arrive with dry or damp hair — either works",
-      "Let us know your desired style when you arrive",
-      "No special preparation needed",
-      "Sessions are approximately 45 minutes",
-    ],
-    afterCare: [
-      "Sleep on a silk pillowcase to extend your blowout",
-      "Avoid getting your hair wet for as long as possible",
-      "Use dry shampoo at the roots to maintain volume",
-      "Most blowouts last 2–3 days with proper care",
-    ],
-    whatToExpect: [
-      "A professional wash using premium products",
-      "A blowdry and style tailored to your desired look",
-      "Final touches for a polished, camera-ready finish",
-    ],
-  },
 };
 
 // ── TESTIMONIALS ─────────────────────────────────────────────
@@ -343,13 +246,6 @@ export const testimonials = [
   },
   {
     quote:
-      "Hannah did an amazing job with my blowout and style! It was so relaxing and my hair looked SO good — will definitely be back for more!",
-    name: "Reagan L.",
-    location: "Verified Vagaro review",
-    service: "Blowout",
-  },
-  {
-    quote:
       "For a girl who loves having her hair played with and having it styled, this was the perfect afternoon. From beginning to end the entire experience was completely relaxing — I can't wait to book again!",
     name: "Courtney B.",
     location: "Verified Vagaro review",
@@ -358,54 +254,47 @@ export const testimonials = [
 ];
 
 // ── FAQs ─────────────────────────────────────────────────────
-// Broad spa & wellness questions — used on /faq and the /contact teaser.
-// Covers the brand blueprint's categories: general, services, wellness
-// consultations, booking, policies, and expectations.
+// Answered on /visit. Facts follow the brochure and the two Vagaro profiles.
 export const faqs = [
   {
-    question: "What is Lather Spa & Wellness?",
+    question: "What is the difference between Lather Spa and Lather Wellness?",
     answer:
-      "Lather is a modern wellness destination in Greenville, NC that blends restorative spa experiences with advanced, personalized wellness care. We bridge the gap between clinical wellness and a luxury spa — offering both in one thoughtfully designed space, so you can restore, renew, and invest in yourself without ever feeling rushed.",
+      "They are two practices under one roof. Lather Spa offers head spa rituals, Glo2Facials, and massage. Lather Wellness provides personalized medical and wellness care, led by Stacia Friend, CNM, Certified Nurse Midwife. Each keeps its own calendar, so each books separately.",
   },
   {
-    question: "How is Lather different from a traditional spa or a medspa?",
+    question: "How do I book?",
     answer:
-      "We're neither, exactly — and that's the point. A traditional spa focuses on relaxation; clinical wellness focuses on results. Lather brings the two together: effective, results-driven treatments delivered in a calm, elevated environment by licensed providers. You never have to choose between feeling cared for and seeing real results.",
+      "Spa appointments book instantly online through Vagaro: choose a time and it's confirmed. Wellness visits are requested online and the practice confirms the time with you. You can also call (252) 531-0987.",
   },
   {
-    question: "What services do you offer?",
+    question: "Where should I start with Lather Wellness?",
     answer:
-      "Our care lives in two pillars. Spa Experiences include facials, our signature head spa, massage, skin treatments, brows, and red light therapy. Wellness Services include personalized consultations, hormone therapy, peptides, injectables, and vitamin therapy. Our full menu and pricing are being finalized — reach out any time and we'll guide you to the right treatment.",
+      "With a Foundations Visit ($175), our signature starting point. It is a comprehensive wellness consultation where we take the time to talk about symptoms, health, lifestyle and goals, then build an individualized plan for what comes next. You don't need to know what you need before you come in.",
   },
   {
-    question: "What is a wellness consultation?",
+    question: "What happens during a head spa ritual?",
     answer:
-      "It's a one-on-one assessment with a licensed provider — led by Stacia Friend, CNM — designed to understand your body, your goals, and your history, then build a personalized wellness plan around them. It's the ideal starting point for anyone new to our wellness services, and where every wellness journey at Lather begins.",
+      "A scalp cleanse and exfoliation, a long massage, a nourishing mask and steam, finished with a blowdry. The Luxe Ritual adds an extended massage, a rose petal jelly facial, and a blowout. Rituals run 60 to 90 minutes.",
   },
   {
-    question: "Who provides care at Lather?",
+    question: "Do you offer prenatal massage?",
     answer:
-      "Every visit is delivered by licensed professionals — estheticians, cosmetologists, massage therapists, and nurse injectors — with our wellness care led by Stacia Friend, CNM. You're always in trusted, credentialed hands.",
-  },
-  {
-    question: "Do I need to know exactly what I want before I book?",
-    answer:
-      "Not at all. If you're unsure where to start, book a wellness consultation or simply reach out — we'll listen, assess, and recommend a plan built around your goals rather than fitting you to a menu.",
-  },
-  {
-    question: "How do I book an appointment?",
-    answer:
-      "Book online any time through our scheduling partner, Vagaro, or call or text us during business hours. Everything at Lather is by appointment, so each time slot is reserved exclusively for you — we recommend booking ahead, especially for weekends.",
+      "Yes — prenatal massage in 60 or 90 minutes, $100 or $150.",
   },
   {
     question: "Is Lather only for women?",
     answer:
-      "Our environment is designed with women in mind, but we warmly welcome all guests who value a high-end, personalized experience. Everyone deserves to slow down and feel genuinely cared for.",
+      "No. Lather Spa welcomes everyone, and the Gentleman's Recharge was made for men. Lather Wellness focuses on women's health, from perimenopause and menopause to postpartum wellness.",
   },
   {
-    question: "What should I expect on my first visit?",
+    question: "Where do I park?",
     answer:
-      "Expect to be genuinely cared for. Arrive a few minutes early to settle in, and your provider will guide you from there — no pressure, no upselling, just thoughtful, unhurried care. Most guests tell us they leave feeling better than when they arrived. That's the whole idea.",
+      "Lather is at 101 Fox Haven Drive, Greenville, NC 27858, with free parking at the door. Arrive a few minutes early to settle in.",
+  },
+  {
+    question: "Can I buy a gift card?",
+    answer:
+      "Yes. Gift cards are sold online through Vagaro, or call us and we will help.",
   },
 ];
 
@@ -420,7 +309,7 @@ export const headSpaFaqs = [
   {
     question: "How long does a head spa session last?",
     answer:
-      "Sessions range from 45 to 90 minutes depending on the ritual you choose. Our Blowout is approximately 45 minutes, the Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a full 90-minute experience. All sessions are by appointment and reserved exclusively for you.",
+      "Head spa sessions range from 60 to 90 minutes depending on the ritual you choose. The Gentleman's Recharge is 60 minutes, The Classic Ritual is 75 minutes, and The Luxe Ritual is a full 90-minute experience. All sessions are by appointment and reserved exclusively for you.",
   },
   {
     question: "How should I prepare for my head spa appointment?",
@@ -435,7 +324,7 @@ export const headSpaFaqs = [
   {
     question: "Do the head spa treatments include a blowdry?",
     answer:
-      "The Classic Ritual includes a professional blowdry finish, and The Luxe Ritual includes a full professional blowout. We also offer a standalone Blowout service for guests who want styling without a scalp treatment. The Gentleman's Recharge includes a clean finish appropriate for men's styling.",
+      "The Classic Ritual includes a professional blowdry finish, and The Luxe Ritual includes a full professional blowout. The Gentleman's Recharge includes a clean finish appropriate for men's styling.",
   },
   {
     question: "How often should I come in for a head spa?",

@@ -1,60 +1,23 @@
 import type { Metadata } from "next";
-import BookCTA from "@/components/BookCTA";
-import EditorialSplitHero from "@/components/heroes/EditorialSplitHero";
-import Reveal from "@/components/Reveal";
-import { Em } from "@/components/ui/Type";
-import { GIFT_CARD_URL } from "@/lib/business";
-import { services } from "@/lib/data";
+import { Figure, Leader, PageOpening, SectionHead } from "@/components/site/Editorial";
+import { GIFT_CARD_URL, business } from "@/lib/business";
+import { rituals, usd } from "@/lib/menu";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Gift Cards — Give the Ritual",
+  title: "Gift Cards",
   description:
-    "Digital gift certificates for Lather Spa & Wellness in Greenville, NC. Any amount, any service, delivered instantly by email.",
+    "Digital gift cards for Lather Spa in Greenville, NC, in any amount, sent by email. A head spa ritual from $100.",
   alternates: { canonical: "/gift-cards" },
 };
 
 const steps = [
-  {
-    number: "01",
-    title: "Choose an amount",
-    body: "Any amount you like, bought through our secure payment page.",
-  },
-  {
-    number: "02",
-    title: "Sent instantly by email",
-    body: "The digital certificate arrives in their inbox moments after purchase — or in yours, if you'd rather hand it over in person.",
-  },
-  {
-    number: "03",
-    title: "They book their ritual",
-    body: "Redeemable toward any service on the menu, whenever the moment is right. No printing, no fine print.",
-  },
+  { title: "Choose an amount", body: "Any amount, bought securely online through Vagaro." },
+  { title: "Sent by email", body: "To them, or to you if you’d rather hand it over in person." },
+  { title: "They book their visit", body: "Whenever the moment is right." },
 ];
 
 export default function GiftCardsPage() {
-  const blowout = services.find((s) => s.id === "blowout");
-  const classic = services.find((s) => s.id === "classic-ritual");
-  const luxe = services.find((s) => s.id === "luxe-ritual");
-
-  const amounts = [
-    blowout && {
-      price: blowout.price,
-      name: blowout.name,
-      note: "A polished wash, blowdry, and style — the perfect small luxury.",
-    },
-    classic && {
-      price: classic.price,
-      name: classic.name,
-      note: "Our most popular ritual — the full head spa experience, start to finish.",
-    },
-    luxe && {
-      price: luxe.price,
-      name: luxe.name,
-      note: "The most complete gift on the menu — a full head spa ritual for scalp, hair, and skin.",
-    },
-  ].filter(Boolean) as { price: number; name: string; note: string }[];
-
   return (
     <>
       <script
@@ -63,87 +26,65 @@ export default function GiftCardsPage() {
           breadcrumbSchema([
             { name: "Home", path: "/" },
             { name: "Gift Cards", path: "/gift-cards" },
-          ])
+          ]),
         )}
       />
-      <EditorialSplitHero
-        src="/media/editorial/gift-card-detail.webp"
-        alt="A Lather Spa & Wellness gift card styled with quiet, editorial detail"
-        side="left"
-        title={
-          <>
-            The <Em>&ldquo;sorry, I have plans&rdquo;</Em> gift.
-          </>
+      <PageOpening
+        eyebrow="Gift cards"
+        title="Give a ritual."
+        figure={
+          <Figure
+            src="/media/editorial/gift-card-detail.webp"
+            alt="A Lather gift card"
+            caption="A Lather gift card"
+            ratio="4/5"
+            priority
+            sizes="(min-width: 1024px) 55vw, 100vw"
+          />
         }
-        sub="A Lather gift card is an hour of stillness with someone else's name on it — digital, instant, and redeemable toward any spa or wellness service on the menu."
-      />
-
-      {/* ── INTRO ────────────────────────────────────────────── */}
-      <section className="section-pad bg-porcelain">
-        <div className="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
-          <Reveal>
-            <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              Stillness, gift-wrapped
-            </h2>
-            <p className="mt-8 max-w-xl text-umber">
-              Lather gift certificates are digital and bought securely online in any amount you
-              choose. They arrive by email and can be put toward any spa or wellness service on the
-              menu.
-            </p>
-            <p className="mt-5 max-w-xl text-umber">
-              And because a gift card never feels rushed, your recipient books whenever the moment
-              is right — this month or six months from now.
-            </p>
-            <div className="mt-10">
-              <a href={GIFT_CARD_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
-                Buy a Gift Card
-              </a>
-            </div>
-          </Reveal>
-          <ol className="space-y-8 border-t hairline pt-8">
-            {steps.map((step, i) => (
-              <Reveal key={step.number} as="li" delay={i * 80} className="flex gap-6">
-                <p className="font-display text-3xl text-brass-dark">{step.number}</p>
-                <div>
-                  <h3 className="font-display text-2xl">{step.title}</h3>
-                  <p className="mt-2 text-[0.95rem] text-umber">{step.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
+      >
+        <p>An unhurried hour with someone else&rsquo;s name on it. Digital, in any amount, sent by email.</p>
+        <div className="pt-2">
+          <a href={GIFT_CARD_URL} target="_blank" rel="noopener noreferrer" className="lnk">
+            Buy a gift card
+          </a>
         </div>
+      </PageOpening>
+
+      <section aria-labelledby="ideas" className="shell pt-20 lg:pt-32">
+        <SectionHead num="01" label="A few ideas" as="h2" id="ideas" note="Any amount" />
+        <ul className="mt-8 flex max-w-[40rem] flex-col gap-5 lg:ml-[88px]">
+          {rituals.map((r) => (
+            <li key={r.id}>
+              <Leader name={r.name} price={usd(r.price)} />
+              <p className="note mt-1">{r.includes}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      {/* ── SUGGESTED AMOUNTS ────────────────────────────────── */}
-      <section className="grain relative section-pad border-t hairline bg-noir text-ivory">
-        <div className="wrap relative">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              Amounts that map to a head spa ritual
-            </h2>
-            <p className="mt-6 text-ivory/70">
-              Any amount works toward any service — but if you want the gift to cover a full head spa
-              ritual, these are the numbers to know.
-            </p>
-          </Reveal>
-          <div className="mt-14 grid gap-10 border-t border-ivory/10 pt-12 md:grid-cols-3">
-            {amounts.map((a, i) => (
-              <Reveal key={a.name} delay={i * 80}>
-                <p className="font-display text-4xl text-brass-light">${a.price}</p>
-                <h3 className="mt-4 font-display text-2xl">{a.name}</h3>
-                <p className="mt-3 text-[0.9rem] leading-relaxed text-ivory/60">{a.note}</p>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal className="mt-14">
-            <a href={GIFT_CARD_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-light">
-              Buy a Gift Card
-            </a>
-          </Reveal>
+      <section aria-labelledby="how-gift" className="shell pb-20 pt-20 lg:pb-32 lg:pt-32">
+        <SectionHead num="02" label="How it works" as="h2" id="how-gift" />
+        <ol className="mt-4 lg:ml-[88px] lg:grid lg:grid-cols-3 lg:gap-12">
+          {steps.map((s, i) => (
+            <li key={s.title} className="grid grid-cols-[44px_minmax(0,1fr)] border-b border-line py-5 lg:block lg:border-b-0 lg:border-t lg:pt-6">
+              <span className="num">{String(i + 1).padStart(2, "0")}</span>
+              <div className="lg:mt-4">
+                <h3 className="font-display text-[1.375rem] leading-snug">{s.title}</h3>
+                <p className="copy mt-1">{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-10 flex flex-wrap items-baseline gap-x-7 gap-y-4 lg:ml-[88px]">
+          <a href={GIFT_CARD_URL} target="_blank" rel="noopener noreferrer" className="lnk">
+            Buy a gift card
+          </a>
+          <a href={business.phoneHref} className="note text-ink">
+            Or call {business.phone}
+          </a>
         </div>
       </section>
-
-      <BookCTA title="Or treat yourself instead." />
     </>
   );
 }

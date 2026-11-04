@@ -23,10 +23,10 @@ import type { ElementType, ReactNode } from "react";
 // Instrument Serif ships tightly fitted, so the display sizes need only a
 // hairline of negative tracking to look set rather than default.
 const SIZES = {
-  xl: "text-[clamp(3.25rem,8.5vw,9rem)] leading-[0.95] tracking-[-0.015em]",
-  lg: "text-[clamp(2.5rem,6vw,5.75rem)] leading-[1.02] tracking-[-0.012em]",
-  md: "text-[clamp(2rem,4vw,3.5rem)] leading-[1.06] tracking-[-0.008em]",
-  sm: "text-[clamp(1.5rem,2.4vw,2.25rem)] leading-[1.15] tracking-[-0.004em]",
+  xl: "text-[clamp(2.375rem,5vw,4.25rem)] leading-[1.08]",
+  lg: "text-[clamp(2rem,3.8vw,3.25rem)] leading-[1.12]",
+  md: "text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.15]",
+  sm: "text-[clamp(1.375rem,2vw,1.75rem)] leading-[1.25]",
 } as const;
 
 interface StatementProps {
@@ -51,7 +51,7 @@ export function Statement({ children, size = "lg", as: Tag = "h2", className = "
  * Statement is roman by default — only the emphasis opts in.
  */
 export function Em({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <em className={`italic ${className}`}>{children}</em>;
+  return <em className={`not-italic ${className}`}>{children}</em>;
 }
 
 /**
@@ -70,7 +70,7 @@ export function Kicker({
 }) {
   return (
     <Tag
-      className={`font-body text-[0.7rem] font-semibold tracking-[0.02em] sm:text-[0.72rem] ${className}`}
+      className={`cap-m ${className}`}
     >
       {children}
     </Tag>
@@ -93,7 +93,7 @@ export function Lede({
 }) {
   return (
     <p
-      className={`text-[1.02rem] leading-[1.75] sm:text-[1.08rem] ${
+      className={`copy ${
         centered ? "mx-auto max-w-[46ch] text-center" : "max-w-[58ch]"
       } ${className}`}
     >

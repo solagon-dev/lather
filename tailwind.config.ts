@@ -5,36 +5,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        porcelain: "#F4EFE7",
-        ivory: "#FAF7F1",
-        sand: "#E7DECE",
-        bone: "#EFE9DC",
-        // Small-print colour. Darkened from #8A7A66, which measured 3.63:1 on
-        // porcelain and failed WCAG AA for the 10–14px text it is used on.
-        // #756652 clears 4.5:1 on porcelain (4.86), ivory (4.95) and bone (4.59).
-        taupe: "#756652",
-        umber: "#57462F",
-        ink: "#241C12",
-        noir: "#181310",
-        // `dark` is the text-safe brass. Darkened from #8A6F45, which measured
-        // 4.13:1 on porcelain / 3.91 on bone / 3.54 on sand and failed WCAG AA
-        // for the 11–20px eyebrows, prices and star rows it is used on.
-        // #785E3A clears 4.5:1 on all four light grounds (5.30 / 5.67 / 5.02 /
-        // 4.55). DEFAULT and `light` stay as-is: they are for rules, borders and
-        // light-on-noir text, never small text on a light ground.
-        // DEFAULT matches the fountain in the logo artwork exactly (#AC8D6B) so
-        // the mark and the UI accent are the same metal. `dark` is the
-        // text-safe brass — darkened from #8A6F45, which measured 4.13:1 on
-        // porcelain / 3.91 on bone / 3.54 on sand and failed WCAG AA for the
-        // 11–20px eyebrows, prices and star rows it is used on. #785E3A clears
-        // 4.5:1 on all four light grounds (5.30 / 5.67 / 5.02 / 4.55).
-        // DEFAULT and `light` are for rules, the mark, and light-on-noir text —
-        // never small text on a light ground.
-        brass: { DEFAULT: "#AC8D6B", light: "#C9AE7E", dark: "#785E3A" },
+        // The palette is the brochure's: warm paper, sand panels, cocoa ink,
+        // and gold taken from the fountain mark. Token names predate it and
+        // are kept so every page inherits the new values.
+        //
+        // Contrast, measured: taupe #6E6052 is 5.46:1 on porcelain, 4.92 on
+        // sand, 5.73 on ivory. umber #5E5044 is 6.97 / 6.28. ink 12.79 / 11.53.
+        porcelain: "#F7F2EC", // paper — the page
+        ivory: "#FBF8F3", // card
+        sand: "#EFE6DA", // panels
+        bone: "#EFE6DA",
+        taupe: "#6E6052", // small text
+        umber: "#5E5044", // body text
+        ink: "#35281F", // cocoa — headings, rules, the booking bar
+        noir: "#35281F",
+        line: { DEFAULT: "#DDD0BE", soft: "#E4D9C9", sand: "#CDBDA6", dots: "#B5A38A" },
+        // `dark` is the only gold for text on a light ground (#7E6440 measured
+        // 4.49:1 on sand and failed). DEFAULT is for marks and rules; `light`
+        // is for text on cocoa.
+        brass: { DEFAULT: "#AC8D5F", light: "#CDB898", dark: "#785E3A" },
       },
       fontFamily: {
-        display: ["var(--font-instrument-serif)", "Georgia", "Times New Roman", "serif"],
-        body: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        // Gilda Display: headings, names and prices. Marcellus: the logotype
+        // and section numbers only. Jost: everything else.
+        display: ["var(--font-gilda)", "Georgia", "Times New Roman", "serif"],
+        mark: ["var(--font-marcellus)", "Georgia", "serif"],
+        body: ["var(--font-jost)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         kicker: "0.28em",
@@ -47,7 +43,7 @@ const config: Config = {
         arch: "999px 999px 0 0",
       },
       maxWidth: {
-        content: "72rem",
+        content: "74rem",
         prose2: "42rem",
       },
     },

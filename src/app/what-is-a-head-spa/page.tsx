@@ -183,7 +183,7 @@ export default function WhatIsAHeadSpaPage() {
             ))}
           </ol>
           <Reveal className="mt-14">
-            <Link href="/experience" className="btn-outline-light">
+            <Link href="/spa/head-spa" className="btn-outline-light">
               Walk Through the Full Experience
             </Link>
           </Reveal>
@@ -202,7 +202,7 @@ export default function WhatIsAHeadSpaPage() {
             <p className="max-w-prose2 text-umber">{article.conclusion}</p>
             <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
               <Link
-                href="/services"
+                href="/spa/head-spa"
                 className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]"
               >
                 Browse the Rituals →

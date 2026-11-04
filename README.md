@@ -2,8 +2,9 @@
 
 Marketing website for **Lather Spa & Wellness**, Greenville, NC — rebuilt in 2026 as a fully
 static Next.js site, then rebranded from "Lather Head Spa" to a two-pillar spa + wellness
-business. All booking and gift-certificate purchases run through Lather's Vagaro profile;
-the site has no database, no server runtime, and no cron jobs.
+business. Booking runs through two Vagaro profiles — `latherspa` for the spa (instant
+booking, gift cards) and `latherwellness` for Lather Wellness Center PLLC (visits by
+request). The site has no database, no server runtime, and no cron jobs.
 
 ## Tech Stack
 
@@ -12,14 +13,18 @@ the site has no database, no server runtime, and no cron jobs.
 - **Styling**: Tailwind CSS (design tokens in `tailwind.config.ts` + `src/app/globals.css`)
 - **Fonts**: Fraunces (display) + Figtree (body), self-hosted via `next/font`
 - **Media**: compressed WebP (q70, ≤2160px) + short MP4 loops in `public/media/`
-- **Booking**: Vagaro deep links (`src/lib/business.ts` → `BOOK_URL`, `GIFT_CARD_URL`)
+- **Booking**: Vagaro deep links (`src/lib/business.ts` → `BOOK_URL`, `WELLNESS_BOOK_URL`, `GIFT_CARD_URL`).
+  Every generic "Book" control is a `BookButton` — a real link to `/book` that opens the
+  spa-or-wellness chooser as a dialog when JS is running.
 
 ## Getting Started
 
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm run build   # production build (fully prerendered, 44 routes)
+npm run build   # production build (fully prerendered)
+npm run lint
+npm run check:links   # after a build: every external link in the output must resolve
 ```
 
 Tailwind design tokens are compiled into `.next`. After editing `tailwind.config.ts`,
@@ -30,10 +35,11 @@ restart the dev server — a stale `.next` will keep serving the old token value
 ```
 src/
 ├── app/                  # Routes (all server components)
-│   ├── page.tsx          # Home
-│   ├── services/         # Two-pillar menu + 4 head-spa ritual detail pages
-│   ├── book/             # ★ The only page carrying ritual pricing
-│   ├── experience/       # What happens during a head spa session
+│   ├── page.tsx          # Home — a preview of both businesses, ~13 phone screens
+│   ├── spa/              # Spa hub, head-spa/ (rituals + 3 detail pages), facials/, massage/
+│   ├── wellness/         # Wellness hub + [slug] treatment pages
+│   ├── pricing/          # ★ Every price on the site, split #spa / #wellness
+│   ├── book/             # Spa-or-wellness chooser (no-JS fallback for the dialog)
 │   ├── about/            # Story, values, founders, space
 │   ├── what-is-a-head-spa/, scalp-concerns/, faq/, journal/
 │   ├── gift-cards/, contact/
@@ -43,7 +49,8 @@ src/
 ├── components/           # Navbar, Footer, Reveal, BookCTA, PageHero, …
 └── lib/
     ├── business.ts       # ★ Single source of truth: NAP, hours, Vagaro URLs, geo
-    ├── menu.ts           # Spa / Wellness pillars, featured provider, "Why Lather"
+    ├── menu.ts           # Pillars, price groups (facials, massage, laser, Secret…), service cards
+    ├── wellness.ts       # Wellness care areas + treatment pages
     ├── data.ts           # Head-spa rituals, add-ons, FAQs, real Vagaro reviews
     ├── blog.ts           # 10 journal articles (static content)
     ├── locations.ts      # Cities served + legacy-slug redirect map
@@ -82,8 +89,12 @@ to be sparing about adding more.
 ## Conventions worth knowing
 
 - **Business facts** — hours, phone, address, and booking links live **only** in
-  `src/lib/business.ts`. Ritual names and prices live in `src/lib/data.ts`. Change them
-  there and every page, footer, and JSON-LD schema updates together.
+  `src/lib/business.ts` (spa `hours`, `wellnessHours`, two Vagaro profiles). Ritual names
+  and prices live in `src/lib/data.ts`; every other price lives in `priceGroups` in
+  `src/lib/menu.ts`. Change them there and every page, footer, and JSON-LD schema
+  updates together.
+- **URLs** — the old `/services`, `/experience`, `/treatments` and `/book`-as-pricing
+  routes 301 to the new structure in `next.config.ts`. Keep redirects single-hop.
 - **Meta descriptions** — keep under ~160 characters. Templated routes
   (`journal/[slug]`, `locations/[city]`, the four SEO families) pass theirs through
   `clampDescription()` in `src/lib/seo.ts` as a backstop.

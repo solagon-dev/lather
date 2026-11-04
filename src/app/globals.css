@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --porcelain: #f4efe7;
-  --ivory: #faf7f1;
-  --ink: #241c12;
-  --brass: #a98b5f;
+  --paper: #f7f2ec;
+  --sand: #efe6da;
+  --ink: #35281f;
+  --gold: #785e3a;
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -14,22 +14,98 @@
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    /* Anchored sections clear the sticky header. */
+    scroll-padding-top: 76px;
   }
 
   body {
     @apply bg-porcelain font-body text-ink;
-    font-size: 1.0625rem;
+    font-size: 0.875rem;
+    font-weight: 300;
     line-height: 1.75;
   }
 
+  @media (min-width: 1024px) {
+    body {
+      font-size: 0.9375rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-normal;
+  }
+
+  a {
+    transition: color 0.3s var(--ease-luxe);
+  }
+
   ::selection {
-    background: #c9ae7e;
-    color: #181310;
+    background: #cdb898;
+    color: #35281f;
   }
 
   :focus-visible {
-    outline: 2px solid #a98b5f;
-    outline-offset: 3px;
+    outline: 1px solid #35281f;
+    outline-offset: 4px;
+  }
+
+  select {
+    font: inherit;
+  }
+}
+
+/* ── The brochure's primitives ─────────────────────────────────
+   Small caps labels, notes, underlined text links and the dotted price
+   leaders. Everything on the site is built from these and the three faces. */
+@layer components {
+  .cap {
+    @apply font-body text-[0.65625rem] font-medium uppercase leading-normal tracking-[0.2em] text-ink;
+  }
+  .cap-m {
+    @apply font-body text-[0.65625rem] font-normal uppercase leading-normal tracking-[0.2em] text-brass-dark;
+  }
+  .note {
+    @apply font-body text-[0.75rem] font-light leading-[1.6] text-taupe lg:text-[0.8125rem];
+  }
+  .copy {
+    @apply font-body text-[0.875rem] font-light leading-[1.75] text-umber lg:text-[0.96875rem];
+  }
+  .num {
+    @apply font-mark text-[0.9375rem] leading-none text-brass-dark;
+  }
+  .lnk {
+    @apply inline-block border-b border-ink pb-[5px] font-body text-[0.65625rem] font-medium uppercase leading-normal tracking-[0.2em] text-ink;
+    transition: color 0.3s var(--ease-luxe), border-color 0.3s var(--ease-luxe);
+  }
+  .lnk:hover {
+    @apply border-brass-dark text-brass-dark;
+  }
+  .lnk-light {
+    @apply lnk border-porcelain text-porcelain hover:border-brass-light hover:text-brass-light;
+  }
+  /* A row with a dotted leader between name and price. */
+  .ld {
+    @apply flex items-baseline gap-2.5;
+  }
+  .dots {
+    flex: 1 1 auto;
+    min-width: 1rem;
+    border-bottom: 1px dotted #b5a38a;
+    transform: translateY(-5px);
+  }
+  .shell {
+    @apply mx-auto w-full max-w-[74rem] px-5 sm:px-8 lg:px-12;
+  }
+  /* The page's one solid control: the booking bar and its desktop twin. */
+  .btn-book {
+    @apply inline-flex min-h-[50px] items-center justify-center bg-ink px-8 font-body text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-porcelain;
+    transition: background-color 0.3s var(--ease-luxe);
+  }
+  .btn-book:hover {
+    @apply bg-brass-dark;
   }
 }
 
@@ -39,7 +115,7 @@
   }
 
   .btn {
-    @apply inline-flex w-full items-center justify-center gap-3 px-8 py-4 font-body text-[0.72rem] font-semibold tracking-[0.02em] transition-all duration-500 ease-luxe sm:w-auto;
+    @apply inline-flex min-h-[50px] w-full items-center justify-center gap-3 px-8 font-body text-[0.6875rem] font-medium uppercase tracking-[0.22em] transition-all duration-500 ease-luxe sm:w-auto;
   }
   /* The floating translucent control used in the page corners and over
      imagery. Backdrop blur keeps it legible on both porcelain and photography
@@ -506,4 +582,26 @@
 
 @media (prefers-reduced-motion: reduce) {
   .haze-a, .haze-b, .haze-c { animation: none; }
+}
+
+/* The booking sheet rises from the bottom edge on a phone. */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.book-sheet[open] {
+  animation: sheet-up 0.42s var(--ease-luxe);
+}
+.book-sheet[open]::backdrop {
+  animation: fade-in 0.3s ease-out;
+}
+@media (min-width: 640px) {
+  .book-sheet[open] { animation: fade-in 0.3s ease-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .book-sheet[open], .book-sheet[open]::backdrop { animation: none; }
 }

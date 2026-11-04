@@ -1,8 +1,14 @@
 // ── BUSINESS FACTS ───────────────────────────────────────────
 // Single source of truth for name/address/phone/hours.
 // Updated per the "Lather Spa & Wellness" brand blueprint (rebrand from
-// Lather Head Spa). Booking remains on the existing Vagaro profile.
-// Email is a placeholder pending confirmation.
+// Lather Head Spa). Email is a placeholder pending confirmation.
+//
+// One brand, two businesses under one roof: the spa (`business`) and Lather
+// Wellness Center PLLC (`wellness`), the medical practice. They book on
+// separate Vagaro profiles and keep separate hours, so anything that books,
+// lists hours or describes the practice must pick the right one. Vagaro is
+// the source of truth for both — verified against it on 2026-11-02, and
+// `npm run check:links` fails if either profile URL stops resolving.
 
 export const business = {
   name: "Lather Spa & Wellness",
@@ -27,13 +33,16 @@ export const business = {
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Lather+Spa+and+Wellness+101+Fox+Haven+Drive+Greenville+NC+27858",
   siteUrl: "https://www.latherspas.com",
-  instagram: "https://www.instagram.com/lather_greenvillenc/",
-  instagramHandle: "@lather_greenvillenc",
+  instagram: "https://www.instagram.com/lather_spaandwellness/",
+  instagramHandle: "@lather_spaandwellness",
+  // The profile moved from /latherheadspa with the rebrand; the old slug
+  // now 404s on Vagaro.
   vagaro: {
-    profile: "https://www.vagaro.com/latherheadspa",
-    booking: "https://www.vagaro.com/latherheadspa/services",
-    giftCards: "https://www.vagaro.com/latherheadspa/gift-certificates",
+    profile: "https://www.vagaro.com/latherspa",
+    booking: "https://www.vagaro.com/latherspa/services",
+    giftCards: "https://www.vagaro.com/latherspa/gift-certificates",
   },
+  paymentAccepted: "Visa, Mastercard, Discover",
   rating: {
     value: "5.0",
     count: 3,
@@ -41,24 +50,76 @@ export const business = {
   parking: "Free parking on site",
 };
 
-// Order: Monday first for display.
-export const hours = [
-  { day: "Monday", short: "Mon", open: "10:00 AM", close: "6:00 PM" },
-  { day: "Tuesday", short: "Tue", open: "10:00 AM", close: "6:00 PM" },
-  { day: "Wednesday", short: "Wed", open: "10:00 AM", close: "6:00 PM" },
-  { day: "Thursday", short: "Thu", open: "10:00 AM", close: "6:00 PM" },
-  { day: "Friday", short: "Fri", open: "10:00 AM", close: "6:00 PM" },
+// The medical practice. Same address and phone as the spa; its own legal
+// entity, booking profile and hours. Vagaro takes wellness bookings as
+// requests that the practice confirms.
+export const wellness = {
+  name: "Lather Wellness",
+  legalName: "Lather Wellness Center PLLC",
+  vagaro: {
+    profile: "https://www.vagaro.com/latherwellness",
+    booking: "https://www.vagaro.com/latherwellness/services",
+  },
+};
+
+type DayHours = { day: string; short: string; open: string | null; close: string | null };
+
+// Order: Monday first for display. Spa hours vary by day — copied from the
+// spa's Vagaro profile, which is what clients actually book against.
+export const hours: readonly DayHours[] = [
+  { day: "Monday", short: "Mon", open: "10:00 AM", close: "2:00 PM" },
+  { day: "Tuesday", short: "Tue", open: "10:00 AM", close: "8:00 PM" },
+  { day: "Wednesday", short: "Wed", open: "4:00 PM", close: "7:00 PM" },
+  { day: "Thursday", short: "Thu", open: "10:00 AM", close: "8:00 PM" },
+  { day: "Friday", short: "Fri", open: "10:00 AM", close: "7:00 PM" },
   { day: "Saturday", short: "Sat", open: "9:00 AM", close: "3:00 PM" },
   { day: "Sunday", short: "Sun", open: null, close: null },
-] as const;
-
-export const hoursShort = "Mon–Fri 10–6 · Sat 9–3";
-
-// Schema.org OpeningHoursSpecification values
-export const openingHoursSpec = [
-  { dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "10:00", closes: "18:00" },
-  { dayOfWeek: ["Saturday"], opens: "09:00", closes: "15:00" },
 ];
+
+export const wellnessHours: readonly DayHours[] = [
+  { day: "Monday", short: "Mon", open: "9:00 AM", close: "4:00 PM" },
+  { day: "Tuesday", short: "Tue", open: "9:00 AM", close: "4:00 PM" },
+  { day: "Wednesday", short: "Wed", open: "9:00 AM", close: "4:00 PM" },
+  { day: "Thursday", short: "Thu", open: "9:00 AM", close: "4:00 PM" },
+  { day: "Friday", short: "Fri", open: "9:00 AM", close: "4:00 PM" },
+  { day: "Saturday", short: "Sat", open: null, close: null },
+  { day: "Sunday", short: "Sun", open: null, close: null },
+];
+
+// Too irregular to compress into a range, so the short form names the days
+// and leaves the times to the full table.
+export const hoursShort = "Open Monday–Saturday";
+export const wellnessHoursShort = "Monday–Friday, 9–4";
+
+// The hours as the brochure sets them: days that share hours share a line.
+export const spaHoursCompact: [string, string][] = [
+  ["Mon", "10–2"],
+  ["Tue, Thu", "10–8"],
+  ["Wed", "4–7"],
+  ["Fri", "10–7"],
+  ["Sat", "9–3"],
+  ["Sun", "Closed"],
+];
+export const wellnessHoursCompact: [string, string][] = [
+  ["Mon–Fri", "9–4"],
+  ["Sat, Sun", "Closed"],
+];
+
+/** Schema.org OpeningHoursSpecification values, derived from a table above. */
+export function openingHoursSpecFor(table: readonly DayHours[]) {
+  return table
+    .filter((h) => h.open && h.close)
+    .map((h) => ({ dayOfWeek: [h.day], opens: to24h(h.open!), closes: to24h(h.close!) }));
+}
+
+function to24h(t: string) {
+  const [, hh, mm, ap] = t.match(/^(\d{1,2}):(\d{2}) (AM|PM)$/)!;
+  const h = (Number(hh) % 12) + (ap === "PM" ? 12 : 0);
+  return `${String(h).padStart(2, "0")}:${mm}`;
+}
+
+export const openingHoursSpec = openingHoursSpecFor(hours);
 
 export const BOOK_URL = business.vagaro.booking;
 export const GIFT_CARD_URL = business.vagaro.giftCards;
+export const WELLNESS_BOOK_URL = wellness.vagaro.booking;

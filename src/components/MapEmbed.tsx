@@ -28,54 +28,30 @@ export default function MapEmbed() {
         src={src}
         title={`Map to ${business.name}`}
         loading="lazy"
-        className="h-full min-h-[420px] w-full border-0"
+        className="h-[360px] w-full border-0 lg:h-[480px]"
         allowFullScreen
       />
     );
   }
 
   return (
-    <div className="relative flex h-full min-h-[420px] w-full flex-col items-center justify-center gap-6 overflow-hidden bg-bone px-6 py-12 text-center">
-      {/* Suggestion of a street grid — decorative, drawn in CSS, no requests. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.14]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #241C12 1px, transparent 1px), linear-gradient(to bottom, #241C12 1px, transparent 1px)",
-          backgroundSize: "58px 58px",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.16]"
-        style={{
-          backgroundImage:
-            "linear-gradient(115deg, transparent 47.6%, #241C12 47.6%, #241C12 48.6%, transparent 48.6%)",
-        }}
-      />
-
-      <div className="relative">
-        <span aria-hidden className="mx-auto block h-3 w-3 rounded-full bg-brass-dark ring-4 ring-brass/25" />
-        <address className="mt-5 not-italic leading-relaxed text-umber">
-          <span className="font-display text-xl text-ink">{business.address.street}</span>
-          <br />
-          {business.address.city}, {business.address.state} {business.address.zip}
-        </address>
+    <div className="flex min-h-[260px] w-full flex-col justify-between gap-8 bg-sand px-5 py-6 sm:px-8 sm:py-8 lg:min-h-[360px]">
+      <address className="font-display text-[1.375rem] not-italic leading-snug">
+        {business.address.street}
+        <br />
+        {business.address.city}, {business.address.state} {business.address.zip}
+      </address>
+      <div>
+        <div className="flex flex-wrap gap-x-7 gap-y-4">
+          <button type="button" onClick={() => setLoaded(true)} className="lnk">
+            Show the map
+          </button>
+          <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="lnk">
+            Get directions
+          </a>
+        </div>
+        <p className="note mt-4">The map loads from Google only when you ask for it.</p>
       </div>
-
-      <div className="relative flex flex-col gap-3 sm:flex-row sm:gap-4">
-        <button type="button" onClick={() => setLoaded(true)} className="btn-solid">
-          Show map
-        </button>
-        <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" className="btn-outline">
-          Get directions
-        </a>
-      </div>
-
-      <p className="relative text-[0.75rem] text-taupe">
-        The map loads from Google only when you ask for it.
-      </p>
     </div>
   );
 }

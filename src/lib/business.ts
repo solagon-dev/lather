@@ -33,8 +33,8 @@ export const business = {
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Lather+Spa+and+Wellness+101+Fox+Haven+Drive+Greenville+NC+27858",
   siteUrl: "https://www.latherspas.com",
-  instagram: "https://www.instagram.com/lather_greenvillenc/",
-  instagramHandle: "@lather_greenvillenc",
+  instagram: "https://www.instagram.com/lather_spaandwellness/",
+  instagramHandle: "@lather_spaandwellness",
   // The profile moved from /latherheadspa with the rebrand; the old slug
   // now 404s on Vagaro.
   vagaro: {
@@ -89,7 +89,21 @@ export const wellnessHours: readonly DayHours[] = [
 // Too irregular to compress into a range, so the short form names the days
 // and leaves the times to the full table.
 export const hoursShort = "Open Monday–Saturday";
-export const wellnessHoursShort = "Mon–Fri 9–4";
+export const wellnessHoursShort = "Monday–Friday, 9–4";
+
+// The hours as the brochure sets them: days that share hours share a line.
+export const spaHoursCompact: [string, string][] = [
+  ["Mon", "10–2"],
+  ["Tue, Thu", "10–8"],
+  ["Wed", "4–7"],
+  ["Fri", "10–7"],
+  ["Sat", "9–3"],
+  ["Sun", "Closed"],
+];
+export const wellnessHoursCompact: [string, string][] = [
+  ["Mon–Fri", "9–4"],
+  ["Sat, Sun", "Closed"],
+];
 
 /** Schema.org OpeningHoursSpecification values, derived from a table above. */
 export function openingHoursSpecFor(table: readonly DayHours[]) {

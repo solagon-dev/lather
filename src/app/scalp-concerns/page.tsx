@@ -99,7 +99,7 @@ function ConcernCard({ concern, index }: { concern: Concern; index: number }) {
         <div className="mt-6 border-t hairline pt-5">
           <p className="text-[0.68rem] tracking-[0.02em] text-taupe">We recommend</p>
           <Link
-            href={`/spa/head-spa/${service.id}`}
+            href={`/spa/head-spa#${service.id}`}
             className="link-ul mt-2 inline-block font-display text-xl text-ink"
           >
             {service.name} →

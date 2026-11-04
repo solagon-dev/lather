@@ -1,34 +1,26 @@
 import type { Metadata } from "next";
-import BookCTA from "@/components/BookCTA";
-import UtilityHero from "@/components/heroes/UtilityHero";
-import Reveal from "@/components/Reveal";
-import ServiceCards from "@/components/ServiceCards";
-import SplitFeature from "@/components/sections/SplitFeature";
-import { Em, Lede, Statement } from "@/components/ui/Type";
-import { WELLNESS_BOOK_URL, wellness, wellnessHours } from "@/lib/business";
-import { featuredProvider, pillars, wellnessCards } from "@/lib/menu";
+import Link from "next/link";
+import { Figure, Leader, PageOpening, SectionHead } from "@/components/site/Editorial";
+import { WELLNESS_BOOK_URL, wellness, wellnessHoursShort } from "@/lib/business";
+import { foundations, hormoneSupport, provider, usd, wellnessSummary } from "@/lib/menu";
 import { breadcrumbSchema, jsonLd } from "@/lib/seo";
-import { careAreas } from "@/lib/wellness";
-
-const wellnessPillar = pillars.find((p) => p.key === "wellness")!;
 
 export const metadata: Metadata = {
   title: "Women's Wellness in Greenville, NC",
   description:
-    "Lather Wellness, led by Stacia Friend, CNM: hormone and midlife care, medical weight management, laser hair removal, Secret RF & PRO, injectables and body contouring.",
+    "Lather Wellness, led by Stacia Friend, CNM: Foundations Visits, hormone support, laser hair removal, Secret RF & PRO, Xeomin and vitamin injections, and body contouring.",
   alternates: { canonical: "/wellness" },
 };
 
-// How a first visit works. The practice books by request, so the first step is
-// a request rather than an instant booking — saying so up front stops anyone
-// expecting a confirmed slot the moment they submit.
+// The practice books by request, so the first step is a request rather than
+// an instant booking. Saying so up front sets the right expectation.
 const steps = [
   { title: "Request a visit", body: "Pick a time online. The practice confirms it with you." },
   {
-    title: "Your Foundations visit",
-    body: "An unhurried conversation about your symptoms, your history, and your goals — with labs and next steps discussed.",
+    title: "Your Foundations Visit",
+    body: "Time to talk about symptoms, health, lifestyle and goals.",
   },
-  { title: "A plan that's yours", body: "Treatments and follow-ups built around you, not a package." },
+  { title: "A plan that’s yours", body: "An individualized plan for what comes next." },
 ];
 
 export default function WellnessPage() {
@@ -39,124 +31,109 @@ export default function WellnessPage() {
         dangerouslySetInnerHTML={jsonLd(
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Wellness", path: "/wellness" },
-          ])
+            { name: "Lather Wellness", path: "/wellness" },
+          ]),
         )}
       />
-      <UtilityHero
-        title={
-          <>
-            Lather <Em>Wellness</Em>
-          </>
+      <PageOpening
+        eyebrow="Lather Wellness"
+        aside="By request"
+        title="Medical & aesthetic care, in the same quiet house."
+        figure={
+          <Figure
+            src="/media/experience/step-01-consultation.webp"
+            alt="A Foundations Visit consultation"
+            caption="A Foundations Visit"
+            focal="50% 30%"
+            ratio="4/5"
+            priority
+            sizes="(min-width: 1024px) 55vw, 100vw"
+          />
         }
-        sub={wellnessPillar.intro}
-        aside={{
-          src: "/media/experience/step-01-consultation.webp",
-          alt: "A consultation at Lather Wellness",
-          focal: "50% 28%",
-        }}
       >
-        <a href={WELLNESS_BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
-          Request a Foundations Visit
-        </a>
-      </UtilityHero>
-
-      {/* ── IT STARTS WITH YOU ───────────────────────────────── */}
-      <SplitFeature
-        src="/media/team/team-atmosphere.webp"
-        alt="Inside Lather Spa & Wellness"
-        side="right"
-        tone="ivory"
-        body={
-          <>
-            <Lede>{featuredProvider.blurb}</Lede>
-            <p className="mt-8 font-display text-xl text-brass-dark">
-              {featuredProvider.service} · ${featuredProvider.price}
-              <span className="block text-[0.8rem] font-normal tracking-[0.015em] text-taupe">
-                with {featuredProvider.name}, {featuredProvider.role}
-              </span>
-            </p>
-          </>
-        }
-        actions={
-          <a href={WELLNESS_BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
-            Request a Foundations Visit
+        <p>{provider.line}</p>
+        <div className="flex flex-wrap gap-x-7 gap-y-4 pt-2">
+          <a href={WELLNESS_BOOK_URL} target="_blank" rel="noopener noreferrer" className="lnk">
+            Request a wellness visit
           </a>
-        }
-      >
-        <Statement as="h2" size="md">
-          It starts <Em>with you.</Em>
-        </Statement>
-      </SplitFeature>
-
-      {/* ── WHAT WE CARE FOR ─────────────────────────────────── */}
-      <section className="section-pad bg-porcelain">
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">What we care for</h2>
-            <p className="mt-5 text-umber">
-              Each of these begins with a Foundations visit, so you don&rsquo;t need to know which
-              one you need before you walk in.
-            </p>
-          </Reveal>
-          <ul className="mt-12 grid border-t hairline md:grid-cols-2 md:gap-x-12">
-            {careAreas.map((c, i) => (
-              <Reveal key={c.name} as="li" delay={i * 50} className="border-b hairline py-6">
-                <h3 className="font-display text-2xl">{c.name}</h3>
-                <p className="mt-2 max-w-[48ch] text-[0.95rem] text-umber">{c.blurb}</p>
-              </Reveal>
-            ))}
-          </ul>
         </div>
-      </section>
+      </PageOpening>
 
-      {/* ── TREATMENTS ───────────────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-ivory">
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">Treatments</h2>
-          </Reveal>
-          <div className="mt-12">
-            <ServiceCards cards={wellnessCards} columns={4} />
+      {/* ── FOUNDATIONS ─────────────────────────────────────── */}
+      <section aria-labelledby="foundations" className="mt-20 bg-sand py-16 lg:mt-32 lg:py-28">
+        <div className="shell">
+          <SectionHead num="01" label="Where to begin" as="h2" id="foundations" note={foundations.lead} />
+          <div className="mt-8 lg:ml-[88px] lg:mt-12 lg:grid lg:grid-cols-2 lg:gap-16">
+            <div>
+              <Leader
+                name={foundations.name}
+                price={usd(foundations.price)}
+                nameClass="font-display text-[1.5rem] leading-snug text-ink lg:text-[2rem]"
+                priceClass="font-display text-[1.375rem] text-ink lg:text-[1.75rem]"
+              />
+              <p className="copy mt-3">{foundations.description}</p>
+              <Link href="/wellness/foundations" className="lnk mt-6">
+                About the visit
+              </Link>
+            </div>
+            <div className="mt-10 lg:mt-0">
+              <p className="cap">Hormone support</p>
+              <ul className="mt-3 border-t border-line-sand">
+                {hormoneSupport.map((h) => (
+                  <li key={h} className="copy border-b border-line-sand py-2.5 text-ink">
+                    {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS + HOURS ─────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-porcelain">
-        <div className="wrap grid gap-14 lg:grid-cols-[1.4fr_1fr]">
-          <div>
-            <Reveal>
-              <h2 className="h-display text-4xl">How a first visit works</h2>
-            </Reveal>
-            <ol className="mt-10 border-t hairline">
-              {steps.map((s, i) => (
-                <Reveal key={s.title} as="li" delay={i * 80} className="grid grid-cols-[3rem_1fr] border-b hairline py-6">
-                  <span className="font-display text-2xl text-brass-dark">{String(i + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h3 className="font-display text-2xl">{s.title}</h3>
-                    <p className="mt-2 max-w-[52ch] text-[0.95rem] text-umber">{s.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </ol>
-          </div>
-          <Reveal delay={120}>
-            <h2 className="text-[0.7rem] uppercase tracking-[0.18em] text-brass-dark">Wellness hours</h2>
-            <ul className="mt-5 max-w-sm space-y-1 text-[0.95rem] text-umber">
-              {wellnessHours.map((h) => (
-                <li key={h.day} className="flex justify-between gap-3 border-b hairline pb-1">
-                  <span>{h.day}</span>
-                  <span className="whitespace-nowrap">{h.open ? `${h.open} – ${h.close}` : "Closed"}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-[0.8rem] text-taupe">{wellness.legalName}</p>
-          </Reveal>
-        </div>
+      {/* ── TREATMENTS ──────────────────────────────────────── */}
+      <section aria-labelledby="treatments" className="shell pt-20 lg:pt-32">
+        <SectionHead num="02" label="Treatments" as="h2" id="treatments" />
+        <ul className="mt-4 lg:ml-[88px]">
+          {wellnessSummary.map((t) => (
+            <li key={t.slug}>
+              <Link href={`/wellness/${t.slug}`} className="group block border-b border-line py-5 lg:py-7">
+                <Leader
+                  name={<span className="group-hover:text-brass-dark">{t.name}</span>}
+                  price={t.range}
+                  nameClass="font-display text-[1.375rem] leading-snug text-ink lg:text-[1.875rem]"
+                  priceClass="font-display text-[1.0625rem] text-ink lg:text-[1.375rem]"
+                />
+                <p className="note mt-1">{t.note}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <BookCTA />
+      {/* ── HOW IT WORKS ────────────────────────────────────── */}
+      <section aria-labelledby="how" className="shell pb-20 pt-20 lg:pb-32 lg:pt-32">
+        <SectionHead num="03" label="How it works" as="h2" id="how" note={wellnessHoursShort} />
+        <ol className="mt-4 lg:ml-[88px] lg:grid lg:grid-cols-3 lg:gap-12">
+          {steps.map((s, i) => (
+            <li key={s.title} className="grid grid-cols-[44px_minmax(0,1fr)] border-b border-line py-5 lg:block lg:border-b-0 lg:border-t lg:pt-6">
+              <span className="num">{String(i + 1).padStart(2, "0")}</span>
+              <div className="lg:mt-4">
+                <h3 className="font-display text-[1.375rem] leading-snug">{s.title}</h3>
+                <p className="copy mt-1">{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="mt-10 lg:ml-[88px]">
+          <a href={WELLNESS_BOOK_URL} target="_blank" rel="noopener noreferrer" className="lnk">
+            Request a wellness visit
+          </a>
+          <p className="note mt-6 max-w-[36rem]">
+            {wellness.legalName}. The information on this site is general and is not medical advice; your provider will
+            discuss what is right for you.
+          </p>
+        </div>
+      </section>
     </>
   );
 }

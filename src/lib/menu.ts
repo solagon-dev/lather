@@ -1,243 +1,157 @@
-// ── SERVICE MENU (STRUCTURE) ─────────────────────────────────
-// Two pillars — Spa and Wellness — per the brand blueprint. Each books on its
-// own Vagaro profile (see business.ts), and each has its own hub page —
-// /spa and /wellness — with a page per service line beneath it.
+// ── THE MENU ─────────────────────────────────────────────────
+// Everything Lather sells, with its price, in one place. The client's printed
+// brochure (output/brochure-v12) is the source of truth: names, prices,
+// durations and the one-line "what's included" are copied from it, so the site
+// and the paper menu never disagree. Detailed tables the brochure only
+// summarises (laser by area, Secret RF/PRO by treatment, vitamin injections)
+// come from the client's price list and the two Vagaro profiles.
+//
+// Two practices, each with its own booking:
+//   Lather Spa       vagaro.com/latherspa       booked instantly online
+//   Lather Wellness  vagaro.com/latherwellness  requested, then confirmed
 
-import type { ServiceCard } from "@/components/ServiceCards";
 import { BOOK_URL, WELLNESS_BOOK_URL } from "@/lib/business";
-import { services } from "@/lib/data";
-import { treatments } from "@/lib/wellness";
 
-export interface MenuItem {
+// ── LATHER SPA ───────────────────────────────────────────────
+
+export interface Ritual {
+  /** Anchor on /spa/head-spa, and the id in data.ts where there is one. */
+  id: string;
   name: string;
-  blurb: string;
-  href?: string; // internal link when a dedicated page already exists
+  price: number;
+  minutes?: number;
+  /** The brochure's one line. */
+  includes: string;
 }
 
-export interface Pillar {
-  key: "spa" | "wellness";
-  label: string;
-  tagline: string;
-  intro: string;
-  image: string;
-  /**
-   * object-position for the card image. These photos are tall portraits shown
-   * in landscape crops (16:10 / 4:3); a plain center crop decapitates standing
-   * subjects, so bias the focal point per image. Defaults to center.
-   */
-  imagePosition?: string;
-  items: MenuItem[];
-  /** The pillar's hub page. */
-  href: "/spa" | "/wellness";
-  /** Where this pillar books — the spa and the wellness practice are separate Vagaro profiles. */
-  bookUrl: string;
-  /**
-   * The pillar is announced but not yet open for booking — the surfaces that
-   * list it say so rather than offering a booking that cannot yet be honoured.
-   * Lather Wellness launched this way; it is now open and the flag is off.
-   */
-  comingSoon?: boolean;
-  /** A short line shown with the pillar's status, e.g. under a "coming soon". */
-  comingSoonNote?: string;
-}
-
-export const pillars: Pillar[] = [
+export const rituals: Ritual[] = [
   {
-    key: "spa",
-    label: "Spa Experiences",
-    tagline: "Restore",
-    intro:
-      "Restorative treatments in a quiet, considered space — care for the scalp, skin, and body that leaves you feeling genuinely better than when you arrived.",
-    image: "/media/experience/step-03-massage.webp",
-    imagePosition: "50% 35%",
-    href: "/spa",
-    bookUrl: BOOK_URL,
-    items: [
-      {
-        name: "Head Spa",
-        blurb:
-          "Our signature Japanese-inspired scalp ritual — cleanse, exfoliation, extended massage, and targeted treatment.",
-        href: "/spa/head-spa",
-      },
-      {
-        name: "Facials",
-        blurb:
-          "Glo2Facial Essential and Advanced — exfoliation, oxygenation, and ultrasound, with RF technology in the Advanced for firming.",
-      },
-      {
-        name: "Massage",
-        blurb:
-          "Therapeutic massage in 45, 60, or 90 minutes, and prenatal massage for expecting mothers.",
-      },
-    ],
+    id: "classic-ritual",
+    name: "The Classic Ritual",
+    price: 125,
+    minutes: 75,
+    includes: "Scalp cleanse, exfoliation, massage, nourishing mask, steam, and a blowdry.",
   },
   {
-    key: "wellness",
-    label: "Wellness Services",
-    tagline: "Renew",
-    // Lather Wellness is women's wellness, led by Stacia Friend, CNM — a place
-    // with time to talk, where symptoms are not dismissed and care is not
-    // one-size-fits-all. The menu below follows the sneak peek, corrected to
-    // what the practice actually books on Vagaro.
-    intro:
-      "Women's wellness, reimagined — led by Stacia Friend, CNM. A place where you have time to talk, where your symptoms aren't dismissed, and where your care is never one-size-fits-all.",
-    // A provider-and-client consultation — the image that actually reads
-    // "wellness care," and visually distinct from the hands-on Spa photo above.
-    image: "/media/experience/step-01-consultation.webp",
-    imagePosition: "50% 28%",
-    href: "/wellness",
-    bookUrl: WELLNESS_BOOK_URL,
-    // From the Lather Wellness sneak-peek menu. Foundations Wellness
-    // leads because it is the entry point every plan is built from — the visit
-    // where we listen first and prescribe second.
-    items: [
-      {
-        name: "Foundations Wellness",
-        blurb:
-          "Your personalized starting point — an unhurried visit to hear your symptoms, your story, and your goals, then build a plan that's yours.",
-      },
-      {
-        name: "Hormone + Midlife Wellness",
-        blurb: "Perimenopause, menopause, and hormone care.",
-      },
-      {
-        name: "Metabolic + Body Wellness",
-        blurb:
-          "Medical weight management, GLP-1 therapy when appropriate, body composition, and muscle-focused wellness.",
-      },
-      {
-        name: "Sexual Wellness",
-        blurb: "Private, personalized care for women's intimate wellness.",
-      },
-      {
-        name: "Postpartum + Mom Wellness",
-        blurb:
-          "Support for women through the physical and hormonal changes of motherhood.",
-      },
-      {
-        name: "Peptide + Longevity Wellness",
-        blurb:
-          "Individualized therapies for wellness, recovery, and healthy aging, when medically appropriate.",
-      },
-      {
-        name: "Vitamin + Wellness Injections",
-        blurb: "B12, Lipo-B, L-Carnitine, and Glutathione.",
-      },
-      {
-        name: "Body + Recovery",
-        blurb:
-          "truSculpt body contouring, truFlex muscle conditioning, red light therapy, and body composition.",
-      },
-      {
-        name: "Laser Hair Removal",
-        blurb: "Lasting hair reduction for face and body, priced by area.",
-      },
-      {
-        name: "Secret RF + Secret PRO",
-        blurb:
-          "RF microneedling and CO₂ resurfacing for texture, tone, firmness, and stretch marks.",
-      },
-      {
-        // The practice uses Xeomin, not Botox — "Botox" is both inaccurate and
-        // someone else's trademark.
-        name: "Injectables + Aesthetics",
-        blurb: "Xeomin® wrinkle relaxer and natural-looking aesthetic treatments, with a thoughtful approach.",
-      },
-    ],
+    id: "luxe-ritual",
+    name: "The Luxe Ritual",
+    price: 175,
+    minutes: 90,
+    includes: "Our complete ritual with extended massage, rose petal jelly facial, and a blowout.",
+  },
+  {
+    id: "gentlemans-recharge",
+    name: "Gentleman’s Recharge",
+    price: 100,
+    minutes: 60,
+    includes: "A deep scalp cleanse, restorative massage, and revitalizing hair treatment.",
+  },
+  {
+    id: "couples-retreat",
+    name: "Couples Head Spa Retreat",
+    price: 250,
+    includes: "A scalp ritual for two, enjoyed side by side.",
   },
 ];
 
-// Featured provider highlighted on the homepage and wellness pillar.
-export const featuredProvider = {
+export const enhancements = [
+  { name: "Extended massage, 15 minutes", price: 30 },
+  { name: "Bond Repair Protocol", price: 30 },
+  { name: "Anti hair loss protocol", price: 30 },
+  { name: "Extension removal (wefts only)", price: 25 },
+];
+
+export const facials = [
+  { name: "Glo2Facial Essential", price: 225, includes: "Exfoliation, oxygenation, and ultrasound." },
+  {
+    name: "Glo2Facial Advanced",
+    price: 275,
+    includes: "The Essential experience with added RF technology for firming.",
+  },
+];
+
+export const massages = [
+  { name: "Therapeutic massage", options: [{ minutes: 45, price: 85 }, { minutes: 60, price: 100 }, { minutes: 90, price: 150 }] },
+  { name: "Prenatal massage", options: [{ minutes: 60, price: 100 }, { minutes: 90, price: 150 }] },
+];
+
+// ── LATHER WELLNESS ──────────────────────────────────────────
+
+export const provider = {
   name: "Stacia Friend, CNM",
   role: "Certified Nurse Midwife",
-  service: "Foundations Wellness Visit",
-  price: 175,
-  // From the Lather Wellness sneak peek — "It starts with you." You don't have
-  // to know which hormone, lab, or treatment you need before you walk in; the
-  // Foundations visit exists to listen first and build the plan from there.
-  blurb:
-    "You don't have to know which hormone, lab, or treatment you need before you walk in. The Foundations Wellness Visit is time to listen — to your symptoms, your story, and your goals — and to build a plan that's yours.",
+  line: "Led by Stacia Friend, CNM, Certified Nurse Midwife.",
 };
 
-export const whyLather = [
-  {
-    title: "Results without the trade-off",
-    body: "Advanced, effective treatments delivered in a space built for genuine relaxation — you never have to choose between results and rest.",
-  },
-  {
-    title: "Whole-body wellness",
-    body: "Skin, body, and long-term well-being, considered together. Care that looks past a single visit toward how you feel over time.",
-  },
-  {
-    title: "Personalized care",
-    body: "Every plan begins with you. We tailor treatments to your goals rather than fitting you to a menu.",
-  },
-  {
-    title: "A luxury environment",
-    body: "A calm, elegant, modern space — high-end and welcoming, never clinical and never rushed.",
-  },
-  {
-    title: "Licensed providers",
-    body: "Estheticians, cosmetologists, massage therapists, and nurse injectors you can trust with your care.",
-  },
+export const foundations = {
+  name: "Foundations Visit",
+  price: 175,
+  lead: "Our signature starting point",
+  description:
+    "A comprehensive wellness consultation where we take the time to talk about symptoms, health, lifestyle and goals — then build an individualized plan for what comes next.",
+};
+
+/** The brochure's "Hormone support" list — what a Foundations Visit can lead into. */
+export const hormoneSupport = [
+  "Perimenopause",
+  "Menopause",
+  "Metabolic health & weight management",
+  "Sexual wellness",
+  "Postpartum wellness",
+  "Peptide & longevity",
 ];
 
-// ── PRICE LIST (BEYOND THE HEAD SPA RITUALS) ─────────────────
-// The three rituals carry their own pages and live in data.ts; everything else
-// on the menu is listed here for /book. From the client's own menu, 2026-11-02.
-// Laser and Secret RF/PRO are not on either Vagaro profile yet, so their
-// groups send people to request a visit with the wellness practice.
+/** One line per wellness treatment, as the brochure sets them. */
+export const wellnessSummary: { slug: string; name: string; short?: string; range: string; note: string }[] = [
+  { slug: "laser-hair-removal", name: "Laser hair removal", range: "$125–700", note: "Per area, per session" },
+  { slug: "secret-rf-pro", name: "Secret RF & Secret PRO", range: "$225–2,000", note: "Launch 3-session packages, $500–$4,000" },
+  { slug: "injectables", name: "Injectables & vitamin injections", short: "Injectables & vitamins", range: "$11 / unit", note: "Xeomin® · B12, Lipo-B, L-Carnitine & Glutathione" },
+  { slug: "body-contouring", name: "Body contouring & recovery", range: "$1,250", note: "truSculpt · truFlex, 6 for $1,800 · red light & body composition" },
+];
+
+// ── PRICE TABLES ─────────────────────────────────────────────
+// The detailed lists behind the summary lines, rendered on each service page
+// and on /menu.
 
 export interface PriceItem {
   name: string;
   detail?: string;
-  /** One price per column — a single price unless the group has `columns`. */
+  /** One price per column — a single price unless the group has `columns`. Empty: priced at the visit. */
   prices: number[];
+  /** Printed after the price, e.g. "/ unit". */
+  unit?: string;
 }
 
 export interface PriceGroup {
-  key: "facials" | "massage" | "wellness-visits" | "laser" | "secret";
-  /** Which pillar the group belongs to — /pricing splits on this. */
+  key: "facials" | "massage" | "wellness-visits" | "laser" | "secret" | "injectables" | "body";
   pillar: "spa" | "wellness";
   heading: string;
   intro?: string;
   /** Column headings for groups priced more than one way (single, packs). */
   columns?: string[];
   items: PriceItem[];
-  /** Shown after the group; groups that share a booking door can leave it to the last one. */
-  book?: { url: string; label: string };
+  book: { url: string; label: string };
 }
 
-/** The one head-spa booking without a page of its own. Listed with the rituals on /book. */
-export const couplesRetreat = {
-  name: "Couples Head Spa Retreat",
-  tagline: "Side by side, for two — scalp treatment, cleanse, hydration, and massage",
-  price: 250,
-};
+const spaBook = { url: BOOK_URL, label: "Book the spa" };
+const wellnessBook = { url: WELLNESS_BOOK_URL, label: "Request a wellness visit" };
 
 export const priceGroups: PriceGroup[] = [
   {
     key: "facials",
     pillar: "spa",
-    heading: "Facials",
-    items: [
-      { name: "Glo2Facial Essential", detail: "Exfoliation, oxygenation, and ultrasound", prices: [225] },
-      { name: "Glo2Facial Advanced", detail: "Adds RF technology for firming", prices: [275] },
-    ],
+    heading: "Glo2Facial",
+    items: facials.map((f) => ({ name: f.name, detail: f.includes, prices: [f.price] })),
+    book: spaBook,
   },
   {
     key: "massage",
     pillar: "spa",
     heading: "Massage",
-    items: [
-      { name: "Therapeutic Massage", detail: "45 minutes", prices: [85] },
-      { name: "Therapeutic Massage", detail: "60 minutes", prices: [100] },
-      { name: "Therapeutic Massage", detail: "90 minutes", prices: [150] },
-      { name: "Prenatal Massage", detail: "60 minutes", prices: [100] },
-      { name: "Prenatal Massage", detail: "90 minutes", prices: [150] },
-    ],
-    book: { url: BOOK_URL, label: "Book the Spa" },
+    items: massages.flatMap((m) =>
+      m.options.map((o) => ({ name: m.name, detail: `${o.minutes} minutes`, prices: [o.price] })),
+    ),
+    book: spaBook,
   },
   {
     key: "wellness-visits",
@@ -245,20 +159,15 @@ export const priceGroups: PriceGroup[] = [
     heading: "Wellness visits",
     items: [
       { name: "Foundations Visit", detail: "Your starting point, with Stacia Friend, CNM", prices: [175] },
-      { name: "Wellness Follow-Up", detail: "After your Foundations visit", prices: [85] },
-      { name: "Body Contouring Consultation", detail: "truSculpt and truFlex", prices: [50] },
-      { name: "Wellness Injection Consultation", prices: [50] },
-      { name: "B12 Injection", prices: [30] },
-      { name: "Lipo-B Injection", prices: [40] },
-      { name: "L-Carnitine Injection", prices: [40] },
-      { name: "Glutathione Injection", prices: [45] },
+      { name: "Wellness follow-up", detail: "After your Foundations Visit", prices: [85] },
     ],
+    book: wellnessBook,
   },
   {
     key: "laser",
     pillar: "wellness",
     heading: "Laser hair removal",
-    intro: "Priced per area, per session.",
+    intro: "Per area, per session.",
     items: [
       { name: "Upper lip", prices: [125] },
       { name: "Chin", prices: [125] },
@@ -276,22 +185,49 @@ export const priceGroups: PriceGroup[] = [
       { name: "Upper legs", prices: [400] },
       { name: "Full legs", prices: [700] },
     ],
+    book: wellnessBook,
   },
   {
     key: "secret",
     pillar: "wellness",
     heading: "Secret RF & Secret PRO",
     intro: "RF microneedling and CO₂ resurfacing. Launch pricing on three-session packages.",
-    columns: ["Single", "3-pack", "Launch 3-pack"],
+    columns: ["Single", "3 sessions", "Launch"],
     items: [
-      { name: "Secret RF — Face", prices: [375, 900, 750] },
-      { name: "Secret RF — Face & Neck", prices: [425, 1050, 900] },
-      { name: "Secret RF — Stretch Marks", prices: [225, 600, 500] },
-      { name: "Secret PRO — Gentle CO₂", prices: [375, 900, 750] },
-      { name: "Secret PRO — CO₂ Resurfacing", prices: [1750, 4200, 3500] },
-      { name: "Secret PRO — RF + CO₂ Combo", prices: [2000, 4800, 4000] },
+      { name: "Secret RF — face", prices: [375, 900, 750] },
+      { name: "Secret RF — face & neck", prices: [425, 1050, 900] },
+      { name: "Secret RF — stretch marks", prices: [225, 600, 500] },
+      { name: "Secret PRO — gentle CO₂", prices: [375, 900, 750] },
+      { name: "Secret PRO — CO₂ resurfacing", prices: [1750, 4200, 3500] },
+      { name: "Secret PRO — RF + CO₂", prices: [2000, 4800, 4000] },
     ],
-    book: { url: WELLNESS_BOOK_URL, label: "Request a Wellness Visit" },
+    book: wellnessBook,
+  },
+  {
+    key: "injectables",
+    pillar: "wellness",
+    heading: "Injectables & vitamin injections",
+    items: [
+      { name: "Xeomin®", detail: "Wrinkle relaxer", prices: [11], unit: "/ unit" },
+      { name: "Wellness injection consultation", prices: [50] },
+      { name: "B12", prices: [30] },
+      { name: "Lipo-B", prices: [40] },
+      { name: "L-Carnitine", prices: [40] },
+      { name: "Glutathione", prices: [45] },
+    ],
+    book: wellnessBook,
+  },
+  {
+    key: "body",
+    pillar: "wellness",
+    heading: "Body contouring & recovery",
+    items: [
+      { name: "truSculpt", detail: "Per treatment", prices: [1250] },
+      { name: "truFlex", detail: "Six treatments", prices: [1800] },
+      { name: "Body contouring consultation", prices: [50] },
+      { name: "Red light therapy & body composition", detail: "Priced at your consultation", prices: [] },
+    ],
+    book: wellnessBook,
   },
 ];
 
@@ -299,52 +235,56 @@ export function priceGroup(key: PriceGroup["key"]) {
   return priceGroups.find((g) => g.key === key)!;
 }
 
-/** The lowest price in a group, for "from $X" lines. */
-export function fromPrice(key: PriceGroup["key"]) {
-  return Math.min(...priceGroup(key).items.map((i) => i.prices[0]));
-}
+export const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
-// ── DOORS ────────────────────────────────────────────────────
-// The service cards on the homepage and the two hubs. One list each, so a
-// price or a photo changed here changes everywhere it is shown.
+// ── THE FINDER ───────────────────────────────────────────────
+// "I'm looking for …" on the homepage. Starts from the feeling, not the
+// treatment name, and suggests one place to begin.
 
-const ritualFrom = Math.min(...services.map((s) => s.price));
-
-export const spaCards: ServiceCard[] = [
-  {
-    href: "/spa/head-spa",
-    title: "Head Spa",
-    body: "Our signature Japanese-inspired scalp ritual, in three versions and a couples retreat.",
-    price: `From $${ritualFrom}`,
-    image: { src: "/media/about/spa-detail.webp", alt: "Scalp massage during a Lather head spa ritual" },
-  },
-  {
-    href: "/spa/facials",
-    title: "Glo2Facial",
-    body: "Exfoliation, oxygenation, and ultrasound — with RF technology in the Advanced.",
-    price: `From $${fromPrice("facials")}`,
-    image: { src: "/media/editorial/secondary-treatment.webp", alt: "Skincare tools on marble" },
-  },
-  {
-    href: "/spa/massage",
-    title: "Massage",
-    body: "Therapeutic massage in 45, 60, or 90 minutes, and prenatal massage.",
-    price: `From $${fromPrice("massage")}`,
-    image: { src: "/media/experience/step-03-massage.webp", alt: "Massage at Lather Spa" },
-  },
+export const finder = [
+  { want: "deep relaxation", suggest: "a head spa ritual", detail: "start with the Classic, 75 minutes.", href: "/spa/head-spa#classic-ritual" },
+  { want: "glowing skin", suggest: "a Glo2Facial", detail: "the Essential is $225.", href: "/spa/facials" },
+  { want: "tension relief", suggest: "a therapeutic massage", detail: "60 minutes is $100.", href: "/spa/massage" },
+  { want: "hormone & energy support", suggest: "a Foundations Visit", detail: "time to talk with Stacia Friend, CNM.", href: "/wellness/foundations" },
+  { want: "firmer, smoother skin", suggest: "Secret RF microneedling", detail: "from $225 a session.", href: "/wellness/secret-rf-pro" },
+  { want: "smooth, hair-free skin", suggest: "laser hair removal", detail: "priced per area, from $125.", href: "/wellness/laser-hair-removal" },
+  { want: "a gift for someone", suggest: "a Lather gift card", detail: "for any ritual or treatment.", href: "/gift-cards" },
 ];
 
-const treatmentFrom: Record<string, string> = {
-  "laser-hair-removal": `From $${fromPrice("laser")}`,
-  "secret-rf-pro": `From $${fromPrice("secret")}`,
-  injectables: "From $30",
-  "body-contouring": "Consult $50",
-};
+// ── PILLARS ──────────────────────────────────────────────────
+// The two practices in brief, for the Areas We Serve pages.
 
-export const wellnessCards: ServiceCard[] = treatments.map((t) => ({
-  href: `/wellness/${t.slug}`,
-  title: t.name,
-  body: t.tagline,
-  price: treatmentFrom[t.slug],
-  image: t.image,
-}));
+export interface Pillar {
+  key: "spa" | "wellness";
+  label: string;
+  intro: string;
+  href: "/spa" | "/wellness";
+  bookUrl: string;
+  items: { name: string; blurb: string; href: string }[];
+}
+
+export const pillars: Pillar[] = [
+  {
+    key: "spa",
+    label: "Lather Spa",
+    intro: "Head spa rituals, facials, and massage.",
+    href: "/spa",
+    bookUrl: BOOK_URL,
+    items: [
+      { name: "Head spa rituals", blurb: "Classic, Luxe, Gentleman’s Recharge, and a couples retreat. From $100.", href: "/spa/head-spa" },
+      { name: "Glo2Facial", blurb: "Essential and Advanced. From $225.", href: "/spa/facials" },
+      { name: "Massage", blurb: "Therapeutic and prenatal. From $85.", href: "/spa/massage" },
+    ],
+  },
+  {
+    key: "wellness",
+    label: "Lather Wellness",
+    intro: "Medical & aesthetic treatments, led by Stacia Friend, CNM.",
+    href: "/wellness",
+    bookUrl: WELLNESS_BOOK_URL,
+    items: [
+      { name: "Foundations Visit", blurb: "Our signature starting point. $175.", href: "/wellness/foundations" },
+      ...wellnessSummary.map((t) => ({ name: t.name, blurb: `${t.note}. ${t.range}.`, href: `/wellness/${t.slug}` })),
+    ],
+  },
+];

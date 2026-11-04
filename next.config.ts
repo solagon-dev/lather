@@ -38,22 +38,23 @@ const nextConfig: NextConfig = {
     }));
 
     return [
-      // The November 2026 restructure: two hubs (/spa, /wellness) replace the
-      // single /services overview, the head spa rituals move under the spa,
-      // and the price list moves to /pricing (/book is now the Spa-or-Wellness
-      // chooser). Older routes point straight at their final home, no chains.
-      // The standalone Blowout was retired from the menu the same month.
-      { source: "/services/blowout", destination: "/pricing", permanent: true },
-      { source: "/services", destination: "/pricing", permanent: true },
-      { source: "/services/:slug", destination: "/spa/head-spa/:slug", permanent: true },
+      // The November 2026 rebuild around the brochure: two hubs (/spa,
+      // /wellness), the head spa rituals on one page with an anchor each, the
+      // whole menu at /menu, and hours, directions and the FAQ at /visit.
+      // Older routes point straight at their final home, no chains.
+      { source: "/pricing", destination: "/menu", permanent: true },
+      { source: "/contact", destination: "/visit", permanent: true },
+      { source: "/faq", destination: "/visit#faq", permanent: true },
+      { source: "/spa/head-spa/:slug", destination: "/spa/head-spa#:slug", permanent: true },
+      { source: "/services/blowout", destination: "/menu", permanent: true },
+      { source: "/services", destination: "/menu", permanent: true },
+      { source: "/services/:slug", destination: "/spa/head-spa#:slug", permanent: true },
       { source: "/experience", destination: "/spa/head-spa", permanent: true },
-
-      // Routes renamed or removed in the 2026 redesign
-      { source: "/treatments", destination: "/pricing", permanent: true },
-      { source: "/treatments/:slug", destination: "/spa/head-spa/:slug", permanent: true },
+      { source: "/treatments", destination: "/menu", permanent: true },
+      { source: "/treatments/:slug", destination: "/spa/head-spa#:slug", permanent: true },
       { source: "/team", destination: "/about", permanent: true },
       { source: "/memberships", destination: "/gift-cards", permanent: true },
-      { source: "/spa-parties", destination: "/contact", permanent: true },
+      { source: "/spa-parties", destination: "/visit", permanent: true },
 
       // Routes consolidated in the 2026 duplicate-content cleanup
       ...renamedCityPages,

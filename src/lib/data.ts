@@ -87,44 +87,13 @@ export const services = [
   },
 ];
 
-// ── ADD-ONS ──────────────────────────────────────────────────
+// ── ENHANCEMENTS ─────────────────────────────────────────────
+// Head spa add-ons, exactly as the client's printed menu lists them.
 export const addOns = [
-  {
-    id: "scalp-analysis",
-    name: "Scalp Analysis",
-    price: 25,
-    duration: "+15 min",
-    description:
-      "A detailed scalp assessment using magnification to evaluate follicle health, oil balance, buildup, and circulation. Helps us tailor your current treatment and recommend your ideal ongoing protocol.",
-    bestWith: ["classic-ritual", "gentlemans-recharge"],
-  },
-  {
-    id: "extended-massage",
-    name: "Extended Massage",
-    price: 30,
-    duration: "+15 min",
-    description:
-      "Additional time for our signature scalp and neck massage — deeper pressure, slower tempo. Ideal for those carrying tension or simply wanting to extend the most relaxing part of the ritual.",
-    bestWith: ["classic-ritual", "luxe-ritual", "gentlemans-recharge"],
-  },
-  {
-    id: "aromatherapy",
-    name: "Aromatherapy Enhancement",
-    price: 20,
-    duration: "—",
-    description:
-      "A custom essential oil blend selected for your session — lavender for calm, peppermint for invigoration, or rosemary for stimulation. Infused into your massage and steam treatment.",
-    bestWith: ["classic-ritual", "luxe-ritual"],
-  },
-  {
-    id: "hot-towel",
-    name: "Hot Towel Compression",
-    price: 15,
-    duration: "—",
-    description:
-      "Warm herbal towel wraps applied to the scalp and neck during your treatment. Opens pores for deeper product absorption and adds an extra layer of sensory luxury.",
-    bestWith: ["classic-ritual", "luxe-ritual"],
-  },
+  { id: "extended-massage", name: "Extended massage, 15 minutes", price: 30 },
+  { id: "bond-repair", name: "Bond Repair Protocol", price: 30 },
+  { id: "anti-hair-loss", name: "Anti hair loss protocol", price: 30 },
+  { id: "extension-removal", name: "Extension removal (wefts only)", price: 25 },
 ];
 
 // ── TREATMENT-SPECIFIC FAQs ──────────────────────────────────
@@ -277,13 +246,6 @@ export const testimonials = [
   },
   {
     quote:
-      "Hannah did an amazing job with my blowout and style! It was so relaxing and my hair looked SO good — will definitely be back for more!",
-    name: "Reagan L.",
-    location: "Verified Vagaro review",
-    service: "Blowout",
-  },
-  {
-    quote:
       "For a girl who loves having her hair played with and having it styled, this was the perfect afternoon. From beginning to end the entire experience was completely relaxing — I can't wait to book again!",
     name: "Courtney B.",
     location: "Verified Vagaro review",
@@ -292,54 +254,47 @@ export const testimonials = [
 ];
 
 // ── FAQs ─────────────────────────────────────────────────────
-// Broad spa & wellness questions — used on /faq and the /contact teaser.
-// Covers the brand blueprint's categories: general, services, wellness
-// consultations, booking, policies, and expectations.
+// Answered on /visit. Facts follow the brochure and the two Vagaro profiles.
 export const faqs = [
   {
-    question: "What is Lather Spa & Wellness?",
+    question: "What is the difference between Lather Spa and Lather Wellness?",
     answer:
-      "Lather is a modern wellness destination in Greenville, NC that blends restorative spa experiences with advanced, personalized wellness care. We bridge the gap between clinical wellness and a luxury spa — offering both in one thoughtfully designed space, so you can restore, renew, and invest in yourself without ever feeling rushed.",
+      "They are two practices under one roof. Lather Spa offers head spa rituals, Glo2Facials, and massage. Lather Wellness provides personalized medical and wellness care, led by Stacia Friend, CNM, Certified Nurse Midwife. Each keeps its own calendar, so each books separately.",
   },
   {
-    question: "How is Lather different from a traditional spa or a medspa?",
+    question: "How do I book?",
     answer:
-      "We're neither, exactly — and that's the point. A traditional spa focuses on relaxation; clinical wellness focuses on results. Lather brings the two together: effective, results-driven treatments delivered in a calm, elevated environment by licensed providers. You never have to choose between feeling cared for and seeing real results.",
+      "Spa appointments book instantly online through Vagaro: choose a time and it's confirmed. Wellness visits are requested online and the practice confirms the time with you. You can also call (252) 531-0987.",
   },
   {
-    question: "What services do you offer?",
+    question: "Where should I start with Lather Wellness?",
     answer:
-      "Our care lives in two pillars. Spa Experiences include facials, our signature head spa, massage, skin treatments, brows, and red light therapy. Wellness Services include personalized consultations, hormone therapy, peptides, injectables, and vitamin therapy. Our full menu and pricing are being finalized — reach out any time and we'll guide you to the right treatment.",
+      "With a Foundations Visit ($175), our signature starting point. It is a comprehensive wellness consultation where we take the time to talk about symptoms, health, lifestyle and goals, then build an individualized plan for what comes next. You don't need to know what you need before you come in.",
   },
   {
-    question: "What is a wellness consultation?",
+    question: "What happens during a head spa ritual?",
     answer:
-      "It's a one-on-one assessment with a licensed provider — led by Stacia Friend, CNM — designed to understand your body, your goals, and your history, then build a personalized wellness plan around them. It's the ideal starting point for anyone new to our wellness services, and where every wellness journey at Lather begins.",
+      "A scalp cleanse and exfoliation, a long massage, a nourishing mask and steam, finished with a blowdry. The Luxe Ritual adds an extended massage, a rose petal jelly facial, and a blowout. Rituals run 60 to 90 minutes.",
   },
   {
-    question: "Who provides care at Lather?",
+    question: "Do you offer prenatal massage?",
     answer:
-      "Every visit is delivered by licensed professionals — estheticians, cosmetologists, massage therapists, and nurse injectors — with our wellness care led by Stacia Friend, CNM. You're always in trusted, credentialed hands.",
-  },
-  {
-    question: "Do I need to know exactly what I want before I book?",
-    answer:
-      "Not at all. If you're unsure where to start, book a wellness consultation or simply reach out — we'll listen, assess, and recommend a plan built around your goals rather than fitting you to a menu.",
-  },
-  {
-    question: "How do I book an appointment?",
-    answer:
-      "Book online any time through our scheduling partner, Vagaro, or call or text us during business hours. Everything at Lather is by appointment, so each time slot is reserved exclusively for you — we recommend booking ahead, especially for weekends.",
+      "Yes — prenatal massage in 60 or 90 minutes, $100 or $150.",
   },
   {
     question: "Is Lather only for women?",
     answer:
-      "Our environment is designed with women in mind, but we warmly welcome all guests who value a high-end, personalized experience. Everyone deserves to slow down and feel genuinely cared for.",
+      "No. Lather Spa welcomes everyone, and the Gentleman's Recharge was made for men. Lather Wellness focuses on women's health, from perimenopause and menopause to postpartum wellness.",
   },
   {
-    question: "What should I expect on my first visit?",
+    question: "Where do I park?",
     answer:
-      "Expect to be genuinely cared for. Arrive a few minutes early to settle in, and your provider will guide you from there — no pressure, no upselling, just thoughtful, unhurried care. Most guests tell us they leave feeling better than when they arrived. That's the whole idea.",
+      "Lather is at 101 Fox Haven Drive, Greenville, NC 27858, with free parking at the door. Arrive a few minutes early to settle in.",
+  },
+  {
+    question: "Can I buy a gift card?",
+    answer:
+      "Yes. Gift cards are sold online through Vagaro, or call us and we will help.",
   },
 ];
 

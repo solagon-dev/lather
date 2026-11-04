@@ -1,114 +1,88 @@
 # Handoff — Lather site
 
-Written so the next session does not re-derive what took a while to find. Read
-this before touching the hero, the navbar, or any scroll-driven motion.
+Written so the next session does not re-derive what took a while to find.
 
 ## Current state
 
-Branch `phase-0-business-truth` (not pushed). The site was restructured around
-the two businesses it actually is:
+Branch `phase-0-business-truth` (not pushed). In November 2026 the site was
+rebuilt around the client's printed brochure (`output/brochure-v12`), which is
+the source of truth for every name, price, duration and "what's included" line.
+The approved mock is direction A, third pass, on the Design canvas.
 
-- **Spa** (`/spa`, `/spa/head-spa`, `/spa/facials`, `/spa/massage`) books
-  instantly on Vagaro `latherspa`.
-- **Wellness** (`/wellness`, `/wellness/[slug]`) is a separate practice, Lather
-  Wellness Center PLLC, booked by request on Vagaro `latherwellness`.
-- **`/pricing`** carries every price; **`/book`** is the chooser between the two
-  profiles, and the same chooser opens as a dialog from every `BookButton`.
+**Two practices, one front door.**
 
-The 3D pass was removed: the pinned robe (`PinnedObjectSequence`/`ModelScene`),
-the coin statement, the fountain mark and the preloader, along with `three`.
-Measured headless before removal, the robe section ran at a 167–200 ms median
-frame with ~20 s of long tasks and blank frames on phones; everything else held
-60 fps. The model is kept at `brand-assets/models/robe.glb` and the code is in
-git history (before commit "Restructure the site…"). Do not bring it back
-without re-solving phone performance first.
+- **Lather Spa** (`/spa`, `/spa/head-spa`, `/spa/facials`, `/spa/massage`)
+  books instantly on Vagaro `latherspa`.
+- **Lather Wellness** (`/wellness`, `/wellness/foundations`,
+  `/wellness/[slug]`) is Lather Wellness Center PLLC, led by Stacia Friend,
+  CNM, booked by request on Vagaro `latherwellness`.
+- **`/menu`** is the whole brochure on one page, with a Spa | Wellness switch.
+  **`/visit`** has address, map, both sets of hours and the FAQ. **`/book`** is
+  the Spa-or-Wellness chooser that the booking sheet falls back to.
+- Footer only: `/what-is-a-head-spa`, `/journal`, `/locations`,
+  `/scalp-concerns`.
+- Old URLs (`/pricing`, `/contact`, `/faq`, `/spa/head-spa/<ritual>`,
+  `/services*`, `/treatments*`) 308 to their new home in `next.config.ts`.
+  The rituals are anchors on `/spa/head-spa` now (`#classic-ritual` …).
 
-Homepage after the cut, at 390px: ~13 phone screens plus footer (was 35), every
-section at 16.7 ms median frame, 0 jank, 0 canvases.
+**Where things live.**
+
+- All prices: `src/lib/menu.ts`. Treatment copy: `src/lib/wellness.ts`.
+  Address, hours, Vagaro URLs: `src/lib/business.ts`. FAQ and reviews:
+  `src/lib/data.ts`.
+- Chrome: `src/components/site/` — `Header` (Menu · LATHER · Call on a phone,
+  with a `<dialog>` drawer), `BookBar` (one pinned bar on phones), `BookSheet`
+  (the Spa/Wellness sheet, opened by any `BookButton`), `Footer`.
+- Page parts: `site/Editorial.tsx` — `SectionHead` (01 ─ LABEL ··· note),
+  `Figure` (inset photo with caption), `Leader` (name · · · price),
+  `PriceMenu`, `PageOpening`. `site/ServicePage.tsx` renders facials, massage
+  and every wellness treatment.
+
+## The design system
+
+- **Type.** Gilda Display for headings, names and prices (one roman, no
+  italic, so nothing leans on italics). Marcellus only for the LATHER logotype
+  and section numbers. Jost 300 for body, Jost 500 tracked caps for labels.
+- **Colour.** Paper `#F7F2EC`, sand panels `#EFE6DA`, cocoa ink `#35281F`.
+  Gold text is `brass-dark` `#785E3A` only; `#7E6440` measured 4.49:1 on sand
+  and fails. `brass` `#AC8D5F` is for marks and rules, `brass-light` for text
+  on cocoa. Legacy token names (porcelain, umber, taupe…) are remapped to this
+  palette in `tailwind.config.ts`.
+- **Patterns.** Inset photos with small captions; numbered sections with a
+  44px (88px desktop) number column; dotted price leaders (`.ld` / `.dots`);
+  text links as underlined caps (`.lnk`). No gradients over photos, shadows,
+  chips, centred stacks, italic half-headlines or grain.
 
 ## Findings that are expensive to rediscover
 
-**framer-motion silently reinterprets keyframe ranges.** Given a
-`[stops] → [values]` pair, it may hoist the value onto a scroll-linked Web
-Animations timeline, where a range narrower than `[0,1]` **does not hold at its
-endpoint** — it drifts back toward its start value across the rest of the
-range. This has caused bugs before: the hero's tagline and buttons faded out during the collapse
-and then quietly returned to full opacity as the hero scrolled away. Both are
-invisible in the DOM: `el.style.opacity` still reads the value you set, because
-the animation is running above it. `getComputedStyle` is the only thing that
-tells the truth.
-
-**Every scroll-driven value on this site is therefore a clamped function**, not
-a keyframe list — `useTransform(progress, (p) => …)` with an explicit `ramp()`.
-If something scroll-driven mysteriously decays, undoes itself, or comes back,
-this is why. Do not "simplify" one back into a stops/values pair.
-
-**A sticky panel's blank tail is exactly its inset.** A panel of height `P`
-inside a section of height `H` is pinned for `H − P` and then takes exactly `P`
-of scroll to leave. A tile inset by `I` inside that panel clears the top of
-frame `I` *before* the section ends — so there is always a gap of exactly `I`
-with nothing on screen, and no choice of `H` removes it. The fix in
-`CollapsingHero` is to keep moving the tile's insets after the collapse
-finishes, sliding it down inside the panel at the rate that carries its bottom
-edge to the top of frame just as the section ends. Height stays constant
-because the two insets move by equal and opposite amounts.
-
-**The hero's pinned stretch is `SECTION − PANEL` and the wordmark handoff has
-to finish inside it.** `HERO_HANDOFF_VH` is 0.72, so the pin cannot go below
-about 0.8 viewport — which is what stops anyone from shortening the hero.
-Raising the constant or shortening the section re-breaks the handoff and you
-see two wordmarks.
-
 **`Logo variant="descriptor"` used to render an empty SVG.** The descriptor
-paths were nested inside the wordmark's `<g>`, which that variant switches off
-— so it produced a correctly-sized box containing nothing, and the navbar's
-SPA & WELLNESS line had never once appeared. It measures right in the DOM,
-which is why it survived so long; only a screenshot shows it.
-
-**The hero video is source-limited.** `hero-landscape.mp4` is 1440×810 now,
-but the detail in it is far smaller than that — it is corrected phone footage
-that was already an upscale. It has been denoised, sharpened and re-encoded
-(`hqdn3d` → `unsharp` → lanczos, CRF 21), which is as far as processing can
-take it. If it still reads soft the answer is landscape footage shot for the
-purpose, not another encode.
+paths were nested inside the wordmark's `<g>`, which that variant switches off.
+It measures right in the DOM, which is why it survived so long; only a
+screenshot shows it.
 
 **framer-motion overwrites CSS transforms.** It writes the whole `transform`
 property, so a `-translate-x-1/2` class on an element that also has `y`/`scale`
-in its motion `style` is silently discarded. Centring offsets must live in the
-motion style (`x: "-50%"`).
+in its motion `style` is silently discarded. It also hoists `[stops] → [values]`
+keyframes onto scroll timelines where narrow ranges drift back; use clamped
+`useTransform(progress, (p) => …)` functions instead.
 
-**The navbar samples the ground under the wordmark** via `elementsFromPoint`
-and picks ink or ivory, falling back to the body colour when nothing opaque is
-found. It used to assume dark, which broke the moment the hero went light.
-
-## The tone rule
-
-The page's ground is light throughout. **Anything dark on it is dark because
-there is a photograph or a rendered object in it, never because a panel was
-painted noir.** That is why the ritual film on `/spa/head-spa` is dark (it is film) and the
-pages around it are not.
+**Full-page screenshots show the fixed booking bar mid-page.** That is the
+screenshot tool, not the layout.
 
 ## Verification
 
-`node scripts/audit.mjs [baseUrl]` — durable this time, in the repo. Playwright
-is not a dependency; set `PLAYWRIGHT` to an install if it does not resolve:
+    npm run build && npm run lint && npm run check:links
+    PLAYWRIGHT=/path/to/node_modules/playwright/index.mjs node scripts/audit.mjs http://localhost:3101
 
-    PLAYWRIGHT=/path/to/node_modules/playwright/index.mjs node scripts/audit.mjs
-
-Worth recreating if ever needed and not present: a frame-time / long-task
-probe while wheel-scrolling the whole page at 390px and 1440px, reporting
-median and p95 frame per section.
-
-When measuring anything spring-driven, wait ~1.1 s for it to settle. Reading a
-position and screenshotting a moment later compares two different states and
-produces false positives.
+`check:links` checks external links only; internal links were checked by
+crawling the built HTML.
 
 ## Outstanding
 
-1. Confirm with the client: Classic/Luxe blowdry inclusions, where laser and
-   Secret RF/PRO book (they are not on Vagaro yet, so they point at the
-   wellness profile), and update the Luxe to $175 on Vagaro itself.
-2. Real photography for facials, massage and each wellness treatment — those
-   cards currently use interior shots.
-3. Legal pages (privacy, terms, a medical disclaimer for wellness).
-4. One homepage testimonial praises a blowout, a service that has been retired.
+1. Vagaro still lists the Luxe Ritual at $200 (brochure: $175) and has no
+   prenatal massage. The client should update both.
+2. Real photography for the Glo2Facial, massage, Gentleman's Recharge and each
+   wellness treatment; those use interior shots now.
+3. Privacy, Terms and a medical disclaimer need client or legal content before
+   launch. The footer does not link them until they exist.
+4. Rotate the credentials that were once in `.env`.

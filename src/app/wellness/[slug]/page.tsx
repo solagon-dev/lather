@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import TreatmentLayout from "@/components/TreatmentLayout";
-import { WELLNESS_BOOK_URL } from "@/lib/business";
-import { priceGroup } from "@/lib/menu";
+import ServicePage from "@/components/site/ServicePage";
+import { priceGroup, wellnessSummary } from "@/lib/menu";
 import { clampDescription } from "@/lib/seo";
 import { getTreatment, treatments } from "@/lib/wellness";
 
@@ -16,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const t = getTreatment((await params).slug);
   if (!t) return {};
   return {
-    title: `${t.name} in Greenville, NC`,
+    title: `${t.name.charAt(0).toUpperCase()}${t.name.slice(1)} in Greenville, NC`,
     description: clampDescription(t.description),
     alternates: { canonical: `/wellness/${t.slug}` },
   };
@@ -26,22 +25,29 @@ export default async function WellnessTreatmentPage({ params }: { params: Promis
   const t = getTreatment((await params).slug);
   if (!t) notFound();
 
-  const group = priceGroup(t.prices.group);
-  const items = t.prices.only ? group.items.filter((i) => t.prices.only!.includes(i.name)) : undefined;
-
   return (
-    <TreatmentLayout
-      pillar={{ label: "Lather Wellness", href: "/wellness" }}
+    <ServicePage
+      practice="wellness"
       path={`/wellness/${t.slug}`}
       name={t.name}
-      tagline={t.tagline}
-      image={t.image}
+      title={
+        <>
+          {t.name}
+          <span className="mt-4 block font-body text-[0.875rem] font-light leading-[1.6] text-taupe lg:text-[0.9375rem]">
+            {t.summary}
+          </span>
+        </>
+      }
       intro={t.intro}
+      image={{ ...t.image, caption: t.caption }}
       facts={t.facts}
-      prices={{ group, items, heading: t.prices.heading }}
-      priceNote={t.priceNote}
-      book={{ url: WELLNESS_BOOK_URL, label: "Request a Visit" }}
-      related={treatments.filter((o) => o.slug !== t.slug).map((o) => ({ href: `/wellness/${o.slug}`, label: o.name }))}
+      group={priceGroup(t.prices)}
+      related={[
+        { href: "/wellness/foundations", label: "Foundations Visit", aside: "$175" },
+        ...wellnessSummary
+          .filter((o) => o.slug !== t.slug)
+          .map((o) => ({ href: `/wellness/${o.slug}`, label: o.name, aside: o.range })),
+      ]}
     />
   );
 }

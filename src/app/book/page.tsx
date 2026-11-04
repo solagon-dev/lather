@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
-import BookOptions from "@/components/BookOptions";
-import { Em, Statement } from "@/components/ui/Type";
+import BookChoices from "@/components/site/BookChoices";
 
 export const metadata: Metadata = {
   title: "Book an Appointment",
   description:
-    "Book Lather Spa (head spa, Glo2Facials, massage) or request a visit with Lather Wellness in Greenville, NC.",
+    "Book Lather Spa (head spa rituals, Glo2Facials, massage) or request a visit with Lather Wellness in Greenville, NC.",
   alternates: { canonical: "/book" },
 };
 
 /**
  * The page behind every Book button. With JavaScript the buttons open this
- * same choice as a dialog; this page is what they fall back to, and what an
- * old /book link lands on.
+ * same choice as a sheet; this page is what they fall back to.
  */
 export default function BookPage() {
   return (
-    <section className="bg-porcelain px-6 pb-24 pt-32 sm:px-10 md:pt-40 lg:px-16">
-      <div className="wrap max-w-4xl">
-        <Statement as="h1" size="md">
-          What would you <Em>like to book?</Em>
-        </Statement>
-        <div className="mt-12">
-          <BookOptions />
+    <section className="shell pb-24 pt-5 lg:pb-36 lg:pt-14">
+      <p className="cap-m">Book</p>
+      <div className="max-w-[34rem]">
+        <h1 className="mt-11 font-display text-[2.375rem] leading-[1.1] lg:mt-12 lg:text-[3.5rem]">
+          What would you like to book?
+        </h1>
+        <p className="copy mt-4">Lather is two practices under one roof, each with its own calendar.</p>
+        <div className="mt-10">
+          <BookChoices />
         </div>
       </div>
     </section>

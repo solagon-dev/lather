@@ -12,7 +12,7 @@ export default function NotFound() {
           <Link href="/" className="btn-solid">
             Return Home
           </Link>
-          <Link href="/pricing" className="btn-outline">
+          <Link href="/menu" className="btn-outline">
             See Services &amp; Pricing
           </Link>
         </div>

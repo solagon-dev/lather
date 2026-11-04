@@ -156,34 +156,21 @@ export default async function LocationPage({ params }: { params: Promise<Params>
           <div className="mt-14 grid gap-8 lg:grid-cols-2">
             {pillars.map((pillar, i) => (
               <Reveal key={pillar.key} delay={i * 120} className="h-full">
-                <div className="flex h-full flex-col border hairline bg-porcelain p-8">
-                  <div className="flex items-center gap-3">
-                    <p className="text-[0.7rem] font-semibold tracking-[0.02em] text-brass-dark">
-                      {pillar.tagline}
-                    </p>
-                    {pillar.comingSoon && (
-                      <span className="rounded-full border border-brass-dark/40 px-2.5 py-0.5 text-[0.6rem] uppercase tracking-[0.16em] text-brass-dark">
-                        Opening soon
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="mt-3 font-display text-2xl">{pillar.label}</h3>
-                  <p className="mt-4 text-[0.95rem] leading-relaxed text-umber">{pillar.intro}</p>
-                  <ul className="mt-6 flex flex-wrap gap-2">
+                <div className="flex h-full flex-col border-t border-ink pt-6">
+                  <h3 className="font-display text-[1.75rem]">{pillar.label}</h3>
+                  <p className="copy mt-2">{pillar.intro}</p>
+                  <ul className="mt-5 border-t border-line">
                     {pillar.items.map((item) => (
-                      <li
-                        key={item.name}
-                        className="border hairline px-3 py-1.5 text-[0.72rem] tracking-[0.015em] text-umber"
-                      >
-                        {item.name}
+                      <li key={item.name} className="border-b border-line py-3">
+                        <Link href={item.href} className="font-display text-[1.125rem] hover:text-brass-dark">
+                          {item.name}
+                        </Link>
+                        <p className="note">{item.blurb}</p>
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href={pillar.href}
-                    className="link-ul mt-auto inline-block pt-8 text-[0.75rem] font-semibold tracking-[0.02em]"
-                  >
-                    View {pillar.label} →
+                  <Link href={pillar.href} className="lnk mt-6 self-start">
+                    {pillar.label}
                   </Link>
                 </div>
               </Reveal>
@@ -203,7 +190,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
               are scheduled by consultation.
             </p>
             <Link
-              href="/pricing"
+              href="/menu"
               className="link-ul mt-8 inline-block text-[0.75rem] font-semibold tracking-[0.02em]"
             >
               Full Menu &amp; Pricing →
@@ -214,7 +201,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
               {services.map((s) => (
                 <li key={s.id}>
                   <Link
-                    href={`/spa/head-spa/${s.id}`}
+                    href={`/spa/head-spa#${s.id}`}
                     className="group flex items-baseline justify-between gap-6 py-5"
                   >
                     <span className="font-display text-xl transition-colors group-hover:text-brass-dark sm:text-2xl">
@@ -303,7 +290,7 @@ export default async function LocationPage({ params }: { params: Promise<Params>
                 { href: "/what-is-a-head-spa", label: "What is a head spa?", body: "The Japanese origins, how it differs from a salon wash, and what it costs." },
                 { href: "/spa/head-spa", label: "What happens in a session", body: "The five movements of the ritual, start to finish, and how to prepare." },
                 { href: "/scalp-concerns", label: "Find a ritual by concern", body: "Thinning, dryness, buildup, tension, sensitivity or damage — matched to a treatment." },
-                { href: "/faq", label: "Questions before booking", body: "Policies, timing, what to expect on a first visit, and how consultations work." },
+                { href: "/visit#faq", label: "Questions before booking", body: "Policies, timing, what to expect on a first visit, and how consultations work." },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="group flex flex-col border hairline bg-porcelain p-7">
                   <h3 className="font-display text-xl transition-colors group-hover:text-brass-dark">

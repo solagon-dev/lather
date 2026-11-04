@@ -1,58 +1,43 @@
 import type { Metadata } from "next";
-import { Fragment } from "react";
 import Link from "next/link";
-import BookCTA from "@/components/BookCTA";
-import LazyVideo from "@/components/LazyVideo";
-import CinematicHero from "@/components/heroes/CinematicHero";
-import Reveal from "@/components/Reveal";
-import HorizontalSteps from "@/components/sections/HorizontalSteps";
-import { Em } from "@/components/ui/Type";
-import { BOOK_URL } from "@/lib/business";
+import { Figure, Leader, PageOpening, SectionHead } from "@/components/site/Editorial";
+import { BOOK_URL, business } from "@/lib/business";
 import { services, treatmentDetails } from "@/lib/data";
 import { experienceSteps } from "@/lib/experience";
-import { couplesRetreat } from "@/lib/menu";
-import { breadcrumbSchema, jsonLd } from "@/lib/seo";
+import { enhancements, rituals, usd } from "@/lib/menu";
+import { breadcrumbSchema, jsonLd, serviceSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Japanese Head Spa in Greenville, NC",
+  title: "Head Spa Rituals in Greenville, NC",
   description:
-    "Lather's head spa rituals in Greenville, NC — Classic, Luxe, Gentleman's Recharge and a couples retreat, $100–$250 — and the five movements of every session.",
+    "Lather's head spa rituals in Greenville, NC: the Classic ($125, 75 min), the Luxe ($175, 90 min), Gentleman's Recharge ($100, 60 min) and a Couples Retreat ($250).",
   alternates: { canonical: "/spa/head-spa" },
 };
 
-const ritualSteps = experienceSteps.map((s) => ({
-  src: s.image,
-  alt: `${s.title} — movement ${s.number} of the Lather head spa ritual`,
-  number: s.number,
-  title: s.title,
-  body: s.body,
-}));
+const photos: Record<string, { src: string; alt: string; caption: string }> = {
+  "classic-ritual": {
+    src: "/media/treatments/classic-ritual.webp",
+    alt: "An aromatherapy diffuser in the treatment room",
+    caption: "The Classic Ritual",
+  },
+  "luxe-ritual": {
+    src: "/media/treatments/nourish-fortify.webp",
+    alt: "A nourishing hair mask during the Luxe Ritual",
+    caption: "The Luxe Ritual",
+  },
+  "gentlemans-recharge": {
+    src: "/media/treatments/gentlemans-recharge.webp",
+    alt: "A scalp treatment during the Gentleman's Recharge",
+    caption: "Gentleman’s Recharge",
+  },
+  "couples-retreat": {
+    src: "/media/gallery/interior-waiting-room.webp",
+    alt: "The lounge at Lather Spa",
+    caption: "The lounge",
+  },
+};
 
-const guides = [
-  { href: "/what-is-a-head-spa", label: "What is a head spa?", body: "The Japanese origins, and how it differs from a salon wash." },
-  { href: "/scalp-concerns", label: "Scalp concerns", body: "Buildup, dryness, sensitivity, thinning — and which ritual fits." },
-  { href: "/journal", label: "The journal", body: "Longer reads on scalp health and the head spa ritual." },
-];
-
-// Practical notes — copy sourced from treatmentDetails (classic-ritual beforeVisit + faqs).
-const goodToKnow = [
-  {
-    title: "Arrive a few minutes early",
-    body: treatmentDetails["classic-ritual"].beforeVisit[3],
-  },
-  {
-    title: "Come with unwashed hair",
-    body: treatmentDetails["classic-ritual"].beforeVisit[0],
-  },
-  {
-    title: "Dress for reclining",
-    body: treatmentDetails["classic-ritual"].beforeVisit[2],
-  },
-  {
-    title: "Plan quiet time after",
-    body: "Give yourself some unhurried time afterward — the renewed feeling lingers, and it deserves a slow return to the world.",
-  },
-];
+const before = treatmentDetails["classic-ritual"].beforeVisit;
 
 export default function HeadSpaPage() {
   return (
@@ -62,150 +47,150 @@ export default function HeadSpaPage() {
         dangerouslySetInnerHTML={jsonLd(
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Spa", path: "/spa" },
-            { name: "Head Spa", path: "/spa/head-spa" },
-          ])
+            { name: "Lather Spa", path: "/spa" },
+            { name: "Head spa rituals", path: "/spa/head-spa" },
+          ]),
         )}
       />
-      <CinematicHero
-        src="/media/experience/step-03-massage.webp"
-        alt="Slow, intentional scalp massage during a Lather head spa ritual"
-        lines={[
-          <Fragment key="a">One unhurried hour,</Fragment>,
-          <Fragment key="b">
-            <Em>five movements.</Em>
-          </Fragment>,
-        ]}
-        sub="Our signature Japanese-inspired head spa. Every ritual follows the same quiet arc — assessed, cleansed, massaged, treated, renewed — and differs only in how far it goes."
-      />
+      {services.map((s) => (
+        <script key={s.id} type="application/ld+json" dangerouslySetInnerHTML={jsonLd(serviceSchema(s))} />
+      ))}
 
-      {/* ── THE RITUALS ──────────────────────────────────────── */}
-      {/* What people came for, first: the menu with prices, before the
-          explanation of what happens inside it. */}
-      <section className="section-pad bg-porcelain">
-        <div className="wrap">
-          <Reveal className="max-w-2xl">
-            <h2 className="h-display text-4xl sm:text-5xl">The rituals</h2>
-          </Reveal>
-          <div className="mt-12 border-t hairline">
-            {services.map((s, i) => (
-              <Reveal
-                key={s.id}
-                delay={i * 70}
-                className="grid items-baseline gap-2 border-b hairline py-6 sm:grid-cols-[1.6fr_auto_auto_auto] sm:gap-8"
+      <PageOpening
+        eyebrow="Lather Spa"
+        aside="Booked online"
+        title="Head spa rituals, unhurried and private."
+        figure={
+          <Figure
+            src="/media/gallery/treatment-waterfall.webp"
+            alt="Warm water over the scalp during a ritual"
+            caption="The head spa basin"
+            ratio="4/5"
+            priority
+            sizes="(min-width: 1024px) 55vw, 100vw"
+          />
+        }
+      >
+        <p>
+          A Japanese-inspired scalp ritual: cleanse, exfoliation, a long massage, a nourishing mask and steam. Every
+          ritual follows the same quiet arc, and differs only in how far it goes.
+        </p>
+      </PageOpening>
+
+      {/* ── THE RITUALS ─────────────────────────────────────── */}
+      <section aria-labelledby="rituals" className="shell pt-20 lg:pt-32">
+        <SectionHead num="01" label="The rituals" as="h2" id="rituals" note="From $100" />
+        <ol className="mt-4">
+          {rituals.map((r, i) => {
+            const photo = photos[r.id];
+            const detail = services.find((s) => s.id === r.id);
+            return (
+              <li
+                key={r.id}
+                id={r.id}
+                className="grid scroll-mt-24 grid-cols-[96px_minmax(0,1fr)] gap-[18px] border-b border-line py-8 lg:grid-cols-12 lg:gap-12 lg:py-14"
               >
-                <Link href={`/spa/head-spa/${s.id}`} className="group">
-                  <h3 className="font-display text-2xl transition-colors group-hover:text-brass-dark">
-                    {s.name}
-                  </h3>
-                  <p className="mt-1 text-[0.85rem] text-taupe">{s.tagline}</p>
-                </Link>
-                <p className="text-[0.75rem] tracking-[0.02em] text-taupe">{s.duration}</p>
-                <p className="font-display text-xl text-brass-dark">${s.price}</p>
-                <Link href={`/spa/head-spa/${s.id}`} className="link-ul text-[0.75rem] font-semibold tracking-[0.02em]">
-                  Details →
-                </Link>
-              </Reveal>
+                <Figure
+                  src={photo.src}
+                  alt={photo.alt}
+                  ratio="3/4"
+                  sizes="(min-width: 1024px) 25vw, 96px"
+                  className={`lg:col-span-3 lg:col-start-2 ${i % 2 ? "lg:col-start-9 lg:row-start-1" : ""}`}
+                />
+                <div className={`lg:col-span-6 ${i % 2 ? "lg:col-start-2 lg:row-start-1" : "lg:col-start-6"}`}>
+                  <Leader
+                    name={<h3 className="inline font-display">{r.name}</h3>}
+                    price={usd(r.price)}
+                    nameClass="font-display text-[1.3125rem] leading-snug text-ink lg:text-[1.875rem]"
+                    priceClass="font-display text-[1.1875rem] text-ink lg:text-[1.625rem]"
+                  />
+                  <p className="cap-m mt-1">{r.minutes ? `${r.minutes} minutes` : "For two, side by side"}</p>
+                  <p className="copy mt-2 text-ink">{r.includes}</p>
+                  {detail && <p className="copy mt-3 hidden lg:block">{detail.description}</p>}
+                  <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="lnk mt-5">
+                    Book {r.id === "couples-retreat" ? "the retreat" : "this ritual"}
+                  </a>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+
+        <div className="mt-10 lg:ml-[88px] lg:mt-14 lg:max-w-[36rem]">
+          <p className="cap-m">Enhancements</p>
+          <ul className="mt-3 flex flex-col gap-2.5">
+            {enhancements.map((e) => (
+              <li key={e.name}>
+                <Leader name={e.name} price={usd(e.price)} nameClass="copy text-ink" priceClass="copy text-ink" />
+              </li>
             ))}
-            <Reveal className="grid items-baseline gap-2 border-b hairline py-6 sm:grid-cols-[1.6fr_auto_auto] sm:gap-8">
-              <div>
-                <h3 className="font-display text-2xl">{couplesRetreat.name}</h3>
-                <p className="mt-1 text-[0.85rem] text-taupe">{couplesRetreat.tagline}</p>
-              </div>
-              <p className="font-display text-xl text-brass-dark">${couplesRetreat.price}</p>
-              <span className="text-[0.75rem] tracking-[0.02em] text-taupe">For two</span>
-            </Reveal>
-          </div>
-          <Reveal className="mt-10">
-            <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="btn-solid">
-              Book a Ritual
-            </a>
-          </Reveal>
+          </ul>
+          <p className="note mt-3">Add any enhancement when you book.</p>
         </div>
       </section>
 
-      {/* ── THE FIVE MOVEMENTS ───────────────────────────────── */}
-      <section className="section-pad bg-ivory pb-12 text-center">
-        <Reveal className="wrap-narrow">
-          <h2 className="h-display text-4xl sm:text-5xl">
-            Five <Em>movements</Em>
-          </h2>
-        </Reveal>
-      </section>
-      <HorizontalSteps steps={ritualSteps} />
-
-      {/* ── THE SPACE BETWEEN ────────────────────────────────── */}
-      <section className="grain relative section-pad bg-noir text-ivory">
-        <div className="wrap relative grid items-center gap-14 lg:grid-cols-2">
-          <Reveal>
-            <h2 className="h-display text-balance text-4xl sm:text-5xl">
-              The space between
-            </h2>
-            <p className="mt-8 max-w-xl text-ivory/70">
-              The movements matter — but so does everything around them. Lather is a quiet,
-              adults-focused space with no busy salon floor and no background noise competing for
-              your attention. Every appointment is private, held exclusively for you, so the only
-              sounds are warm water, slow breathing, and the occasional soft word from your
-              therapist.
-            </p>
-            <p className="mt-5 max-w-xl text-ivory/70">
-              Between each movement there is a pause — a moment for the scalp to settle and for you
-              to drift a little deeper. Nothing is rushed, because the slower the session moves, the
-              better it works.
-            </p>
-          </Reveal>
-          <Reveal delay={120}>
-            {/* 4:5 matches the clip's encoded frame exactly — see HeroMedia for
-                why these sources are cropped at encode time rather than in CSS. */}
-            <div className="relative aspect-[404/506] overflow-hidden">
-              <LazyVideo
-                className="absolute inset-0 h-full w-full object-cover"
-                src="/media/video/experience-cleanse.mp4"
-                poster="/media/experience/step-02-cleanse.webp"
-                ariaLabel="Warm water cleanse during a Lather head spa session"
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── GOOD TO KNOW ─────────────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-bone">
-        <div className="wrap">
-          <Reveal>
-            <h2 className="h-display text-4xl sm:text-5xl">
-              Before you arrive
-            </h2>
-          </Reveal>
-          <div className="mt-14 grid gap-px overflow-hidden border hairline bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
-            {goodToKnow.map((g, i) => (
-              <Reveal key={g.title} delay={i * 80} className="flex flex-col bg-ivory p-8">
-                <p className="font-display text-2xl text-brass-dark">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-4 font-display text-xl">{g.title}</h3>
-                <p className="mt-3 text-[0.9rem] leading-relaxed text-umber">{g.body}</p>
-              </Reveal>
-            ))}
+      {/* ── WHAT HAPPENS ────────────────────────────────────── */}
+      <section aria-labelledby="movements" className="mt-20 bg-sand py-16 lg:mt-32 lg:py-28">
+        <div className="shell">
+          <SectionHead num="02" label="What happens" as="h2" id="movements" />
+          <div className="lg:grid lg:grid-cols-12 lg:gap-12">
+            <Figure
+              src="/media/experience/step-03-massage.webp"
+              alt="Slow scalp massage during a ritual"
+              caption="The massage, the heart of the ritual"
+              ratio="4/5"
+              sizes="(min-width: 1024px) 35vw, 100vw"
+              className="mt-10 lg:col-span-4 lg:mt-14"
+            />
+            <ol className="mt-10 lg:col-span-7 lg:col-start-6 lg:mt-14">
+              {experienceSteps.map((s) => (
+                <li key={s.number} className="grid grid-cols-[44px_minmax(0,1fr)] border-t border-line-sand py-5">
+                  <span className="num">{s.number}</span>
+                  <div>
+                    <h3 className="font-display text-[1.375rem] leading-snug">{s.title}</h3>
+                    <p className="copy mt-1">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* ── LEARN MORE ───────────────────────────────────────── */}
-      <section className="section-pad border-t hairline bg-porcelain">
-        <div className="wrap grid gap-px overflow-hidden border hairline bg-ink/10 md:grid-cols-3">
-          {guides.map((g, i) => (
-            <Reveal key={g.href} delay={i * 80} className="bg-porcelain">
-              <Link href={g.href} className="group block h-full p-8 transition-colors hover:bg-ivory">
-                <h2 className="font-display text-2xl transition-colors group-hover:text-brass-dark">{g.label} →</h2>
-                <p className="mt-3 text-[0.9rem] leading-relaxed text-umber">{g.body}</p>
+      {/* ── BEFORE YOU COME ─────────────────────────────────── */}
+      <section aria-labelledby="before" className="shell pb-20 pt-20 lg:pb-32 lg:pt-32">
+        <SectionHead num="03" label="Before you come" as="h2" id="before" />
+        <div className="mt-6 lg:ml-[88px] lg:grid lg:grid-cols-2 lg:gap-12">
+          <ul className="border-t border-line lg:border-t-0">
+            {before.map((b) => (
+              <li key={b} className="copy border-b border-line py-3 text-ink">
+                {b}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10 lg:mt-0">
+            <p className="copy">
+              New to head spa?{" "}
+              <Link href="/what-is-a-head-spa" className="text-ink underline decoration-line-dots underline-offset-4">
+                What a head spa is
               </Link>
-            </Reveal>
-          ))}
+              , and{" "}
+              <Link href="/scalp-concerns" className="text-ink underline decoration-line-dots underline-offset-4">
+                which ritual suits which scalp
+              </Link>
+              .
+            </p>
+            <div className="mt-8 flex flex-wrap gap-x-7 gap-y-4">
+              <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="lnk">
+                Book a ritual
+              </a>
+              <a href={business.phoneHref} className="lnk border-transparent text-umber">
+                {business.phone}
+              </a>
+            </div>
+          </div>
         </div>
       </section>
-
-      <BookCTA title="Ready to feel it for yourself?" />
     </>
   );
 }

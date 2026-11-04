@@ -4,6 +4,8 @@ import { business } from "@/lib/business";
 import { citiesWithPages } from "@/lib/locations";
 import { treatments } from "@/lib/wellness";
 
+export const dynamic = "force-static";
+
 const BASE = business.siteUrl;
 
 export default function sitemap(): MetadataRoute.Sitemap {

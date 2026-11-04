@@ -1,8 +1,18 @@
 import type { NextConfig } from "next";
 import { citiesWithPages, legacyLocationSlugs } from "./src/lib/locations";
 
+// Cloudflare serves the site as static files (see scripts/cloudflare.mjs).
+// `STATIC_EXPORT=1 next build` writes the whole site to out/; the redirects
+// below still land in .next/routes-manifest.json, and the post-build script
+// turns them into Cloudflare's _redirects file, so they are defined once.
+const staticExport = process.env.STATIC_EXPORT === "1";
+
 const nextConfig: NextConfig = {
+  ...(staticExport && { output: "export" as const }),
   images: {
+    // Static files have no image optimizer behind them. The source images are
+    // already sized webp, so they are served as they are.
+    unoptimized: staticExport,
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

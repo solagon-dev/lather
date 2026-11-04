@@ -69,6 +69,17 @@ keyframes onto scroll timelines where narrow ranges drift back; use clamped
 **Full-page screenshots show the fixed booking bar mid-page.** That is the
 screenshot tool, not the layout.
 
+## Deploying to Cloudflare
+
+The site is fully static, so Cloudflare serves it as files from `out/` behind a small Worker that only does the redirects (`worker/index.js`, config in `wrangler.jsonc`).
+
+- `npm run build:cf` — static export plus the generated redirect list. `npm run deploy:cf` builds and runs `wrangler deploy` (Worker name `lather`).
+- `npm run deploy:cf:preview` — the noindex test link, Worker `lather-preview` (lather-preview.csb5170.workers.dev).
+- Git-connected Workers Builds: build command `npm run build:cf`, deploy command `npx wrangler deploy`.
+- Redirects are written once, in `next.config.ts`. `scripts/cloudflare.mjs` reads them from `.next/routes-manifest.json`. Cloudflare's own `_redirects` file is not used, because it lets a wildcard rule beat an exact one.
+- No image optimizer on Cloudflare: `next/image` serves the source webp files as they are (`images.unoptimized` in export mode). Keep new photos sized and compressed before adding them.
+- `business.siteUrl` is `https://www.latherspas.com`. Make www the primary hostname on Cloudflare and redirect the apex to it, or change `siteUrl` to match.
+
 ## Verification
 
     npm run build && npm run lint && npm run check:links

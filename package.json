@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "check:links": "node scripts/check-links.mjs"
+    "check:links": "node scripts/check-links.mjs",
+    "build:cf": "STATIC_EXPORT=1 next build && node scripts/cloudflare.mjs",
+    "build:cf:preview": "STATIC_EXPORT=1 next build && node scripts/cloudflare.mjs --preview",
+    "deploy:cf": "npm run build:cf && wrangler deploy",
+    "deploy:cf:preview": "npm run build:cf:preview && wrangler deploy --name lather-preview"
   },
   "dependencies": {
     "framer-motion": "^12.43.0",

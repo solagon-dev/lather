@@ -11,3 +11,8 @@ public/Videos/
 public/July_-_Greenville_Living_Magazine/
 .DS_Store
 tsconfig.tsbuildinfo
+
+# Cloudflare static export
+out/
+.wrangler/
+worker/redirects.json
